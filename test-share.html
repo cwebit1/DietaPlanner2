@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test Web Share API</title>
+<style>
+  body {
+    font-family: -apple-system, system-ui, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+  h1 { font-size: 18px; text-align: center; }
+  button {
+    font-size: 18px;
+    padding: 16px 32px;
+    border-radius: 12px;
+    border: none;
+    background: #d97757;
+    color: white;
+    font-weight: 600;
+  }
+  button:active { opacity: 0.8; }
+  #esito {
+    margin-top: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    background: white;
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+    font-size: 15px;
+    white-space: pre-wrap;
+  }
+  #supporto {
+    font-size: 13px;
+    color: #666;
+  }
+</style>
+</head>
+<body>
+  <h1>Test condivisione nativa</h1>
+  <p id="supporto"></p>
+  <button onclick="prova()">Condividi ricetta di prova</button>
+  <div id="esito"></div>
+
+<script>
+  const esito = document.getElementById('esito');
+  const supporto = document.getElementById('supporto');
+
+  if (navigator.share) {
+    supporto.textContent = '✅ navigator.share È disponibile in questo browser';
+  } else {
+    supporto.textContent = '❌ navigator.share NON è disponibile in questo browser';
+  }
+
+  async function prova() {
+    const testo = 'Ricetta di prova: Farro e ceci tiepidi al pomodoro confit. Ingredienti: farro 80g, ceci 150g, pomodorini 150g, olio, aglio, rosmarino, basilico.';
+
+    if (!navigator.share) {
+      esito.textContent = 'navigator.share non esiste in questo contesto (probabilmente sandbox o browser non supportato).';
+      return;
+    }
+
+    try {
+      await navigator.share({
+        title: 'Ricetta DietaPlanner2',
+        text: testo
+      });
+      esito.textContent = '✅ Condivisione riuscita (o annullata dall\'utente senza errore).';
+    } catch (err) {
+      esito.textContent = '❌ Errore: ' + err.name + ' - ' + err.message;
+    }
+  }
+</script>
+</body>
+</html>
