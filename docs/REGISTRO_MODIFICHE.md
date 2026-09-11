@@ -2372,3 +2372,39 @@ pre-esistente, non mascherata né dichiarata risolta.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Nuovo file: gestore-ricette-github.html — 11 settembre 2026
+
+**Motivo:** `gestore-ricette.html` salva solo tramite File System Access
+API (`showOpenFilePicker`/`createWritable`), disponibile esclusivamente su
+Chrome/Edge desktop. Da mobile il pulsante "Salva sul file aperto" resta
+sempre disabilitato: unica via, "Scarica JSON" con sostituzione manuale su
+GitHub.
+
+**Aggiunto (non modifica `gestore-ricette.html`, che resta invariato):**
+`gestore-ricette-github.html`, stessa interfaccia e stessi campi (nome,
+percorso immagine, testo ricetta, disponibilità), con due differenze:
+- pulsante "Carica foto" per scheda: legge una foto dal dispositivo, la
+  ritaglia/ridimensiona (cover, centrata) a 800×500px fisse e la converte
+  in webp lato client, con percorso `assets/ricette/<idRicetta>.<ext>`
+  compilato automaticamente (campo non più editabile a mano);
+- pulsante "Salva su GitHub" che scrive direttamente nel repository
+  tramite Contents API (`PUT /repos/{owner}/{repo}/contents/{path}`): un
+  commit per ogni foto caricata, poi un commit per `db-visuale.json` con
+  tutte le modifiche di testo/disponibilità/percorso accumulate.
+
+**Token:** richiesto in un campo dedicato in pagina, tenuto solo in
+memoria per la sessione corrente — non salvato in localStorage, cookie o
+altrove, va incollato ad ogni apertura della pagina.
+
+**Verificato:** sintassi dello script principale controllata
+(`node --check`); chiamata di lettura Contents API (`GET .../contents/db-visuale.json`)
+verificata dal vivo con il token fornito, stesso formato usato dal file.
+Il flusso di scrittura (upload foto + commit) non è stato eseguito dal
+vivo in questa sessione per non produrre commit automatici non richiesti:
+va verificato da te al primo utilizzo reale.
+
+**File aggiunto:** `gestore-ricette-github.html`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
