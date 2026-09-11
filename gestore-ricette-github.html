@@ -67,11 +67,11 @@
   </script>
   <script src="motor-v12.js"></script>
   <script>
-    /* Dimensione uniforme richiesta per le foto di riferimento: ogni
-       immagine caricata viene ridimensionata/ritagliata (cover) a questa
-       misura fissa prima del salvataggio, indipendentemente dalla foto
-       originale scattata dal telefono. */
-    const PHOTO_WIDTH=800,PHOTO_HEIGHT=500,PHOTO_QUALITY=.85;
+    /* Dimensione uniforme di riferimento per le foto: 800x450, stesso
+       rapporto 16:9 con cui il generatore produce le immagini
+       (1792x1024). Resize proporzionale, mai ritaglio: vedi
+       preparaFoto(). */
+    const PHOTO_WIDTH=800,PHOTO_HEIGHT=450,PHOTO_QUALITY=.85;
     const IMAGES_DIR='assets/ricette/';
 
     const state={catalog:{versione:1,ricette:[]},recipes:[],names:new Map(),currentIds:new Set(),dirty:false,versionRaised:false,pendingPhotos:new Map()};
@@ -147,16 +147,18 @@
       return 'webp';
     }
 
-    /* Ridimensiona/ritaglia (cover, centrato) qualunque foto caricata alla
-       misura fissa 800x500 richiesta per le immagini di riferimento, poi
-       la converte in webp (fallback jpeg se il browser non supporta la
-       codifica webp in canvas). */
+    /* Nessun ritaglio: resize proporzionale puro (contain). Le foto del
+       generatore sono sempre 16:9 (1792x1024), stesso rapporto del target
+       800x450 - il resize riporta esattamente le stesse proporzioni senza
+       perdere nessuna porzione dell'immagine. Se una foto arrivasse con un
+       rapporto diverso, viene comunque scalata per intero (mai tagliata)
+       e centrata su un canvas 800x450, con bordo trasparente residuo. */
     async function preparaFoto(file){
       const bitmap=await createImageBitmap(file);
       const canvas=document.createElement('canvas');
       canvas.width=PHOTO_WIDTH;canvas.height=PHOTO_HEIGHT;
       const ctx=canvas.getContext('2d');
-      const scala=Math.max(PHOTO_WIDTH/bitmap.width,PHOTO_HEIGHT/bitmap.height);
+      const scala=Math.min(PHOTO_WIDTH/bitmap.width,PHOTO_HEIGHT/bitmap.height);
       const larghezzaScalata=bitmap.width*scala,altezzaScalata=bitmap.height*scala;
       const dx=(PHOTO_WIDTH-larghezzaScalata)/2,dy=(PHOTO_HEIGHT-altezzaScalata)/2;
       ctx.drawImage(bitmap,dx,dy,larghezzaScalata,altezzaScalata);
