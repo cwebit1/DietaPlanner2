@@ -131,7 +131,7 @@ label{display:block;font-size:0.75rem;color:var(--text-dim);margin:12px 0 5px;}
 label:first-child{margin-top:0;}
 
 /* Day selector: sola resa R1; scorrimento e selezione restano quelli di index. */
-.giorni-riga{height:50px;display:flex;gap:4px;align-items:center;margin:0 -14px 10px;padding:4px 8px;background:var(--panel);border-bottom:1px solid var(--border);}
+.giorni-riga{height:42px;display:flex;gap:2px;align-items:center;margin:-14px -14px 8px;padding:3px 5px;background:var(--panel);border-bottom:1px solid var(--border);}
 .giorni-modal{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;margin-bottom:10px;flex-wrap:wrap;}
 .giorni-modal button{
   flex:0 0 auto;background:var(--panel);border:1px solid var(--border);color:var(--text-dim);
@@ -140,22 +140,23 @@ label:first-child{margin-top:0;}
 .giorni-modal button.active{background:var(--accent);color:#131608;border-color:var(--accent);font-weight:700;}
 .giorni{display:flex;gap:3px;overflow-x:auto;flex:1;min-width:0;scrollbar-width:none;-webkit-tap-highlight-color:transparent;}
 .giorni::-webkit-scrollbar{display:none;}
+.giorni-freccia{flex:0 0 24px;width:24px;height:32px;padding:0;border:0;background:transparent;color:var(--text);font-size:1.35rem;line-height:1;cursor:pointer;}
 .giorni button{
-  flex:0 0 calc((100% - 18px)/7);height:38px;min-width:0;
+  flex:0 0 calc((100% - 18px)/7);height:30px;min-width:0;
   background:transparent;border:1px solid transparent;color:var(--text-dim);
-  padding:0 2px;border-radius:13px;cursor:pointer;white-space:nowrap;
-  display:flex;align-items:center;justify-content:center;gap:3px;
+  padding:0;border-radius:10px;cursor:pointer;white-space:nowrap;
+  display:flex;align-items:center;justify-content:center;gap:2px;
   -webkit-tap-highlight-color:transparent;
 }
-.giorni button .giorno-numero{order:2;font-size:.72rem;font-weight:700;line-height:1;}
+.giorni button .giorno-numero{order:2;font-size:.68rem;font-weight:700;line-height:1;}
 .giorni button .giorno-testo{order:1;display:flex;line-height:1;min-width:0;}
-.giorni button .giorno-testo span{font-size:.72rem;}
+.giorni button .giorno-testo span{font-size:.68rem;}
 .giorni button .giorno-testo span:last-child{display:none;}
 .giorni button.active{background:var(--accent-dim);color:var(--accent);border-color:var(--accent);font-weight:800;}
 .giorni button.active .giorno-numero{color:var(--accent);}
 .giorni button.oggi{border-color:var(--accent);}
 .btn-calendario{
-  flex:0 0 34px;height:34px;background:var(--panel-2);border:1px solid var(--border);color:var(--text-dim);
+  flex:0 0 30px;height:30px;background:var(--panel-2);border:1px solid var(--border);color:var(--text-dim);
   border-radius:50%;display:flex;align-items:center;justify-content:center;
   font-size:.9rem;cursor:pointer;position:relative;
 }
@@ -689,7 +690,9 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 <section class="view active" id="view-piano">
   <div id="benvenutoPrimoUtilizzo"></div>
   <div class="giorni-riga">
+    <button class="giorni-freccia" id="btnGiorniPrev" type="button" aria-label="Giorni precedenti">‹</button>
     <div class="giorni" id="selettoreGiorni"></div>
+    <button class="giorni-freccia" id="btnGiorniNext" type="button" aria-label="Giorni successivi">›</button>
     <div class="btn-calendario" id="btnCalendarioSalto">📅</div>
   </div>
   <div id="nessunPastoOggi"></div>
@@ -7554,6 +7557,15 @@ let calMeseCorrente = new Date();
 document.getElementById('btnCalendarioSalto').addEventListener('click', ()=>{
   apriCalendarioVisuale();
 });
+function scorriCaroselloGiorni(direzione){
+  const selettore=document.getElementById('selettoreGiorni');
+  const giorno=selettore?.querySelector('button');
+  if(!selettore||!giorno)return;
+  const gap=parseFloat(getComputedStyle(selettore).columnGap)||0;
+  selettore.scrollBy({left:direzione*(giorno.offsetWidth+gap),behavior:'smooth'});
+}
+document.getElementById('btnGiorniPrev').addEventListener('click',()=>scorriCaroselloGiorni(-1));
+document.getElementById('btnGiorniNext').addEventListener('click',()=>scorriCaroselloGiorni(1));
 
 async function apriCalendarioVisuale(){
   calMeseCorrente = new Date(giornoSelezionato + 'T00:00:00');

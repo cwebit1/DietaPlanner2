@@ -2228,3 +2228,28 @@ presentazionale del nome del giorno; `git diff --check` pulito.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## 30. Rifinitura spazi e frecce del carosello giorni — 11 settembre 2026
+
+**Difetti corretti:** mancavano le frecce laterali di scorrimento; le pill dei
+giorni avevano troppo spazio interno; fra header e striscia calendario restava
+il padding superiore di `main`.
+
+**Correzione applicata:** aggiunti due controlli laterali fissi che scorrono di
+una cella il selettore già esistente; ridotte altezza, padding, raggio e gap
+delle pill; compensato il padding superiore di `main` per accostare il
+calendario all'header. Il pulsante del calendario visuale resta presente.
+
+**Funzioni preservate:** finestra giorni, selezione, centratura, swipe nativo e
+apertura del calendario restano quelli di index. Le nuove frecce agiscono
+esclusivamente sullo `scrollLeft` del medesimo `#selettoreGiorni` e non cambiano
+il giorno selezionato.
+
+**Verifiche:** compilazione degli script inline riuscita; presenza univoca dei
+nuovi controlli e listener; `git diff --check` pulito.
+
+**File modificato:** `index.html`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
