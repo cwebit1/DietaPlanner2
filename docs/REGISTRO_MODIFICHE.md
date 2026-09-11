@@ -2203,3 +2203,28 @@ inline riuscita; `git diff --check` pulito.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## 29. Formattazione R1 del carosello giorni — 11 settembre 2026
+
+**Intervento richiesto:** applicare al carosello giorni di index la sola resa
+grafica di R1, senza importarne o ricostruirne alcuna funzione.
+
+**Correzione applicata:** la striscia usa ora proporzioni compatte, sette giorni
+visibili, etichetta abbreviata e numero sulla stessa riga, pill attiva e bordo
+accento per oggi. Il pulsante calendario già presente è stato soltanto
+ridimensionato in coerenza con la nuova altezza.
+
+**Funzioni preservate:** generazione della finestra di 181 giorni, selezione,
+centratura automatica del giorno attivo, scorrimento nativo, apertura del
+calendario visuale e relativi listener restano integralmente quelli di index.
+Non sono state aggiunte funzioni o gestioni eventi provenienti da R1.
+
+**Verifiche:** script inline compilati senza errori; listener invariati; diff
+applicativo limitato alle regole CSS del selettore e all'abbreviazione puramente
+presentazionale del nome del giorno; `git diff --check` pulito.
+
+**File modificato:** `index.html`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
