@@ -2105,3 +2105,29 @@ immagini controllati; `git diff --check` pulito; `index.html` invariato.
 **SHA dell'intervento grafico:** `f93308314cb5600cf3229ea7286836b2829f3e16`.
 
 ---
+
+## 25. Inizializzazione integrale della repository DietaPlanner2 — 11 settembre 2026
+
+**Intervento richiesto:** sostituire interamente il precedente contenuto della
+repository di prova `DietaPlanner2` con una copia completa e funzionante della
+repository `DietaPlanner`, così da sviluppare il restyling direttamente sul
+sistema reale senza ripetere successivamente l'integrazione.
+
+**Operazione eseguita:** il branch `main` di `DietaPlanner2` è stato sostituito
+con l'albero completo del commit sorgente
+`df6c06dc91e4f35cbc2edf8fd97a026bb4a059a9`. Sono stati trasferiti 111 file,
+inclusi sorgenti, database, documentazione, test e immagini; i binari sono stati
+copiati in Base64.
+
+**Verifiche:** SHA di ogni blob confrontato con la sorgente; zero differenze sui
+111 file; albero risultante identico alla sorgente
+(`a040320032106da08e8a4c73b958bd1af76ec719`). Il precedente stato di
+`DietaPlanner2` resta recuperabile dalla cronologia Git.
+
+**Repository sorgente modificata:** nessuna.
+
+**Repository aggiornata:** `cwebit1/DietaPlanner2`.
+
+**SHA della copia integrale:** `f7960877b99f3983627474fd06e1f89701acbb12`.
+
+---
