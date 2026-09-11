@@ -2292,3 +2292,83 @@ La resa visuale del gestore non è stata dichiarata verificata in browser.
 **SHA dell'intervento tecnico:** `e5d0db9c1b4220a87c03da8bcda7f1ef8d193a85`.
 
 ---
+
+## 31. Verdura ricorrente: da filtro a posteriori a vincolo attivo — 11 settembre 2026
+
+**Difetto accertato:** `requiredVegetableVariantId` (verdura ricorrente del
+Set) veniva verificato soltanto dopo che il pasto era già composto: il
+motore sceglieva la verdura dedicata secondo deperibilità/preferite e
+scartava l'intera combinazione proteina+carboidrato se non conteneva la
+ricorrente, invece di imporla. In `generaPianoSettimana` con ricorrente
+attiva su tutti gli slot, questo produceva fallimenti intermittenti
+riproducibili (6/20 esecuzioni, sempre `Nessuna composizione valida per
+2026-09-03 pranzo...`), perché con l'avanzare della settimana i vincoli di
+varietà riducevano le combinazioni ancora tentabili e quindi le occasioni
+di indovinare per caso la ricorrente.
+
+**Correzione applicata:** in `completaResiduoVerduraRicette` (unico punto
+che sceglie la verdura dedicata per chiudere il residuo, condiviso da
+generazione settimanale, "Pasto odierno"/Cambia piatto e rigenerazione), la
+verdura ricorrente è ora il primo controllo: se compatibile con il ruolo
+mancante, è quella la scelta, prima e indipendentemente dall'ordinamento
+per deperibilità/programmazione settimanale e dalle preferite, che restano
+invariati come criterio di riserva quando la ricorrente non è attiva o non
+è compatibile. Corretto anche un secondo punto in cui la ricorrente veniva
+persa: la rinormalizzazione post rotazione condimenti (`normalizzaRealizzazioniVerdura`,
+richiamata da `chiudiPastoConVerdura` dopo la validazione) non riceveva il
+vincolo e poteva silenziosamente sostituire la ricorrente appena imposta.
+
+**Non modificato:** selezione proteine, priorità PX+C.user, stati
+AUTO/FIXED/EXCLUDED dei carboidrati, formule V/S/G, soglia dei 50 g,
+struttura delle realizzazioni, comportamento dei lucchetti, catalogo,
+interfaccia. Il controllo a posteriori esistente resta come rete di
+sicurezza per i conflitti HARD reali (verdura disattivata, esclusione
+clinica, ricetta non disponibile, blocco incompatibile).
+
+**Verifica del secondo/terzo controllo (dispensa/deperibilità):** la
+priorità per scadenza/avanzo (`variantiPrioritarieDeperimento`) e la
+distribuzione per deperibilità di catalogo (`punteggioVerduraProgrammazione`)
+erano già presenti e funzionanti nell'ordinamento esistente, non toccate da
+questo intervento; restano applicate quando la ricorrente non è attiva.
+L'integrazione della dispensa reale (scorte, freezer, quantità) in
+`generaPianoSettimana` oggi è usata soltanto in "Pasto odierno"/Salvafrigo
+(`livelliPrioritaInventario`) e non ancora estesa alla Programmazione:
+estensione emersa ma non applicata in questo intervento, da autorizzare
+separatamente.
+
+**Test aggiunto:** `tests/lotto-k-verdura-ricorrente-priorita.test.js` —
+dimostra a livello di `completaResiduoVerduraRicette` che la ricorrente
+vince sempre anche contro una verdura contemporaneamente preferita e
+urgente (il caso peggiore), che senza il controllo esplicito la stessa
+situazione sceglierebbe quella verdura invece della ricorrente (prova che
+la correzione è la causa, non il pool), e che l'esito non dipende
+dall'ordine di iterazione del pool. Fallisce sul commit precedente
+(`4434f13`), passa dopo la correzione.
+
+**Test eseguiti:**
+```
+tests/lotto-k-verdura-ricorrente-priorita.test.js        → OK (3/3 casi)
+tests/lotto-set-preferenze-runtime.test.js                → OK (19/19 casi)
+tests/lotto-g-weekly-generation.test.js × 30 esecuzioni    → 30/30 (era 14/20 prima)
+node --check motor-v12.js e sul nuovo file test           → OK
+git diff --check                                          → pulito
+```
+
+**Nota su un test pre-esistente:** `tests/lotto-set-proteine-menu-reale.test.js`
+è flaky anche sul commit precedente (25/30 su un campione di verifica,
+causa ripetizione di macro proteica non correlata alla verdura — il test
+non configura alcuna ricorrente). Con questa correzione il campione
+osservato è stato 21/30: il percorso di selezione proteine non è stato
+toccato da questo intervento e la scelta della verdura dedicata, quando la
+ricorrente non è configurata, richiama la stessa `ordinaVerdureProgrammazione`
+di prima con gli stessi argomenti; la differenza osservata sul campione non
+ha una causa individuata in questo codice ed è segnalata qui come
+pre-esistente, non mascherata né dichiarata risolta.
+
+**File modificati:** `motor-v12.js`.
+
+**File aggiunto:** `tests/lotto-k-verdura-ricorrente-priorita.test.js`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
