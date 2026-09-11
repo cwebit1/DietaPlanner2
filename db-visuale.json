@@ -1,5 +1,5 @@
 {
-  "versione": 2,
+  "versione": 3,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -9,8 +9,8 @@
     },
     {
       "idRicetta": "nr_1_1",
-      "percorsoImmagine": "",
-      "ricettaTestuale": "",
+      "percorsoImmagine": "assets/ricette/nr_1_1.webp",
+      "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Portare a bollore l'acqua leggermente salata. Versare la farina di polenta (preferibilmente a grana fine o \"fioretto\" per una maggiore cremosità) a pioggia, mescolando continuamente e energicamente con una frusta per evitare la formazione di grumi.\n2. Abbassare la fiamma e cuocere a fuoco medio-basso per circa 25-30 minuti, continuando a mescolare con un cucchiaio di legno. La consistenza finale deve essere morbida e cremosa, ma abbastanza soda da mantenere la forma una volta impiattata.\n3. A fuoco spento, incorporare il taleggio tagliato a piccoli cubetti (privato della crosta se si desidera un sapore più delicato). Mescolare delicatamente finché il formaggio non si scioglie completamente, creando una crema uniforme, vellutata e dal gusto avvolgente.\n\n🎨 Impiattamento e Accorgimenti per la Foto\nLa superficie deve apparire naturalmente lucida e vellutata grazie al taleggio fuso. Non aggiungere olio a crudo. È concessa solo una minuscola e sottile spolverata di pepe nero macinato al momento o un piccolo rametto di timo fresco per creare un punto focale visivo elegante e rustico, senza appesantire il piatto.",
       "disponibile": true
     },
     {
