@@ -1,5 +1,5 @@
 {
-  "versione": 3,
+  "versione": 4,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -15,8 +15,8 @@
     },
     {
       "idRicetta": "nr_1_2",
-      "percorsoImmagine": "",
-      "ricettaTestuale": "",
+      "percorsoImmagine": "assets/ricette/nr_1_2.webp",
+      "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Sciacquare il farro perlato sotto acqua corrente. Portare a bollore una pentola di acqua leggermente salata e versare il farro, cuocendo per il tempo indicato sulla confezione (circa 25-30 minuti) fino a quando risulta tenero ma ancora leggermente al dente.\n2. Scolare il farro, riservando un mestolo di acqua di cottura.\n3. A fuoco spento, incorporare il gorgonzola dolce tagliato a piccoli cubetti e un goccio dell'acqua di cottura tenuta da parte. Mescolare energicamente (mantecare) finché il formaggio non si scioglie completamente, creando una crema avvolgente e vellutata che lega i chicchi.\n\n🎨 Impiattamento e Accorgimenti\nPer valorizzare il piatto, disponi il farro al centro creando un piccolo disco basso. La cremosità del gorgonzola fuso renderà il piatto naturalmente lucido e appetitoso. Per un tocco finale elegante, aggiungi una leggerissima spolverata di pepe nero macinato al momento o qualche fogliolina di timo fresco al centro. Evita di aggiungere olio a crudo per non appesantire visivamente il piatto.",
       "disponibile": true
     },
     {
