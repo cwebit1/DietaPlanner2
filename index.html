@@ -51,24 +51,20 @@ button{font-family:inherit;}
   height:77px;padding:7px 28px;
   border-bottom:1px solid var(--border);
   color:var(--text);background:var(--bg);
-  display:grid;grid-template-columns:minmax(0,1fr) auto auto;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
   align-items:center;gap:20px;
 }
 .header-brand{min-width:0;}
 .header-brand-title{font:56px/1 Georgia,serif;letter-spacing:-2.5px;white-space:nowrap;}
 .header-tagline{margin-top:2px;font-size:9px;letter-spacing:5.4px;text-transform:uppercase;white-space:nowrap;}
-.header-leaf{width:27px;height:37px;border-radius:100% 0 100% 0;background:#c7d9a3;transform:rotate(-42deg);position:relative;}
-.header-leaf:after{content:"";position:absolute;left:13px;top:5px;width:1px;height:31px;background:#779268;transform:rotate(-8deg);}
 .header-welcome{justify-self:end;display:flex;align-items:center;gap:15px;min-width:0;}
 .header-greeting{display:flex;flex-direction:column;gap:4px;max-width:190px;font-size:15px;line-height:1.18;color:#fff;font-weight:500;white-space:normal;text-align:left;}
 .account-button{width:42px;height:42px;border:2px solid rgba(255,255,255,.72);border-radius:50%;padding:0;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;background:#eff3ec;color:#174b35;font-size:.9rem;box-shadow:0 3px 12px rgba(0,0,0,.18);}
 .account-button img{width:100%;height:100%;object-fit:cover;}
 @media(max-width:430px){
-  .app-header{height:52px;padding:4px 14px;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;}
+  .app-header{height:52px;padding:4px 14px;grid-template-columns:minmax(0,1fr) auto;gap:8px;}
   .header-brand-title{font-size:30px;letter-spacing:-1.3px;}
   .header-tagline{margin-top:2px;font-size:4.8px;letter-spacing:2.8px;}
-  .header-leaf{width:17px;height:24px;}
-  .header-leaf:after{left:8px;top:3px;height:20px;}
   .header-welcome{gap:6px;}
   .header-greeting{max-width:none;gap:3px;font-size:8.5px;line-height:1.18;}
   .account-button{width:28px;height:28px;border-width:1px;font-size:.68rem;}
@@ -678,7 +674,6 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
     <div class="header-brand-title">DietaPlanner <span id="headerVersione" style="font:400 .34em/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#c7d9a3;vertical-align:super;margin-left:4px;"></span></div>
     <div class="header-tagline">Piani sani, giorni migliori</div>
   </div>
-  <span class="header-leaf" aria-hidden="true"></span>
   <div class="header-welcome">
     <div class="header-greeting hidden" id="headerGreeting"></div>
     <button class="account-button" id="btnAccountHeader" aria-label="Account Google" title="Account Google">👤</button>

@@ -2184,3 +2184,22 @@ index, salvo adattamenti dimensionali strettamente necessari.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## 28. Rimozione della foglia dall'header — 11 settembre 2026
+
+**Intervento richiesto:** eliminare la foglia decorativa dall'header R1
+trasferito su index.
+
+**Correzione applicata:** rimosso l'elemento `.header-leaf`, eliminate le sue
+regole CSS desktop/mobile e ridotta la griglia dell'header da tre a due colonne
+(marchio e area utente). Logo, saluto, avatar, colori, altezze e funzioni
+account restano invariati.
+
+**Verifiche:** assenza completa di `.header-leaf`; compilazione degli script
+inline riuscita; `git diff --check` pulito.
+
+**File modificato:** `index.html`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
