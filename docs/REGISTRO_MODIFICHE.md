@@ -2161,3 +2161,26 @@ markup e aggiornamento del saluto dell'header; `git diff --check` pulito.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## 27. Ripristino dello sfondo nativo nell'header ibrido — 11 settembre 2026
+
+**Difetto corretto:** durante il trasferimento della struttura R1 era stato
+importato anche il gradiente verde del suo linguaggio grafico, in contrasto
+con il vincolo di conservare CSS e stile visivo di index.
+
+**Correzione applicata:** ripristinati sull'header `background: var(--bg)` e
+`color: var(--text)`. Struttura, disposizione, proporzioni, saluto e avatar
+restano invariati.
+
+**Regola operativa confermata:** in `DietaPlanner2` R1 fornisce esclusivamente
+strutture, disposizioni e funzioni; il linguaggio grafico resta quello di
+index, salvo adattamenti dimensionali strettamente necessari.
+
+**Verifiche:** diff CSS di una sola dichiarazione nell'app; script invariati;
+`git diff --check` pulito.
+
+**File modificato:** `index.html`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
