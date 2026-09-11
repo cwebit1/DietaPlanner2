@@ -1,0 +1,901 @@
+{
+  "versione": 19,
+  "ricette": [
+    {
+      "id": 1,
+      "nome": "al pomodoro",
+      "classe": "C",
+      "carboidratiCompatibili": [
+        {
+          "nome": "Pasta corta",
+          "nomeVisualizzato": "Pasta"
+        },
+        {
+          "nome": "Pasta integrale"
+        },
+        {
+          "nome": "Tagliolini all'uovo",
+          "nomeVisualizzato": "Tagliolini"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "nome": "con taleggio e speck",
+      "classe": [
+        "C",
+        "PF",
+        "PC"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Pasta corta",
+          "nomeVisualizzato": "Pasta"
+        },
+        {
+          "nome": "Pasta integrale"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "nome": "alla Norma",
+      "classe": [
+        "C",
+        "V"
+      ],
+      "verduraGrammiInclusi": 100,
+      "carboidratiCompatibili": [
+        {
+          "nome": "Pasta corta",
+          "nomeVisualizzato": "Pasta"
+        },
+        {
+          "nome": "Pasta integrale"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "classe": "PP",
+      "proteineCompatibili": [
+        {
+          "nome": "sogliola"
+        },
+        {
+          "nome": "nasello"
+        },
+        {
+          "nome": "orata"
+        },
+        {
+          "nome": "branzino"
+        },
+        {
+          "nome": "platessa"
+        }
+      ],
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "al forno"
+        },
+        {
+          "nome": "al limone"
+        },
+        {
+          "nome": "al cartoccio"
+        },
+        {
+          "nome": "ai ferri"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "classe": "PC",
+      "proteineCompatibili": [
+        {
+          "nome": "salsiccia di maiale",
+          "sottotipo": "carne_rossa"
+        },
+        {
+          "nome": "salsiccia di tacchino",
+          "sottotipo": "carne_bianca"
+        }
+      ],
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "al forno"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "nome": "insalata fredda con uovo, emmental e pomodoro",
+      "classe": [
+        "C",
+        "PU",
+        "PF",
+        "V"
+      ],
+      "composizioneFissa": [
+        {
+          "nome": "uovo sodo"
+        },
+        {
+          "nome": "emmental a cubetti"
+        },
+        {
+          "nome": "pomodori freschi"
+        }
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Cous cous"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "classe": "PU",
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "sode"
+        },
+        {
+          "nome": "strapazzate"
+        },
+        {
+          "nome": "in camicia"
+        },
+        {
+          "nome": "al tegamino"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "classe": "PL",
+      "proteineCompatibili": [
+        {
+          "nome": "ceci"
+        },
+        {
+          "nome": "fagioli borlotti"
+        },
+        {
+          "nome": "fagioli cannellini"
+        },
+        {
+          "nome": "lenticchie"
+        },
+        {
+          "nome": "tofu"
+        }
+      ],
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "all'olio e rosmarino"
+        },
+        {
+          "nome": "olio piccante e sesamo"
+        },
+        {
+          "nome": "aglio olio e peperoncino"
+        },
+        {
+          "nome": "al pepe"
+        },
+        {
+          "nome": "saltati"
+        },
+        {
+          "nome": "in insalata"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "classe": "PC",
+      "proteineCompatibili": [
+        {
+          "nome": "petto di pollo",
+          "sottotipo": "carne_bianca"
+        },
+        {
+          "nome": "sovracosce di pollo",
+          "sottotipo": "carne_bianca"
+        },
+        {
+          "nome": "petto di tacchino",
+          "sottotipo": "carne_bianca"
+        },
+        {
+          "nome": "fettina di vitello",
+          "sottotipo": "carne_bianca"
+        },
+        {
+          "nome": "fettina di manzo",
+          "sottotipo": "carne_rossa"
+        },
+        {
+          "nome": "nodino di maiale",
+          "sottotipo": "carne_rossa"
+        }
+      ],
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "alla piastra"
+        },
+        {
+          "nome": "al forno"
+        },
+        {
+          "nome": "in padella"
+        },
+        {
+          "nome": "ai ferri"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "classe": [
+        "PF",
+        "C",
+        "V"
+      ],
+      "proteineCompatibili": [
+        {
+          "nome": "grana o parmigiano",
+          "sottotipo": "formaggio_stagionato"
+        },
+        {
+          "nome": "mozzarella",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "crescenza",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "ricotta",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "pecorino",
+          "sottotipo": "formaggio_stagionato"
+        },
+        {
+          "nome": "stracchino",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "brie",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "feta",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "provola",
+          "sottotipo": "formaggio_stagionato"
+        }
+      ],
+      "tipiCotturaCompatibili": [
+        {
+          "nome": "a fette"
+        },
+        {
+          "nome": "a scaglie"
+        },
+        {
+          "nome": "a cubetti"
+        },
+        {
+          "nome": "a cucchiaiate"
+        },
+        {
+          "nome": "al naturale"
+        },
+        {
+          "nome": "alla piastra"
+        }
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Taralli"
+        },
+        {
+          "nome": "Crackers"
+        },
+        {
+          "nome": "Gallette di riso",
+          "nomeVisualizzato": "Gallette"
+        }
+      ],
+      "verdureCompatibili": [
+        {
+          "nome": "pomodorini"
+        },
+        {
+          "nome": "rucola"
+        },
+        {
+          "nome": "radicchio"
+        },
+        {
+          "nome": "finocchi"
+        },
+        {
+          "nome": "radicchio, pomodori e cipolle",
+          "composizioneFissa": [
+            {
+              "nome": "radicchio"
+            },
+            {
+              "nome": "pomodori"
+            },
+            {
+              "nome": "cipolle"
+            }
+          ]
+        },
+        {
+          "nome": "insalata, peperoni e carote",
+          "composizioneFissa": [
+            {
+              "nome": "insalata"
+            },
+            {
+              "nome": "peperoni"
+            },
+            {
+              "nome": "carote"
+            }
+          ]
+        },
+        {
+          "nome": "finocchio all'arancio",
+          "composizioneFissa": [
+            {
+              "nome": "finocchio"
+            },
+            {
+              "nome": "arancia"
+            }
+          ]
+        },
+        {
+          "nome": "spinaci freschi con ananas",
+          "composizioneFissa": [
+            {
+              "nome": "spinaci freschi"
+            },
+            {
+              "nome": "ananas"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "nome": "Polenta con",
+      "classe": [
+        "C",
+        "PF"
+      ],
+      "proteineCompatibili": [
+        {
+          "nome": "taleggio",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "gorgonzola",
+          "sottotipo": "formaggio_fresco"
+        },
+        {
+          "nome": "parmigiano",
+          "sottotipo": "formaggio_stagionato"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "nome": "fredda di cereali con verdure crude",
+      "classe": [
+        "C",
+        "V"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Cous cous"
+        }
+      ],
+      "verdureCompatibili": [
+        {
+          "nome": "pomodorini"
+        },
+        {
+          "nome": "cetriolo"
+        },
+        {
+          "nome": "carote"
+        },
+        {
+          "nome": "peperoni"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "nome": "fredda di cereali con tonno o salmone",
+      "classe": [
+        "C",
+        "PP",
+        "V"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Cous cous"
+        }
+      ],
+      "proteineCompatibili": [
+        {
+          "nome": "tonno",
+          "sottotipo": "pesce_conservato",
+          "verdureCompatibili": [
+            {
+              "nome": "olive"
+            },
+            {
+              "nome": "capperi"
+            },
+            {
+              "nome": "pomodorini"
+            }
+          ]
+        },
+        {
+          "nome": "salmone",
+          "sottotipo": "pesce_grande",
+          "verdureCompatibili": [
+            {
+              "nome": "avocado"
+            },
+            {
+              "nome": "cetriolo"
+            },
+            {
+              "nome": "aneto fresco"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "nome": "fredda di cereali con verdure cotte",
+      "classe": [
+        "C",
+        "V"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Cous cous"
+        }
+      ],
+      "verdureCompatibili": [
+        {
+          "nome": "melanzane"
+        },
+        {
+          "nome": "zucchine"
+        },
+        {
+          "nome": "zucca"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "nome": "in bianco con parmigiano",
+      "classe": "C",
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Pasta corta",
+          "nomeVisualizzato": "Pasta"
+        },
+        {
+          "nome": "Pasta integrale"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "nome": "con verdure",
+      "classe": [
+        "C",
+        "V"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Pasta corta",
+          "nomeVisualizzato": "Pasta"
+        },
+        {
+          "nome": "Tagliolini all'uovo",
+          "nomeVisualizzato": "Tagliolini"
+        },
+        {
+          "nome": "Pasta integrale"
+        },
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Cous cous"
+        },
+        {
+          "nome": "Ravioli ricotta e spinaci",
+          "nomeVisualizzato": "Ravioli"
+        },
+        {
+          "nome": "Gnocchi"
+        }
+      ],
+      "verdureCompatibili": [
+        {
+          "nome": "zucchine e melanzane",
+          "composizioneFissa": [
+            {
+              "nome": "zucchine"
+            },
+            {
+              "nome": "melanzane"
+            }
+          ]
+        },
+        {
+          "nome": "zucchine e carote",
+          "composizioneFissa": [
+            {
+              "nome": "zucchine"
+            },
+            {
+              "nome": "carote"
+            }
+          ]
+        },
+        {
+          "nome": "zucchine e pomodoro",
+          "composizioneFissa": [
+            {
+              "nome": "zucchine"
+            },
+            {
+              "nome": "pomodoro"
+            }
+          ]
+        },
+        {
+          "nome": "pomodoro e melanzane",
+          "composizioneFissa": [
+            {
+              "nome": "pomodoro"
+            },
+            {
+              "nome": "melanzane"
+            }
+          ]
+        },
+        {
+          "nome": "piselli e carote",
+          "composizioneFissa": [
+            {
+              "nome": "piselli"
+            },
+            {
+              "nome": "carote"
+            }
+          ]
+        },
+        {
+          "nome": "piselli e pomodoro fresco",
+          "composizioneFissa": [
+            {
+              "nome": "piselli"
+            },
+            {
+              "nome": "pomodoro fresco"
+            }
+          ]
+        },
+        {
+          "nome": "pomodoro e basilico",
+          "composizioneFissa": [
+            {
+              "nome": "pomodoro"
+            },
+            {
+              "nome": "basilico fresco"
+            }
+          ]
+        },
+        {
+          "nome": "aglio, olio e pomodorini",
+          "composizioneFissa": [
+            {
+              "nome": "aglio"
+            },
+            {
+              "nome": "pomodorini"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "nome": "con piselli",
+      "classe": [
+        "C",
+        "PL"
+      ],
+      "composizioneFissa": [
+        {
+          "nome": "piselli"
+        }
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Riso Originario",
+          "nomeVisualizzato": "Riso"
+        },
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        },
+        {
+          "nome": "Cous cous"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "nome": "zuppa di cereali e legumi",
+      "classe": [
+        "C",
+        "PL"
+      ],
+      "carboidratiCompatibili": [
+        {
+          "nome": "Orzo perlato",
+          "nomeVisualizzato": "Orzo"
+        },
+        {
+          "nome": "Farro perlato",
+          "nomeVisualizzato": "Farro"
+        }
+      ],
+      "proteineCompatibili": [
+        {
+          "nome": "ceci",
+          "sottotipo": "legumi"
+        },
+        {
+          "nome": "fagioli borlotti",
+          "sottotipo": "legumi"
+        },
+        {
+          "nome": "lenticchie",
+          "sottotipo": "legumi"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "nome": "Insalata di",
+      "classe": "V",
+      "porzioneRiferimentoGrammi": 70,
+      "verdureCompatibili": [
+        {
+          "nome": "lattuga"
+        },
+        {
+          "nome": "radicchio"
+        },
+        {
+          "nome": "valeriana"
+        },
+        {
+          "nome": "songino"
+        },
+        {
+          "nome": "misticanza (lattuga, radicchio, valeriana e songino)",
+          "composizioneFissa": [
+            {
+              "nome": "lattuga"
+            },
+            {
+              "nome": "radicchio"
+            },
+            {
+              "nome": "valeriana"
+            },
+            {
+              "nome": "songino"
+            }
+          ]
+        }
+      ],
+      "condimentoCompatibili": [
+        {
+          "nome": "al limone"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "nome": "Insalata di",
+      "classe": "V",
+      "porzioneRiferimentoGrammi": 200,
+      "verdureCompatibili": [
+        {
+          "nome": "rucola"
+        },
+        {
+          "nome": "carote"
+        },
+        {
+          "nome": "cetriolo"
+        },
+        {
+          "nome": "finocchi"
+        },
+        {
+          "nome": "pomodoro fresco"
+        },
+        {
+          "nome": "pomodorini"
+        },
+        {
+          "nome": "peperoni"
+        },
+        {
+          "nome": "cipolla"
+        },
+        {
+          "nome": "spinaci freschi"
+        },
+        {
+          "nome": "zucchine"
+        },
+        {
+          "nome": "pomodori, cetrioli e cipolla",
+          "composizioneFissa": [
+            {
+              "nome": "pomodori"
+            },
+            {
+              "nome": "cetrioli"
+            },
+            {
+              "nome": "cipolla"
+            }
+          ]
+        },
+        {
+          "nome": "carote e finocchi",
+          "composizioneFissa": [
+            {
+              "nome": "carote"
+            },
+            {
+              "nome": "finocchi"
+            }
+          ]
+        },
+        {
+          "nome": "rucola e pomodorini",
+          "composizioneFissa": [
+            {
+              "nome": "rucola"
+            },
+            {
+              "nome": "pomodorini"
+            }
+          ]
+        }
+      ],
+      "condimentoCompatibili": [
+        {
+          "nome": "al limone"
+        }
+      ]
+    }
+  ]
+}

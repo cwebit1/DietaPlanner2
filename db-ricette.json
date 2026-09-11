@@ -1,0 +1,3234 @@
+{
+  "versione": 73,
+  "ricette": [
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Polenta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PF",
+          "ingredienti": [
+            {
+              "nome": "Gorgonzola",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Taleggio",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PF"
+      ],
+      "id": 1
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Branzino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Merluzzo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Nasello",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orata",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Platessa",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Sogliola",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "al forno",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al limone",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al cartoccio",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "ai ferri",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PP",
+      "id": 2
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Salsiccia di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Salsiccia di tacchino",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "al forno",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PC",
+      "id": 3
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Pomodori gratinati",
+              "stack": 1,
+              "roll": 1,
+              "dose": 12
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "V",
+        "C"
+      ],
+      "id": 5
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Pasta corta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pasta integrale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tagliolini all'uovo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "al",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Pomodoro fresco",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "S"
+      ],
+      "id": 6
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Pasta corta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pasta integrale",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "alla Norma",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Melanzane",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "S"
+      ],
+      "id": 7
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pasta corta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pasta integrale",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PF",
+          "ingredienti": [
+            {
+              "nome": "Taleggio",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Speck",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PF",
+        "PC"
+      ],
+      "id": 8
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "insalata fredda di",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PU",
+          "ingredienti": [
+            {
+              "nome": "Uova",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "sode",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Pomodoro fresco",
+              "stack": 1,
+              "roll": 1,
+              "dose": 200
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PU",
+        "V"
+      ],
+      "id": 9
+    },
+    {
+      "id": 10,
+      "stackScope": "insalate_fredde_cereali",
+      "gruppi": [
+        {
+          "testo1": "insalata fredda di",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PF",
+          "ingredienti": [
+            {
+              "nome": "Emmental",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Mozzarella",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Feta",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true,
+          "composizioni": [
+            {
+              "nome": "pomodorini e cetriolo",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Cetriolo",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e carote",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Carote",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e peperoni",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Peperoni",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PF",
+        "V"
+      ]
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PU",
+          "ingredienti": [
+            {
+              "nome": "Uova",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "sode",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "strapazzate",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "in camicia",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al tegamino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "in frittata",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PU",
+      "id": 11
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Ceci",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Fagioli borlotti",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Fagioli cannellini",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Lenticchie",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tofu",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "all'olio e rosmarino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "olio piccante e sesamo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "aglio olio e peperoncino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al pepe",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "saltati",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "in insalata",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PL",
+      "id": 12
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Fettina di manzo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di pollo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di suino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di tacchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di vitello",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Nodino di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Petto di pollo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Petto di tacchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Sovracosce di pollo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "alla piastra",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al forno",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "in padella",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "ai ferri",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PC",
+      "id": 13
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Crackers",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Gallette di riso",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Taralli",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PF",
+          "ingredienti": [
+            {
+              "nome": "Brie",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Crescenza",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Feta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Grana",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Mozzarella",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pecorino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Provola",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Ricotta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Stracchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tomino",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PF"
+      ],
+      "id": 14
+    },
+    {
+      "id": 16,
+      "stackScope": "insalate_fredde_cereali",
+      "gruppi": [
+        {
+          "testo1": "insalata fredda di",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Tonno",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Salmone affumicato",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true,
+          "composizioni": [
+            {
+              "nome": "pomodorini e cetriolo",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Cetriolo",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e carote",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Carote",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e peperoni",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Peperoni",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Semi di sesamo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PP",
+        "V"
+      ]
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Lattuga",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Radicchio",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Songino",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Spinaci freschi",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Valeriana",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Aceto balsamico",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Aceto di mele",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Limone",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 18
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Carote",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Cetriolo",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Finocchi",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Peperoni",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Pomodoro fresco",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Basilico fresco",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Cipolla rossa",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Sedano",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Aceto di mele",
+                "Limone"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Aceto balsamico",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Aceto di mele",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Limone",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 19
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Pomodoro fresco",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Aceto balsamico",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 20
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Carote",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "julienne",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 21
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Finocchi",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "all'arancia",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "al vapore",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 22
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Zucchine",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "grigliate",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "trifolate",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 23
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Melanzane",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "grigliate",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 24
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Carote",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "al vapore",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 25
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Insalata di",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Lattuga",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Radicchio",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Songino",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Spinaci freschi",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Valeriana",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Carote",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Cipolla",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Finocchi",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            },
+            {
+              "nome": "Pomodorini",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Aceto balsamico",
+                "Arancia",
+                "Limone"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Aceto balsamico",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Arancia",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Limone",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "V",
+      "id": 26
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Arista di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Costine di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Fettina di manzo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di pollo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di suino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di tacchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Hamburger di vitello",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Magro di vitello",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Nodino di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Petto di pollo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Petto di tacchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Salsiccia",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Salsiccia di maiale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Salsiccia di tacchino",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Sovracosce di pollo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "alla griglia",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "ai ferri",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "arrosto",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PC",
+      "id": 27
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [],
+          "cotture": [
+            {
+              "nome": "zuppa",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "di",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Mix cereali e legumi",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PL"
+      ],
+      "id": 28
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Bresaola",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Rucola",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "PC",
+        "G"
+      ],
+      "id": 31
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Panino",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "al",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Prosciutto crudo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PC"
+      ],
+      "id": 32
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PC",
+          "ingredienti": [
+            {
+              "nome": "Prosciutto crudo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Melone",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "PC",
+        "G"
+      ],
+      "id": 33
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Ceci",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Olio extravergine oliva",
+                "Rosmarino"
+              ]
+            },
+            {
+              "nome": "Fagioli borlotti",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Olio extravergine oliva",
+                "Rosmarino"
+              ]
+            },
+            {
+              "nome": "Fagioli cannellini",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Olio extravergine oliva",
+                "Rosmarino"
+              ]
+            },
+            {
+              "nome": "Lenticchie",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Olio extravergine oliva",
+                "Rosmarino"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Olio extravergine oliva",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Rosmarino",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PL",
+      "id": 34
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Tofu",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Tofu",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "al pepe",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PL",
+      "id": 35
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "Piselli",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Piselli surgelati",
+              "stack": 1,
+              "roll": 1,
+              "condimentiCompatibili": [
+                "Cipolla rossa"
+              ]
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Condimenti",
+          "ingredienti": [
+            {
+              "nome": "Cipolla rossa",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PL",
+      "id": 36
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Linguine",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Spaghetti",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tagliolini all'uovo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Cozze",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Gamberetti surgelati",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Vongole",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e pomodoro",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PP"
+      ],
+      "id": 37
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Linguine",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Spaghetti",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tagliolini all'uovo",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Cozze",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Vongole",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e pomodoro",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PP"
+      ],
+      "id": 38
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Seppie",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [
+            {
+              "nome": "Piselli surgelati",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "PP",
+        "G"
+      ],
+      "id": 39
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Pesce spada",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Polpo surgelato",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Patate",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "lesse",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "PP",
+        "C"
+      ],
+      "id": 40
+    },
+    {
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "PP",
+          "ingredienti": [
+            {
+              "nome": "Sardine fresche",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Sgombro fresco",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "al forno",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "gratinati",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": "PP",
+      "id": 41
+    },
+    {
+      "id": 42,
+      "stackScope": "insalate_fredde_cereali",
+      "gruppi": [
+        {
+          "testo1": "insalata fredda di",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Tofu",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true,
+          "composizioni": [
+            {
+              "nome": "pomodorini e cetriolo",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Cetriolo",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e carote",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Carote",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodorini e peperoni",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Peperoni",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 112.5,
+                  "categoria": "V"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PL",
+        "V"
+      ]
+    },
+    {
+      "id": 43,
+      "stackScope": "sughi_verdure",
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Pasta corta",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Tagliolini all'uovo",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Pasta integrale",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Ravioli ricotta e spinaci",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Gnocchi",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true,
+          "composizioni": [
+            {
+              "nome": "zucchine e melanzane",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Zucchine",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Melanzane",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "zucchine e carote",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Zucchine",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Carote",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "zucchine e pomodoro",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Zucchine",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Pomodoro fresco",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodoro e melanzane",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodoro fresco",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Melanzane",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "piselli e carote",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Piselli surgelati",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Carote",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "piselli e pomodoro fresco",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Piselli surgelati",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Pomodoro fresco",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 40,
+                  "categoria": "V"
+                }
+              ]
+            },
+            {
+              "nome": "pomodoro e basilico",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Pomodoro fresco",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 70,
+                  "categoria": "V"
+                },
+                {
+                  "nome": "Basilico fresco",
+                  "stack": 1,
+                  "roll": 1,
+                  "categoria": "Condimenti"
+                }
+              ]
+            },
+            {
+              "nome": "aglio, olio e pomodorini",
+              "stack": 1,
+              "roll": 1,
+              "ingredienti": [
+                {
+                  "nome": "Aglio",
+                  "stack": 1,
+                  "roll": 1,
+                  "categoria": "Condimenti"
+                },
+                {
+                  "nome": "Olio extravergine oliva",
+                  "stack": 1,
+                  "roll": 1,
+                  "categoria": "Condimenti"
+                },
+                {
+                  "nome": "Pomodorini",
+                  "stack": 1,
+                  "roll": 1,
+                  "dose": 70,
+                  "categoria": "V"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "Nessuno",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "S"
+      ]
+    },
+    {
+      "id": 44,
+      "stackScope": "uovo_piselli",
+      "gruppi": [
+        {
+          "testo1": "",
+          "categoria": "C",
+          "ingredienti": [
+            {
+              "nome": "Riso",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Orzo perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Farro perlato",
+              "stack": 1,
+              "roll": 1
+            },
+            {
+              "nome": "Cous cous",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "cotture": [],
+          "testo2": "con",
+          "mostraNomi": false
+        },
+        {
+          "testo1": "",
+          "categoria": "PU",
+          "ingredienti": [
+            {
+              "nome": "Uova",
+              "stack": 1,
+              "roll": 1,
+              "dose": 1
+            }
+          ],
+          "cotture": [
+            {
+              "nome": "strapazzate",
+              "stack": 1,
+              "roll": 1
+            }
+          ],
+          "testo2": "e",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "PL",
+          "ingredienti": [
+            {
+              "nome": "Piselli surgelati",
+              "stack": 1,
+              "roll": 1,
+              "dose": 60
+            }
+          ],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": true
+        },
+        {
+          "testo1": "",
+          "categoria": "V",
+          "ingredienti": [],
+          "cotture": [],
+          "testo2": "",
+          "mostraNomi": false
+        }
+      ],
+      "classe": [
+        "C",
+        "PU",
+        "PL",
+        "S"
+      ]
+    }
+  ]
+}

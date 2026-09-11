@@ -1,19 +1,23 @@
 (function(global){
 'use strict';
 
+const N=global.DietaPlannerNutritionConfig||(typeof module!=='undefined'&&module.exports?require('./nutrition-config.js'):null);
+if(!N)throw new Error('DietaPlannerNutritionConfig non caricato');
+
 const DEFAULTS=Object.freeze({
   proteinFrequencies:{
-    carne:{min:1,max:3,target:3},pesce:{min:2,max:3,target:3},
-    formaggi:{min:2,max:3,target:3},uova:{min:1,max:2,target:2},
-    legumi:{min:2,max:null,target:3}
+    carne:{min:N.PDF_BASELINE.proteinFrequencies.carne.min,max:N.PDF_BASELINE.proteinFrequencies.carne.max,target:N.APP_DEFAULTS.proteinTargets.carne},
+    pesce:{min:N.PDF_BASELINE.proteinFrequencies.pesce.min,max:N.PDF_BASELINE.proteinFrequencies.pesce.max,target:N.APP_DEFAULTS.proteinTargets.pesce},
+    formaggi:{min:N.PDF_BASELINE.proteinFrequencies.formaggi.min,max:N.PDF_BASELINE.proteinFrequencies.formaggi.max,target:N.APP_DEFAULTS.proteinTargets.formaggi},
+    uova:{min:N.PDF_BASELINE.proteinFrequencies.uova.min,max:N.PDF_BASELINE.proteinFrequencies.uova.max,target:N.APP_DEFAULTS.proteinTargets.uova},
+    legumi:{min:N.PDF_BASELINE.proteinFrequencies.legumi.min,max:N.PDF_BASELINE.proteinFrequencies.legumi.max,target:N.APP_DEFAULTS.proteinTargets.legumi}
   },
-  subtypeCaps:{carne_rossa:1,affettati:1,pesce_grande:1,pesce_conservato:1},
-  maxProteinSourcesPerDay:2,
-  carbSlots:14,carbCellMax:6,limitedCarbTotalMax:3,
-  fruit:{min:2,max:3,portionMin:150,portionMax:200},
-  specialBreakfastMax:1,specialMealsMax:2,
-  cooldownDays:{carboidrati:7,verdure:2},oilGramsPerMeal:10,
-  deadlines:{pranzo:'15:00',cena:'22:00'}
+  subtypeCaps:Object.assign({},N.PDF_BASELINE.subtypeCaps),
+  carbSlots:N.APP_DEFAULTS.carbSlots,carbCellMax:N.APP_DEFAULTS.carbCellMax,limitedCarbTotalMax:N.APP_DEFAULTS.limitedCarbTotalMax,
+  fruit:{min:N.PDF_BASELINE.fruit.dailyMin,max:N.PDF_BASELINE.fruit.dailyMax,portionMin:N.PDF_BASELINE.fruit.portionMinGrams,portionMax:N.PDF_BASELINE.fruit.portionMaxGrams},
+  specialBreakfastMax:N.APP_DEFAULTS.specialBreakfastMax,specialMealsMax:N.APP_DEFAULTS.specialMealsMax,
+  cooldownDays:Object.assign({},N.APP_DEFAULTS.cooldownDays),oilGramsPerDay:N.APP_DEFAULTS.oilGramsPerDay,
+  deadlines:Object.assign({},N.APP_DEFAULTS.deadlines)
 });
 
 const SUBTYPE_TO_MACRO=Object.freeze({
@@ -81,21 +85,129 @@ function coverageForRecipe(recipe,ingredientMeta){
   }
   if(carb)tokens.push('C');if(salad>=70||vegGrams>=200)tokens.push('V');return tokens;
 }
+/* buildProteinGrid: costruisce (o valida) la tabella proteica dei 7 giorni
+   x 2 pasti (pranzo/cena), rispettando SEMPRE contemporaneamente: minimi e
+   massimi settimanali per categoria, target come preferenza morbida,
+   categorie escluse (assenti da cfg.proteinFrequencies o con max=0),
+   celle fissate a mano (userTable).
+   Regola definitiva di Cwe: pranzo e cena dello stesso giorno hanno
+   SEMPRE due categorie diverse - non esiste più un
+   "maxProteinSourcesPerDay" configurabile (concetto eliminato, era una
+   semantica errata: "1" nel vecchio motore indicava solo che l'utente
+   aveva già scelto una delle due categorie e il sistema doveva
+   completare la seconda, MAI "stessa categoria per entrambi i pasti").
+   Il numero di categorie già scelte per un giorno si deduce SOLO dalla
+   tabella di quel giorno:
+   - 0 scelte -> completa con due categorie distinte;
+   - 1 scelta -> quella resta vincolante, la seconda dev'essere diversa;
+   - 2 scelte -> entrambe restano vincolanti (deve già valere che sono
+     diverse: due celle uguali sono un errore di dati a monte, la UI non
+     può produrle - una sola casella per combinazione giorno/categoria).
+   Garantito con vero backtracking (mai un fallback che riusa la
+   categoria dell'altro pasto dello stesso giorno quando il pool
+   alternativo è temporaneamente vuoto - quella era la causa esatta del
+   duplicato ['carne','carne']).
+   Se i vincoli sono realmente incompatibili tra loro (incluso: meno di
+   due categorie ammesse dopo profilo/esclusioni), restituisce
+   errors non vuoto e cells={} - mai una griglia formalmente completa
+   ma invalida. */
 function buildProteinGrid(days,userTable,config,history,rng){
-  const cfg=mergeConfig(config),cells={},counts={carne:0,pesce:0,formaggi:0,uova:0,legumi:0},errors=[];
-  for(const day of days){cells[day]={pranzo:{macro:null,source:'auto'},cena:{macro:null,source:'auto'}};const chosen=(userTable&&userTable[day]||[]).slice(0,2);chosen.forEach((macro,i)=>{if(!cfg.proteinFrequencies[macro])return;const meal=i?'cena':'pranzo';cells[day][meal]={macro,source:'user'};counts[macro]++;});}
-  for(const [m,n] of Object.entries(counts)){const max=cfg.proteinFrequencies[m].max;if(max!==null&&n>max)errors.push(`${m}: ${n} > ${max}`);}
-  let previous=null;
-  for(const day of days)for(const meal of ['pranzo','cena']){const cell=cells[day][meal];if(cell.macro){previous=cell.macro;continue;}
-    let pool=Object.keys(cfg.proteinFrequencies).filter(m=>counts[m]<cfg.proteinFrequencies[m].min);
-    if(!pool.length)pool=Object.keys(cfg.proteinFrequencies).filter(m=>counts[m]<(cfg.proteinFrequencies[m].target||cfg.proteinFrequencies[m].min)&&(cfg.proteinFrequencies[m].max===null||counts[m]<cfg.proteinFrequencies[m].max));
-    if(!pool.length)pool=Object.keys(cfg.proteinFrequencies).filter(m=>cfg.proteinFrequencies[m].max===null||counts[m]<cfg.proteinFrequencies[m].max);
-    const alt=pool.filter(m=>m!==previous);if(alt.length)pool=alt;
-    pool.sort((a,b)=>((history&&history.lastMacro&&history.lastMacro[a])||0)-((history&&history.lastMacro&&history.lastMacro[b])||0));
-    const macro=pool.length?shuffle(pool.filter(x=>((history&&history.lastMacro&&history.lastMacro[x])||0)===((history&&history.lastMacro&&history.lastMacro[pool[0]])||0)),rng)[0]:null;
-    if(!macro){errors.push(`nessuna proteina per ${day} ${meal}`);continue;}cell.macro=macro;counts[macro]++;previous=macro;
+  const cfg=mergeConfig(config);
+  const categorie=Object.keys(cfg.proteinFrequencies).filter(m=>{
+    const f=cfg.proteinFrequencies[m];return f&&f.max!==0;
+  });
+  const counts={};for(const m of Object.keys(cfg.proteinFrequencies))counts[m]=0;
+  const errors=[];
+  if(categorie.length<2){
+    errors.push('Categorie proteiche disponibili insufficienti ('+categorie.length+'): servono almeno due categorie ammesse per completare pranzo e cena con categorie sempre diverse.');
+    return {cells:{},counts,errors};
   }
-  return {cells,counts,errors};
+  const stato={};
+  for(const day of days){
+    const scelte=(userTable&&userTable[day]||[]).slice(0,2);
+    const pranzo=scelte[0]&&cfg.proteinFrequencies[scelte[0]]?scelte[0]:null;
+    const cena=scelte[1]&&cfg.proteinFrequencies[scelte[1]]?scelte[1]:null;
+    if(pranzo&&cena&&pranzo===cena)errors.push(`${day}: la stessa categoria (${pranzo}) non puo' comparire due volte nello stesso giorno - pranzo e cena devono sempre essere categorie diverse.`);
+    stato[day]={pranzo,cena};
+    if(pranzo)counts[pranzo]++;
+    if(cena)counts[cena]++;
+  }
+  if(errors.length)return {cells:{},counts,errors};
+  for(const m of categorie){
+    const max=cfg.proteinFrequencies[m].max;
+    if(max!=null&&counts[m]>max)errors.push(`${m}: superato il massimo settimanale (${counts[m]}/${max}) solo con le celle fissate.`);
+  }
+  if(errors.length)return {cells:{},counts,errors};
+
+  const liberi=[];
+  for(const day of days){
+    if(!stato[day].pranzo)liberi.push({day,pasto:'pranzo'});
+    if(!stato[day].cena)liberi.push({day,pasto:'cena'});
+  }
+  // controllo rapido di fattibilita' residua: se la somma dei deficit ai
+  // minimi supera gli slot liberi disponibili, e' gia' impossibile,
+  // nessun bisogno di avviare la ricerca.
+  const deficitTotale=categorie.reduce((tot,m)=>tot+Math.max(0,Number(cfg.proteinFrequencies[m].min||0)-counts[m]),0);
+  if(deficitTotale>liberi.length){
+    errors.push('Impossibile rispettare i minimi settimanali con gli slot liberi rimasti: servirebbero almeno '+deficitTotale+' pasti liberi, ne restano '+liberi.length+'.');
+    return {cells:{},counts,errors};
+  }
+
+  const ordinaCandidati=(candidati)=>{
+    const mischiati=shuffle(candidati,rng);
+    return mischiati.slice().sort((a,b)=>{
+      const da=Math.max(0,Number(cfg.proteinFrequencies[a].min||0)-counts[a]);
+      const db=Math.max(0,Number(cfg.proteinFrequencies[b].min||0)-counts[b]);
+      if(db!==da)return db-da; // maggior deficit al minimo prima
+      const la=(history&&history.lastMacro&&history.lastMacro[a])||0;
+      const lb=(history&&history.lastMacro&&history.lastMacro[b])||0;
+      return la-lb; // usato meno di recente prima
+    });
+  };
+  // Backtracking limitato ai soli slot liberi (al massimo 14): mai un
+  // retry casuale illimitato. Il budget e' un limite di sicurezza sui
+  // tentativi di candidato esplorati, ampiamente sufficiente per lo
+  // spazio di ricerca reale (5 categorie, max 14 incognite) e mai
+  // raggiunto da una configurazione davvero fattibile.
+  const budget={n:20000};
+  const assegna=(idx)=>{
+    if(idx>=liberi.length){
+      for(const m of categorie){
+        const min=Number(cfg.proteinFrequencies[m].min||0);
+        if(counts[m]<min)return false;
+      }
+      return true;
+    }
+    const slot=liberi[idx],altro=slot.pasto==='pranzo'?stato[slot.day].cena:stato[slot.day].pranzo;
+    let candidati=categorie.filter(m=>{
+      const max=cfg.proteinFrequencies[m].max;
+      if(max!=null&&counts[m]>=max)return false;
+      if(altro!=null&&m===altro)return false; // sempre diversa dall'altro pasto dello stesso giorno
+      return true;
+    });
+    candidati=ordinaCandidati(candidati);
+    for(const macro of candidati){
+      if(budget.n--<=0)return false;
+      stato[slot.day][slot.pasto]=macro;counts[macro]++;
+      if(assegna(idx+1))return true;
+      counts[macro]--;stato[slot.day][slot.pasto]=null;
+    }
+    return false;
+  };
+  const risolto=assegna(0);
+  if(!risolto){
+    errors.push('Nessuna combinazione valida trovata per i vincoli attuali (minimi/massimi settimanali, categorie escluse, celle fissate).');
+    return {cells:{},counts,errors};
+  }
+  const cells={};
+  for(const day of days){
+    const scelteOriginali=(userTable&&userTable[day]||[]).slice(0,2);
+    cells[day]={
+      pranzo:{macro:stato[day].pranzo,source:scelteOriginali[0]&&scelteOriginali[0]===stato[day].pranzo?'user':'auto'},
+      cena:{macro:stato[day].cena,source:scelteOriginali[1]&&scelteOriginali[1]===stato[day].cena?'user':'auto'}
+    };
+  }
+  return {cells,counts,errors:[]};
 }
 function validateCarbBudget(budget,carbConfig,config){
   const cfg=mergeConfig(config),errors=[],normalized={},defs=carbConfig||{};let total=0,limited=0;
@@ -107,10 +219,17 @@ function chooseCarb(state,carbConfig,options,rng){
   const opts=options||{},defs=carbConfig||{},used=state.carbsUsed||(state.carbsUsed={}),remaining=state.carbRemaining||(state.carbRemaining={});
   let pool=Object.keys(defs).filter(k=>(remaining[k]||0)>0);
   if(opts.quick){const quick=pool.filter(k=>['pane','friselle'].includes(k));if(quick.length)pool=quick;}
-  if(opts.proteinSubtype==='affettati'&&defs.pane)pool=['pane'];
-  if(!pool.length)pool=Object.keys(defs).filter(k=>!defs[k].limitato||(used[k]||0)<(defs[k].tettoSettimanale||2));
-  pool=pool.filter(k=>!defs[k].limitato||(used[k]||0)<(defs[k].tettoSettimanale||2));if(!pool.length)return null;
-  const pick=oldest(pool,state.history&&state.history.lastCarb,used,rng);used[pick]=(used[pick]||0)+1;if((remaining[pick]||0)>0)remaining[pick]--;return pick;
+  if(opts.proteinSubtype==='affettati'&&defs.pane){
+    if(!pool.includes('pane'))return null;
+    pool=['pane'];
+  }
+  pool=pool.filter(k=>!defs[k].limitato||(used[k]||0)<(defs[k].tettoSettimanale||2));
+  if(!pool.length)return null;
+  const pick=shuffle(pool,rng)[0]||null;
+  if(!pick)return null;
+  used[pick]=(used[pick]||0)+1;
+  remaining[pick]=Math.max(0,(remaining[pick]||0)-1);
+  return pick;
 }
 function inventoryUrgency(recipe,inventoryByVariant,now){
   let score=0;const today=now||Date.now();for(const ing of recipe&&recipe.ingredienti||[]){const rows=inventoryByVariant&&inventoryByVariant[ing.variantId]||[];for(const row of rows){if(row.stato==='esaurito'||Number(row.quantita)<=0)continue;if(row.scadenza){const dd=(Date.parse(row.scadenza+'T12:00:00')-today)/86400000;if(dd<=2)score=Math.max(score,300);}if(row.avanzoScomodo)score=Math.max(score,200);if(row.zona==='freezer')score=Math.max(score,100);}}return score;
@@ -139,9 +258,9 @@ function composeMeal(input,state,rng){
 }
 function automaticDayAllowed(day,today){return String(day)>String(today);}
 
-function buildCarbGrid(days,meals,budget,carbConfig,rng){
+function buildCarbGrid(days,meals,budget,carbConfig,rng,config){
   const slots=[];for(const day of days||[])for(const meal of meals||['pranzo','cena'])slots.push({day,meal});
-  const validation=validateCarbBudget(budget,carbConfig);if(!validation.ok)return {cells:{},errors:validation.errors.slice()};
+  const validation=validateCarbBudget(budget,carbConfig,config);if(!validation.ok)return {cells:{},errors:validation.errors.slice()};
   const keys=[];for(const [key,n] of Object.entries(validation.normalized))for(let i=0;i<n;i++)keys.push(key);
   const shuffled=shuffle(keys,rng),cells={};slots.forEach((slot,i)=>{cells[slot.day]=cells[slot.day]||{};cells[slot.day][slot.meal]={carbKey:shuffled[i],source:'system'};});
   return {cells,errors:[]};
@@ -150,7 +269,7 @@ function recipeIngredientKeys(recipe){return (recipe&&recipe.ingredienti||[]).ma
 function applyIngredientCaps(pool,weeklyCounts,caps){
   const limits=caps||{},counts=weeklyCounts||{},all=(pool||[]).slice();
   const allowed=all.filter(r=>recipeIngredientKeys(r).every(k=>limits[k]===undefined||(counts[k]||0)<Number(limits[k])));
-  return {pool:allowed.length?allowed:all,exceeded:!allowed.length&&all.length>0};
+  return {pool:allowed,exceeded:allowed.length<all.length,blockedAll:all.length>0&&!allowed.length};
 }
 function accumulateRecipeIngredients(recipe,counts){const out=counts||{};for(const k of new Set(recipeIngredientKeys(recipe)))out[k]=(out[k]||0)+1;return out;}
 function shoppingDeficits(requirements,inventory,variantMeta){
@@ -163,6 +282,8 @@ function countSpecialMeals(records){return (records||[]).filter(x=>x&&x.piattoSp
 function withinWeeklyCap(current,max){return max==null||Number(current)<Number(max);}
 function profileAllowsRecipe(recipe,profile){const macro=macroOf(recipe&&recipe.gruppoProteico);if(profile==='vegano')return !['carne','pesce','formaggi','uova'].includes(macro);if(profile==='vegetariano')return !['carne','pesce'].includes(macro);return true;}
 
-const api={DEFAULTS,SUBTYPE_TO_MACRO,PROTEIN_CODE,mergeConfig,macroOf,seeded,shuffle,oldest,recipeBlocked,parseCoverage,requiredCoverage,unionCoverage,missingCoverage,coverageSatisfies,coverageForRecipe,buildProteinGrid,validateCarbBudget,chooseCarb,inventoryUrgency,chooseRecipe,vegetableTier,chooseVegetable,composeMeal,automaticDayAllowed,buildCarbGrid,recipeIngredientKeys,applyIngredientCaps,accumulateRecipeIngredients,shoppingDeficits,hasMealContent,automaticConsumptionAllowed,countSpecialMeals,withinWeeklyCap,profileAllowsRecipe};
+function resolveNutritionConfig(input){return N.resolveNutritionConfig(input);}
+function vegetableCoverage(entries,portionConfig){return N.vegetableCoverage(entries,portionConfig);}
+const api={DEFAULTS,SUBTYPE_TO_MACRO,PROTEIN_CODE,mergeConfig,macroOf,seeded,shuffle,oldest,recipeBlocked,parseCoverage,requiredCoverage,unionCoverage,missingCoverage,coverageSatisfies,coverageForRecipe,buildProteinGrid,validateCarbBudget,chooseCarb,inventoryUrgency,chooseRecipe,vegetableTier,chooseVegetable,composeMeal,automaticDayAllowed,buildCarbGrid,recipeIngredientKeys,applyIngredientCaps,accumulateRecipeIngredients,shoppingDeficits,hasMealContent,automaticConsumptionAllowed,countSpecialMeals,withinWeeklyCap,profileAllowsRecipe,resolveNutritionConfig,vegetableCoverage};
 global.DietaPlannerEngine=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

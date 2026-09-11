@@ -1,0 +1,150 @@
+{
+  "version": "PDF-V1.2",
+  "source": "PERCORSO ALIMENTARE MIRIA SPILLER.pdf",
+  "principles": {
+    "pdfIsPrimaryForNutrition": true,
+    "appRulesMustBeLabeledSeparately": true,
+    "defaultFromRangeUsesLowerBound": true
+  },
+  "proteinFrequencies": {
+    "carne": {
+      "min": 1,
+      "max": 3
+    },
+    "pesce": {
+      "min": 2,
+      "max": 3
+    },
+    "formaggi": {
+      "min": 2,
+      "max": 3
+    },
+    "uova": {
+      "min": 1,
+      "max": 2
+    },
+    "legumi": {
+      "min": 2,
+      "max": null
+    }
+  },
+  "subtypeCaps": {
+    "carne_rossa": 1,
+    "affettati": 1,
+    "pesce_grande": 1,
+    "pesce_conservato": 1
+  },
+  "carbohydrates": {
+    "limitedByPdf": [
+      "gnocchi",
+      "pasta_ripiena",
+      "gallette",
+      "crackers",
+      "friselle",
+      "taralli",
+      "piadina",
+      "pasta_sfoglia"
+    ],
+    "notLimitedByPdf": [
+      "pasta",
+      "pasta_fresca",
+      "riso",
+      "farro",
+      "orzo",
+      "cous_cous",
+      "pane",
+      "patate",
+      "polenta"
+    ],
+    "appCweGlobalLimitedCap": 3,
+    "userZeroMeansAutomaticExclusion": true,
+    "zeroBudgetFallbackForbidden": true,
+    "selectionSemantics": {
+      "auto": "eligible for automatic fill only if not weekly-capped",
+      "excluded": "explicit user zero; forbidden in automatic generation",
+      "fixedPositive": "exact weekly count selected by user"
+    },
+    "defaultFill": {
+      "totalSlots": 14,
+      "whenNoUserSelection": "fill all 14 from non-weekly-capped carbohydrates only",
+      "weeklyCappedAutoInsert": false,
+      "randomizeNature": true,
+      "randomizePlacement": true
+    },
+    "partialFill": {
+      "preserveExactUserCounts": true,
+      "example": "friselle=2 => exactly 2 friselle + 12 auto-filled non-weekly-capped slots",
+      "neverAutoAddWeeklyCapped": true,
+      "neverOverrideExplicitZero": true
+    }
+  },
+  "fruit": {
+    "dailyMin": 2,
+    "dailyMax": 3,
+    "portionMinGrams": 150,
+    "portionMaxGrams": 200
+  },
+  "vegetables": {
+    "mealPresence": [
+      "pranzo",
+      "cena"
+    ],
+    "vegetablePortionMinGrams": 200,
+    "vegetablePortionMaxGrams": 250,
+    "saladPortionMinGrams": 70,
+    "saladPortionMaxGrams": 80,
+    "partialContributionCounts": true,
+    "residualCompletion": true,
+    "residualRule": "complete only the missing portion fraction across all meal components, including sauces"
+  },
+  "breakfast": {
+    "requiredGroups": [
+      "carboidrati",
+      "proteine"
+    ],
+    "optionalGroups": [
+      "grassi",
+      "carboidrati_semplici"
+    ],
+    "specialDefaultPerWeek": 1,
+    "specialPdfMaxPerWeek": 2,
+    "contextualLimitedPdfMaxPerWeek": 2
+  },
+  "snacks": {
+    "granita": {
+      "defaultPerWeek": 2,
+      "pdfMaxPerWeek": 3
+    },
+    "grana": {
+      "defaultPerWeek": 2,
+      "pdfMaxPerWeek": 3
+    },
+    "crackers": {
+      "defaultPerWeek": 2,
+      "pdfMaxPerWeek": 3
+    },
+    "pane_marmellata": {
+      "defaultPerWeek": 2,
+      "pdfMaxPerWeek": 3
+    },
+    "frutta_secca": {
+      "pdfMaxPerDay": 1
+    },
+    "patatine_grisbi": {
+      "defaultPerWeek": 1,
+      "pdfMaxPerWeek": 2
+    }
+  },
+  "oil": {
+    "defaultGramsPerMeal": 10,
+    "pdfMinTeaspoons": 2,
+    "pdfMaxTeaspoons": 3,
+    "approxGramsPerTeaspoon": 5
+  },
+  "precedence": {
+    "clinicalExclusionWins": true,
+    "clinicalMinimumRemainsRequired": true,
+    "effectiveMaxRule": "min(nutritionistMax,userMax) when both exist",
+    "userCanRestrictButNotLoosenClinicalLimits": true
+  }
+}

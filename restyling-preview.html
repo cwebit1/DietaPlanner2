@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#174b35">
+  <title>DietaPlanner — anteprima grafica</title>
+  <style>
+    :root{--forest:#124b35;--sage:#edf2e9;--ivory:#fbfaf6;--paper:#fffefb;--ink:#101913;--line:#dde2d9;--gold:#d39a12;--shadow:0 5px 17px rgba(30,50,39,.09)}
+    *{box-sizing:border-box}html{background:#e8e6df}body{margin:0;background:var(--ivory);color:var(--ink);font-family:Arial,Helvetica,sans-serif;min-height:100vh;padding-bottom:92px}button{font:inherit;color:inherit}.app{max-width:720px;margin:auto;min-height:100vh;background:var(--ivory);box-shadow:0 0 35px rgba(0,0,0,.14)}
+    .top{height:176px;padding:35px 34px 28px;color:#fff;background:linear-gradient(135deg,#174f39,#0c3d2b);display:flex;justify-content:space-between;align-items:center;gap:22px}.brand{font:56px/1 Georgia,serif;letter-spacing:-2.5px}.tagline{margin-top:10px;font-size:15px;letter-spacing:7px;text-transform:uppercase;white-space:nowrap}.welcome{display:flex;align-items:center;gap:15px;font-size:22px;line-height:1.25;max-width:250px;padding:8px 0}.user-avatar{width:52px;height:52px;flex:0 0 52px;border-radius:50%;overflow:hidden;display:grid;place-items:center;background:#eff3ec;color:#174b35;border:2px solid rgba(255,255,255,.72);box-shadow:0 3px 12px rgba(0,0,0,.18)}.user-avatar svg{width:74%;height:74%;fill:currentColor}.welcome-copy{display:flex;flex-direction:column;gap:6px}.welcome-copy span{display:block}
+    main{padding:0 24px 25px}.date-strip{height:75px;background:var(--paper);border-radius:0 0 21px 21px;display:grid;grid-template-columns:42px minmax(0,1fr) 42px;align-items:center;box-shadow:0 4px 13px rgba(30,50,39,.06);overflow:hidden;padding:0 10px}.date-days{display:flex;gap:4px;min-width:0;overflow-x:auto;scroll-behavior:smooth;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}.date-days::-webkit-scrollbar{display:none}.arrow{border:0;background:transparent;font-size:39px;line-height:1}.day{flex:0 0 calc((100% - 24px)/7);height:52px;border:0;background:transparent;border-radius:17px;font-size:18px;white-space:nowrap;scroll-snap-align:center}.day.today{box-shadow:inset 0 0 0 1px var(--forest)}.day.active{background:linear-gradient(145deg,#245e46,#124b35);color:#fff;font-weight:700}
+    .heading{display:flex;justify-content:space-between;align-items:center;gap:18px;padding:26px 10px 19px}.heading h1{margin:0;font:48px/1.05 Georgia,serif;letter-spacing:-1.5px}.tools{display:flex;align-items:center;gap:17px}.calendar{width:28px;height:28px;border:3px solid currentColor;border-radius:4px;background:linear-gradient(currentColor,currentColor) 0 7px/100% 2px no-repeat;position:relative;font-size:0}.calendar:before,.calendar:after{content:"";position:absolute;top:-6px;width:3px;height:8px;border-radius:2px;background:currentColor}.calendar:before{left:5px}.calendar:after{right:5px}.copy{height:50px;border:0;border-radius:28px;background:#e7eee2;padding:0 22px;display:flex;gap:10px;align-items:center;font-size:17px;white-space:nowrap}.caption{font:italic 22px/1.2 Georgia,serif;color:#6c6c6c;margin:-9px 10px 19px}
+    .meals{display:grid;gap:14px}.meal{border:1px solid #dbe2d6;border-radius:19px;background:var(--paper);box-shadow:var(--shadow);overflow:hidden}.meal-head{height:54px;padding:0 17px;display:grid;grid-template-columns:48px 1fr auto 28px;align-items:center;background:linear-gradient(90deg,#eef3e9,#f8f9f5);color:#103f2d}.meal-icon{font-size:32px}.meal-icon.sun{color:var(--gold)}.meal-title{font-size:27px;font-weight:800;letter-spacing:.5px}.time{font:18px Georgia,serif}.chevron{font-size:27px;text-align:right}
+    .photo-rail{display:flex;gap:13px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-left:17px}.photo-rail::-webkit-scrollbar{display:none}.slide{flex:0 0 calc(88% - 4px);height:151px;scroll-snap-align:start;border-radius:14px;overflow:hidden;position:relative;background:#e7ece2}.slide img{width:100%;height:100%;display:block;object-fit:cover}.slide-next{position:absolute;right:15px;top:50%;transform:translateY(-50%);width:51px;height:51px;border:0;border-radius:50%;background:rgba(255,255,255,.94);font-size:36px;box-shadow:0 2px 9px rgba(0,0,0,.15)}.dots{height:18px;display:flex;justify-content:center;align-items:center;gap:10px}.dot{width:10px;height:10px;border-radius:50%;background:#d4d5cf}.dot.active{background:#1d684b}
+    .meal-body{padding:0 17px 10px}.dish-row{display:grid;grid-template-columns:minmax(0,1fr) 51px;align-items:center;gap:10px}.dish{margin:0;font:700 24px/1.15 Georgia,serif}.dish-kind{display:inline-block;margin-right:5px;color:#176047;font:700 11px/1 Arial,sans-serif;letter-spacing:.08em;text-transform:uppercase}.lock{width:51px;height:51px;border:0;border-radius:50%;background:#eff2eb;color:#174b35;display:grid;place-items:center}.lock svg{width:55%;height:55%;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:3px 0 9px}.ingredient{display:grid;grid-template-columns:42px 1fr;align-items:center;min-width:0}.food-icon{font-size:34px;text-align:center}.ingredient span:last-child{font-size:15px;line-height:1.2}.ingredient small{display:block;font-size:14px;color:#343b36;margin-top:2px}.actions{border-top:1px solid var(--line);padding-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:14px}.action{height:43px;border:0;border-radius:13px;font-size:18px;font-weight:600;background:#eff2ec}.action.primary{background:linear-gradient(90deg,#164e38,#0d5a3c);color:#fff;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;line-height:1}.action.primary b{justify-self:end;margin:0 9px 0 0;line-height:1}.action.primary .action-label{align-self:center;line-height:1}.action.primary .right{justify-self:end;float:none;line-height:1}.action b{font-size:22px;margin-right:9px}.action .right{float:right;font-size:27px;line-height:18px}
+    .visual-carousel{position:relative;overflow:hidden}.visual-track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none}.visual-track::-webkit-scrollbar{display:none}.vertical-rail{position:absolute;z-index:3;top:0;left:0;width:100%;pointer-events:none}.vertical-rail>.visual-track{width:100%;background:var(--paper)}.visual-pane{flex:0 0 100%;min-width:0;scroll-snap-align:start}.visual-photo-row{height:151px;display:grid;grid-template-columns:minmax(0,1fr) 15%;gap:13px;padding-left:17px;overflow:hidden}.visual-main,.visual-peek{width:100%;height:100%;object-fit:cover}.visual-main{border-radius:14px}.visual-peek{border-radius:14px 0 0 14px}.carousel-next{position:absolute;z-index:4;right:20px;top:50px;width:51px;height:51px;border:0;border-radius:50%;background:rgba(255,255,255,.95);font-size:36px;box-shadow:0 2px 9px rgba(0,0,0,.15)}.actions.has-restore{grid-template-columns:.78fr .78fr 1.35fr;gap:8px}.action.restore{background:#fff;border:1px solid #bdd0c3;color:#16533c}.action.change-compact b{margin-right:4px}
+    .bottom{position:fixed;z-index:20;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,100%);height:91px;padding:8px 25px calc(8px + env(safe-area-inset-bottom));background:linear-gradient(90deg,#174f39,#0c3d2b);display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 -4px 15px rgba(13,47,34,.16);touch-action:pan-y}.nav{border:0;background:transparent;color:#c8d4cc;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:15px;transition:color 180ms ease}.nav i{width:38px;height:38px;display:grid;place-items:center;color:currentColor;filter:drop-shadow(0 3px 2px rgba(0,0,0,.28));transition:transform 200ms ease,color 180ms ease}.nav svg{width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.nav.active{color:#e4b640;font-weight:700}.nav.active i{transform:translateY(-2px) scale(1.08);filter:drop-shadow(0 4px 3px rgba(0,0,0,.34))}.nav.active:after{content:"";width:7px;height:7px;background:currentColor;border-radius:50%;margin-top:1px;box-shadow:0 2px 3px rgba(0,0,0,.25)}
+    @media(max-width:580px){.top{height:145px;padding:27px 22px 23px}.brand{font-size:45px}.tagline{font-size:11px;letter-spacing:5px}.welcome{font-size:17px;max-width:205px;gap:10px}.user-avatar{width:42px;height:42px;flex-basis:42px}.welcome-copy{gap:5px}main{padding:0 13px 18px}.date-strip{grid-template-columns:31px minmax(0,1fr) 31px;height:67px;padding:0 3px}.day{font-size:15px;height:48px}.arrow{font-size:31px}.heading{padding:22px 5px 17px}.heading h1{font-size:38px}.tools{gap:8px}.copy{height:44px;padding:0 14px;font-size:14px}.caption{font-size:19px;margin:-8px 5px 16px}.meal-title{font-size:23px}.time{font-size:15px}.slide{height:137px}.dish{font-size:21px}.ingredient span:last-child{font-size:13px}.ingredient small{font-size:12px}.action{font-size:16px}}
+    @media(max-width:430px){body{padding-bottom:64px}.top{height:72px;padding:7px 17px 6px}.brand{font-size:33px;letter-spacing:-1.5px}.tagline{margin-top:4px;font-size:6.5px;letter-spacing:3.3px}.welcome{font-size:10px;line-height:1.15;max-width:138px;gap:7px;padding:4px 0}.user-avatar{width:32px;height:32px;flex-basis:32px;border-width:1px}.welcome-copy{gap:4px}.date-strip{margin:0 -13px;border-radius:0;height:43px;grid-template-columns:22px minmax(0,1fr) 22px}.date-days{gap:3px}.day{font-size:10.5px;height:32px;border-radius:11px;flex-basis:calc((100% - 18px)/7)}.arrow{font-size:23px}.heading{padding:10px 1px 7px;gap:5px}.heading h1{font-size:23px;letter-spacing:-.6px;white-space:nowrap}.tools{gap:7px}.calendar{display:block;width:17px;height:17px;border-width:2px;background-position:0 4px;background-size:100% 2px}.calendar:before,.calendar:after{top:-4px;width:2px;height:5px}.copy{font-size:9px;height:27px;padding:0 9px;gap:4px}.caption{display:none}.meals{gap:8px}.meal{border-radius:12px}.meal-head{height:31px;grid-template-columns:29px 1fr auto 16px;padding:0 8px}.meal-icon{font-size:19px}.meal-title{font-size:14px;letter-spacing:.2px}.time{font-size:9px}.chevron{font-size:15px}.photo-rail{padding-left:8px;gap:7px}.slide{height:82px;border-radius:8px;flex-basis:86%}.slide-next{right:8px;width:31px;height:31px;font-size:22px}.visual-photo-row{height:82px;gap:7px;padding-left:8px}.visual-main{border-radius:8px}.visual-peek{border-radius:8px 0 0 8px}.carousel-next{right:12px;top:26px;width:31px;height:31px;font-size:22px}.dots{height:11px;gap:6px}.dot{width:6px;height:6px}.meal-body{padding:0 8px 6px}.dish-row{grid-template-columns:minmax(0,1fr) 30px;gap:5px}.dish{font-size:13px;line-height:1.05}.dish-kind{font-size:7px;margin-right:3px}.lock{width:30px;height:30px}.ingredients{gap:4px;margin:1px 0 5px}.food-icon{font-size:19px}.ingredient{grid-template-columns:23px 1fr}.ingredient span:last-child{font-size:8px}.ingredient small{font-size:7.5px;margin-top:0}.actions{padding-top:5px;gap:6px}.action{height:25px;border-radius:8px;font-size:9px}.action b{font-size:13px;margin-right:4px}.action .right{font-size:16px;line-height:9px}.bottom{height:64px;padding:2px 18px calc(2px + env(safe-area-inset-bottom))}.nav{font-size:9px;gap:0}.nav i{width:29px;height:29px}.nav svg{width:27px;height:27px}.nav.active:after{width:4px;height:4px}}
+    @media(max-width:430px){.top{height:62px;padding:0 7px}.lock{width:34px;height:34px}.lock svg{width:100%;height:100%}.dish-row{grid-template-columns:minmax(0,1fr) 34px}.actions.has-restore{gap:4px;grid-template-columns:.72fr .82fr 1.25fr}.actions.has-restore .action{font-size:7.5px}.actions.has-restore .action.primary{font-size:8.5px}}
+    .detail-overlay{position:fixed;z-index:80;inset:0;display:none;align-items:center;justify-content:center;padding:16px;background:rgba(10,22,15,.58);backdrop-filter:blur(8px)}.detail-overlay.open{display:flex}.detail-modal{position:relative;width:min(680px,100%);height:calc(100dvh - 32px);overflow-y:auto;border-radius:24px;background:var(--ivory);box-shadow:0 22px 70px rgba(0,0,0,.35);will-change:transform}.detail-close{position:absolute;z-index:4;top:12px;right:12px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.94);font-size:25px;box-shadow:0 2px 12px rgba(0,0,0,.2)}.detail-hero{position:relative;background:var(--forest)}.detail-hero img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover}.detail-hero-caption{position:relative;z-index:2;margin-top:-84px;padding:58px 22px 18px;background:linear-gradient(to bottom,rgba(18,75,53,0),rgba(18,75,53,.8) 68%,rgba(18,75,53,.9));color:#fff;text-align:left}.detail-kind{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#cfdfd2}.detail-hero-caption h2{margin:4px 0 0;font:700 29px/1.08 Georgia,serif}.detail-content{padding:19px 22px 25px}.detail-toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;padding-bottom:16px;border-bottom:1px solid var(--line)}.detail-time{font-weight:700;color:#184d38}.portion-control{display:flex;align-items:center;gap:11px}.portion-control button{width:34px;height:34px;border:0;border-radius:50%;background:var(--forest);color:#fff;font-size:22px}.portion-control button:disabled{background:#dce2dc;color:#9aa19c}.portion-value{min-width:18px;text-align:center;font-weight:800}.detail-section{padding:17px 0;border-bottom:1px solid var(--line)}.detail-section h3{margin:0 0 11px;font:700 20px Georgia,serif;color:#153f2f}.detail-list{display:grid;gap:8px}.detail-list-row{display:grid;grid-template-columns:28px 1fr auto;gap:8px;align-items:center}.recipe-steps{margin:0;padding-left:25px;display:grid;gap:10px;line-height:1.45}.nutrition-grid,.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.nutri,.stat{padding:11px 7px;border-radius:12px;background:#eaf0e7;text-align:center}.nutri b,.stat b{display:block;color:#145039;font-size:17px}.nutri small,.stat small{font-size:10px;color:#667069}.history-bar{height:7px;margin-top:12px;border-radius:9px;background:#dce4dc;overflow:hidden}.history-bar i{display:block;width:68%;height:100%;background:var(--forest)}.social-box{margin-top:18px;padding:16px;border-radius:16px;background:linear-gradient(135deg,#174f39,#0c3d2b);color:#fff}.social-brand{font:22px Georgia,serif}.social-box p{margin:5px 0 12px;font-size:12px;color:#d9e5dd}.social-actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.social-actions button{height:44px;border:1px solid rgba(255,255,255,.24);border-radius:11px;background:rgba(255,255,255,.1);color:#fff;display:grid;place-items:center}.social-actions button:active{background:rgba(255,255,255,.2)}.social-actions svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}.social-actions .brand-fill{fill:currentColor;stroke:none}
+    @media(max-width:430px){.detail-overlay{padding:16px}.detail-modal{height:calc(100dvh - 32px);border-radius:18px}.detail-close{width:34px;height:34px;top:8px;right:8px;font-size:20px}.detail-hero img{aspect-ratio:4/3}.detail-hero-caption{margin-top:-72px;padding:47px 13px 13px}.detail-hero-caption h2{font-size:20px}.detail-content{padding:12px 13px 18px}.detail-section{padding:12px 0}.detail-section h3{font-size:16px}.nutrition-grid,.stats-grid{gap:5px}.nutri,.stat{padding:8px 4px}.social-actions button{font-size:10px}}
+    .detail-list{display:table;width:100%;border-collapse:separate;border-spacing:0 8px}.detail-list td{padding:0;vertical-align:middle}.detail-icon{width:36px}.detail-amount{width:1%;padding-right:11px!important;color:#153f2f;font-weight:800;white-space:nowrap}.detail-of{width:1%;padding-right:11px!important;color:#7a817c;white-space:nowrap}.detail-ingredient-name{min-width:0}
+    .detail-hero img{padding:0;border:3px solid #fff;border-bottom:0;border-radius:21px 21px 0 0}.detail-hero-caption{padding-left:25px;padding-right:25px;border-left:3px solid #fff;border-right:3px solid #fff}.history-bar{display:none}
+    @media(max-width:430px){.detail-hero img{border-radius:15px 15px 0 0}.detail-hero-caption{padding-left:16px;padding-right:16px}}
+    .bottom{grid-template-columns:repeat(6,1fr);padding-left:12px;padding-right:12px}
+    .bottom-swipe-indicator{position:absolute;z-index:0;bottom:4px;left:0;width:22px;height:3px;border-radius:4px;background:#e4b640;box-shadow:0 2px 4px rgba(0,0,0,.3);pointer-events:none;will-change:left}.nav{position:relative;z-index:1}
+    @media(max-width:430px){.bottom{padding-left:5px;padding-right:5px}.nav{font-size:8px}.nav i{width:28px;height:28px}.nav svg{width:26px;height:26px}}
+    .dish-row{grid-template-columns:minmax(0,1fr) 51px 51px}.favorite{width:51px;height:51px;border:0;border-radius:50%;background:#eff2eb;color:#e0a711;display:grid;place-items:center}.favorite svg{width:87%;height:87%;fill:currentColor;stroke:#b98508;stroke-width:1.1;stroke-linejoin:round;filter:drop-shadow(0 2px 2px rgba(126,86,0,.2))}
+    .favorite.active{box-shadow:inset 0 0 0 2px rgba(224,167,17,.42),0 2px 8px rgba(126,86,0,.12)}.favorite.active svg{transform-origin:center;animation:special-star-spin 2.8s linear infinite}@keyframes special-star-spin{to{transform:rotate(360deg)}}.action.choose-special{position:relative;isolation:isolate;background:#eff2ec;color:#531715;overflow:visible}.action.choose-special:before{content:"";position:absolute;z-index:-1;inset:-1px;border-radius:14px;background:rgba(204,42,35,.62);box-shadow:0 0 4px rgba(204,42,35,.58);animation:special-alert 1s ease-in-out infinite}.action.choose-special b{color:#a31f1a}@keyframes special-alert{0%,100%{opacity:.3;transform:scale(.992)}50%{opacity:1;transform:scale(1.005)}}
+    @property --special-frame-angle{syntax:'<angle>';initial-value:0deg;inherits:false}.meal{position:relative}.meal.special-mode:after{content:"";position:absolute;z-index:8;inset:0;border-radius:inherit;padding:3px;pointer-events:none;background:conic-gradient(from var(--special-frame-angle),#ff3b30,#ffcc00,#35d06f,#34aadc,#ad5cff,#ff3b30);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;filter:drop-shadow(0 0 4px rgba(255,204,0,.6));animation:special-frame-lights 2.4s linear infinite}.meal.special-mode .dots{display:none}.meal.special-mode .visual-photo-row{margin-bottom:10px}@keyframes special-frame-lights{to{--special-frame-angle:360deg}}
+    .action.special-confirmed{background:#dfeadf;color:#174b35;border:1px solid #b9ceb9}.action.special-confirmed b{color:#174b35}
+    @media(max-width:430px){.dish-row{grid-template-columns:minmax(0,1fr) 34px 34px;gap:3px}.favorite{width:34px;height:34px}.favorite svg{width:102%;height:102%}}
+    /* Header pasti: nessun controllo di espansione, quindi nessuna colonna riservata. */
+    .meal-head{grid-template-columns:48px minmax(0,1fr) auto}
+    @media(max-width:430px){.meal-head{grid-template-columns:29px minmax(0,1fr) auto}}
+    .app-page{display:none}.app-page.active{display:block}
+    .menu-page{padding-bottom:108px}.menu-week-hero{margin:0 -24px;padding:21px 24px 18px;background:linear-gradient(145deg,#174f39,#0d3f2d);color:#fff}.menu-kicker{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#cfddce}.menu-week-title{display:flex;align-items:end;justify-content:space-between;gap:15px;margin-top:7px}.menu-week-title h1{margin:0;font:42px/1 Georgia,serif}.menu-week-title p{margin:0 0 3px;color:#dbe7de;font-size:13px;text-align:right}.menu-week-nav{height:48px;margin-top:17px;display:grid;grid-template-columns:43px 1fr 43px;align-items:center;border:1px solid rgba(255,255,255,.22);border-radius:15px;background:rgba(255,255,255,.09)}.menu-week-nav button{height:100%;border:0;background:transparent;color:#fff;font-size:29px}.menu-week-range{text-align:center}.menu-week-range strong{display:block;font:17px Georgia,serif}.menu-week-range small{font-size:10px;color:#cfddce}.week-balance{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.balance-item{padding:10px 8px;border-radius:12px;background:rgba(255,255,255,.1);text-align:center}.balance-item b{display:block;font:20px Georgia,serif;color:#fff}.balance-item span{font-size:9px;color:#d5e2d8;text-transform:uppercase;letter-spacing:.06em}
+    .menu-intro{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:17px 2px 12px}.menu-intro h2{margin:0;font:28px Georgia,serif;color:#123e2e}.menu-intro p{margin:3px 0 0;font-size:12px;color:#6b756e}.menu-generate{height:38px;padding:0 15px;border:0;border-radius:20px;background:#e8eee4;color:#164c37;font-size:12px;font-weight:700;white-space:nowrap}.week-plan{display:grid;gap:11px}.week-day{position:relative;border:1px solid #d8e1d6;border-radius:17px;background:var(--paper);box-shadow:0 4px 14px rgba(27,53,38,.07);overflow:hidden}.week-day.today{border-color:#1b6549;box-shadow:0 5px 18px rgba(18,75,53,.15)}.week-day-head{min-height:50px;padding:9px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(90deg,#edf3e9,#fafbf8)}.week-day.today .week-day-head{background:linear-gradient(100deg,#174f39,#27664e);color:#fff}.day-identity{display:flex;align-items:center;gap:11px}.day-number{width:35px;height:35px;border-radius:11px;display:grid;place-items:center;background:#fff;color:#174b35;font:700 20px Georgia,serif;box-shadow:0 2px 7px rgba(16,61,43,.1)}.day-name strong{display:block;font:21px Georgia,serif}.day-name small{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#718078}.today .day-name small{color:#d4e4d8}.day-status{padding:5px 9px;border-radius:11px;background:#e1eadf;color:#174b35;font-size:9px;font-weight:700;text-transform:uppercase}.today .day-status{background:rgba(255,255,255,.16);color:#fff}.day-meals{padding:3px 12px 8px}.plan-meal{display:grid;grid-template-columns:72px minmax(0,1fr);gap:8px;padding:9px 0;border-bottom:1px solid #e2e6df}.plan-meal:last-child{border-bottom:0}.plan-meal-label{padding-top:2px;color:#174b35;font-size:10px;font-weight:800;letter-spacing:.08em}.plan-meal-label i{display:block;margin-bottom:3px;font-style:normal;font-size:18px}.plan-dishes{display:grid;gap:5px}.plan-dish{display:grid;grid-template-columns:22px minmax(0,1fr) 28px;align-items:center;gap:7px;min-height:26px}.plan-dish>i{font-style:normal;font-size:17px;text-align:center}.plan-dish-copy{min-width:0}.plan-dish-copy b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px}.plan-dish-copy small{display:block;margin-top:1px;color:#738078;font-size:8px;text-transform:uppercase;letter-spacing:.06em}.mini-lock{width:27px;height:27px;border:0;border-radius:50%;background:#edf2eb;color:#19513b;display:grid;place-items:center}.mini-lock svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.menu-actions{position:sticky;z-index:10;bottom:75px;margin-top:14px;padding:7px;display:grid;grid-template-columns:1fr 1fr 1.25fr;gap:7px;border-radius:15px;background:rgba(251,250,246,.94);backdrop-filter:blur(8px);box-shadow:0 4px 18px rgba(20,50,34,.15)}.menu-actions button{height:37px;border-radius:10px;border:1px solid #cdd9ce;background:#fff;color:#174b35;font-size:11px;font-weight:700}.menu-actions .save-menu{border-color:#124b35;background:#124b35;color:#fff}.shopping-link{grid-column:1/-1}.menu-merge-note{display:none}
+    @media(max-width:430px){.menu-page{padding-bottom:78px}.menu-week-hero{margin:0 -13px;padding:13px 13px 11px}.menu-kicker{font-size:7px}.menu-week-title{margin-top:4px}.menu-week-title h1{font-size:26px}.menu-week-title p{font-size:8px}.menu-week-nav{height:37px;margin-top:10px;border-radius:11px;grid-template-columns:34px 1fr 34px}.menu-week-nav button{font-size:22px}.menu-week-range strong{font-size:12px}.menu-week-range small{font-size:7px}.week-balance{margin-top:8px;gap:5px}.balance-item{padding:6px 4px;border-radius:8px}.balance-item b{font-size:14px}.balance-item span{font-size:6px}.menu-intro{padding:10px 0 8px}.menu-intro h2{font-size:20px}.menu-intro p{font-size:8px}.menu-generate{height:29px;padding:0 10px;font-size:8px}.week-plan{gap:8px}.week-day{border-radius:12px}.week-day-head{min-height:39px;padding:6px 8px}.day-identity{gap:7px}.day-number{width:28px;height:28px;border-radius:8px;font-size:15px}.day-name strong{font-size:15px}.day-name small{font-size:6px}.day-status{padding:4px 6px;font-size:6px}.day-meals{padding:2px 8px 5px}.plan-meal{grid-template-columns:48px minmax(0,1fr);gap:4px;padding:6px 0}.plan-meal-label{font-size:7px}.plan-meal-label i{font-size:13px;margin-bottom:1px}.plan-dishes{gap:3px}.plan-dish{grid-template-columns:17px minmax(0,1fr) 22px;gap:4px;min-height:21px}.plan-dish>i{font-size:12px}.plan-dish-copy b{font-size:9px}.plan-dish-copy small{font-size:6px}.mini-lock{width:21px;height:21px}.mini-lock svg{width:12px;height:12px}.menu-actions{bottom:67px;margin-top:9px;padding:5px;gap:4px;border-radius:10px}.menu-actions button{height:28px;border-radius:7px;font-size:8px}}
+    .mini-lock.locked{background:#f5e7ad;color:#9b6b00;box-shadow:inset 0 0 0 1px #e7cc67}.plan-dish-copy b{white-space:normal}
+    /* Ricostruzione metrica del riferimento A: header comune e Menù settimanale. */
+    .top{height:94px;padding:12px 28px;display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:20px}.header-brand{min-width:0}.header-leaf{font-size:39px;line-height:1;color:#c7d9a3;transform:rotate(-32deg)}.welcome{justify-self:end;padding:0}.welcome-copy{order:0}.user-avatar{order:1}.menu-reference-a{padding-top:0;background:var(--ivory);border-radius:14px 14px 0 0;overflow:hidden}.menu-reference-head{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:16px 13px 12px}.menu-reference-head h1{margin:0;font:54px/.92 Georgia,serif;letter-spacing:-2px}.menu-reference-head p{margin:5px 0 0;font:28px/1 Georgia,serif}.change-week{height:64px;min-width:270px;padding:0 15px;display:grid;grid-template-columns:27px 1fr 30px 30px;align-items:center;gap:8px;border-radius:17px;background:#e8eee4;font-size:16px}.change-week button{height:100%;padding:0;border:0;background:transparent;font-size:29px}.week-calendar{font-size:24px;color:#16503a}.reference-balance{height:90px;margin:0 0 13px;padding:9px 13px;display:grid;grid-template-columns:1.35fr repeat(5,1fr) 1.2fr;align-items:center;border:1px solid #e1e4dd;border-radius:15px;background:#fffefb;box-shadow:0 3px 11px rgba(30,50,39,.06)}.balance-label{height:100%;display:flex;align-items:center;gap:9px;border-right:1px solid #e1e4dd}.balance-label span{font-size:32px;color:#4d8054}.balance-label b{font-size:14px}.balance-stat{text-align:center}.balance-stat i{width:31px;height:31px;margin:auto;display:grid;place-items:center;border-radius:50%;background:#edf2e9;font-style:normal;font-size:18px}.balance-stat b{display:block;margin-top:2px;font-size:15px}.balance-stat small{display:block;font-size:9px;white-space:nowrap}.balance-quote{font:italic 15px/1.1 Georgia,serif;text-align:center}.reference-week-plan{gap:11px}.reference-day{border:1px solid #dce3d9;border-radius:15px;background:#fffefb;box-shadow:0 3px 12px rgba(30,50,39,.07);overflow:hidden}.reference-day>header{height:48px;padding:0 15px;display:grid;grid-template-columns:minmax(0,1fr) auto 27px;align-items:center;gap:10px;background:linear-gradient(90deg,#eef3e9,#fafbf7)}.reference-day>header h2{margin:0;font:31px/1 Georgia,serif;letter-spacing:-.6px}.reference-day>header em{font:italic 16px Georgia,serif;color:#2e4f40}.reference-day>header button{border:0;background:transparent;font-size:23px}.expanded-day-meals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:0 13px}.expanded-meal{min-width:0;padding:8px 10px 5px;border-right:1px solid #dfe3dc}.expanded-meal:first-child{padding-left:0}.expanded-meal:last-child{padding-right:0;border-right:0}.reference-meal-label{height:27px;display:flex;align-items:center;gap:6px}.reference-meal-label i{font-style:normal;font-size:22px}.reference-meal-label b{font-size:14px}.reference-meal-label small{margin-left:auto;font:10px Georgia,serif;white-space:nowrap}.expanded-meal .reference-meal-main{display:block}.expanded-meal img{display:block;width:100%;height:130px;object-fit:cover;border-radius:10px}.expanded-meal h3{min-height:40px;margin:6px 0 3px;font:700 18px/1.08 Georgia,serif}.expanded-meal p{height:27px;margin:0;overflow:hidden;font-size:10px;line-height:1.25}.meal-tags{height:25px;margin-top:5px;display:flex;align-items:center;gap:4px;overflow:hidden}.meal-tags span{padding:4px 7px;border-radius:12px;background:#e7eee3;font-size:8px;white-space:nowrap}.day-thought{height:44px;margin:6px 13px 10px;padding:0 14px;display:grid;grid-template-columns:27px 1fr 20px;align-items:center;gap:8px;border-radius:12px;background:linear-gradient(90deg,#eaf1e6,#f4f7f1)}.day-thought span{font-size:24px;color:#397052}.day-thought em{font:italic 15px Georgia,serif}.day-thought b{font-size:25px;text-align:right}.compact-day>header{height:43px;background:#fffefb;border-bottom:1px solid #e2e6df}.compact-day>header h2{font-size:27px}.compact-day-meals{height:74px;padding:7px 14px 9px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}.compact-meal{min-width:0;padding:0 10px;border-right:1px solid #dfe3dc}.compact-meal:first-child{padding-left:0}.compact-meal:last-child{padding-right:0;border:0}.compact-meal .reference-meal-label{display:none}.compact-meal .reference-meal-main{height:58px;display:grid;grid-template-columns:62px minmax(0,1fr);align-items:center;gap:9px}.compact-meal img{width:62px;height:58px;object-fit:cover;border-radius:8px}.compact-meal h3{margin:0;font:14px/1.12 Georgia,serif;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}.menu-reference-a .menu-actions{display:none}
+    @media(max-width:430px){.top{height:59px;padding:6px 16px;grid-template-columns:minmax(0,1fr) auto auto;gap:8px}.brand{font-size:29px;letter-spacing:-1.3px}.tagline{margin-top:3px;font-size:5.5px;letter-spacing:2.9px}.header-leaf{font-size:24px}.welcome{max-width:none;gap:6px;font-size:9px;line-height:1.18}.welcome-copy{gap:3px}.user-avatar{width:30px;height:30px;flex-basis:30px}.menu-reference-a{margin:0 -13px;padding:0 14px 66px;border-radius:7px 7px 0 0}.menu-reference-head{height:61px;padding:8px 1px 6px;gap:7px}.menu-reference-head h1{font-size:31px;letter-spacing:-1px}.menu-reference-head p{margin-top:3px;font-size:15px}.change-week{height:32px;min-width:164px;padding:0 6px;grid-template-columns:18px 1fr 18px 18px;gap:3px;border-radius:9px;font-size:8.5px}.week-calendar{font-size:14px}.change-week button{font-size:18px}.reference-balance{height:54px;margin-bottom:7px;padding:5px 6px;border-radius:8px;grid-template-columns:1.35fr repeat(5,1fr) 1.2fr}.balance-label{gap:4px}.balance-label span{font-size:18px}.balance-label b{font-size:7.5px}.balance-stat i{width:20px;height:20px;font-size:11px}.balance-stat b{margin-top:0;font-size:9px}.balance-stat small{font-size:5.5px}.balance-quote{font-size:8px}.reference-week-plan{gap:7px}.reference-day{border-radius:8px}.reference-day>header{height:33px;padding:0 8px;grid-template-columns:minmax(0,1fr) auto 17px;gap:4px}.reference-day>header h2{font-size:19px;letter-spacing:-.4px}.reference-day>header em{font-size:8.5px}.reference-day>header button{padding:0;font-size:15px}.expanded-day-meals{padding:0 7px}.expanded-meal{padding:4px 5px 2px}.reference-meal-label{height:20px;gap:3px}.reference-meal-label i{font-size:15px}.reference-meal-label b{font-size:8.5px}.reference-meal-label small{font-size:5.7px}.expanded-meal img{height:83px;border-radius:5px}.expanded-meal h3{min-height:30px;margin:4px 0 2px;font-size:12px}.expanded-meal p{height:19px;font-size:6.5px}.meal-tags{height:18px;margin-top:3px;gap:2px}.meal-tags span{padding:3px 4px;font-size:5.5px}.day-thought{height:29px;margin:4px 7px 6px;padding:0 8px;grid-template-columns:17px 1fr 12px;gap:4px;border-radius:6px}.day-thought span{font-size:15px}.day-thought em{font-size:8.5px}.day-thought b{font-size:17px}.compact-day>header{height:29px}.compact-day>header h2{font-size:17px}.compact-day-meals{height:50px;padding:5px 8px 6px}.compact-meal{padding:0 5px}.compact-meal .reference-meal-main{height:39px;grid-template-columns:42px minmax(0,1fr);gap:5px}.compact-meal img{width:42px;height:39px;border-radius:5px}.compact-meal h3{font-size:8.3px}.bottom{height:58px}.nav i{width:25px;height:25px}.nav svg{width:23px;height:23px}}
+    .top{height:77px;padding:7px 28px}.brand{font-size:44px}.tagline{margin-top:6px;font-size:11px;letter-spacing:5.2px}.header-leaf{width:27px;height:37px;border-radius:100% 0 100% 0;background:#c7d9a3;transform:rotate(-42deg);position:relative}.header-leaf:after{content:"";position:absolute;left:13px;top:5px;width:1px;height:31px;background:#779268;transform:rotate(-8deg)}.menu-reference-head{height:94px;padding-top:11px;padding-bottom:9px}.expanded-meal img{height:137px}.compact-day>header{height:45px}.compact-day-meals{height:84px}.compact-meal .reference-meal-main{height:68px}.compact-meal img{height:64px}
+    @media(max-width:430px){.top{height:52px;padding:4px 14px}.brand{font-size:27px}.tagline{margin-top:2px;font-size:5px;letter-spacing:2.7px}.header-leaf{width:17px;height:24px}.header-leaf:after{left:8px;top:3px;height:20px}.welcome{font-size:8.5px}.user-avatar{width:28px;height:28px;flex-basis:28px}.menu-reference-head{height:55px}.expanded-meal img{height:84px}.compact-day>header{height:30px}.compact-day-meals{height:55px}.compact-meal .reference-meal-main{height:44px}.compact-meal img{height:42px}}
+    .brand{font-size:56px}.tagline{margin-top:2px;font-size:9px;letter-spacing:5.4px}.expanded-day.reference-day>header{height:54px}.day-thought{height:51px}.expanded-meal:nth-child(1) .reference-meal-label i{color:#d39a12}.expanded-meal:nth-child(2) .reference-meal-label i{color:#b77a19}.expanded-meal:nth-child(3) .reference-meal-label i{color:#155039}
+    @media(max-width:430px){.brand{font-size:30px}.tagline{font-size:4.8px;letter-spacing:2.8px}.expanded-day.reference-day>header{height:36px}.day-thought{height:34px}}
+    /* Cornice dell'app fissa: soltanto il contenuto centrale scorre. */
+    .top{position:fixed;z-index:30;top:0;left:50%;width:min(720px,100%);transform:translateX(-50%)}
+    .app-page{padding-top:77px}
+    @media(max-width:430px){.app-page{padding-top:52px}}
+    /* Menù verticale: le ricette sono l'informazione primaria. */
+    .menu-reference-a{padding-left:18px;padding-right:18px}.menu-reference-head{height:auto;padding:14px 0 12px;border-bottom:1px solid #dfe4dc}.menu-reference-head>div:first-child{display:flex;align-items:baseline;gap:13px}.menu-reference-head h1{font-size:34px;letter-spacing:-1px}.menu-reference-head p{font:18px Georgia,serif;color:#53645a}.change-week{height:40px;min-width:235px;border-radius:12px}.reference-balance{display:none}.reference-week-plan{display:grid;gap:22px}.vertical-day{padding:0 0 18px;border:0;border-bottom:1px solid #d7d6cc;border-radius:0;background:transparent;box-shadow:none;overflow:visible}.vertical-day:last-child{border-bottom:0}.vertical-day-head{display:flex;align-items:baseline;gap:9px;padding:15px 0 7px}.vertical-day-head h2{margin:0;font:700 35px/1 Georgia,serif;color:#123f2f}.vertical-day-head time{font:24px/1 Georgia,serif;color:#123f2f}.vertical-day.today .vertical-day-head:after{content:"Oggi";margin-left:auto;padding:4px 9px;border:1px solid #d3ab43;border-radius:12px;color:#8e6810;font-size:10px;font-weight:700;text-transform:uppercase}.vertical-meals{display:grid}.vertical-meal{display:grid;grid-template-columns:58px minmax(0,1fr) 39px;column-gap:13px;padding:12px 0;border-top:1px solid #e2e4de}.vertical-meal-icon{grid-column:1;grid-row:1/span 2;align-self:start;padding-top:22px;text-align:center;font-style:normal;font-size:29px;line-height:1;color:#174f39}.vertical-meal-icon svg{width:31px;height:31px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.vertical-meal.colazione .vertical-meal-icon{color:#c28a08}.vertical-meal-copy{grid-column:2;min-width:0}.vertical-meal-title{margin:0 0 6px;color:#a17517;font-size:10px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.vertical-recipes{display:grid}.vertical-recipe{display:grid;grid-template-columns:minmax(0,1fr);align-items:center;min-height:39px;border-top:1px solid #ecece6}.vertical-recipe:first-child{border-top:0}.vertical-recipe-name{padding:6px 0;font:21px/1.14 Georgia,serif;color:#101913}.vertical-locks{grid-column:3;display:grid}.vertical-locks .mini-lock{width:32px;height:32px;margin:auto}.vertical-locks .recipe-lock-slot{min-height:39px;display:grid;place-items:center;border-top:1px solid #ecece6}.vertical-locks .recipe-lock-slot:first-child{border-top:0}
+    @media(max-width:430px){.menu-reference-a{margin:0;padding-left:11px;padding-right:11px;padding-bottom:70px}.menu-reference-head{padding:8px 0 7px}.menu-reference-head>div:first-child{gap:7px}.menu-reference-head h1{font-size:21px}.menu-reference-head p{font-size:11px}.change-week{height:29px;min-width:151px;padding:0 5px;grid-template-columns:16px 1fr 16px 16px;font-size:7.5px}.reference-week-plan{gap:12px}.vertical-day{padding-bottom:10px}.vertical-day-head{gap:5px;padding:9px 0 5px}.vertical-day-head h2{font-size:22px}.vertical-day-head time{font-size:15px}.vertical-day.today .vertical-day-head:after{padding:2px 5px;font-size:6px}.vertical-meal{grid-template-columns:34px minmax(0,1fr) 29px;column-gap:7px;padding:7px 0}.vertical-meal-icon{padding-top:15px;font-size:19px}.vertical-meal-title{margin-bottom:3px;font-size:7px}.vertical-recipe,.vertical-locks .recipe-lock-slot{min-height:29px}.vertical-recipe-name{padding:4px 0;font-size:13.5px;line-height:1.12}.vertical-locks .mini-lock{width:24px;height:24px}.vertical-locks .mini-lock svg{width:13px;height:13px}}
+    /* Set utente: stessa struttura del form reale, sola veste grafica. */
+    .set-page{padding:94px 18px 92px;background:var(--ivory)}.set-title{padding:14px 2px 12px;border-bottom:1px solid #dfe4dc}.set-title h1{margin:0;font:700 35px/1 Georgia,serif;color:#123f2f}.set-title p{margin:6px 0 0;color:#68746c;font-size:12px;line-height:1.4}.set-stack{display:grid;gap:13px;padding-top:13px}.set-card{border:1px solid #dce3d9;border-radius:15px;background:var(--paper);box-shadow:0 3px 12px rgba(30,50,39,.07);overflow:hidden}.set-card>header{padding:13px 15px;background:linear-gradient(90deg,#edf3e9,#fafbf7)}.set-card h2{margin:0;font:700 23px/1.05 Georgia,serif;color:#123f2f}.set-card header p,.set-section-note{margin:5px 0 0;color:#66736b;font-size:11px;line-height:1.35}.set-card-body{padding:13px 15px}.set-group-title{display:flex;align-items:center;gap:8px;margin:0 0 9px;color:#174f39;font:700 15px Georgia,serif}.set-group-title:after{content:"";height:1px;flex:1;background:#dce3da}.set-carb-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px}.set-carb-item{padding:8px;border:1px solid #e0e5dd;border-radius:10px;background:#fcfcf8}.set-carb-head{display:flex;align-items:center;justify-content:space-between;gap:6px}.set-carb-name{font-size:11px;font-weight:700}.set-mode{height:25px;padding:0 7px;border:1px solid #aebdaf;border-radius:8px;background:#edf2eb;color:#164c37;font-size:8px;font-weight:800}.set-mode.fixed{background:#e5efe6}.set-mode.excluded{background:#f2dddd;color:#9b302c;border-color:#d7aaa7}.set-cells{display:flex;gap:4px;margin-top:7px}.set-cell{width:18px;height:18px;padding:0;border:1px solid #9eaaa0;border-radius:5px;background:#fff}.set-cell.active{background:#1b6348;border-color:#1b6348}.set-cell.suggested{border:1px dashed #c58c14;background:#fff9e8}.set-status{margin:11px 0 0;color:#174f39;font-size:11px;font-weight:700}.set-actions{display:flex;gap:7px;margin-top:10px;overflow-x:auto;scrollbar-width:none}.set-actions::-webkit-scrollbar{display:none}.set-actions button,.set-save-all{height:34px;padding:0 12px;border:1px solid #c5d2c7;border-radius:9px;background:#f3f6f1;color:#164c37;font-size:10px;font-weight:700;white-space:nowrap}.set-actions button.primary,.set-save-all{background:#145039;color:#fff;border-color:#145039}.set-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}.set-table{width:100%;min-width:470px;border-collapse:collapse;font-size:9px}.set-table th,.set-table td{padding:5px 4px;border:1px solid #dfe4dd;text-align:center}.set-table th:first-child,.set-table td:first-child{text-align:left;min-width:92px}.set-table small{display:block;margin-top:2px;color:#758078;font-size:7px}.set-square{width:20px;height:20px;padding:0;border:1px solid #89988c;border-radius:5px;background:#fff}.set-square.active{background:#1b6348;border-color:#1b6348}.set-square.suggested{border:1px dashed #c58c14;background:#fff9e8}.set-subsection{padding-top:12px;margin-top:12px;border-top:1px solid #e0e4dd}.set-subsection h3{margin:0;font:700 17px Georgia,serif;color:#173f31}.set-swipe{display:flex;gap:7px;overflow-x:auto;padding:7px 18% 6px 0;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}.set-swipe::-webkit-scrollbar{display:none}.set-chip{flex:0 0 auto;min-height:34px;padding:0 13px;border:1px solid #aebdaf;border-radius:10px;background:#fff;color:#38453d;font-size:10px;white-space:nowrap;scroll-snap-align:start}.set-chip.active{background:#e0ede2;color:#145039;border-color:#1b6348;font-weight:700}.set-chip.off{background:#f6e1df;color:#a3342f;border-color:#d7aaa7}.set-chip[disabled]{opacity:.55}.tier-label{display:flex;align-items:center;gap:6px;margin-top:8px;color:#536159;font-size:10px;font-weight:700}.tier-label:before{content:"";width:8px;height:8px;border-radius:50%;background:#2f7958}.tier-label.durable:before{background:#d0a72a}.tier-label.tinned:before{background:#c57d25}.tier-label.frozen:before{background:#55a7c4}.cap-groups{display:grid;gap:5px}.cap-group{border:1px solid #dce3da;border-radius:9px;background:#fbfcf8;overflow:hidden}.cap-group>summary{padding:9px 11px;color:#174f39;font:700 14px Georgia,serif;background:#eff4eb}.cap-group[open]>summary{border-bottom:1px solid #dce3da}.cap-rows{padding:4px 9px}.cap-row{display:grid;grid-template-columns:minmax(0,1fr) 74px;align-items:center;gap:8px;min-height:42px;border-bottom:1px solid #e6e8e3}.cap-row:last-child{border:0}.cap-name{font-size:11px;font-weight:700}.cap-name small{display:block;margin-top:2px;color:#6f7972;font-size:8px;font-weight:400}.cap-input{width:74px;height:28px;border:1px solid #b9c5bb;border-radius:7px;background:#fff;text-align:center}.cap-row.excluded{opacity:.55}.cap-row.excluded .cap-input{font-size:8px}.breakfast-groups{display:grid;gap:9px}.breakfast-group-label{font-size:10px;font-weight:800;color:#174f39}.set-save-all{width:100%;height:43px;margin-top:2px;font-size:13px}.set-contract{display:none}
+    @media(max-width:430px){.set-page{padding:61px 10px 69px}.set-title{padding:8px 1px 7px}.set-title h1{font-size:23px}.set-title p{font-size:8px;margin-top:4px}.set-stack{gap:8px;padding-top:8px}.set-card{border-radius:11px}.set-card>header{padding:9px 10px}.set-card h2{font-size:16px}.set-card header p,.set-section-note{font-size:7.5px}.set-card-body{padding:9px 10px}.set-group-title{font-size:11px;margin-bottom:6px}.set-carb-grid{gap:5px}.set-carb-item{padding:6px}.set-carb-name{font-size:8px}.set-mode{height:20px;font-size:6px}.set-cells{gap:2px;margin-top:5px}.set-cell{width:13px;height:13px;border-radius:3px}.set-status{font-size:8px;margin-top:7px}.set-actions{gap:4px;margin-top:7px}.set-actions button{height:26px;padding:0 8px;font-size:7px}.set-table{min-width:390px;font-size:7px}.set-table th,.set-table td{padding:4px 3px}.set-table th:first-child,.set-table td:first-child{min-width:74px}.set-table small{font-size:5.5px}.set-square{width:17px;height:17px}.set-subsection{padding-top:8px;margin-top:8px}.set-subsection h3{font-size:12px}.set-swipe{gap:5px;padding:5px 22% 4px 0}.set-chip{min-height:27px;padding:0 9px;border-radius:8px;font-size:7px}.tier-label{font-size:7px;margin-top:6px}.cap-groups{gap:4px}.cap-group>summary{padding:7px 8px;font-size:10px}.cap-rows{padding:3px 7px}.cap-row{grid-template-columns:minmax(0,1fr) 58px;min-height:34px}.cap-name{font-size:8px}.cap-name small{font-size:6px}.cap-input{width:58px;height:23px;font-size:8px}.set-save-all{height:32px;font-size:9px}}
+    /* Setting nutrizionista: stessa copertura del form reale, gerarchia più leggibile. */
+    .nutritionist-page{padding:94px 18px 92px;background:var(--ivory)}.nutritionist-page .set-title{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center}.nutri-back{width:38px;height:38px;border:1px solid #bcc9bf;border-radius:50%;background:#fff;color:#174f39;font-size:23px}.nutri-badge{display:inline-flex;margin-top:7px;padding:4px 9px;border-radius:12px;background:#e8efe7;color:#17513b;font-size:9px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.nutri-profile{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}.nutri-profile label{display:grid;gap:5px;color:#174f39;font-size:10px;font-weight:800}.nutri-profile select{height:34px;border:1px solid #b9c6bb;border-radius:8px;background:#fff;padding:0 9px;color:#17241c;font-size:11px}.nutri-rebuild{height:34px;padding:0 11px;border:1px solid #beccbf;border-radius:8px;background:#f2f5ef;color:#174f39;font-size:9px;font-weight:700}.allergen-grid{display:flex;gap:6px;overflow-x:auto;padding:4px 18% 7px 0;scrollbar-width:none}.allergen-grid::-webkit-scrollbar{display:none}.allergen{flex:0 0 auto;min-height:35px;padding:0 12px;border:1px solid #bdc8bf;border-radius:18px;background:#fff;font-size:10px;white-space:nowrap}.allergen.active{background:#f5dfdc;border-color:#b84942;color:#9e2f2a;font-weight:800}.nutri-source{margin:3px 0 8px;color:#17513b;font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}.nutri-source.app{margin-top:14px;color:#8d6b18}.nutritionist-grid{display:grid;gap:5px}.nutritionist-row{display:grid;grid-template-columns:minmax(110px,1fr) 58px 58px 75px;gap:5px;align-items:center;min-height:39px;padding:5px 7px;border:1px solid #e0e5de;border-radius:8px;background:#fcfcf8}.nutritionist-row.protein{grid-template-columns:minmax(95px,1fr) 42px 50px 50px 72px}.nutritionist-row.header{min-height:25px;border:0;background:transparent;color:#758078;font-size:8px;text-transform:uppercase}.nutritionist-row.header span:not(:first-child){text-align:center}.nutritionist-name{font-size:10px;font-weight:700}.nutritionist-unit{text-align:center;color:#6b756e;font-size:8px}.nutritionist-row input{width:100%;height:28px;border:1px solid #bec9c0;border-radius:6px;background:#fff;text-align:center;font-size:9px}.nutritionist-row.disabled{opacity:.45}.nutri-ingredient-groups{display:grid;gap:10px}.nutri-ingredient-group h3{margin:0 0 3px;font:700 15px Georgia,serif;color:#174f39}.nutri-constraint-list{display:grid;gap:5px;margin-top:10px}.ingredient-constraint{border:1px solid #dce3da;border-radius:9px;background:#fbfcf8;overflow:hidden}.ingredient-main{display:grid;grid-template-columns:minmax(0,1fr) 47px 47px 66px;gap:5px;align-items:center;padding:7px}.ingredient-main strong{font-size:10px}.ingredient-main input,.context-row input{width:100%;height:27px;border:1px solid #bdc8bf;border-radius:6px;text-align:center;font-size:8px}.ingredient-main.excluded{color:#a2342e;background:#f7e7e4}.ingredient-main.excluded span{grid-column:2/5;text-align:right;font-size:9px;font-weight:800}.context-box{display:grid;gap:4px;padding:6px 7px 8px;border-top:1px dashed #d6ddd6}.context-title{color:#6d7870;font-size:8px}.context-row{display:grid;grid-template-columns:minmax(0,1fr) 65px 72px;gap:5px;align-items:center;font-size:8px}.nutritionist-actions{position:sticky;bottom:68px;z-index:5;display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:8px;background:rgba(251,250,246,.94);border:1px solid #dce3da;border-radius:12px;box-shadow:0 4px 18px rgba(24,58,42,.14);backdrop-filter:blur(8px)}.nutritionist-actions button{height:38px;border-radius:9px;border:1px solid #b9c7bc;background:#fff;color:#174f39;font-size:10px;font-weight:800}.nutritionist-actions .primary{background:#145039;color:#fff;border-color:#145039}.nutri-access{width:100%;height:38px;margin-top:9px;border:1px solid #b9c7bc;border-radius:9px;background:#eef3eb;color:#174f39;font-size:11px;font-weight:800}.nutri-contract{display:none}
+    @media(max-width:430px){.nutritionist-page{padding:61px 10px 69px}.nutritionist-page .set-title{gap:7px}.nutri-back{width:27px;height:27px;font-size:16px}.nutri-badge{font-size:6px;margin-top:4px}.nutri-profile select{height:28px;font-size:8px}.nutri-rebuild{height:28px;padding:0 7px;font-size:6.5px}.allergen{min-height:28px;padding:0 9px;font-size:7px}.nutri-source{font-size:6.5px}.nutritionist-row{grid-template-columns:minmax(78px,1fr) 42px 42px 55px;gap:3px;min-height:31px;padding:4px}.nutritionist-row.protein{grid-template-columns:minmax(67px,1fr) 29px 37px 37px 52px}.nutritionist-row.header{font-size:5.5px}.nutritionist-name{font-size:7.5px}.nutritionist-unit{font-size:6px}.nutritionist-row input{height:22px;font-size:7px}.nutri-ingredient-group h3{font-size:11px}.ingredient-main{grid-template-columns:minmax(0,1fr) 35px 35px 50px;padding:5px}.ingredient-main strong{font-size:7.5px}.ingredient-main input,.context-row input{height:22px;font-size:6.5px}.context-title,.context-row{font-size:6px}.context-row{grid-template-columns:minmax(0,1fr) 50px 55px}.nutritionist-actions{bottom:66px}.nutritionist-actions button{height:30px;font-size:7px}.nutri-access{height:30px;font-size:8px}}
+  </style>
+</head>
+<body data-ui-prototype="dietaplanner-restyling" data-ui-version="1">
+  <div class="app" data-ui-role="app-shell">
+    <header class="top" data-ui-role="app-header"><div class="header-brand"><div class="brand" data-bind="app.name">DietaPlanner</div><div class="tagline" data-bind="app.tagline">Piani sani, giorni migliori</div></div><span class="header-leaf" aria-hidden="true"></span><div class="welcome"><span class="welcome-copy" data-bind="user.greeting"><span>Ciao Cwe,</span><span>Buon Appetito!</span></span><span class="user-avatar" data-bind="user.googleAvatarUrl" aria-label="Avatar Google dell'utente"><svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="17" r="9"/><path d="M8 43c1.5-10 7-15 16-15s14.5 5 16 15Z"/></svg></span></div></header>
+    <main id="mealPage" class="app-page active" data-page="meal">
+      <nav class="date-strip" aria-label="Calendario scorrevole" data-ui-role="week-selector" data-bind="plan.dayWindow"><button class="arrow" data-action="previous-week" aria-label="Settimana precedente">‹</button><div class="date-days" id="dateDays"></div><button class="arrow" data-action="next-week" aria-label="Settimana successiva">›</button></nav>
+      <div class="heading" data-ui-role="selected-day-header"><h1 data-bind="plan.selectedDate">Lunedì 7 Settembre</h1><div class="tools"><button class="calendar" data-action="open-calendar">▣</button><button class="copy" data-action="copy-day"><span>▣</span> Copia giorno</button></div></div>
+      <div class="caption">“Buone abitudini oggi, grandi risultati domani.”</div>
+      <section class="meals">
+        <article class="meal" data-ui-role="meal-card" data-meal-slot="breakfast">
+          <header class="meal-head"><span class="meal-icon sun">☀</span><span class="meal-title">COLAZIONE</span><span class="time">07:00 – 09:00</span></header>
+          <div class="photo-rail"><div class="slide"><img src="assets/visual-demo/colazione-overnight-oats.webp" alt="Overnight oats con frutti di bosco"><button class="slide-next">›</button></div><div class="slide"><img src="assets/visual-demo/pranzo-spaghetti-vongole.webp" alt="Secondo piatto dimostrativo"></div></div><div class="dots"><i class="dot active"></i><i class="dot"></i><i class="dot"></i></div>
+          <div class="meal-body"><div class="dish-row"><h2 class="dish">Overnight oats con frutti di bosco</h2><button class="lock">♙</button></div><div class="ingredients"><div class="ingredient"><span class="food-icon">🌾</span><span>Avena<small>60 g</small></span></div><div class="ingredient"><span class="food-icon">🥛</span><span>Yogurt greco<small>150 g</small></span></div><div class="ingredient"><span class="food-icon">🫐</span><span>Frutti di bosco<small>100 g</small></span></div></div><div class="actions"><button class="action"><b>⟳</b>Cambia piatto</button><button class="action primary"><b>☷</b><span class="action-label">Dettagli</span><span class="right">›</span></button></div></div>
+        </article>
+        <article class="meal" data-ui-role="meal-card" data-meal-slot="lunch">
+          <header class="meal-head"><span class="meal-icon sun">☀</span><span class="meal-title">PRANZO</span><span class="time">12:30 – 14:30</span></header>
+          <div class="photo-rail"><div class="slide"><img src="assets/visual-demo/pranzo-spaghetti-vongole.webp" alt="Spaghetti integrali alle vongole"><button class="slide-next">›</button></div><div class="slide"><img src="assets/visual-demo/cena-ceci-radicchio.webp" alt="Secondo piatto dimostrativo"></div></div><div class="dots"><i class="dot active"></i><i class="dot"></i><i class="dot"></i></div>
+          <div class="meal-body"><div class="dish-row"><h2 class="dish">Spaghetti integrali alle vongole</h2><button class="lock">♙</button></div><div class="ingredients"><div class="ingredient"><span class="food-icon">🌾</span><span>Spaghetti integrali<small>80 g</small></span></div><div class="ingredient"><span class="food-icon">🐚</span><span>Vongole<small>150 g</small></span></div><div class="ingredient"><span class="food-icon">🌿</span><span>Prezzemolo<small>q.b.</small></span></div></div><div class="actions"><button class="action"><b>⟳</b>Cambia piatto</button><button class="action primary"><b>☷</b><span class="action-label">Dettagli</span><span class="right">›</span></button></div></div>
+        </article>
+        <article class="meal" data-ui-role="meal-card" data-meal-slot="dinner">
+          <header class="meal-head"><span class="meal-icon">☾</span><span class="meal-title">CENA</span><span class="time">19:30 – 21:30</span></header>
+          <div class="photo-rail"><div class="slide"><img src="assets/visual-demo/cena-ceci-radicchio.webp" alt="Ceci al rosmarino con radicchio"><button class="slide-next">›</button></div><div class="slide"><img src="assets/visual-demo/colazione-overnight-oats.webp" alt="Secondo piatto dimostrativo"></div></div><div class="dots"><i class="dot active"></i><i class="dot"></i><i class="dot"></i></div>
+          <div class="meal-body"><div class="dish-row"><h2 class="dish">Ceci al rosmarino con radicchio variegato</h2><button class="lock">♙</button></div><div class="ingredients"><div class="ingredient"><span class="food-icon">🫘</span><span>Ceci<small>150 g</small></span></div><div class="ingredient"><span class="food-icon">🌿</span><span>Rosmarino<small>q.b.</small></span></div><div class="ingredient"><span class="food-icon">🥬</span><span>Radicchio variegato<small>100 g</small></span></div></div><div class="actions"><button class="action"><b>⟳</b>Cambia piatto</button><button class="action primary"><b>☷</b><span class="action-label">Dettagli</span><span class="right">›</span></button></div></div>
+        </article>
+      </section>
+    </main>
+    <main id="menuPage" class="app-page menu-page menu-reference-a" data-page="menu" aria-hidden="true">
+      <section class="menu-reference-head" data-ui-role="weekly-plan-header">
+        <div><h1>Il mio menù</h1><p>7 — 13 Settembre</p></div>
+        <div class="change-week" data-bind="plan.week"><span class="week-calendar">▣</span><span>Cambia settimana</span><button type="button" data-action="previous-menu-week" aria-label="Settimana precedente">‹</button><button type="button" data-action="next-menu-week" aria-label="Settimana successiva">›</button></div>
+      </section>
+      <section class="week-plan reference-week-plan" id="weekPlan" data-ui-role="weekly-plan" data-bind="plan.days"></section>
+      <div class="menu-actions"><button type="button" data-action="cancel-menu">Annulla</button><button type="button" data-action="reset-menu">Resetta</button><button class="save-menu" type="button" data-action="save-menu">Salva menù</button><button class="shopping-link" type="button" data-action="open-shopping">🛒 Vai alla lista della spesa</button></div>
+      <div class="menu-merge-note" data-ui-role="menu-merge-contract">La vista rappresenta i record settimanali già prodotti dal motore; non genera né riclassifica ricette.</div>
+    </main>
+    <main id="setPage" class="app-page set-page" data-page="settings" aria-hidden="true">
+      <header class="set-title"><h1>Il mio Set</h1><p>Configura carboidrati, proteine, verdure e colazione. Tutte le scelte vengono salvate insieme.</p><button class="nutri-access" type="button" data-action="open-nutritionist">Configurazione avanzata nutrizionista ›</button></header>
+      <div class="set-stack">
+        <section class="set-card" data-set-module="carbohydrates"><header><h2>Impostazioni Carboidrati</h2><p>AUTO lascia completare il piano; FISSO stabilisce il numero settimanale; 0 esclude la voce.</p></header><div class="set-card-body">
+          <h3 class="set-group-title">Carboidrati complessi AUTO</h3><div class="set-carb-grid" id="setCarbAuto"></div>
+          <h3 class="set-group-title" style="margin-top:12px">Carboidrati con tetto PDF · solo se scelti</h3><div class="set-carb-grid" id="setCarbLimited"></div>
+          <div class="set-status">Fissi: 4 / 14 · AUTO completerà 10 · esclusi 2</div><div class="set-actions"><button>Tutto AUTO</button><button>Completa e fissa</button><button>Casuale 14</button><button class="primary">Salva</button></div>
+        </div></section>
+        <section class="set-card" data-set-module="proteins"><header><h2>Impostazioni Proteine</h2><p>Fissa al massimo due categorie diverse per giorno. Le caselle tratteggiate sono suggerimenti.</p></header><div class="set-card-body"><div class="set-table-wrap"><table class="set-table" id="setProteinTable"></table></div><div class="set-actions"><button>Pulisci</button><button>Completa</button><button>Casuale</button><button class="primary">Salva</button></div>
+          <div class="set-subsection"><h3>Preferenze generazione menù</h3><p class="set-section-note">Una sola categoria meno gradita: viene penalizzata, non esclusa.</p><div class="set-swipe single-choice" data-carousel="less-liked-proteins"><button class="set-chip">Carne</button><button class="set-chip active">Pesce</button><button class="set-chip">Formaggi</button><button class="set-chip">Uova</button><button class="set-chip">Legumi</button></div><div class="set-swipe" data-carousel="preparation-time"><button class="set-chip">Poco tempo a pranzo</button><button class="set-chip">Poco tempo a cena</button><button class="set-chip active">Ho tempo</button></div></div>
+        </div></section>
+        <section class="set-card"><header><h2>Cereali non graditi</h2><p>Il motore li evita quando esistono alternative; almeno una fonte resta disponibile.</p></header><div class="set-card-body"><div class="set-swipe" data-carousel="disliked-cereals"><button class="set-chip">Riso</button><button class="set-chip off">Farro</button><button class="set-chip">Orzo</button><button class="set-chip">Avena</button><button class="set-chip">Quinoa</button><button class="set-chip">Cous cous</button></div></div></section>
+        <section class="set-card" data-set-module="personal-caps"><header><h2>Limiti personali ingredienti</h2><p>Puoi soltanto restringere il piano. Vuoto = nessun limite aggiuntivo; 0 = non proporre automaticamente.</p></header><div class="set-card-body"><div class="cap-groups">
+          <details class="cap-group" open data-cap-group="carboidrati"><summary>Carboidrati</summary><div class="cap-rows"></div></details>
+          <details class="cap-group" data-cap-group="proteine"><summary>Proteine</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="verdura"><summary>Verdure</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="frutta"><summary>Frutta</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="colazione"><summary>Colazione e spuntini</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="grassi"><summary>Grassi</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="condimento"><summary>Condimenti</summary><div class="cap-rows"></div></details><details class="cap-group" data-cap-group="speciale"><summary>Speciali</summary><div class="cap-rows"></div></details>
+        </div><div class="set-status">Limiti personali attivi: 1.</div></div></section>
+        <section class="set-card" data-set-module="vegetables"><header><h2>Impostazioni Verdure</h2><p>Preferenze, disponibilità e ricorrenze restano tre controlli distinti.</p></header><div class="set-card-body">
+          <div class="set-subsection" style="padding-top:0;margin-top:0;border:0"><h3>Verdure da favorire</h3><div class="set-swipe" data-carousel="preferred-vegetables"><button class="set-chip">Nessuna preferenza</button><button class="set-chip active">Zucchine</button><button class="set-chip">Spinaci</button><button class="set-chip">Broccoli</button><button class="set-chip">Carote</button><button class="set-chip">Pomodori</button></div></div>
+          <div class="set-subsection"><h3>Disponibilità verdure</h3><p class="set-section-note">Puoi escluderne al massimo 7. Le esclusioni cliniche non consumano questo limite.</p><div class="tier-label">Freschi</div><div class="set-swipe" data-carousel="vegetables-fresh"><button class="set-chip active">Insalata mista</button><button class="set-chip off">Radicchio</button><button class="set-chip active">Zucchine</button><button class="set-chip active">Pomodoro fresco</button></div><div class="tier-label durable">Freschi duraturi</div><div class="set-swipe" data-carousel="vegetables-durable"><button class="set-chip active">Carote</button><button class="set-chip active">Finocchi</button><button class="set-chip active">Cavolo</button><button class="set-chip active">Sedano</button></div><div class="tier-label tinned">In scatola</div><div class="set-swipe" data-carousel="vegetables-tinned"><button class="set-chip active">Piselli</button><button class="set-chip active">Fagiolini</button><button class="set-chip off">Funghi</button><button class="set-chip active">Pomodori</button></div><div class="tier-label frozen">Surgelati</div><div class="set-swipe" data-carousel="vegetables-frozen"><button class="set-chip active">Spinaci</button><button class="set-chip active">Broccoli</button><button class="set-chip active">Cavolfiore</button><button class="set-chip active">Zucchine</button></div><div class="set-status">Escluse da te: 2 / 7</div></div>
+          <div class="set-subsection"><h3>Verdure ricorrenti</h3><div class="set-swipe single-choice" data-carousel="recurring-vegetable"><button class="set-chip">Nessuna</button><button class="set-chip active">Zucchine</button><button class="set-chip">Melanzane</button><button class="set-chip">Peperoni</button><button class="set-chip">Broccoli</button><button class="set-chip">Carote</button></div><div class="set-table-wrap"><table class="set-table" id="setRecurringTable"></table></div></div>
+        </div></section>
+        <section class="set-card" data-set-module="breakfast"><header><h2>Impostazioni Colazione</h2><p>Componi la colazione da ripetere e scegli i giorni in cui applicarla.</p></header><div class="set-card-body"><div class="breakfast-groups" id="setBreakfastGroups"></div>
+          <div class="set-subsection"><h3>Giorni in cui applicarla</h3><div class="set-table-wrap"><table class="set-table" id="setBreakfastDays"></table></div></div><div class="set-subsection"><h3>Ingredienti da escludere</h3><div class="set-swipe" data-carousel="breakfast-exclusions"><button class="set-chip active">Latte vaccino</button><button class="set-chip">Yogurt</button><button class="set-chip">Uova</button><button class="set-chip">Frutta secca</button><button class="set-chip off">Miele</button><button class="set-chip">Cioccolato</button></div><div class="set-actions"><button>Reset colazione preferita</button></div></div>
+        </div></section>
+        <button class="set-save-all" type="button">Salva tutta la configurazione</button><div class="set-contract" data-ui-role="set-merge-contract">La vista conserva moduli, caroselli, tabelle, stati e comandi del Set reale; i dati dimostrativi non sostituiscono il resolver.</div>
+      </div>
+    </main>
+    <main id="nutritionistPage" class="app-page nutritionist-page" data-page="nutritionist" aria-hidden="true">
+      <header class="set-title"><button class="nutri-back" type="button" data-action="close-nutritionist" aria-label="Torna al Set">‹</button><div><h1>Setting nutrizionista</h1><p>Vincoli clinici, profilo alimentare e regole applicative restano separati dalle preferenze utente.</p><span class="nutri-badge">Area avanzata · predisposta per protezione</span></div></header>
+      <div class="set-stack">
+        <section class="set-card" data-nutri-module="allergens"><header><h2>Allergeni e intolleranze</h2><p>La selezione esclude rigidamente ingredienti e ricette collegati.</p></header><div class="set-card-body"><div class="allergen-grid" id="nutritionistAllergens"></div></div></section>
+        <section class="set-card" data-nutri-module="diet-profile"><header><h2>Piano alimentare</h2><p>Le esclusioni del profilo sono automatiche e non modificabili finché resta selezionato.</p></header><div class="set-card-body"><div class="nutri-profile"><label>Profilo<select id="nutritionistProfile"><option>Onnivoro</option><option>Vegetariano</option><option>Vegano</option></select></label><button class="nutri-rebuild" type="button">Applica cambio e ricostruisci</button></div></div></section>
+        <section class="set-card" data-nutri-module="global-parameters"><header><h2>Parametri nutrizionali globali</h2><p>I valori PDF e le regole tecniche APP‑CWE sono mantenuti in gruppi distinti.</p></header><div class="set-card-body"><div id="nutritionistGlobal"></div></div></section>
+        <section class="set-card" data-nutri-module="carbohydrate-classes"><header><h2>Carboidrati complessi e semplici</h2></header><div class="set-card-body"><div class="nutritionist-grid" id="nutritionistCarbClasses"></div></div></section>
+        <section class="set-card" data-nutri-module="ingredient-constraints"><header><h2>Impostazioni ingredienti</h2><p>Un tocco: limitato · due tocchi: escluso · tre tocchi: disponibile. I limiti contestuali restano indipendenti.</p></header><div class="set-card-body"><div class="nutri-ingredient-groups" id="nutritionistIngredientGroups"></div><div class="nutri-constraint-list" id="nutritionistConstraints"></div><div class="nutri-source" style="margin-top:14px">Contesti PDF aggiuntivi</div><div class="nutri-constraint-list" id="nutritionistExtraContexts"></div></div></section>
+        <div class="nutritionist-actions"><button type="button">Ripristina valori del piano</button><button class="primary" type="button">Salva configurazione</button></div>
+        <div class="nutri-contract" data-ui-role="nutritionist-merge-contract">La vista conserva allergeni, profilo, ricostruzione, parametri PDF, regole APP-CWE, classi carboidrati, stati ingredienti, vincoli globali e contestuali, validazione, salvataggio e reset canonico.</div>
+      </div>
+    </main>
+  </div>
+  <nav class="bottom" aria-label="Navigazione principale" data-ui-role="bottom-navigation">
+    <span class="bottom-swipe-indicator" aria-hidden="true"></span>
+    <button class="nav active" data-route="meal" data-state="selected"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v8M8 3v8M5 7h3M6.5 11v10M15 3v18M15 3c3 1 4 4 4 7v2h-4"/></svg></i>Pasto</button>
+    <button class="nav" data-route="menu"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18M7 14h2M12 14h2M17 14h.01M7 18h2M12 18h2"/></svg></i>Menu</button>
+    <button class="nav" data-route="recipes"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H11a2 2 0 0 1 2 2v16a2 2 0 0 0-2-2H7.5A3.5 3.5 0 0 0 4 21.5Z"/><path d="M20 5.5A3.5 3.5 0 0 0 16.5 2H13v18a2 2 0 0 1 2-2h1.5a3.5 3.5 0 0 1 3.5 3.5Z"/><path d="M7 7h3M7 11h3M16 7h1M16 11h1"/></svg></i>Ricette</button>
+    <button class="nav" data-route="shopping"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.1 10.2a2 2 0 0 0 2 1.6h7.8a2 2 0 0 0 2-1.6L20 8H6"/><circle cx="9" cy="20" r="1.3"/><circle cx="17" cy="20" r="1.3"/></svg></i>Spesa</button>
+    <button class="nav" data-route="inventory"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 4.5v9L12 21l-8-4.5v-9Z"/><path d="m4 7.5 8 4.5 8-4.5M12 12v9M8 5.2l8 4.5"/></svg></i>Inventario</button>
+    <button class="nav" data-route="settings"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></i>Set</button>
+  </nav>
+  <div class="detail-overlay" id="detailOverlay" data-ui-role="recipe-detail-overlay" aria-hidden="true">
+    <article class="detail-modal" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button class="detail-close" data-action="close-details" aria-label="Chiudi">×</button>
+      <div class="detail-hero"><img id="detailImage" alt=""><div class="detail-hero-caption"><div class="detail-kind" id="detailKind"></div><h2 id="detailTitle"></h2></div></div>
+      <div class="detail-content">
+        <div class="detail-toolbar"><div class="detail-time">◷ <span id="detailTime"></span></div><div class="portion-control" data-bind="recipe.portions"><span>Porzioni</span><button id="portionMinus" data-action="decrease-portions" disabled>−</button><strong class="portion-value" id="portionValue">1</strong><button id="portionPlus" data-action="increase-portions">+</button></div></div>
+        <section class="detail-section"><h3>Ingredienti</h3><table class="detail-list" aria-label="Ingredienti e quantità"><tbody id="detailIngredients"></tbody></table></section>
+        <section class="detail-section"><h3>Preparazione</h3><ol class="recipe-steps" id="detailSteps"></ol></section>
+        <section class="detail-section"><h3>Valori nutrizionali</h3><div class="nutrition-grid" id="detailNutrition"></div></section>
+        <section class="detail-section"><h3>La tua storia con questo piatto</h3><div class="stats-grid"><div class="stat"><b id="detailProposed"></b><small>Proposto</small></div><div class="stat"><b id="detailConsumed"></b><small>Consumato</small></div><div class="stat"><b id="detailChanged"></b><small>Cambiato</small></div><div class="stat"><b id="detailRatio"></b><small>Scelto</small></div></div><div class="history-bar"><i id="detailHistoryBar"></i></div></section>
+        <section class="social-box" data-ui-role="recipe-sharing"><div class="social-brand">DietaPlanner</div><p>Condividi questa ricetta firmata DietaPlanner</p><div class="social-actions"><button type="button" data-action="share-recipe" data-channel="whatsapp" aria-label="Condividi su WhatsApp" title="WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.6a8 8 0 0 1-11.8 7l-4.2 1.1 1.1-4A8 8 0 1 1 20 11.6Z"/><path d="M9 8.2c.3 2.9 2 4.6 4.9 5.5l1.3-1.2 2.2 1.1c-.3 1.4-1.2 2.2-2.5 2.3-4.5-.5-7.3-3.2-8-7.6.1-1.2.8-2 2-2.4L10 8Z"/></svg></button><button type="button" data-action="share-recipe" data-channel="facebook" aria-label="Condividi su Facebook" title="Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="brand-fill" d="M13.7 21v-8h2.7l.4-3h-3.1V8.1c0-.9.3-1.5 1.6-1.5H17V4a22 22 0 0 0-2.4-.1c-2.4 0-4 1.5-4 4.1v2H8v3h2.6v8Z"/></svg></button><button type="button" data-action="share-recipe" data-channel="instagram" aria-label="Condividi su Instagram" title="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="brand-fill" cx="17.5" cy="6.7" r="1"/></svg></button><button type="button" data-action="share-recipe" data-channel="copy-link" aria-label="Copia collegamento" title="Copia link"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 14.5 14.5 9"/><path d="M7.5 17.5 5.8 19.2a3 3 0 0 1-4.2-4.2l3.8-3.8a3 3 0 0 1 4.2 0" transform="translate(2 -2)"/><path d="m14.5 6.5 1.7-1.7a3 3 0 1 1 4.2 4.2l-3.8 3.8a3 3 0 0 1-4.2 0" transform="translate(-2 2)"/></svg></button></div></section>
+      </div>
+    </article>
+  </div>
+  <script type="application/json" id="restyling-merge-contract">
+  {
+    "scope": "visual-only",
+    "functionalSources": "external-session",
+    "components": {
+      "week-selector": ["plan.week", "plan.selectedDate"],
+      "meal-card": ["meal.slot", "meal.timeWindow", "meal.original", "meal.alternatives"],
+      "horizontal-carousel": ["dish.imagePath", "dish.kind", "dish.title", "dish.ingredients"],
+      "vertical-rotation": ["meal.original", "meal.alternatives", "meal.current"],
+      "recipe-detail": ["dish.id", "dish.imagePath", "dish.title", "dish.ingredients", "dish.instructions", "dish.nutrition", "dish.history", "dish.portions"],
+      "recipe-sharing": ["dish.id", "dish.title", "dish.shareUrl", "brand.name"],
+      "special-meal-selector": ["meal.systemDefault", "meal.specialSelection", "meal.specialModeOpen"],
+      "bottom-navigation": ["route.current"],
+      "weekly-plan": ["plan.week", "plan.days", "day.meals", "meal.realizations", "realization.locked"],
+      "user-set": ["carbohydrates.states", "proteins.dayGrid", "menuPreferences.lessLikedProtein", "menuPreferences.time", "cereals.disliked", "ingredientWeeklyCaps", "vegetables.preferred", "vegetables.availability", "vegetables.recurring", "breakfast.composition", "breakfast.days", "breakfast.exclusions"],
+      "nutritionist-settings": ["allergens", "dietProfile", "proteinFrequencies", "subtypeCaps", "fruit", "specialBreakfastMax", "oilGramsPerDay", "snackWeeklyCaps", "snackDailyCaps", "maxProteinSourcesPerDay", "specialMealsMax", "cooldownDays", "deadlines", "carbohydrateClassConstraints", "ingredientConstraints", "ingredientContextOverrides"]
+    },
+    "actions": ["previous-week", "next-week", "swipe-week", "select-day", "open-calendar", "copy-day", "next-dish", "change-meal", "restore-meal", "open-details", "close-details", "swipe-close-details", "swipe-bottom-navigation", "increase-portions", "decrease-portions", "share-recipe", "toggle-special-mode", "set-special-meal", "toggle-lock", "previous-menu-week", "next-menu-week", "generate-menu", "save-menu", "reset-menu", "cancel-menu", "open-shopping", "set-carb-mode", "set-carb-count", "set-protein-day", "set-carousel-choice", "set-personal-cap", "set-recurring-vegetable", "set-breakfast-day", "save-user-set", "open-nutritionist", "close-nutritionist", "toggle-allergen", "change-diet-profile", "rebuild-after-profile", "cycle-ingredient-constraint", "set-ingredient-context", "save-nutritionist-settings", "reset-nutritionist-settings"],
+    "invariants": ["functional-databases-untouched", "visual-content-linked-by-id-later", "system-default-meal-retained", "confirmed-special-mode-open-by-default"]
+  }
+  </script>
+  <script>
+    (()=>{
+      const root='assets/visual-demo/';
+      const menuLock='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
+      const menuMealIcons={
+        breakfast:'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>',
+        lunch:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3v8M8 3v8M5 7h3M6.5 11v10M15 3v18M15 3c3 1 4 4 4 7v2h-4"/></svg>',
+        dinner:'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.4 15.2A8.5 8.5 0 0 1 8.8 3.6 8.5 8.5 0 1 0 20.4 15.2Z"/></svg>'
+      };
+      const setCell=(state='')=>`<button class="set-cell ${state}" type="button" aria-label="Frequenza settimanale"></button>`;
+      const carbItem=(name,mode='AUTO',count=0,max=5)=>`<div class="set-carb-item"><div class="set-carb-head"><span class="set-carb-name">${name}</span><button class="set-mode ${mode.startsWith('FISSO')?'fixed':mode.startsWith('0')?'excluded':''}" type="button" data-action="set-carb-mode">${mode}</button></div><div class="set-cells">${Array.from({length:max},(_,i)=>setCell(i<count?'active':'')).join('')}</div></div>`;
+      document.getElementById('setCarbAuto').innerHTML=[['Riso','AUTO',0],['Pane','FISSO 3',3],['Patate','AUTO',0],['Farro','0 · ESCLUSO',0],['Orzo','AUTO',0],['Avena','AUTO',0],['Quinoa','AUTO',0]].map(v=>carbItem(...v)).join('');
+      document.getElementById('setCarbLimited').innerHTML=[['Friselle','AUTO',0,2],['Piadina','0 · ESCLUSO',0,2],['Gnocchi','FISSO 1',1,2],['Pasta ripiena','AUTO',0,2],['Gallette e crackers','AUTO',0,2],['Sfoglia e brisée','AUTO',0,2]].map(v=>carbItem(...v)).join('');
+      const dayNames=['Lun','Mar','Mer','Gio','Ven','Sab','Dom'];
+      const matrix=(rows,states)=>`<thead><tr><th>Categoria</th>${dayNames.map(d=>`<th>${d}</th>`).join('')}</tr></thead><tbody>${rows.map((row,r)=>`<tr><td>${row[0]}${row[1]?`<small>${row[1]}</small>`:''}</td>${dayNames.map((_,d)=>`<td><button class="set-square ${states[`${r}-${d}`]||''}" type="button" aria-label="${row[0]} ${dayNames[d]}"></button></td>`).join('')}</tr>`).join('')}</tbody>`;
+      document.getElementById('setProteinTable').innerHTML=matrix([['Carne','0–3 / sett.'],['Pesce','2–4 / sett.'],['Formaggi','1–3 / sett.'],['Uova','1–3 / sett.'],['Legumi','2–4 / sett.']],{'0-0':'active','1-1':'active','1-2':'suggested','1-4':'active','2-2':'active','3-3':'active','3-6':'active','4-0':'active','4-5':'active'});
+      document.getElementById('setRecurringTable').innerHTML=matrix([['Pranzo',''],['Cena','']],{'0-0':'active','0-2':'active','0-5':'active','1-1':'active','1-3':'active','1-6':'active'}).replace('Categoria','');
+      document.getElementById('setBreakfastDays').innerHTML=matrix([['Colazione','']],{'0-0':'active','0-1':'active','0-3':'active','0-5':'active'}).replace('Categoria','');
+      const breakfastGroups=[['Proteine · obbligatorio',['Yogurt greco','Ricotta','Uova','Latte']],['Bibita · facoltativo',['— nessuno —','Caffè','Tè']],['Carboidrati · obbligatorio',['Avena','Pane integrale','Fette biscottate']],['Grassi · facoltativo',['— nessuno —','Noci','Mandorle']],['Carboidrati semplici · facoltativo',['— nessuno —','Miele','Marmellata']]];
+      document.getElementById('setBreakfastGroups').innerHTML=breakfastGroups.map(([label,items])=>`<div><div class="breakfast-group-label">${label}</div><div class="set-swipe single-choice" data-carousel="breakfast-composition">${items.map((item,i)=>`<button class="set-chip ${i===0?'active':''}" type="button">${item}</button>`).join('')}</div></div>`).join('');
+      const setPage=document.getElementById('setPage');
+      const renderPersonalCaps=async()=>{
+        try{
+          const response=await fetch('ingredienti-new.json');
+          const catalog=(await response.json()).ingredienti||{};
+          setPage.querySelectorAll('[data-cap-group]').forEach(group=>{
+            const key=group.dataset.capGroup;
+            const names=Object.entries(catalog).filter(([,data])=>data.gruppo===key).map(([name])=>name).sort((a,b)=>a.localeCompare(b,'it'));
+            group.querySelector('.cap-rows').innerHTML=names.map(name=>`<div class="cap-row"><div class="cap-name">${name}<small data-bind="nutrition.ingredientConstraints">min — · max —</small></div><input class="cap-input" type="number" min="0" step="1" placeholder="—" aria-label="${name}: massimo personale settimanale"></div>`).join('');
+          });
+        }catch(error){
+          setPage.querySelectorAll('[data-cap-group] .cap-rows').forEach(rows=>rows.innerHTML='<div class="cap-row"><div class="cap-name">Catalogo ingredienti<small>Verrà caricato da IndexedDB nel merge funzionale</small></div><input class="cap-input" placeholder="—" disabled></div>');
+        }
+      };
+      renderPersonalCaps();
+      setPage.addEventListener('click',event=>{
+        const square=event.target.closest('.set-square,.set-cell');if(square){square.classList.toggle('active');square.classList.remove('suggested');return;}
+        const mode=event.target.closest('[data-action="set-carb-mode"]');if(mode){const states=['AUTO','0 · ESCLUSO','FISSO 1'],next=states[(states.indexOf(mode.textContent.trim())+1)%states.length];mode.textContent=next;mode.className='set-mode '+(next.startsWith('0')?'excluded':next.startsWith('FISSO')?'fixed':'');return;}
+        const chip=event.target.closest('.set-chip');if(!chip)return;
+        if(chip.closest('.single-choice')){
+          chip.parentElement.querySelectorAll('.set-chip').forEach(item=>item.classList.remove('active','off'));
+          chip.classList.add('active');
+          return;
+        }
+        const carousel=chip.closest('[data-carousel]')?.dataset.carousel||'';
+        if(carousel==='disliked-cereals'||carousel==='breakfast-exclusions'||carousel.startsWith('vegetables-')){
+          const becomesExcluded=!chip.classList.contains('off');
+          chip.classList.toggle('off',becomesExcluded);
+          chip.classList.toggle('active',!becomesExcluded);
+        }else chip.classList.toggle('active');
+      });
+      const nutritionistPage=document.getElementById('nutritionistPage');
+      const allergens=[['🌾','Glutine'],['🦐','Crostacei'],['🥚','Uova'],['🐟','Pesce'],['🥜','Arachidi'],['🌱','Soia'],['🥛','Latte'],['🌰','Frutta a guscio'],['🥬','Sedano'],['●','Senape'],['○','Sesamo'],['🍷','Solfiti'],['🫘','Lupini'],['🐚','Molluschi']];
+      document.getElementById('nutritionistAllergens').innerHTML=allergens.map(([icon,name],i)=>`<button class="allergen ${i===6?'active':''}" type="button" data-action="toggle-allergen">${icon} ${name}</button>`).join('');
+      const input=(value,type='number')=>`<input type="${type}" min="0" value="${value??''}">`;
+      const standardRow=(name,unit,min='',max='',quantity=null)=>quantity===null?`<div class="nutritionist-row"><span class="nutritionist-name">${name}</span><span class="nutritionist-unit">${unit}</span>${input(min)}${input(max)}</div>`:`<div class="nutritionist-row protein"><span class="nutritionist-name">${name}</span><span class="nutritionist-unit">sett.</span>${input(min)}${input(max)}${input(quantity)}</div>`;
+      const singleRow=(name,unit,value,type='number')=>`<div class="nutritionist-row"><span class="nutritionist-name">${name}</span><span class="nutritionist-unit">${unit}</span><span></span>${input(value,type)}</div>`;
+      const pdfRows=[
+        ['Carne','1','3','150'],['Pesce','2','3','180'],['Formaggi','2','3','100'],['Uova','1','2','2'],['Legumi','2','','150']
+      ].map(v=>standardRow(v[0],'sett.',v[1],v[2],v[3])).join('')+
+        [['Carne rossa','max/sett.',1],['Affettati','max/sett.',1],['Pesce grande','max/sett.',1],['Pesce conservato','max/sett.',1]].map(v=>singleRow(...v)).join('')+
+        standardRow('Frutta','giorno',2,3)+standardRow('Porzione frutta','g',150,200)+
+        [['Colazioni speciali','sett.',1],['Olio EVO al giorno','g',10],['Spuntino grana','max/sett.',2],['Spuntino crackers','max/sett.',2],['Spuntino pane e marmellata','max/sett.',2],['Spuntino granita','max/sett.',2],['Spuntino patatine / Grisbi','max/sett.',1],['Frutta secca','max/giorno',1]].map(v=>singleRow(...v)).join('');
+      const appRows=[['Fonti proteiche','giorno',2],['Pasti speciali','sett.',2],['Spuntini da limitare','max/sett.',2],['Cooldown carboidrati','giorni',7],['Cooldown verdure','giorni',2]].map(v=>singleRow(...v)).join('')+singleRow('Scadenza pranzo','ora','15:00','time')+singleRow('Scadenza cena','ora','22:00','time');
+      document.getElementById('nutritionistGlobal').innerHTML=`<div class="nutri-source">PDF / piano nutrizionale</div><div class="nutritionist-grid"><div class="nutritionist-row protein header"><span>Voce</span><span>Freq.</span><span>Min</span><span>Max</span><span>Quantità</span></div>${pdfRows}</div><div class="nutri-source app">Regole applicative APP‑CWE</div><div class="nutritionist-grid">${appRows}</div>`;
+      document.getElementById('nutritionistCarbClasses').innerHTML=`<div class="nutritionist-row header"><span>Classe</span><span>Unità</span><span>Min</span><span>Max</span></div>${standardRow('Complessi','sett.',10,14)}${standardRow('Semplici','sett.',0,3)}`;
+      const ingredientState=new Map([['Salmone','limitato'],['Tonno','escluso'],['Zucchine','limitato']]);
+      let nutritionistCatalog=[];
+      const contextBox=(name)=>`<div class="context-box"><div class="context-title">${name} · override contestuali facoltativi</div>${[['Colazione','max/sett.','g'],['Pasto principale','max/sett.','g'],['Spuntino','max/sett.','g']].map(([label,max,unit])=>`<label class="context-row"><span>${label}</span>${input('')}<span style="display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px">${input('')}<small>${unit}</small></span></label>`).join('')}</div>`;
+      const renderNutritionistConstraints=()=>{
+        const selected=nutritionistCatalog.filter(item=>ingredientState.has(item.name));
+        document.getElementById('nutritionistConstraints').innerHTML=selected.map(item=>{const state=ingredientState.get(item.name),excluded=state==='escluso';return `<div class="ingredient-constraint"><div class="ingredient-main ${excluded?'excluded':''}"><strong>${item.name}</strong>${excluded?'<span>Escluso</span>':`${input('')} ${input(item.name==='Salmone'?2:'')} ${input(item.quantity||100)}`}</div>${excluded?'':contextBox(item.name)}</div>`;}).join('');
+        document.getElementById('nutritionistExtraContexts').innerHTML=['Burro','Crema di nocciole e cacao'].map(name=>`<div class="ingredient-constraint"><div class="ingredient-main"><strong>${name}</strong>${input('')} ${input('')} ${input('')}</div>${contextBox(name)}</div>`).join('');
+      };
+      const renderNutritionistCatalog=async()=>{
+        try{
+          const response=await fetch('ingredienti-new.json'),raw=(await response.json()).ingredienti||{};
+          nutritionistCatalog=Object.entries(raw).map(([name,data])=>({name,group:data.gruppo,quantity:data.porzione||data.pesoPorzioneGrammi||data.pesoPezzo||100})).filter(item=>['carboidrati','proteine','verdura'].includes(item.group)).sort((a,b)=>a.name.localeCompare(b.name,'it'));
+        }catch(error){nutritionistCatalog=[{name:'Riso',group:'carboidrati'},{name:'Salmone',group:'proteine'},{name:'Tonno',group:'proteine'},{name:'Zucchine',group:'verdura'}];}
+        const groups=[['carboidrati','Carboidrati'],['proteine','Proteine'],['verdura','Verdure']];
+        document.getElementById('nutritionistIngredientGroups').innerHTML=groups.map(([key,label])=>`<section class="nutri-ingredient-group"><h3>${label}</h3><div class="set-swipe" data-nutri-group="${key}">${nutritionistCatalog.filter(i=>i.group===key).map(item=>`<button class="set-chip ${ingredientState.get(item.name)==='limitato'?'active':ingredientState.get(item.name)==='escluso'?'off':''}" type="button" data-nutri-ingredient="${item.name}">${item.name}</button>`).join('')}</div></section>`).join('');
+        renderNutritionistConstraints();
+      };
+      renderNutritionistCatalog();
+      nutritionistPage.addEventListener('click',event=>{
+        const allergen=event.target.closest('.allergen');if(allergen){allergen.classList.toggle('active');return;}
+        const chip=event.target.closest('[data-nutri-ingredient]');if(!chip)return;
+        const name=chip.dataset.nutriIngredient,current=ingredientState.get(name),next=!current?'limitato':current==='limitato'?'escluso':null;
+        if(next)ingredientState.set(name,next);else ingredientState.delete(name);
+        chip.classList.toggle('active',next==='limitato');chip.classList.toggle('off',next==='escluso');renderNutritionistConstraints();
+      });
+      const showNutritionist=show=>{
+        document.getElementById('mealPage').classList.remove('active');document.getElementById('menuPage').classList.remove('active');document.getElementById('setPage').classList.toggle('active',!show);nutritionistPage.classList.toggle('active',show);
+        document.getElementById('setPage').setAttribute('aria-hidden',String(show));nutritionistPage.setAttribute('aria-hidden',String(!show));window.scrollTo({top:0,behavior:'smooth'});
+      };
+      document.querySelector('[data-action="open-nutritionist"]').addEventListener('click',()=>showNutritionist(true));
+      document.querySelector('[data-action="close-nutritionist"]').addEventListener('click',()=>showNutritionist(false));
+      const weeklyMenu=[
+        {day:'Lunedì',date:'7 Settembre',status:'Oggi',today:true,breakfast:'Overnight oats con frutti di bosco',lunch:[['🍝','Spaghetti integrali alle vongole','Primo'],['🐟','Branzino ai ferri','Secondo'],['🥕','Carote e barbabietole','Contorno']],dinner:[['🌾','Farro con pomodorini e zucchine','Primo'],['🫘','Ceci al rosmarino','Secondo'],['🥬','Radicchio variegato','Contorno']]},
+        {day:'Martedì',date:'8 Settembre',status:'Programmato',breakfast:'Yogurt greco, avena e pesca',lunch:[['🍚','Riso integrale alle verdure','Primo'],['🍗','Pollo alle erbe','Secondo'],['🥒','Zucchine grigliate','Contorno']],dinner:[['🍞','Pane integrale','Carboidrato'],['🥚','Frittata agli spinaci','Secondo'],['🥗','Insalata mista','Contorno']]},
+        {day:'Mercoledì',date:'9 Settembre',status:'Programmato',breakfast:'Pane tostato con ricotta e miele',lunch:[['🍝','Pasta con crema di zucchine','Primo'],['🐟','Sogliola al limone','Secondo'],['🥦','Broccoli al vapore','Contorno']],dinner:[['🌾','Cous cous mediterraneo','Primo'],['🫘','Lenticchie speziate','Secondo'],['🥕','Carote al prezzemolo','Contorno']]},
+        {day:'Giovedì',date:'10 Settembre',status:'Programmato',breakfast:'Porridge alla mela e cannella',lunch:[['🍚','Riso basmati alle verdure','Primo'],['🥩','Vitello alla piastra','Secondo'],['🥬','Bietole ripassate','Contorno']],dinner:[['🍞','Frisella al pomodoro','Carboidrato'],['🐟','Orata al forno','Secondo'],['🥗','Finocchi e arance','Contorno']]},
+        {day:'Venerdì',date:'11 Settembre',status:'Programmato',breakfast:'Yogurt greco con pera e noci',lunch:[['🍝','Pasta al pomodoro e basilico','Primo'],['🫘','Fagioli cannellini','Secondo'],['🥒','Melanzane e zucchine','Contorno']],dinner:[['🥔','Patate alle erbe','Carboidrato'],['🍗','Tacchino al limone','Secondo'],['🥬','Spinaci saltati','Contorno']]},
+        {day:'Sabato',date:'12 Settembre',status:'Programmato',breakfast:'Pancake d’avena ai frutti rossi',lunch:[['🌾','Farro mediterraneo','Primo'],['🐟','Salmone alla piastra','Secondo'],['🥗','Pomodorini e cetrioli','Contorno']],dinner:[['🍞','Pane di segale','Carboidrato'],['🥚','Uova strapazzate ai piselli','Secondo'],['🥦','Cavolfiore gratinato','Contorno']]},
+        {day:'Domenica',date:'13 Settembre',status:'Programmato',breakfast:'French toast integrale con frutta',lunch:[['🍝','Lasagnetta alle verdure','Primo'],['🍗','Pollo arrosto al rosmarino','Secondo'],['🥔','Patate e carote al forno','Contorno']],dinner:[['🌾','Orzo con verdure','Primo'],['🫘','Hummus di ceci','Secondo'],['🥗','Insalata croccante','Contorno']]}
+      ];
+      const menuMeal=(type,icon,recipes)=>`<section class="vertical-meal ${type.toLowerCase()}"><i class="vertical-meal-icon" aria-hidden="true">${icon}</i><div class="vertical-meal-copy"><h3 class="vertical-meal-title">${type}</h3><div class="vertical-recipes">${recipes.map(recipe=>`<div class="vertical-recipe"><span class="vertical-recipe-name">${recipe}</span></div>`).join('')}</div></div><div class="vertical-locks">${recipes.map((recipe,index)=>`<div class="recipe-lock-slot"><button class="mini-lock${index===1?' locked':''}" type="button" data-action="toggle-menu-lock" aria-pressed="${index===1}" aria-label="${index===1?'Sblocca':'Blocca'} ${recipe}">${menuLock}</button></div>`).join('')}</div></section>`;
+      const renderWeeklyMenu=()=>{
+        document.getElementById('weekPlan').innerHTML=weeklyMenu.map((day,dayIndex)=>{
+          const lunch=day.lunch.map(item=>item[1]);
+          const dinner=day.dinner.map(item=>item[1]);
+          if(dayIndex===0)lunch.splice(1);
+          if(dayIndex===1)dinner.splice(1);
+          if(dayIndex===1)lunch.splice(2);
+          const meals=[['COLAZIONE',menuMealIcons.breakfast,[day.breakfast]],['PRANZO',menuMealIcons.lunch,lunch],['CENA',menuMealIcons.dinner,dinner]];
+          return `<article class="vertical-day${day.today?' today':''}" data-plan-day="${day.day.toLowerCase()}"><header class="vertical-day-head"><h2>${day.day}</h2><time>${day.date}</time></header><div class="vertical-meals">${meals.map(meal=>menuMeal(...meal)).join('')}</div></article>`;
+        }).join('');
+      };
+      renderWeeklyMenu();
+      const dateStrip=document.querySelector('.date-strip');
+      const dateDays=document.getElementById('dateDays');
+      const previousWeek=dateStrip.querySelector('[data-action="previous-week"]');
+      const nextWeek=dateStrip.querySelector('[data-action="next-week"]');
+      const selectedDayTitle=document.querySelector('[data-bind="plan.selectedDate"]');
+      const shortDays=['Dom','Lun','Mar','Mer','Gio','Ven','Sab'];
+      const longDays=['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
+      const months=['Gennaio','Febbraio','Marzo','Aprile','Maggio','Giugno','Luglio','Agosto','Settembre','Ottobre','Novembre','Dicembre'];
+      let selectedDate=new Date(2026,8,7);
+      const isoLocal=date=>`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+      const dates=[];
+      for(let offset=-90;offset<=90;offset++){
+        const date=new Date(2026,8,7);
+        date.setDate(date.getDate()+offset);
+        dates.push(date);
+      }
+      const centerSelected=(behavior='auto')=>{
+        const active=dateDays.querySelector('.active');
+        if(!active)return;
+        const destination=active.offsetLeft-(dateDays.clientWidth-active.offsetWidth)/2;
+        dateDays.scrollTo({left:Math.max(0,destination),behavior});
+      };
+      const renderCalendar=()=>{
+        const selectedIso=isoLocal(selectedDate);
+        const todayIso=isoLocal(new Date());
+        dateDays.innerHTML=dates.map(date=>{
+          const iso=isoLocal(date);
+          return `<button class="day${iso===todayIso?' today':''}${iso===selectedIso?' active':''}" data-action="select-day" data-date="${iso}"${iso===todayIso?' data-state-today="true"':''}${iso===selectedIso?' data-state="selected"':''}>${shortDays[date.getDay()]} ${date.getDate()}</button>`;
+        }).join('');
+        selectedDayTitle.textContent=`${longDays[selectedDate.getDay()]} ${selectedDate.getDate()} ${months[selectedDate.getMonth()]}`;
+      };
+      const selectOffset=offset=>{
+        selectedDate.setDate(selectedDate.getDate()+offset);
+        renderCalendar();
+        requestAnimationFrame(()=>centerSelected('smooth'));
+      };
+      previousWeek.addEventListener('click',()=>selectOffset(-7));
+      nextWeek.addEventListener('click',()=>selectOffset(7));
+      dateDays.addEventListener('click',event=>{
+        const button=event.target.closest('[data-action="select-day"]');
+        if(!button)return;
+        selectedDate=new Date(button.dataset.date+'T00:00:00');
+        renderCalendar();
+        requestAnimationFrame(()=>centerSelected('smooth'));
+      });
+      renderCalendar();
+      requestAnimationFrame(()=>centerSelected());
+      const data=[
+        [
+          {kind:'Colazione',img:'colazione-overnight-oats.webp',title:'Overnight oats con frutti di bosco',items:[['🌾','Avena','60 g'],['🥛','Yogurt greco','150 g'],['🫐','Frutti di bosco','100 g']]},
+          {kind:'Colazione',img:'pranzo-spaghetti-vongole.webp',title:'Porridge cremoso alla frutta',items:[['🌾','Fiocchi d’avena','60 g'],['🥛','Latte','150 ml'],['🍓','Frutta fresca','100 g']]},
+          {kind:'Colazione',img:'cena-ceci-radicchio.webp',title:'Bowl allo yogurt e cereali',items:[['🥣','Cereali','50 g'],['🥛','Yogurt','150 g'],['🍎','Frutta','100 g']]}
+        ],
+        [
+          {kind:'Primo',img:'pranzo-spaghetti-vongole.webp',title:'Spaghetti integrali alle vongole',items:[['🌾','Spaghetti integrali','80 g'],['🐚','Vongole','150 g'],['🌿','Prezzemolo','q.b.']]},
+          {kind:'Secondo',img:'cena-ceci-radicchio.webp',title:'Ceci al rosmarino',items:[['🫘','Ceci','150 g'],['🌿','Rosmarino','q.b.'],['🫒','Olio EVO','10 g']]},
+          {kind:'Contorno',img:'colazione-overnight-oats.webp',title:'Radicchio variegato',items:[['🥬','Radicchio','100 g'],['🍋','Limone','q.b.'],['🫒','Olio EVO','5 g']]}
+        ],
+        [
+          {kind:'Primo',img:'cena-ceci-radicchio.webp',title:'Vellutata di ceci al rosmarino',items:[['🫘','Ceci','100 g'],['🥕','Carote','80 g'],['🌿','Rosmarino','q.b.']]},
+          {kind:'Secondo',img:'pranzo-spaghetti-vongole.webp',title:'Vongole alle erbe aromatiche',items:[['🐚','Vongole','150 g'],['🌿','Erbe aromatiche','q.b.'],['🫒','Olio EVO','10 g']]},
+          {kind:'Contorno',img:'cena-ceci-radicchio.webp',title:'Radicchio variegato',items:[['🥬','Radicchio','100 g'],['🍋','Limone','q.b.'],['🫒','Olio EVO','5 g']]}
+        ]
+      ];
+      const alternativeLunch=[
+        {kind:'Primo',img:'alternativa-farro-pomodorini-zucchine.webp',title:'Farro con pomodorini e zucchine',items:[['🌾','Farro','80 g'],['🍅','Pomodorini','100 g'],['🥒','Zucchine','100 g']]},
+        {kind:'Secondo',img:'alternativa-branzino-ferri.webp',title:'Branzino ai ferri',items:[['🐟','Branzino','150 g'],['🍋','Limone','q.b.'],['🌿','Erbe aromatiche','q.b.']]},
+        {kind:'Contorno',img:'alternativa-insalata-carote-barbabietole.webp',title:'Insalata di carote e barbabietole',items:[['🥕','Carote','100 g'],['🟣','Barbabietole','100 g'],['🫒','Olio EVO','5 g']]}
+      ];
+      const specialDishes=[
+        {kind:'Speciale',img:'speciale-pizza-verdure.webp',title:'Pizza alle verdure grigliate',items:[['🍞','Impasto pizza','1 porzione'],['🥒','Verdure grigliate','180 g'],['🍅','Pomodoro','80 g']]},
+        {kind:'Speciale',img:'speciale-torta-salata-verdure.webp',title:'Torta salata con verdure',items:[['🥧','Pasta brisée','1 porzione'],['🥒','Zucchine','100 g'],['🥬','Spinaci','80 g']]},
+        {kind:'Speciale',img:'speciale-sushi-misto.webp',title:'Sushi misto',items:[['🍚','Riso per sushi','100 g'],['🐟','Pesce misto','150 g'],['🥒','Cetriolo','50 g']]}
+      ];
+      const recipeRegistry=new Map();
+      const recipeId=entry=>'demo-'+entry.title.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,'');
+      const lock='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 7.7-1.5"/><circle cx="12" cy="15.5" r="1"/></svg>';
+      document.querySelectorAll('.meal').forEach((meal,mealIndex)=>{
+        const baseBody=meal.querySelector('.meal-body');
+        const oldRail=meal.querySelector('.photo-rail');
+        const oldDots=meal.querySelector('.dots');
+        const carousel=document.createElement('div');
+        carousel.className='visual-carousel';
+        carousel.dataset.uiRole='meal-visual';
+        carousel.dataset.bind='meal.current';
+        const track=document.createElement('div');
+        track.className='visual-track';
+        const rotated=[...data[mealIndex].slice(1),data[mealIndex][0]];
+        const sets=mealIndex===1?[data[mealIndex],alternativeLunch,rotated]:[data[mealIndex],rotated];
+        const specialEntries=specialDishes.map((entry,index)=>({...entry,id:`special-${mealIndex}-${index}-${recipeId(entry).replace(/^demo-/,'')}`}));
+        const specialSetIndex=sets.length;
+        sets.push(specialEntries);
+        let currentSet=0;
+        let changing=false;
+        let confirmedSpecialId=null;
+        const instantTrackScroll=left=>{
+          const previousBehavior=track.style.scrollBehavior;
+          track.style.scrollBehavior='auto';
+          track.scrollLeft=left;
+          track.getBoundingClientRect();
+          track.style.scrollBehavior=previousBehavior;
+        };
+        const renderSet=(setIndex)=>{
+          currentSet=setIndex;
+          track.replaceChildren();
+          const entries=sets[setIndex];
+          const isSpecialSet=setIndex===specialSetIndex;
+          meal.classList.toggle('special-mode',isSpecialSet);
+          meal.dataset.specialModeOpen=String(isSpecialSet);
+          const renderedEntries=isSpecialSet?[entries[entries.length-1],...entries,entries[0]]:entries;
+          renderedEntries.forEach((entry,renderIndex)=>{
+            const index=isSpecialSet?(renderIndex-1+entries.length)%entries.length:renderIndex;
+            const next=entries[(index+1)%entries.length];
+            const pane=document.createElement('section');
+            pane.className='visual-pane';
+            const id=entry.id||`demo-${mealIndex}-${setIndex}-${index}-${recipeId(entry).replace(/^demo-/,'')}`;
+            entry.id=id;
+            recipeRegistry.set(id,entry);
+            pane.dataset.recipeId=id;
+            pane.dataset.uiRole='dish-slide';
+            pane.dataset.dishKind=entry.kind.toLowerCase();
+            pane.dataset.logicalIndex=index;
+            pane.dataset.bind='dish.imagePath,dish.title,dish.ingredients';
+            pane.innerHTML=`<div class="visual-photo-row"><img class="visual-main" src="${root+entry.img}" alt="${entry.title}"><img class="visual-peek" src="${root+next.img}" alt=""></div><div class="dots">${entries.map((_,dot)=>`<i class="dot${dot===index?' active':''}"></i>`).join('')}</div>`;
+            const body=baseBody.cloneNode(true);
+            body.querySelector('.dish').innerHTML=`<span class="dish-kind">${entry.kind}</span>${entry.title}`;
+            body.querySelector('.ingredients').innerHTML=entry.items.map(item=>`<div class="ingredient"><span class="food-icon">${item[0]}</span><span>${item[1]}<small>${item[2]}</small></span></div>`).join('');
+            const favorite=document.createElement('button');
+            favorite.className='favorite';
+            favorite.type='button';
+            favorite.dataset.action='toggle-special-mode';
+            favorite.dataset.bind='meal.systemDefault,meal.specialSelection,meal.specialModeOpen';
+            favorite.dataset.uiRole='special-meal-selector';
+            favorite.setAttribute('aria-label','Apri i piatti speciali');
+            favorite.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2-4.5-4.4 6.3-.9Z"/></svg>';
+            if(setIndex===specialSetIndex){
+              favorite.classList.add('active');
+              favorite.setAttribute('aria-label','Chiudi i piatti speciali');
+            }
+            body.querySelector('.dish-row').insertBefore(favorite,body.querySelector('.lock'));
+            body.querySelector('.lock').innerHTML=lock;
+            body.querySelector('.lock').dataset.action='toggle-lock';
+            const actions=body.querySelector('.actions');
+            const change=actions.querySelector('.action:not(.primary)');
+            change.dataset.action='change-meal';
+            actions.querySelector('.primary').dataset.action='open-details';
+            actions.querySelector('.primary').dataset.recipeId=id;
+            if(setIndex===specialSetIndex){
+              if(entry.id===confirmedSpecialId){
+                change.classList.add('special-confirmed');
+                change.dataset.action='special-meal-selected';
+                change.innerHTML='<b>★</b><span>Pasto speciale impostato</span>';
+              }else{
+                change.classList.add('choose-special');
+                change.dataset.action='set-special-meal';
+                change.innerHTML='<b>✓</b><span>Imposta come pasto</span>';
+              }
+            }else if(setIndex>0){
+              actions.classList.add('has-restore');
+              change.classList.add('change-compact');
+              change.innerHTML='<b>⟳</b><span>Cambia</span>';
+              const restore=document.createElement('button');
+              restore.className='action restore';
+              restore.type='button';
+              restore.dataset.action='restore-meal';
+              restore.textContent='Ripristina';
+              actions.querySelector('.primary').before(restore);
+            }
+            pane.appendChild(body);
+            track.appendChild(pane);
+          });
+          instantTrackScroll(isSpecialSet?track.clientWidth:0);
+          if(isSpecialSet)requestAnimationFrame(()=>instantTrackScroll(track.clientWidth));
+        };
+        renderSet(0);
+        const nextButton=document.createElement('button');
+        nextButton.className='carousel-next';
+        nextButton.type='button';
+        nextButton.setAttribute('aria-label','Piatto successivo');
+        nextButton.dataset.action='next-dish';
+        nextButton.textContent='›';
+        carousel.append(track,nextButton);
+        oldRail.replaceWith(carousel);
+        oldDots.remove();
+        baseBody.remove();
+        let infiniteScrollTimer=0;
+        const normalizeSpecialLoop=()=>{
+          if(currentSet!==specialSetIndex||!track.clientWidth)return;
+          const physicalIndex=Math.round(track.scrollLeft/track.clientWidth);
+          const count=sets[specialSetIndex].length;
+          if(physicalIndex===0)instantTrackScroll(count*track.clientWidth);
+          else if(physicalIndex===count+1)instantTrackScroll(track.clientWidth);
+        };
+        track.addEventListener('scroll',()=>{
+          if(currentSet!==specialSetIndex)return;
+          clearTimeout(infiniteScrollTimer);
+          infiniteScrollTimer=setTimeout(normalizeSpecialLoop,90);
+        },{passive:true});
+        nextButton.addEventListener('click',()=>{
+          const index=Math.round(track.scrollLeft/track.clientWidth);
+          if(currentSet===specialSetIndex){
+            const count=sets[specialSetIndex].length;
+            const normalizedIndex=index>=count+1?1:index;
+            if(normalizedIndex!==index)instantTrackScroll(track.clientWidth);
+            track.scrollTo({left:(normalizedIndex+1)*track.clientWidth,behavior:'smooth'});
+            clearTimeout(infiniteScrollTimer);
+            infiniteScrollTimer=setTimeout(normalizeSpecialLoop,430);
+          }else track.scrollTo({left:((index+1)%sets[currentSet].length)*track.clientWidth,behavior:'smooth'});
+        });
+        const switchSet=async(setIndex,direction='down')=>{
+          if(changing)return;
+          changing=true;
+          const outgoingScroll=track.scrollLeft;
+          const outgoing=track.cloneNode(true);
+          renderSet(setIndex);
+          const incomingScroll=track.scrollLeft;
+          const incoming=track.cloneNode(true);
+          const rail=document.createElement('div');
+          rail.className='vertical-rail';
+          if(direction==='up')rail.append(outgoing,incoming);
+          else rail.append(incoming,outgoing);
+          carousel.insertBefore(rail,nextButton);
+          outgoing.scrollLeft=outgoingScroll;
+          incoming.scrollLeft=incomingScroll;
+          track.style.visibility='hidden';
+          const frames=direction==='up'?[{transform:'translateY(0)'},{transform:'translateY(-50%)'}]:[{transform:'translateY(-50%)'},{transform:'translateY(0)'}];
+          await rail.animate(frames,{duration:380,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+          rail.remove();
+          track.style.visibility='';
+          changing=false;
+        };
+        carousel.addEventListener('click',event=>{
+          const favorite=event.target.closest('.favorite');
+          const change=event.target.closest('.action:not(.primary):not(.restore)');
+          const restore=event.target.closest('.action.restore');
+          if(favorite){
+            switchSet(currentSet===specialSetIndex?0:specialSetIndex,currentSet===specialSetIndex?'up':'down');
+            return;
+          }
+          if(change&&currentSet===specialSetIndex){
+            if(change.classList.contains('special-confirmed'))return;
+            const physicalIndex=Math.round(track.scrollLeft/track.clientWidth);
+            const selectedIndex=(physicalIndex-1+sets[specialSetIndex].length)%sets[specialSetIndex].length;
+            const selected=sets[specialSetIndex][selectedIndex]||sets[specialSetIndex][0];
+            confirmedSpecialId=selected.id;
+            sets[specialSetIndex]=[selected,...sets[specialSetIndex].filter(entry=>entry.id!==selected.id)];
+            track.querySelectorAll('.special-confirmed').forEach(button=>{
+              button.classList.remove('special-confirmed');
+              button.classList.add('choose-special');
+              button.dataset.action='set-special-meal';
+              button.innerHTML='<b>✓</b><span>Imposta come pasto</span>';
+            });
+            change.classList.remove('choose-special');
+            change.classList.add('special-confirmed');
+            change.dataset.action='special-meal-selected';
+            change.innerHTML='<b>★</b><span>Pasto speciale impostato</span>';
+            meal.dataset.specialMealId=confirmedSpecialId;
+            meal.dataset.specialModeOpen='true';
+          }else if(change)switchSet(currentSet===specialSetIndex-1?1:currentSet+1);
+          if(restore)switchSet(0,'up');
+        });
+      });
+      const overlay=document.getElementById('detailOverlay');
+      const modal=overlay.querySelector('.detail-modal');
+      let portions=1;
+      let activeRecipe=null;
+      const amountForPortions=(value)=>value.replace(/([0-9]+(?:[.,][0-9]+)?)/,match=>String(Math.round(parseFloat(match.replace(',','.'))*portions*10)/10).replace('.',','));
+      const renderPortions=()=>{
+        document.getElementById('portionValue').textContent=portions;
+        document.getElementById('portionMinus').disabled=portions===1;
+        if(activeRecipe)document.getElementById('detailIngredients').innerHTML=[...activeRecipe.items,['🧂','Sale','q.b.'],['🌿','Spezie ed erbe','q.b.']].map(item=>`<tr><td class="detail-icon">${item[0]}</td><td class="detail-amount">${amountForPortions(item[2])}</td><td class="detail-of">di</td><td class="detail-ingredient-name">${item[1]}</td></tr>`).join('');
+      };
+      const openDetails=id=>{
+        const entry=recipeRegistry.get(id);
+        if(!entry)return;
+        activeRecipe=entry;
+        portions=1;
+        modal.dataset.recipeId=id;
+        document.getElementById('detailImage').src=root+entry.img;
+        document.getElementById('detailImage').alt=entry.title;
+        document.getElementById('detailKind').textContent=entry.kind;
+        document.getElementById('detailTitle').textContent=entry.title;
+        document.getElementById('detailTime').textContent=entry.kind==='Contorno'?'15 min':'30 min';
+        document.getElementById('detailSteps').innerHTML=['Prepara e pesa tutti gli ingredienti.','Cuoci gli ingredienti principali rispettandone consistenza e sapore.','Completa con spezie, erbe e condimento, quindi servi.'].map(step=>`<li>${step}</li>`).join('');
+        const nutrients=[['420','kcal'],['28 g','Proteine'],['46 g','Carboidrati'],['14 g','Grassi']];
+        document.getElementById('detailNutrition').innerHTML=nutrients.map(n=>`<div class="nutri"><b>${n[0]}</b><small>${n[1]}</small></div>`).join('');
+        document.getElementById('detailNutrition').closest('.detail-section').hidden=entry.kind==='Speciale';
+        const proposed=12,consumed=8,changed=2,ratio=Math.round(consumed/proposed*100);
+        document.getElementById('detailProposed').textContent=proposed;
+        document.getElementById('detailConsumed').textContent=consumed;
+        document.getElementById('detailChanged').textContent=changed;
+        document.getElementById('detailRatio').textContent=ratio+'%';
+        document.getElementById('detailHistoryBar').style.width=ratio+'%';
+        renderPortions();
+        overlay.classList.add('open');
+        overlay.setAttribute('aria-hidden','false');
+        document.body.style.overflow='hidden';
+      };
+      const closeDetails=()=>{overlay.classList.remove('open');overlay.setAttribute('aria-hidden','true');document.body.style.overflow='';};
+      document.addEventListener('click',event=>{
+        const details=event.target.closest('[data-action="open-details"]');
+        if(details)openDetails(details.dataset.recipeId);
+        if(event.target.closest('[data-action="close-details"]'))closeDetails();
+      });
+      overlay.addEventListener('click',event=>{if(event.target===overlay)closeDetails();});
+      document.addEventListener('keydown',event=>{if(event.key==='Escape'&&overlay.classList.contains('open'))closeDetails();});
+      let swipeStartY=0;
+      let swipeDistance=0;
+      let swipeClosing=false;
+      modal.addEventListener('touchstart',event=>{
+        if(modal.scrollTop!==0||event.touches.length!==1)return;
+        swipeStartY=event.touches[0].clientY;
+        swipeDistance=0;
+        swipeClosing=true;
+        modal.style.transition='none';
+      },{passive:true});
+      modal.addEventListener('touchmove',event=>{
+        if(!swipeClosing)return;
+        swipeDistance=Math.max(0,event.touches[0].clientY-swipeStartY);
+        if(swipeDistance>0){event.preventDefault();modal.style.transform=`translateY(${swipeDistance}px)`;}
+      },{passive:false});
+      modal.addEventListener('touchend',()=>{
+        if(!swipeClosing)return;
+        swipeClosing=false;
+        modal.style.transition='transform 240ms cubic-bezier(.4,0,.2,1)';
+        if(swipeDistance>90){
+          modal.style.transform='translateY(110%)';
+          setTimeout(()=>{closeDetails();modal.style.transition='';modal.style.transform='';},240);
+        }else{
+          modal.style.transform='translateY(0)';
+          setTimeout(()=>{modal.style.transition='';modal.style.transform='';},240);
+        }
+      },{passive:true});
+      document.getElementById('portionPlus').addEventListener('click',()=>{if(portions<8){portions++;renderPortions();}});
+      document.getElementById('portionMinus').addEventListener('click',()=>{if(portions>1){portions--;renderPortions();}});
+      const bottomNavigation=document.querySelector('.bottom');
+      const navigationItems=[...bottomNavigation.querySelectorAll('.nav')];
+      const navigationIndicator=bottomNavigation.querySelector('.bottom-swipe-indicator');
+      let navigationStartX=0;
+      let navigationStartY=0;
+      let navigationStartIndex=0;
+      let navigationPosition=0;
+      let navigationDragging=false;
+      let suppressNavigationClickUntil=0;
+      const positionNavigationIndicator=position=>{
+        const first=navigationItems[0];
+        const last=navigationItems[navigationItems.length-1];
+        const firstCenter=first.offsetLeft+first.offsetWidth/2;
+        const lastCenter=last.offsetLeft+last.offsetWidth/2;
+        const step=(lastCenter-firstCenter)/(navigationItems.length-1);
+        navigationIndicator.style.left=`${firstCenter-11+step*position}px`;
+      };
+      const selectNavigationItem=(index,indicatorPosition=index)=>{
+        navigationItems.forEach((item,itemIndex)=>{
+          const selected=itemIndex===index;
+          item.classList.toggle('active',selected);
+          if(selected)item.dataset.state='selected';
+          else delete item.dataset.state;
+        });
+        const route=navigationItems[index]?.dataset.route;
+        const showMenu=route==='menu';
+        const showSet=route==='settings';
+        document.getElementById('mealPage').classList.toggle('active',!showMenu&&!showSet);
+        document.getElementById('menuPage').classList.toggle('active',showMenu);
+        document.getElementById('setPage').classList.toggle('active',showSet);
+        document.getElementById('nutritionistPage').classList.remove('active');
+        document.getElementById('menuPage').setAttribute('aria-hidden',String(!showMenu));
+        document.getElementById('setPage').setAttribute('aria-hidden',String(!showSet));
+        document.getElementById('nutritionistPage').setAttribute('aria-hidden','true');
+        positionNavigationIndicator(indicatorPosition);
+      };
+      document.getElementById('weekPlan').addEventListener('click',event=>{
+        const button=event.target.closest('[data-action="toggle-menu-lock"]');
+        if(!button)return;
+        button.classList.toggle('locked');
+        button.setAttribute('aria-pressed',String(button.classList.contains('locked')));
+      });
+      navigationItems.forEach((item,index)=>item.addEventListener('click',event=>{
+        if(Date.now()<suppressNavigationClickUntil){event.preventDefault();return;}
+        navigationIndicator.style.transition='left 180ms cubic-bezier(.2,.8,.2,1)';
+        selectNavigationItem(index);
+      }));
+      bottomNavigation.addEventListener('touchstart',event=>{
+        if(event.touches.length!==1)return;
+        navigationStartX=event.touches[0].clientX;
+        navigationStartY=event.touches[0].clientY;
+        navigationStartIndex=Math.max(0,navigationItems.findIndex(item=>item.classList.contains('active')));
+        navigationPosition=navigationStartIndex;
+        navigationDragging=false;
+        navigationIndicator.style.transition='none';
+      },{passive:true});
+      bottomNavigation.addEventListener('touchmove',event=>{
+        if(event.touches.length!==1)return;
+        const distanceX=event.touches[0].clientX-navigationStartX;
+        const distanceY=event.touches[0].clientY-navigationStartY;
+        if(!navigationDragging&&Math.abs(distanceX)<8)return;
+        if(!navigationDragging&&Math.abs(distanceX)<=Math.abs(distanceY))return;
+        navigationDragging=true;
+        event.preventDefault();
+        const itemWidth=bottomNavigation.clientWidth/navigationItems.length;
+        navigationPosition=Math.max(0,Math.min(navigationItems.length-1,navigationStartIndex+distanceX/itemWidth));
+        selectNavigationItem(Math.round(navigationPosition),navigationPosition);
+      },{passive:false});
+      bottomNavigation.addEventListener('touchend',event=>{
+        if(event.changedTouches.length!==1||!navigationDragging)return;
+        navigationDragging=false;
+        suppressNavigationClickUntil=Date.now()+400;
+        navigationIndicator.style.transition='left 150ms cubic-bezier(.2,.8,.2,1)';
+        selectNavigationItem(Math.round(navigationPosition));
+      },{passive:true});
+      selectNavigationItem(Math.max(0,navigationItems.findIndex(item=>item.classList.contains('active'))));
+      window.addEventListener('resize',()=>selectNavigationItem(Math.max(0,navigationItems.findIndex(item=>item.classList.contains('active')))));
+    })();
+  </script>
+</body>
+</html>

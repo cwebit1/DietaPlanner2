@@ -796,7 +796,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
     Tutto viene salvato con un unico pulsante in fondo alla pagina.
   </div>
   <div id="setCarboidrati"><div class="card"><h3 style="margin-bottom:10px;">🍝 Impostazioni Carboidrati</h3><div class="meta" style="margin-bottom:12px;">Puoi lasciare una voce in <b>AUTO</b>, fissarne un numero esatto oppure impostarla a <b>0</b>. I posti non fissati vengono completati automaticamente fino a 14 usando solo carboidrati senza tetto settimanale; quelli con tetto PDF entrano solo se li scegli tu.</div><div id="cfgCarboidratiContenuto"></div><div id="cfgCarboidratiTotale" style="font-weight:700;font-size:0.9rem;margin-top:12px;">Fissi: 0 / 14</div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciCarboidrati">Tutto AUTO</button><button class="secondary" id="btnCompletaCarboidrati" title="Fissa (FIXED) anche i posti ancora liberi, fino a 14 - nessuna voce resta AUTO al termine">Completa e fissa</button><button class="secondary" id="btnCasualeCarboidrati" title="Propone e fissa (FIXED) tutti e 14 i posti in un colpo solo - non è una semplice anteprima AUTO, dopo il click nessuna voce resta AUTO">Casuale 14</button><button class="primary" id="btnSalvaCarboidrati">Salva</button></div><div class="meta" style="margin-top:6px;font-size:.72rem;">"Completa e fissa" e "Casuale 14" impostano davvero le voci come FISSE (FIXED): dopo averle usate nessun posto resta AUTO, a meno di rimetterlo tu manualmente in AUTO o su "Tutto AUTO".</div></div></div>
-  <div id="setProteine"><div class="card"><h3 style="margin-bottom:10px;">🍗 Impostazioni Proteine</h3><div class="meta" style="margin-bottom:12px;">Tocca le caselle per fissare la categoria proteica di ciascun giorno. Max 2 categorie diverse per giorno. I tetti settimanali del percorso sono rispettati automaticamente.</div><div id="setTabellaGiorno" style="overflow-x:auto;"></div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciProteine">Pulisci</button><button class="secondary" id="btnCompletaProteine">Completa</button><button class="secondary" id="btnCasualeProteine">Casuale</button><button class="primary" id="btnSalvaProteine">Salva</button></div><div id="setPreferenzeMenu" style="margin-top:16px;"><h3 style="margin-bottom:10px;">⚙️ Preferenze generazione menù</h3><div class="meta" style="margin-bottom:8px;">Categorie che gradisci meno: il motore le penalizza senza eliminarle se servono per rispettare il piano.</div><div class="tabgroup" id="setProteineLimitate"></div><div class="meta" style="margin:14px 0 8px;">Tempo disponibile. Se selezioni poco tempo, quel pasto prova prima una composizione completa con pane o friselle, quando compatibile con il piano.</div><div class="tabgroup" id="setTempoMenu"></div></div></div></div>
+  <div id="setProteine"><div class="card"><h3 style="margin-bottom:10px;">🍗 Impostazioni Proteine</h3><div class="meta" style="margin-bottom:12px;">Tocca le caselle per fissare la categoria proteica di ciascun giorno. Max 2 categorie diverse per giorno. I tetti settimanali del percorso sono rispettati automaticamente.</div><div id="setTabellaGiorno" style="overflow-x:auto;"></div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciProteine">Pulisci</button><button class="secondary" id="btnCompletaProteine">Completa</button><button class="secondary" id="btnCasualeProteine">Casuale</button><button class="primary" id="btnSalvaProteine">Salva</button></div><div id="setPreferenzeMenu" style="margin-top:16px;"><h3 style="margin-bottom:10px;">⚙️ Preferenze generazione menù</h3><div class="meta" style="margin-bottom:8px;">Categorie che gradisci meno: il motore le penalizza senza eliminarle se servono per rispettare il piano.</div><div class="tabgroup" id="setProteineLimitate"></div><div class="meta" style="margin:14px 0 8px;">Tempo disponibile. Se selezioni poco tempo, quel pasto preferisce preparazioni fredde e pane/friselle.</div><div class="tabgroup" id="setTempoMenu"></div></div></div></div>
   <div class="card"><h3>🌾 Cereali non graditi</h3><div class="meta">Il motore li evita quando esistono alternative; non puoi escludere tutte le fonti.</div><div id="setCerealiGradimento" class="setting-swipe" style="margin-top:8px;"></div></div>
   <div class="card"><h3>🎚 Limiti personali ingredienti</h3><div class="meta">Puoi solo rendere più restrittivo il piano del nutrizionista. Lascia vuoto per non aggiungere un limite personale; 0 significa non proporre automaticamente quell'ingrediente. Un minimo clinico non può essere annullato.</div><div id="setLimitiPersonaliIngredienti" style="margin-top:10px;"></div><div id="setLimitiPersonaliStato" class="meta" style="margin-top:8px;"></div></div>
   <div id="setVerdure"><div class="card"><h3 style="margin-bottom:10px;">🥬 Impostazioni Verdure</h3><div id="setVerdurePreferite" style="margin-bottom:16px;"><div style="margin:12px 0 9px;"><span style="display:inline-block;border:1px solid #2ecc71;color:#2ecc71;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;line-height:1.2;">Verdure da favorire</span></div><div class="meta" style="margin-bottom:8px;">Seleziona una o più verdure stagionali da favorire nella generazione.</div><div class="setting-swipe" id="setVerdurePreferiteLista"></div><div id="setVerdurePreferiteNota" class="meta" style="margin-top:8px;"></div></div><div style="margin:12px 0 9px;"><span style="display:inline-block;border:1px solid #f1c40f;color:#f1c40f;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;line-height:1.2;">Disponibilità verdure</span></div><div class="meta" style="margin-bottom:10px;">Tocca per escludere le verdure che non vuoi usare. Puoi escluderne al massimo 7; raggiunto il limite devi riattivarne una prima di escluderne un'altra.</div><div id="setVerdureLista"></div><div id="setVerdureRicorrenti" style="margin-top:16px;"><div style="margin:12px 0 9px;"><span style="display:inline-block;border:1px solid #2ecc71;color:#2ecc71;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;line-height:1.2;">Verdure ricorrenti</span></div><div class="meta" style="margin-bottom:8px;">Seleziona una verdura e i pasti settimanali in cui deve essere obbligatoria. Nei pasti marcati il motore userà quella verdura.</div><div class="setting-swipe" id="setVerduraRicorrenteScelta"></div><div id="setVerduraRicorrenteTabella" style="overflow-x:auto;margin-top:10px;"></div><div class="meta" id="setVerduraRicorrenteNota" style="margin-top:8px;"></div></div></div></div>
@@ -1303,6 +1303,480 @@ function aggiornaStoricoSlot(chiaveSlot, nomeRicetta){
   }catch(e){}
 }
 
+/* =========================================================
+   SEED — arricchisce il DB in modo incrementale (non duplica
+   ciò che è già presente, aggiunge solo ciò che manca)
+   ========================================================= */
+async function seedIfEmpty(){
+  const baseData = [
+    // ---- CARBOIDRATI ----
+    {nome:'Riso Originario', gruppo:'carboidrati', varianti:[
+      {nome:'Riso Originario', formato:1000, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:332,prot:6.7,carb:75,grassi:0.6, qta:300}
+    ]},
+    {nome:'Pasta corta', gruppo:'carboidrati', varianti:[
+      {nome:'Pasta corta', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:350,prot:12,carb:71,grassi:1.5, qta:250}
+    ]},
+    {nome:'Pane', gruppo:'carboidrati', varianti:[
+      {nome:'Panino', formato:500, consistenza:'gia_cotto', congelabile:'si', zona:'dispensa', kcal:275,prot:9,carb:56,grassi:1.2, qta:250}
+    ]},
+    {nome:'Patate', gruppo:'carboidrati', varianti:[
+      {nome:'Patate', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:77,prot:2,carb:17,grassi:0.1, qta:400}
+    ]},
+    {nome:'Polenta', gruppo:'carboidrati', varianti:[
+      {nome:'Farina per polenta', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:362,prot:8,carb:75,grassi:3.4, qta:250}
+    ]},
+    {nome:'Orzo', gruppo:'carboidrati', varianti:[
+      {nome:'Orzo perlato', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:352,prot:10,carb:72,grassi:2, qta:250}
+    ]},
+
+    // ---- VERDURA ----
+    {nome:'Piselli', gruppo:'verdura', varianti:[
+      {nome:'Piselli surgelati', formato:250, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:81,prot:5.4,carb:14,grassi:0.4, qta:180},
+      {nome:'Piselli in barattolo', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:75,prot:4.8,carb:12,grassi:0.3, qta:400}
+    ]},
+    {nome:'Cipolla', gruppo:'verdura', varianti:[
+      {nome:'Cipolla', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:40,prot:1.1,carb:9,grassi:0.1, qta:80}
+    ]},
+    {nome:'Zucchine', gruppo:'verdura', varianti:[
+      {nome:'Zucchine', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:17,prot:1.2,carb:3.1,grassi:0.3, qta:200}
+    ]},
+    {nome:'Pomodoro', gruppo:'verdura', varianti:[
+      {nome:'Pomodoro fresco', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:18,prot:0.9,carb:3.9,grassi:0.2, qta:150}
+    ]},
+    {nome:'Insalata mista', gruppo:'verdura', varianti:[
+      {nome:'Insalata mista', formato:150, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:15,prot:1.4,carb:2.9,grassi:0.2, qta:80}
+    ]},
+    {nome:'Broccoli', gruppo:'verdura', varianti:[
+      {nome:'Broccoli', formato:0, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:34,prot:2.8,carb:4,grassi:0.4, qta:300}
+    ]},
+    {nome:'Carote', gruppo:'verdura', varianti:[
+      {nome:'Carote', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:35,prot:0.9,carb:7.6,grassi:0.2, qta:200}
+    ]},
+    {nome:'Melanzane', gruppo:'verdura', varianti:[
+      {nome:'Melanzane', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:24,prot:1,carb:5.7,grassi:0.2, qta:200}
+    ]},
+    {nome:'Peperoni', gruppo:'verdura', varianti:[
+      {nome:'Peperoni', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:27,prot:1,carb:6,grassi:0.3, qta:150}
+    ]},
+    {nome:'Cetriolo', gruppo:'verdura', varianti:[
+      {nome:'Cetriolo', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:12,prot:0.6,carb:2.2,grassi:0.1, qta:150}
+    ]},
+    {nome:'Radicchio', gruppo:'verdura', varianti:[
+      {nome:'Radicchio', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:13,prot:1.4,carb:1.7,grassi:0.2, qta:100}
+    ]},
+
+    // ---- FRUTTA ----
+    {nome:'Mela', gruppo:'frutta', varianti:[
+      {nome:'Mela', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:52,prot:0.3,carb:14,grassi:0.2, qta:300}
+    ]},
+    {nome:'Banana', gruppo:'frutta', varianti:[
+      {nome:'Banana', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:89,prot:1.1,carb:23,grassi:0.3, qta:240}
+    ]},
+    {nome:'Pera', gruppo:'frutta', varianti:[
+      {nome:'Pera', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:57,prot:0.4,carb:15,grassi:0.1, qta:300}
+    ]},
+
+    // ---- GRASSI ----
+    {nome:'Olio EVO', gruppo:'grassi', varianti:[
+      {nome:'Olio extravergine oliva', formato:1000, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:884,prot:0,carb:0,grassi:100, qta:500}
+    ]},
+    {nome:'Latte intero', gruppo:'grassi', varianti:[
+      {nome:'Latte intero', formato:1000, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:64,prot:3.2,carb:4.8,grassi:3.6, qta:200}
+    ]},
+    {nome:'Latte parzialmente scremato', gruppo:'grassi', varianti:[
+      {nome:'Latte parzialmente scremato', formato:1000, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:46,prot:3.3,carb:4.9,grassi:1.5, qta:0}
+    ]},
+    {nome:'Burro', gruppo:'grassi', varianti:[
+      {nome:'Burro', formato:250, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:717,prot:0.9,carb:0.1,grassi:81, qta:125}
+    ]},
+    {nome:'Maionese', gruppo:'grassi', varianti:[
+      {nome:'Maionese', formato:250, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:680,prot:1.1,carb:2,grassi:75, qta:100}
+    ]},
+    {nome:'Avocado', gruppo:'grassi', varianti:[
+      {nome:'Avocado', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:160,prot:2,carb:8.5,grassi:14.7, qta:200}
+    ]},
+    {nome:'Frutta secca', gruppo:'grassi', varianti:[
+      {nome:'Noci e mandorle', formato:200, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:654,prot:15,carb:14,grassi:65, qta:100}
+    ]},
+
+    // ---- PROTEINE ----
+    {nome:'Pancetta', gruppo:'proteine', varianti:[
+      {nome:'Pancetta a cubetti', formato:150, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:380,prot:14,carb:0.5,grassi:36, qta:100}
+    ]},
+    {nome:'Petto di pollo', gruppo:'proteine', varianti:[
+      {nome:'Petto di pollo', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:120,prot:23,carb:0,grassi:2.6, qta:150}
+    ]},
+    {nome:'Uova', gruppo:'proteine', varianti:[
+      {nome:'Uova', formato:60, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:143,prot:13,carb:1.1,grassi:9.5, qta:120, unitaPezzo:true}
+    ]},
+    {nome:'Stracchino', gruppo:'proteine', varianti:[
+      {nome:'Stracchino', formato:250, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:280,prot:16,carb:2,grassi:24, qta:60}
+    ]},
+    {nome:'Parmigiano', gruppo:'proteine', varianti:[
+      {nome:'Parmigiano grattugiato', formato:100, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:392,prot:35,carb:0,grassi:28, qta:50}
+    ]},
+    {nome:'Mozzarella', gruppo:'proteine', varianti:[
+      {nome:'Mozzarella', formato:125, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:253,prot:18,carb:1,grassi:19, qta:125}
+    ]},
+    {nome:'Tonno', gruppo:'proteine', varianti:[
+      {nome:'Tonno in scatola', formato:80, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:116,prot:25,carb:0,grassi:1, qta:160}
+    ]},
+    {nome:'Nasello', gruppo:'proteine', varianti:[
+      {nome:'Filetto di nasello surgelato', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:78,prot:17,carb:0,grassi:0.8, qta:400}
+    ]},
+    {nome:'Gamberetti', gruppo:'proteine', varianti:[
+      {nome:'Gamberetti surgelati', formato:300, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:71,prot:13,carb:0.9,grassi:1.2, qta:300}
+    ]},
+    {nome:'Ceci', gruppo:'proteine', varianti:[
+      {nome:'Ceci in barattolo', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:139,prot:7.3,carb:16,grassi:2.6, qta:400}
+    ]},
+    {nome:'Fagioli', gruppo:'proteine', varianti:[
+      {nome:'Fagioli borlotti in barattolo', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:127,prot:8.7,carb:16,grassi:0.5, qta:400}
+    ]},
+    {nome:'Lenticchie', gruppo:'proteine', varianti:[
+      {nome:'Lenticchie in barattolo', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:116,prot:9,carb:14,grassi:0.5, qta:400}
+    ]},
+    {nome:'Tofu', gruppo:'proteine', varianti:[
+      {nome:'Tofu', formato:200, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:76,prot:8,carb:1.9,grassi:4.8, qta:200}
+    ]},
+
+    // ---- NUOVI: da guida Dott.ssa Praderio ----
+    {nome:'Cous cous', gruppo:'carboidrati', varianti:[
+      {nome:'Cous cous', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:376,prot:13,carb:77,grassi:1, qta:250}
+    ]},
+    {nome:'Farro', gruppo:'carboidrati', varianti:[
+      {nome:'Farro perlato', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:335,prot:15,carb:67,grassi:2.5, qta:250}
+    ]},
+    {nome:'Noodles', gruppo:'carboidrati', varianti:[
+      {nome:'Noodles per ramen', formato:300, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:350,prot:10,carb:71,grassi:2, qta:300}
+    ]},
+    {nome:'Fette biscottate', gruppo:'carboidrati', varianti:[
+      {nome:'Fette biscottate', formato:300, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:408,prot:10,carb:76,grassi:8, qta:300}
+    ]},
+    {nome:'Cereali da colazione', gruppo:'carboidrati', varianti:[
+      {nome:'Cereali da colazione', formato:375, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:378,prot:7,carb:84,grassi:1, qta:375}
+    ]},
+    {nome:'Biscotti', gruppo:'carboidrati', varianti:[
+      {nome:'Biscotti secchi', formato:350, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:440,prot:7,carb:75,grassi:13, qta:350}
+    ]},
+    {nome:'Friselle', gruppo:'carboidrati', varianti:[
+      {nome:'Friselle', formato:250, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:330,prot:11,carb:65,grassi:3, qta:250}
+    ]},
+    {nome:'Spinaci', gruppo:'verdura', varianti:[
+      {nome:'Spinaci freschi', formato:0, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:23,prot:2.9,carb:3.6,grassi:0.4, qta:200}
+    ]},
+    {nome:'Basilico', gruppo:'verdura', varianti:[
+      {nome:'Basilico fresco', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:23,prot:3.2,carb:2.7,grassi:0.6, qta:20}
+    ]},
+    {nome:'Melone', gruppo:'frutta', varianti:[
+      {nome:'Melone', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:34,prot:0.8,carb:8,grassi:0.2, qta:400}
+    ]},
+    {nome:'Limone', gruppo:'frutta', varianti:[
+      {nome:'Limone', formato:0, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:29,prot:1.1,carb:9.3,grassi:0.3, qta:100}
+    ]},
+    {nome:'Miele', gruppo:'grassi', varianti:[
+      {nome:'Miele', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:304,prot:0.3,carb:82,grassi:0, qta:400}
+    ]},
+    {nome:'Marmellata', gruppo:'grassi', varianti:[
+      {nome:'Marmellata', formato:350, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:250,prot:0.4,carb:62,grassi:0.1, qta:350}
+    ]},
+    {nome:'Cioccolato', gruppo:'grassi', varianti:[
+      {nome:'Cioccolato fondente', formato:100, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:546,prot:7.8,carb:46,grassi:31, qta:100}
+    ]},
+    {nome:'Panna da cucina', gruppo:'grassi', varianti:[
+      {nome:'Panna da cucina', formato:200, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:196,prot:2.5,carb:3.5,grassi:19, qta:0}
+    ]},
+    {nome:'Carne di maiale', gruppo:'proteine', varianti:[
+      {nome:'Nodino di maiale', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:143,prot:21,carb:0,grassi:6, qta:0}
+    ]},
+    {nome:'Prosciutto crudo', gruppo:'proteine', varianti:[
+      {nome:'Prosciutto crudo', formato:100, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:268,prot:28,carb:0,grassi:18, qta:0}
+    ]},
+    {nome:'Sogliola', gruppo:'proteine', varianti:[
+      {nome:'Sogliola surgelata', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:86,prot:16.5,carb:0,grassi:1.7, qta:0}
+    ]},
+    {nome:'Brie', gruppo:'proteine', varianti:[
+      {nome:'Brie', formato:125, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:334,prot:20,carb:0.5,grassi:28, qta:0}
+    ]},
+    {nome:'Feta', gruppo:'proteine', varianti:[
+      {nome:'Feta', formato:200, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:264,prot:14,carb:4,grassi:21, qta:0}
+    ]},
+    {nome:'Yogurt', gruppo:'proteine', varianti:[
+      {nome:'Yogurt bianco', formato:125, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:61,prot:3.5,carb:4.7,grassi:3.3, qta:125}
+    ]},
+    {nome:'Fagioli cannellini', gruppo:'proteine', varianti:[
+      {nome:'Fagioli cannellini in barattolo', formato:400, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:126,prot:8.5,carb:16,grassi:0.5, qta:400}
+    ]},
+
+    // ---- ulteriori ingredienti per espandere le ricette ----
+    {nome:'Ricotta', gruppo:'proteine', varianti:[
+      {nome:'Ricotta', formato:250, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:146,prot:8.8,carb:3.5,grassi:10.9, qta:250}
+    ]},
+    {nome:'Crackers', gruppo:'carboidrati', varianti:[
+      {nome:'Crackers', formato:250, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:440,prot:10,carb:65,grassi:15, qta:250}
+    ]},
+    {nome:'Patatine in busta', gruppo:'grassi', varianti:[
+      {nome:'Patatine in busta', formato:150, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:536,prot:6,carb:53,grassi:33, qta:0}
+    ]},
+    {nome:'Tacchino', gruppo:'proteine', varianti:[
+      {nome:'Petto di tacchino', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:104,prot:24,carb:0,grassi:1, qta:0}
+    ]},
+    {nome:'Manzo', gruppo:'proteine', varianti:[
+      {nome:'Fettina di manzo', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:158,prot:26,carb:0,grassi:5.4, qta:0}
+    ]},
+    {nome:'Bresaola', gruppo:'proteine', varianti:[
+      {nome:'Bresaola', formato:70, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:151,prot:32,carb:0.4,grassi:2.6, qta:0}
+    ]},
+    {nome:'Prosciutto cotto', gruppo:'proteine', varianti:[
+      {nome:'Prosciutto cotto', formato:100, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:109,prot:18,carb:1.4,grassi:3.3, qta:0}
+    ]},
+    {nome:'Sgombro', gruppo:'proteine', varianti:[
+      {nome:'Sgombro fresco', formato:300, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:205,prot:18,carb:0,grassi:14, qta:0}
+    ]},
+    {nome:'Salmone', gruppo:'proteine', varianti:[
+      {nome:'Salmone', formato:300, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:208,prot:20,carb:0,grassi:13, qta:0}
+    ]},
+    {nome:'Orata', gruppo:'proteine', varianti:[
+      {nome:'Orata surgelata', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:100,prot:20,carb:0,grassi:2, qta:0}
+    ]},
+    {nome:'Polpo', gruppo:'proteine', varianti:[
+      {nome:'Polpo surgelato', formato:500, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:164,prot:30,carb:0,grassi:2.1, qta:0}
+    ]},
+    {nome:'Crescenza', gruppo:'proteine', varianti:[
+      {nome:'Crescenza', formato:200, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:289,prot:17,carb:2,grassi:24, qta:0}
+    ]},
+    {nome:'Pecorino', gruppo:'proteine', varianti:[
+      {nome:'Pecorino', formato:150, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:392,prot:26,carb:0,grassi:32, qta:0}
+    ]},
+    {nome:'Funghi', gruppo:'verdura', varianti:[
+      {nome:'Funghi champignon', formato:0, consistenza:'da_cuocere', congelabile:'no', zona:'frigo', kcal:22,prot:3.1,carb:1.6,grassi:0.3, qta:0}
+    ]},
+    {nome:'Cavolfiore', gruppo:'verdura', varianti:[
+      {nome:'Cavolfiore', formato:0, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:25,prot:1.9,carb:2.9,grassi:0.2, qta:0}
+    ]},
+    {nome:'Fagiolini', gruppo:'verdura', varianti:[
+      {nome:'Fagiolini', formato:0, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:24,prot:1.7,carb:3.4,grassi:0.2, qta:0}
+    ]},
+
+    // ---- B9: alimenti integrali (guida: "un alimento integrale in almeno uno dei tre pasti principali") ----
+    {nome:'Pasta integrale', gruppo:'carboidrati', varianti:[
+      {nome:'Pasta integrale', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:332,prot:13,carb:66,grassi:2.5, qta:0, integrale:true}
+    ]},
+    {nome:'Riso integrale', gruppo:'carboidrati', varianti:[
+      {nome:'Riso integrale', formato:1000, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:337,prot:7,carb:74,grassi:2.5, qta:0, integrale:true}
+    ]},
+    {nome:'Pane integrale', gruppo:'carboidrati', varianti:[
+      {nome:'Pane integrale', formato:250, consistenza:'gia_cotto', congelabile:'si', zona:'dispensa', kcal:224,prot:9,carb:41,grassi:2, qta:0, integrale:true}
+    ]},
+    {nome:'Farina 00', gruppo:'carboidrati', varianti:[
+      {nome:'Farina 00', formato:1000, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:340,prot:10,carb:76,grassi:1, qta:250}
+    ]},
+    {nome:'Sfoglie di lasagna', gruppo:'carboidrati', varianti:[
+      {nome:'Sfoglie di lasagna', formato:500, consistenza:'da_cuocere', congelabile:'no', zona:'dispensa', kcal:350,prot:12,carb:72,grassi:1.5, qta:0}
+    ]},
+    {nome:'Burro di arachidi', gruppo:'grassi', varianti:[
+      {nome:'Burro di arachidi', formato:350, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:588,prot:25,carb:20,grassi:50, qta:0}
+    ]},
+    {nome:'Crema di nocciole e cacao', gruppo:'grassi', varianti:[
+      {nome:'Crema di nocciole e cacao', formato:350, consistenza:'gia_cotto', congelabile:'no', zona:'dispensa', kcal:539,prot:6,carb:57,grassi:31, qta:0}
+    ]},
+    {nome:'Salmone affumicato', gruppo:'proteine', varianti:[
+      {nome:'Salmone affumicato', formato:100, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:147,prot:25,carb:0,grassi:4.5, qta:0}
+    ]},
+    {nome:'Granita fatta in casa', gruppo:'carboidrati', varianti:[
+      {nome:'Granita fatta in casa', formato:150, consistenza:'gia_cotto', congelabile:'no', zona:'freezer', kcal:110,prot:0,carb:27,grassi:0, qta:0}
+    ]},
+
+    // ---- Nuovi ingredienti (richiesti da Enrico, valori da fonti nutrizionali online) ----
+    {nome:'Branzino', gruppo:'proteine', varianti:[
+      {nome:'Branzino surgelato', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'freezer', kcal:82,prot:16,carb:0,grassi:2.6, qta:0}
+    ]},
+    {nome:'Emmental', gruppo:'proteine', varianti:[
+      {nome:'Emmental', formato:150, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:380,prot:28,grassi:29,carb:1.5, qta:0}
+    ]},
+    {nome:'Formaggio spalmabile', gruppo:'proteine', varianti:[
+      {nome:'Formaggio spalmabile', formato:175, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:313,prot:8.6,carb:0.3,grassi:31, qta:0}
+    ]},
+    {nome:'Taleggio', gruppo:'proteine', varianti:[
+      {nome:'Taleggio', formato:200, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:315,prot:19,carb:0.9,grassi:26.2, qta:0}
+    ]},
+    {nome:'Tomini', gruppo:'proteine', varianti:[
+      {nome:'Tomini', formato:100, consistenza:'gia_cotto', congelabile:'no', zona:'frigo', kcal:280,prot:20,carb:1,grassi:22, qta:0}
+    ]},
+    {nome:'Provola', gruppo:'proteine', varianti:[
+      {nome:'Provola', formato:200, consistenza:'gia_cotto', congelabile:'si', zona:'frigo', kcal:262,prot:21,carb:0.7,grassi:19.6, qta:0}
+    ]},
+    {nome:'Sovracosce di pollo', gruppo:'proteine', varianti:[
+      {nome:'Sovracosce di pollo', formato:500, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:119,prot:20.5,carb:0,grassi:4, qta:0}
+    ]},
+    {nome:'Pollo a dadini', gruppo:'proteine', varianti:[
+      {nome:'Pollo a dadini', formato:400, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:120,prot:23,carb:0,grassi:2.6, qta:0}
+    ]},
+    {nome:'Costine di maiale', gruppo:'proteine', varianti:[
+      {nome:'Costine di maiale', formato:600, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:277,prot:16.5,carb:0,grassi:23.5, qta:0}
+    ]},
+    {nome:'Hamburger di suino', gruppo:'proteine', varianti:[
+      {nome:'Hamburger di suino', formato:250, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:250,prot:17,carb:0,grassi:20, qta:0}
+    ]},
+    {nome:'Hamburger di pollo', gruppo:'proteine', varianti:[
+      {nome:'Hamburger di pollo', formato:250, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:165,prot:19,carb:1,grassi:9.5, qta:0}
+    ]},
+    {nome:'Hamburger di tacchino', gruppo:'proteine', varianti:[
+      {nome:'Hamburger di tacchino', formato:250, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:140,prot:20,carb:1.3,grassi:6, qta:0}
+    ]},
+    {nome:'Hamburger di vitello', gruppo:'proteine', varianti:[
+      {nome:'Hamburger di vitello', formato:250, consistenza:'da_cuocere', congelabile:'si', zona:'frigo', kcal:132,prot:20,carb:0,grassi:5.4, qta:0}
+    ]}
+  ];
+
+  const ingredientiEsistenti = await getAll('ingredienti');
+  const variantiEsistenti = await getAll('varianti');
+  const trovaBase = (nome)=> ingredientiEsistenti.find(x=>x.nome.toLowerCase()===nome.toLowerCase());
+  const trovaVariante = (nome)=> variantiEsistenti.find(x=>x.nome.toLowerCase()===nome.toLowerCase());
+
+  for(const b of baseData){
+    let base = trovaBase(b.nome);
+    let baseId;
+    if(base){
+      baseId = base.id;
+      base.allergeni = Array.isArray(base.allergeni) ? base.allergeni : [];
+      base.bloccoManuale = !!base.bloccoManuale;
+      await put('ingredienti',base);
+    }
+    else{
+      baseId = uid();
+      const nuovoBase = {id:baseId, nome:b.nome, gruppo:b.gruppo, allergeni:[], bloccoManuale:false};
+      await put('ingredienti', nuovoBase);
+      ingredientiEsistenti.push(nuovoBase);
+    }
+    for(const v of b.varianti){
+      if(trovaVariante(v.nome)) continue; // già presente, non duplicare
+      const varId = uid();
+      const nuovaVar = {
+        id:varId, ingredienteId:baseId, nome:v.nome, formato:v.formato,
+        consistenza:v.consistenza, congelabile:v.congelabile,
+        kcal100:v.kcal, prot100:v.prot, carb100:v.carb, grassi100:v.grassi,
+        unitaPezzo: v.unitaPezzo||false, integrale: v.integrale||false, categoria: v.categoria||'conf'
+      };
+      await put('varianti', nuovaVar);
+      variantiEsistenti.push(nuovaVar);
+      if(v.qta>0){
+        await put('inventario', {
+          id:uid(), variantId:varId, zona:v.zona, quantita:v.qta,
+          stato:'disponibile', dataAcquisto: isoLocale(new Date())
+        });
+      }
+    }
+  }
+
+  // patch: rimuove il latte di soia dal database (non usato dall'utente)
+  const varLatteSoia = variantiEsistenti.find(v=>v.nome.toLowerCase()==='latte di soia');
+  if(varLatteSoia){
+    await delKey('varianti', varLatteSoia.id);
+    await delKey('ingredienti', varLatteSoia.ingredienteId);
+    const invLatteSoia = (await getAll('inventario')).filter(i=>i.variantId===varLatteSoia.id);
+    for(const item of invLatteSoia) await delKey('inventario', item.id);
+    const ricetteConLatteSoia = (await getAll('ricette')).filter(r=>r.ingredienti.some(i=>i.variantId===varLatteSoia.id));
+    for(const ric of ricetteConLatteSoia) await delKey('ricette', ric.id);
+  }
+
+  // patch: il latte intero non viene proposto a colazione (decisione
+  // applicativa indipendente, non collegata all'idoneità contestuale
+  // dei carboidrati/pasto principale)
+  {
+    const varDaRimuovereCol = variantiEsistenti.find(v=>v.nome.toLowerCase()==='latte intero');
+    if(varDaRimuovereCol && varDaRimuovereCol.colazioneGruppo){
+      varDaRimuovereCol.colazioneGruppo = null;
+      varDaRimuovereCol.porzioneColazione = null;
+      await put('varianti', varDaRimuovereCol);
+    }
+  }
+
+  // patch: chi aveva già "Uova" salvata prima dell'introduzione di unitaPezzo la corregge
+  const varUova = variantiEsistenti.find(v=>v.nome.toLowerCase()==='uova');
+  if(varUova && !varUova.unitaPezzo){
+    varUova.unitaPezzo = true;
+    await put('varianti', varUova);
+  }
+
+  /* L'idoneità e la porzione di colazione (colazioneGruppo/porzioneColazione)
+     sono decise esclusivamente da motor-v12.js:sincronizzaIngredientiIndexedDB,
+     a partire dal catalogo canonico (ingredienti-new.json:sottoCategoriaColazione
+     o ancheColazione per gli ingredienti a doppio contesto) e dal contesto
+     'colazione' di resolveNutritionConfig(). Nessuna seconda scrittura qui:
+     un tempo esisteva un blocco TAG_COLAZIONE con porzioni hardcoded
+     (incluso "uova: 120g", incompatibile con la quantità contestuale in
+     pezzi) — rimosso, vedi docs/REGISTRO_MODIFICHE.md. */
+
+  // B9: patch — farro e orzo perlato sono cereali integrali per natura
+  for(const nomeIntegrale of ['farro perlato', 'orzo perlato']){
+    const v = variantiEsistenti.find(x=>x.nome.toLowerCase()===nomeIntegrale);
+    if(v && !v.integrale){
+      v.integrale = true;
+      await put('varianti', v);
+    }
+  }
+
+  // Classificazione fresco / conf (confezionato: sottovuoto o barattolo) / surgelato —
+  // criterio unico che determina il Salvafrigo (solo fresco e surgelato sono candidati
+  // ad "avanzo scomodo"; conf ha lunga conservazione e consumo lento, mai urgente).
+  // Idempotente: corregge anche chi ha già il database popolato.
+  const CATEGORIA_ALIMENTI = {
+    // ---- FRESCO ----
+    'avocado':'fresco', 'banana':'fresco', 'basilico fresco':'fresco', 'broccoli':'fresco',
+    'carote':'fresco', 'cavolfiore':'fresco', 'cetriolo':'fresco', 'cipolla':'fresco',
+    'fagiolini':'fresco', 'funghi champignon':'fresco', 'insalata mista':'fresco',
+    'limone':'fresco', 'mela':'fresco', 'melanzane':'fresco', 'melone':'fresco',
+    'peperoni':'fresco', 'pera':'fresco', 'pomodoro fresco':'fresco',
+    'radicchio':'fresco', 'spinaci freschi':'fresco', 'zucchine':'fresco',
+    'latte intero':'fresco', 'latte parzialmente scremato':'fresco', 'yogurt bianco':'fresco',
+    'ricotta':'fresco', 'mozzarella':'fresco', 'crescenza':'fresco', 'stracchino':'fresco',
+    'panna da cucina':'fresco', 'feta':'fresco', 'brie':'fresco',
+    'petto di pollo':'fresco', 'petto di tacchino':'fresco', 'fettina di manzo':'fresco',
+    'nodino di maiale':'fresco', 'pancetta a cubetti':'fresco', 'sgombro fresco':'fresco',
+    'bresaola':'fresco', 'prosciutto crudo':'fresco', 'prosciutto cotto':'fresco',
+    'uova':'fresco', 'tofu':'fresco', 'panino':'fresco', 'pane integrale':'fresco',
+    // ---- SURGELATO ----
+    'piselli surgelati':'surgelato', 'gamberetti surgelati':'surgelato',
+    'filetto di nasello surgelato':'surgelato', 'orata surgelata':'surgelato',
+    'sogliola surgelata':'surgelato', 'polpo surgelato':'surgelato', 'salmone':'surgelato',
+    // ---- CONF (sottovuoto o barattolo, lunga conservazione) ----
+    'olio extravergine oliva':'conf', 'burro':'conf', 'maionese':'conf', 'miele':'conf',
+    'marmellata':'conf', 'cioccolato fondente':'conf', 'noci e mandorle':'conf',
+    'pasta corta':'conf', 'pasta integrale':'conf', 'riso originario':'conf', 'riso integrale':'conf',
+    'cous cous':'conf', 'orzo perlato':'conf', 'farro perlato':'conf', 'noodles per ramen':'conf',
+    'farina per polenta':'conf', 'patate':'conf', 'fette biscottate':'conf',
+    'farina 00':'conf', 'sfoglie di lasagna':'conf', 'burro di arachidi':'conf', 'crema di nocciole e cacao':'conf', 'salmone affumicato':'fresco', 'granita fatta in casa':'surgelato',
+    'cereali da colazione':'conf', 'biscotti secchi':'conf', 'crackers':'conf', 'friselle':'conf',
+    'patatine in busta':'conf', 'ceci in barattolo':'conf', 'fagioli borlotti in barattolo':'conf',
+    'fagioli cannellini in barattolo':'conf', 'lenticchie in barattolo':'conf',
+    'tonno in scatola':'conf', 'parmigiano grattugiato':'conf', 'pecorino':'conf',
+    'piselli in barattolo':'conf',
+    'zucca':'fresco', 'verza':'fresco', 'crauti in barattolo':'conf', 'mais in scatola':'conf',
+    // ---- nuovi ingredienti ----
+    'emmental':'fresco', 'formaggio spalmabile':'fresco', 'taleggio':'fresco',
+    'tomini':'fresco', 'provola':'fresco', 'sovracosce di pollo':'fresco',
+    'pollo a dadini':'fresco', 'costine di maiale':'fresco',
+    'hamburger di suino':'fresco', 'hamburger di pollo':'fresco',
+    'hamburger di tacchino':'fresco', 'hamburger di vitello':'fresco',
+    'branzino surgelato':'surgelato'
+  };
+  for(const [nomeVar, categoria] of Object.entries(CATEGORIA_ALIMENTI)){
+    const v = variantiEsistenti.find(x=>x.nome.toLowerCase()===nomeVar);
+    if(v && v.categoria!==categoria){
+      v.categoria = categoria;
+      await put('varianti', v);
+    }
+  }
+
+  // Le ricette di libreria NON sono più incorporate qui: vivono in un file JSON
+  // esterno (ricette.json), importato tramite "Importa ricette" in Impostazioni.
+  // Questo tiene il file dell'app leggero indipendentemente da quante ricette ci sono.
+  // Al primo avvio su un dispositivo nuovo (nessuna ricetta ancora importata), l'app
+  // resta funzionante ma vuota di ricette finché non si importa il file — vedi il
+  // messaggio guida in renderPiano()/renderRicette().
+}
+
 /* Database nutrizionale esterno (ingredienti.json): nome ingrediente -> valori per
    100g (kcal, proteine, carboidrati, grassi, ...). Caricato una volta all'avvio (vedi
    IIFE di init in fondo al file) e tenuto in memoria. Usato SOLO per calcolare in
@@ -1591,7 +2065,7 @@ function labelGiornoEsteso(iso){
 }
 
 const ALLERGENI_UE=[['glutine','🌾','Glutine'],['crostacei','🦐','Crostacei'],['uova','🥚','Uova'],['pesce','🐟','Pesce'],['arachidi','🥜','Arachidi'],['soia','🌱','Soia'],['latte','🥛','Latte'],['frutta_guscio','🌰','Frutta a guscio'],['sedano','🥬','Sedano'],['senape','🟡','Senape'],['sesamo','⚪','Sesamo'],['solfiti','🍷','Solfiti'],['lupini','🫘','Lupini'],['molluschi','🐚','Molluschi']];
-const CONFIG_AVANZATA_DEFAULT={dietProfile:'onnivoro',proteinFrequencies:{carne:{min:1,max:3,target:3},pesce:{min:2,max:3,target:3},formaggi:{min:2,max:3,target:3},uova:{min:1,max:2,target:2},legumi:{min:2,max:null,target:3}},subtypeCaps:{carne_rossa:1,affettati:1,pesce_grande:1,pesce_conservato:1},specialBreakfastMax:1,specialMealsMax:2,snackWeeklyCaps:{da_limitare:2,grana_spuntino:2,crackers_spuntino:2,pane_marmellata_spuntino:2,granita_spuntino:2,patatine_grisbi:1},snackDailyCaps:{frutta_secca_giornaliero:1},cooldownDays:{carboidrati:7,verdure:2},fruit:{min:2,max:3,portionMin:150,portionMax:200},oilGramsPerDay:10,limitedCarbTotalMax:3,deadlines:{pranzo:'15:00',cena:'22:00'}};
+const CONFIG_AVANZATA_DEFAULT={dietProfile:'onnivoro',proteinFrequencies:{carne:{min:1,max:3,target:3},pesce:{min:2,max:3,target:3},formaggi:{min:2,max:3,target:3},uova:{min:1,max:2,target:2},legumi:{min:2,max:null,target:3}},subtypeCaps:{carne_rossa:1,affettati:1,pesce_grande:1,pesce_conservato:1},maxProteinSourcesPerDay:2,specialBreakfastMax:1,specialMealsMax:2,snackWeeklyCaps:{da_limitare:2,grana_spuntino:2,crackers_spuntino:2,pane_marmellata_spuntino:2,granita_spuntino:2,patatine_grisbi:1},snackDailyCaps:{frutta_secca_giornaliero:1},cooldownDays:{carboidrati:7,verdure:2},fruit:{min:2,max:3,portionMin:150,portionMax:200},oilGramsPerMeal:10,deadlines:{pranzo:'15:00',cena:'22:00'}};
 /* Fallback statico per bootstrap/legacy. Dalla v87 i controlli nutrizionista
    usano il resolver canonico nutrition-config.js come sorgente effettiva. */
 function cloneConfigurazione(x){return typeof structuredClone==='function'?structuredClone(x):JSON.parse(JSON.stringify(x));}
@@ -1601,12 +2075,12 @@ function configAvanzataDaRisolta(resolved,sorgente){
   if(r.proteinFrequencies)out.proteinFrequencies=cloneConfigurazione(r.proteinFrequencies);
   if(r.subtypeCaps)out.subtypeCaps=cloneConfigurazione(r.subtypeCaps);
   if(r.fruit)out.fruit=cloneConfigurazione(r.fruit);
+  if(r.maxProteinSourcesPerDay!==undefined)out.maxProteinSourcesPerDay=r.maxProteinSourcesPerDay;
   if(r.specialBreakfastMax!==undefined)out.specialBreakfastMax=r.specialBreakfastMax;
   if(r.specialMealsMax!==undefined)out.specialMealsMax=r.specialMealsMax;
   if(r.snackWeeklyCaps)out.snackWeeklyCaps=cloneConfigurazione(r.snackWeeklyCaps);
   if(r.snackDailyCaps)out.snackDailyCaps=cloneConfigurazione(r.snackDailyCaps);
-  if(r.oilGramsPerDay!==undefined)out.oilGramsPerDay=r.oilGramsPerDay;
-  if(r.limitedCarbTotalMax!==undefined)out.limitedCarbTotalMax=r.limitedCarbTotalMax;
+  if(r.oilGramsPerMeal!==undefined)out.oilGramsPerMeal=r.oilGramsPerMeal;
   if(r.cooldownDays)out.cooldownDays=cloneConfigurazione(r.cooldownDays);
   if(r.deadlines)out.deadlines=cloneConfigurazione(r.deadlines);
   return out;
@@ -1666,18 +2140,12 @@ async function renderConfigAvanzata(){
   for(const key of ['carne_rossa','affettati','pesce_grande','pesce_conservato'])html+='<div class="nutri-row single"><span class="nutri-name">'+key.replaceAll('_',' ')+'</span><span class="nutri-unit">max/sett.</span><input type="number" min="0" data-cfg-avanzata="subtypeCaps.'+key+'" value="'+((cfg.subtypeCaps||cfgDefault.subtypeCaps)[key]??'')+'"></div>';
   html+=rigaNumericaConfig('fruit','Frutta',cfg.fruit&&cfg.fruit.min,cfg.fruit&&cfg.fruit.max,'giorno');
   html+=rigaNumericaConfig('fruit.portion','Porzione frutta',cfg.fruit&&cfg.fruit.portionMin,cfg.fruit&&cfg.fruit.portionMax,'g');
-  for(const [path,label,val,unit] of [['specialBreakfastMax','Colazioni speciali',cfg.specialBreakfastMax,'sett.'],['oilGramsPerDay','Olio EVO al giorno',cfg.oilGramsPerDay,'g']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
+  for(const [path,label,val,unit] of [['specialBreakfastMax','Colazioni speciali',cfg.specialBreakfastMax,'sett.'],['oilGramsPerMeal','Olio per pasto',cfg.oilGramsPerMeal,'g']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
   const snackPdf=['grana_spuntino','crackers_spuntino','pane_marmellata_spuntino','granita_spuntino','patatine_grisbi'];
   for(const k of snackPdf){const v=(cfg.snackWeeklyCaps||cfgDefault.snackWeeklyCaps)[k];html+='<div class="nutri-row single"><span class="nutri-name">Spuntino '+k.replaceAll('_',' ')+'</span><span class="nutri-unit">max/sett.</span><input type="number" min="0" data-cfg-avanzata="snackWeeklyCaps.'+k+'" value="'+(v??'')+'"></div>';}
   html+='<div class="nutri-row single"><span class="nutri-name">Frutta secca</span><span class="nutri-unit">max/giorno</span><input type="number" min="0" data-cfg-avanzata="snackDailyCaps.frutta_secca_giornaliero" value="'+((cfg.snackDailyCaps||cfgDefault.snackDailyCaps).frutta_secca_giornaliero??'')+'"></div>';
   html+='<div class="nutri-source-label app">Regole applicative APP-CWE</div>';
-  for(const [path,label,val,unit] of [['specialMealsMax','Pasti speciali',cfg.specialMealsMax,'sett.'],['snackWeeklyCaps.da_limitare','Spuntini da limitare',cfg.snackWeeklyCaps&&cfg.snackWeeklyCaps.da_limitare,'max/sett.']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
-  /* Decisione esplicita di Cwe: tetto cumulativo settimanale dei
-     carboidrati limitati, regola APP-CWE (non PDF) configurabile ad
-     personam. Campo canonico limitedCarbTotalMax: intero 0-14, default 3
-     solo quando il dato non esiste in configAvanzataEffettivaSalvata
-     (che è già risolta - mai un secondo default grafico indipendente). */
-  html+='<div class="nutri-row single"><span class="nutri-name">Tetto cumulativo carboidrati limitati</span><span class="nutri-unit">Regola APP-CWE · totale settimanale</span><input type="number" min="0" max="14" step="1" data-cfg-avanzata="limitedCarbTotalMax" value="'+(cfg.limitedCarbTotalMax??3)+'"></div>';
+  for(const [path,label,val,unit] of [['maxProteinSourcesPerDay','Fonti proteiche/giorno',cfg.maxProteinSourcesPerDay,'giorno'],['specialMealsMax','Pasti speciali',cfg.specialMealsMax,'sett.'],['snackWeeklyCaps.da_limitare','Spuntini da limitare',cfg.snackWeeklyCaps&&cfg.snackWeeklyCaps.da_limitare,'max/sett.']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
   for(const k of ['carboidrati','verdure'])html+='<div class="nutri-row single"><span class="nutri-name">Cooldown '+k+'</span><span class="nutri-unit">giorni</span><input type="number" min="0" data-cfg-avanzata="cooldownDays.'+k+'" value="'+((cfg.cooldownDays||cfgDefault.cooldownDays)[k]??'')+'"></div>';
   for(const k of ['pranzo','cena'])html+='<div class="nutri-row single"><span class="nutri-name">Scadenza '+k+'</span><span class="nutri-unit">ora</span><input type="time" data-cfg-avanzata="deadlines.'+k+'" data-cfg-testo="1" value="'+((cfg.deadlines||cfgDefault.deadlines)[k]||'')+'"></div>';
   box.innerHTML=html;
@@ -1815,10 +2283,8 @@ const MAPPATURA_DADINI_INTEGRALE = {
    (vedi calcolaCandidato), non un blocco rigido: se è l'unica disponibile resta
    comunque scelta, in linea con "nessun blocco rigido" del resto del motore. */
 const COOLDOWN_GIORNI_SENZA_GRUPPO = 3;
-/* Porzioni di frutta consigliate al giorno: valore di bootstrap, sostituito
-   subito da applicaConfigAvanzataRuntime() con fruit.min/max risolti da
-   resolveNutritionConfig() - mai usato direttamente per il conteggio. */
-let FRUTTA_GIORNALIERA = {min:2, max:3};
+/* Porzioni di frutta consigliate al giorno */
+const FRUTTA_GIORNALIERA = {min:2, max:3};
 
 /* G: la colazione si compone a gruppi (guida Praderio), non è una "ricetta" fissa */
 let CAP_COLAZIONE_SPECIALE = 1;
@@ -1827,7 +2293,6 @@ function applicaConfigAvanzataRuntime(cfg){
   CAP_SPUNTINO_SETTIMANALE=Object.assign({},def.snackWeeklyCaps,eff.snackWeeklyCaps||{});
   CAP_SPUNTINO_GIORNALIERO=Object.assign({},def.snackDailyCaps,eff.snackDailyCaps||{});
   CAP_COLAZIONE_SPECIALE=eff.specialBreakfastMax??def.specialBreakfastMax??1;
-  FRUTTA_GIORNALIERA=Object.assign({},def.fruit,eff.fruit||{});
 }
 const COLAZIONE_GRUPPI = [
   {chiave:'proteine', label:'Proteine', obbligatorio:true, consentiNessuno:true},
@@ -1948,6 +2413,28 @@ const PRIMI_SPECIALI_CONFIG = {
 };
 
 /* =========================================================
+   ALLOCAZIONE CONDIMENTO PER PASTO
+   -------------------------------------------------------
+   Dal PDF: "Olio extravergine d'oliva: 2-3 cucchiai al giorno"
+   (20-30g totali). Diviso tra pranzo e cena = 10-15g per pasto.
+   Usiamo 10g come valore base per il calcolo nutrizionale
+   dei pasti composti (secondo + contorno).
+   Questa quota NON è un ingrediente della ricetta: è un
+   contributo fisso che il motore aggiunge alla nutrizione
+   del pasto composto, garantendo coerenza col piano PDF.
+   ========================================================= */
+const ALLOCAZIONE_CONDIMENTO_PASTO = {
+  olio_evo: { nome:'Olio extravergine oliva', grammi:10, kcal:88, prot:0, carb:0, grassi:10 }
+  // Sale, pepe, spezie: irrilevanti nutrizionalmente, non entrano nel calcolo.
+  // Aceto/limone: trascurabili, non entrano.
+};
+/* Totale condimento per pasto composto */
+const CONDIMENTO_KCAL = ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.kcal;   // 88
+const CONDIMENTO_GRASSI = ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.grassi; // 10
+const CONDIMENTO_PROT = ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.prot;   // 0
+const CONDIMENTO_CARB = ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.carb;   // 0
+
+/* =========================================================
    SCHEMA COMPONENTI PER SECONDI E CONTORNI
    -------------------------------------------------------
    Le ricette possono essere "componenti" anziché piatti completi.
@@ -1993,6 +2480,14 @@ const CARBOIDRATI_PASTO = {
   piadina:       { label:'Piadina',       ingrediente:'Piadina',           porzione:80,  gruppo:'limitati',      limitato:true, tettoSettimanale:2, haPoolSughi:false },
   pasta_sfoglia: { label:'Pasta sfoglia', ingrediente:'Sfoglie di lasagna', porzione:60, gruppo:'limitati',      limitato:true, tettoSettimanale:2, haPoolSughi:false }
 };
+
+/* Rotazione principale del NUOVO sistema modulare.
+   NON tocca CEREALI_MODULARI usato dal motore E3 esistente. */
+const CARBOIDRATI_ROTAZIONE = ['pasta','pasta_fresca','riso','farro','orzo','cous_cous','pane','patate','polenta','gallette','crackers','friselle','gnocchi','pasta_ripiena','taralli','piadina','pasta_sfoglia'];
+
+/* Carboidrati a frequenza limitata.
+   Vengono proposti solo se il tetto settimanale non è raggiunto. */
+const CARBOIDRATI_LIMITATI = ['friselle','gnocchi','pasta_ripiena','taralli','piadina','pasta_sfoglia'];
 
 /* =========================================================
    CATEGORIA MODULARE — i "mattoncini Lego" del pasto
@@ -2153,24 +2648,11 @@ const CONFIG_CARB_TIPI_BASE = [
 const NUTRITION_CONFIG_SET=globalThis.DietaPlannerNutritionConfig;
 const CONFIG_CARB_MAX_CASELLE=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.carbCellMax||6;
 const CONFIG_CARB_TOTALE_OBBLIGATORIO=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.carbSlots||14;
-let CONFIG_CARB_TETTO_LIMITATI=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.limitedCarbTotalMax||3;
+const CONFIG_CARB_TETTO_LIMITATI=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.limitedCarbTotalMax||3;
 const CONFIG_CARB_TIPI=CONFIG_CARB_TIPI_BASE.map(t=>{
   const cap=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.PDF_BASELINE.carbohydrateWeeklyCaps[t.chiave];
   return Object.assign({},t,{limitato:cap!==undefined,maxIndividuale:cap!==undefined?Number(cap):CONFIG_CARB_MAX_CASELLE});
 });
-/* Decisione esplicita di Cwe: il tetto cumulativo settimanale dei
-   carboidrati limitati è una regola APP-CWE configurabile ad personam
-   dal nutrizionista (limitedCarbTotalMax, risolto da
-   resolveNutritionConfig() - unica fonte). CONFIG_CARB_TETTO_LIMITATI
-   è quindi una cache di sessione (stesso pattern già in uso per
-   CAP_SPUNTINO_* / frequenzeProteineSetCorrenti), mai una costante fissa:
-   ricaricata qui, non ricalcolata altrove. */
-async function aggiornaTettoCarbLimitatiSet(){
-  const N=globalThis.DietaPlannerNutritionConfig;if(!N)return;
-  const rec=await getOne('impostazioni','configAvanzata');
-  const resolved=N.resolveNutritionConfig({nutritionist:{config:rec&&rec.valore||{}}});
-  CONFIG_CARB_TETTO_LIMITATI=resolved.limitedCarbTotalMax;
-}
 
 /* Stato canonico Set carboidrati: AUTO / EXCLUDED / FIXED.
    configCarboidrati e configCarboidratiOrigini restano scritti per compatibilità legacy. */
@@ -2217,12 +2699,7 @@ async function validaClassiCarboidratiSet(){
   return null;
 }
 async function salvaConfigCarboidratiSet(mostraMessaggio){
-  const N=globalThis.DietaPlannerNutritionConfig,input=inputCarboidratiCanonicoSet();
-  /* La validazione pre-salvataggio deve usare il tetto cumulativo
-     effettivamente risolto per l'utente (limitedCarbTotalMax), non il
-     default APP-CWE: la configurazione nutrizionista va sempre passata
-     al resolver, mai omessa. */
-  const recCfg=await getOne('impostazioni','configAvanzata'),resolved=N.resolveNutritionConfig({nutritionist:{config:recCfg&&recCfg.valore||{}},user:{carbohydrates:input}});
+  const N=globalThis.DietaPlannerNutritionConfig,input=inputCarboidratiCanonicoSet(),resolved=N.resolveNutritionConfig({user:{carbohydrates:input}});
   if(!resolved.valid){if(mostraMessaggio!==false)await avviso('Configurazione carboidrati non valida: '+resolved.errors.join(' '));return {ok:false,errori:resolved.errors};}
   const erroreClasse=await validaClassiCarboidratiSet();if(erroreClasse){if(mostraMessaggio!==false)await avviso(erroreClasse);return {ok:false,errori:[erroreClasse]};}
   /* Unica verità funzionale scritta: configCarboidratiStati. I vecchi
@@ -2298,7 +2775,7 @@ async function salvaSetCompleto(mostraMessaggio){
      lasciate vuote restano vuote in tabellaGiornoCategoria - il motore
      le estrarrà di nuovo a caso a ogni generazione futura, mai
      congelate da un singolo Completa/Casuale guardato una volta. */
-  const cfgProt=await caricaVincoliProteineSet(),fatt=validaFattibilitaProteineSet(tabellaProteineDraft||{},cfgProt.frequenze);
+  const cfgProt=await caricaVincoliProteineSet(),fatt=validaFattibilitaProteineSet(tabellaProteineDraft||{},cfgProt.frequenze,maxFontiProteicheGiornaliereSet);
   if(!fatt.ok){const msg='La tabella proteine non è compatibile con i limiti del nutrizionista.';if(mostraMessaggio!==false)await avviso(msg);return {ok:false,errori:[msg]};}
   await put('impostazioni',{chiave:'tabellaGiornoCategoria',valore:cloneConfigurazione(tabellaProteineDraft||{})});
   const caps=await salvaLimitiPersonaliSet(false);
@@ -2317,7 +2794,7 @@ document.getElementById('btnSalvaCarboidrati')?.addEventListener('click',()=>sal
 async function getConfigProteine(){
   const rec=await getOne('impostazioni','configAvanzata'),cfg=configAvanzataEffettivaSalvata(rec&&rec.valore||{}),resolved=risolviConfigNutrizionista(cfg,{},[],[]),forbidden=new Set(resolved.profile&&resolved.profile.forbiddenProteinMacros||[]),frequenze={};
   for(const [k,v] of Object.entries(resolved.proteinFrequencies||{}))frequenze[k]=forbidden.has(k)?Object.assign({},v,{min:0,max:0,target:0}):Object.assign({},v);
-  return {frequenze,subtypeCaps:Object.assign({},resolved.subtypeCaps||{}),profile:resolved.profile};
+  return {frequenze,subtypeCaps:Object.assign({},resolved.subtypeCaps||{}),maxProteinSourcesPerDay:resolved.maxProteinSourcesPerDay,profile:resolved.profile};
 }
 async function getFrequenzeConsigliateEffettive(){return (await getConfigProteine()).frequenze;}
 async function getExtraCapSottotipiEffettivi(){return (await getConfigProteine()).subtypeCaps;}
@@ -2331,22 +2808,21 @@ let tabellaProteineDraft=null;
    ormai superata. */
 let tabellaProteineAnteprima=null;
 let frequenzeProteineSetCorrenti=null;
-/* Regola definitiva di Cwe: pranzo e cena sono sempre due categorie
-   proteiche diverse - non esiste più un "fonti proteiche/giorno"
-   configurabile: il numero di caselle fissabili per giorno è sempre 2. */
+let maxFontiProteicheGiornaliereSet=2;
 async function caricaVincoliProteineSet(){
-  const cfg=await getConfigProteine();frequenzeProteineSetCorrenti=cfg.frequenze;return cfg;
+  const cfg=await getConfigProteine();frequenzeProteineSetCorrenti=cfg.frequenze;maxFontiProteicheGiornaliereSet=Math.max(1,Math.min(2,Number(cfg.maxProteinSourcesPerDay)||2));return cfg;
 }
-function validaFattibilitaProteineSet(tabella,frequenze){
-  const freq=frequenze||frequenzeProteineSetCorrenti||{},conteggi={carne:0,pesce:0,formaggi:0,uova:0,legumi:0};
+function validaFattibilitaProteineSet(tabella,frequenze,maxGiorno){
+  const freq=frequenze||frequenzeProteineSetCorrenti||{},limiteGiorno=Math.max(1,Math.min(2,Number(maxGiorno||maxFontiProteicheGiornaliereSet)||2)),conteggi={carne:0,pesce:0,formaggi:0,uova:0,legumi:0};
   let occupati=0;
   for(let i=0;i<7;i++){
     const arr=(tabella['giorno_'+i]||[]);
-    if(arr.length>2)return {ok:false,reason:'day-max',giorno:i,conteggi,slotLiberi:0,deficitMinimi:0};
-    /* arr.length da solo non basta: ['carne','carne'] ha lunghezza 2 ma
-       non contiene due fonti diverse - pranzo e cena devono sempre
-       essere categorie distinte, mai la stessa ripetuta due volte. */
-    if(arr.length===2&&arr[0]===arr[1])return {ok:false,reason:'day-duplicate',giorno:i,conteggi,slotLiberi:0,deficitMinimi:0};
+    if(arr.length>limiteGiorno)return {ok:false,reason:'day-max',giorno:i,conteggi,slotLiberi:0,deficitMinimi:0};
+    /* arr.length da solo non basta: ['carne','carne'] ha lunghezza 2 (pari
+       al limite con 2 fonti/giorno) ma non contiene due fonti diverse -
+       con 2 fonti/giorno le due caselle devono essere categorie distinte,
+       mai la stessa ripetuta due volte. */
+    if(limiteGiorno===2&&arr.length===2&&arr[0]===arr[1])return {ok:false,reason:'day-duplicate',giorno:i,conteggi,slotLiberi:0,deficitMinimi:0};
     occupati+=arr.length;for(const cat of arr)if(conteggi[cat]!==undefined)conteggi[cat]++;
   }
   for(const [cat,n] of Object.entries(conteggi)){const max=freq[cat]&&freq[cat].max;if(max!==null&&max!==undefined&&n>Number(max))return {ok:false,reason:'weekly-max',categoria:cat,conteggi,slotLiberi:14-occupati,deficitMinimi:0};}
@@ -2358,7 +2834,7 @@ async function renderSetTabellaGiorno(){
   const el=document.getElementById('setTabellaGiorno');if(!el)return;
   const [rec,cfg]=await Promise.all([getOne('impostazioni','tabellaGiornoCategoria'),caricaVincoliProteineSet()]);
   if(!tabellaProteineDraft)tabellaProteineDraft=cloneConfigurazione(rec&&rec.valore||{});
-  const tabella=tabellaProteineDraft,anteprima=tabellaProteineAnteprima,freq=cfg.frequenze,maxDay=2;
+  const tabella=tabellaProteineDraft,anteprima=tabellaProteineAnteprima,freq=cfg.frequenze,maxDay=maxFontiProteicheGiornaliereSet;
   const head=NOMI_GIORNI_SET.map(g=>'<th style="writing-mode:vertical-rl;transform:rotate(180deg);font-size:.68rem;padding:4px 2px;min-width:26px;text-align:center;">'+g+'</th>').join('');
   const righe=CATEGORIE_PROTEICHE_SET.map(c=>{
     const reg=freq[c.chiave]||{min:0,max:0},tetto=reg.max,n=NOMI_GIORNI_SET.filter((_,i)=>(tabella['giorno_'+i]||[]).includes(c.chiave)).length,rowMax=tetto!==null&&tetto!==undefined&&n>=Number(tetto),range=reg.max===null?'min '+reg.min+' · senza max':reg.min+'–'+reg.max+' / sett.';
@@ -2378,7 +2854,7 @@ async function renderSetTabellaGiorno(){
       const tetto=freq[cat]&&freq[cat].max,used=NOMI_GIORNI_SET.filter((_,i)=>(tabella['giorno_'+i]||[]).includes(cat)).length;
       if(tetto!==null&&tetto!==undefined&&used>=Number(tetto)){await avviso('Hai già raggiunto il massimo settimanale definito dal piano per questa categoria.');return;}
       if(arr.length>=maxDay){await avviso('Puoi fissare al massimo '+maxDay+' categorie proteiche per questo giorno.');return;}
-      arr.push(cat);const fatt=validaFattibilitaProteineSet(tabella,freq);if(!fatt.ok){arr.pop();await avviso(fatt.reason==='minimums'?'Questa scelta lascerebbe troppo pochi pasti liberi per completare le frequenze minime del piano.':'Questa scelta supera un vincolo proteico del piano.');return;}
+      arr.push(cat);const fatt=validaFattibilitaProteineSet(tabella,freq,maxDay);if(!fatt.ok){arr.pop();await avviso(fatt.reason==='minimums'?'Questa scelta lascerebbe troppo pochi pasti liberi per completare le frequenze minime del piano.':'Questa scelta supera un vincolo proteico del piano.');return;}
     }
     tabellaProteineAnteprima=null;
     await renderSetTabellaGiorno();
@@ -2392,11 +2868,12 @@ async function completaTabellaProteine(daZero){
      In nessuno dei due casi si tocca tabellaProteineDraft - è solo
      un'anteprima, mai scritta da sola. */
   const base=daZero?{}:cloneConfigurazione(tabellaProteineDraft||{});
-  /* Pranzo e cena sono sempre due categorie diverse (regola definitiva di
-     Cwe, nessuna configurazione "fonti/giorno"): buildProteinGrid le
-     garantisce sempre distinte con vero backtracking, mai un fallback
-     che riusa la categoria precedente a pool vuoto. */
-  const griglia=E&&E.buildProteinGrid?E.buildProteinGrid(giorni,base,{proteinFrequencies:cfg.frequenze},{},Math.random):null;
+  /* maxProteinSourcesPerDay va passato esplicitamente: senza, buildProteinGrid
+     ricadrebbe sul default interno (2) invece del valore effettivo del
+     nutrizionista, e con esso il generatore garantisce pranzo!==cena
+     (o pranzo===cena a 1 fonte/giorno) con vero backtracking, mai un
+     fallback che riusa la categoria precedente a pool vuoto. */
+  const griglia=E&&E.buildProteinGrid?E.buildProteinGrid(giorni,base,{proteinFrequencies:cfg.frequenze,maxProteinSourcesPerDay:cfg.maxProteinSourcesPerDay},{},Math.random):null;
   if(griglia&&griglia.errors&&griglia.errors.length){
     tabellaProteineAnteprima=null;
     await renderSetTabellaGiorno();
@@ -2445,7 +2922,6 @@ async function renderSetPreferenzeMenu(){
     elLim.querySelectorAll('[data-set-prot-lim]').forEach(b=>b.addEventListener('click',async()=>{
       const k=b.dataset.setProtLim,nuova=(esclusa===k)?[]:[k];
       await put('impostazioni',{chiave:'setProteineLimitate',valore:nuova});
-      if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();
       await renderMantieniSwipe(renderSetPreferenzeMenu);
     }));
   }
@@ -2454,26 +2930,20 @@ async function renderSetPreferenzeMenu(){
   const elTempo=document.getElementById('setTempoMenu');
   if(elTempo){
     elTempo.innerHTML=`<button data-set-tempo="pranzo" class="${tempo.pranzo?'active':''}">Poco tempo a pranzo</button><button data-set-tempo="cena" class="${tempo.cena?'active':''}">Poco tempo a cena</button><button data-set-tempo="nessuno" class="${(!tempo.pranzo&&!tempo.cena)?'active':''}">Ho tempo</button>`;
-    elTempo.querySelectorAll('[data-set-tempo]').forEach(b=>b.addEventListener('click',async()=>{const k=b.dataset.setTempo;if(k==='nessuno'){tempo.pranzo=false;tempo.cena=false;}else tempo[k]=!tempo[k];await put('impostazioni',{chiave:'setPocoTempo',valore:tempo});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();await renderMantieniSwipe(renderSetPreferenzeMenu);}));
+    elTempo.querySelectorAll('[data-set-tempo]').forEach(b=>b.addEventListener('click',async()=>{const k=b.dataset.setTempo;if(k==='nessuno'){tempo.pranzo=false;tempo.cena=false;}else tempo[k]=!tempo[k];await put('impostazioni',{chiave:'setPocoTempo',valore:tempo});await renderMantieniSwipe(renderSetPreferenzeMenu);}));
   }
   const recV=await getOne('impostazioni','setVerdurePreferite'),pref=new Set(recV&&recV.valore?recV.valore:[]);
   const stag=verdureDiStagione(new Date());
   const [invPref,varPref,basi,resolvedClinical]=await Promise.all([getAll('inventario'),getAll('varianti'),getAll('ingredienti'),risolviSetUtenteCorrente({ingredientWeeklyCaps:{}})]);
   const baseBy=new Map(basi.map(b=>[b.id,b])),blockedNames=new Set(basi.filter(b=>ingredienteEsclusoClinicamenteNelSet(b,resolvedClinical)).map(b=>b.nome));
-  /* Patate è un carboidrato, non una verdura (catalogo, baseline e
-     specifica concordano): l'insieme dei nomi realmente vegetali si
-     costruisce da varianti+ingredienti (base.gruppo==='verdura'), mai da
-     un elenco stagionale/di inventario non filtrato - né Patate né altri
-     carboidrati possono mai entrare in setVerdurePreferite. */
-  const nomiVerdureReali=new Set(varPref.filter(v=>{const b=baseBy.get(v.ingredienteId);return b&&b.gruppo==='verdura';}).map(v=>v.nome));
   const inCasaPref=new Set(invPref.filter(i=>i.stato==='disponibile'&&i.quantita>0).map(i=>i.variantId));
-  const nomiInCasa=varPref.filter(v=>inCasaPref.has(v.id)&&nomiVerdureReali.has(v.nome)&&!ingredienteEsclusoClinicamenteNelSet(baseBy.get(v.ingredienteId),resolvedClinical)).map(v=>v.nome);
-  const listaPref=Array.from(new Set([...stag.filter(n=>nomiVerdureReali.has(n)&&!blockedNames.has(n)),...nomiInCasa]));
+  const nomiInCasa=varPref.filter(v=>inCasaPref.has(v.id)&&!ingredienteEsclusoClinicamenteNelSet(baseBy.get(v.ingredienteId),resolvedClinical)).map(v=>v.nome);
+  const listaPref=Array.from(new Set([...stag.filter(n=>!blockedNames.has(n)),...nomiInCasa]));
   const elV=document.getElementById('setVerdurePreferiteLista');
   if(elV){
     const stagOrd=listaPref.sort((a,b)=>a.localeCompare(b,'it'));elV.innerHTML=stagOrd.map(v=>`<button data-set-verd-pref="${v}" class="${pref.has(v)?'active':''}">${v}</button>`).join('')+`<button data-set-verd-pref-reset="1" class="${pref.size===0?'active':''}">Nessuna preferenza</button>`;
-    elV.querySelectorAll('[data-set-verd-pref]').forEach(b=>b.addEventListener('click',async()=>{const v=b.dataset.setVerdPref;pref.has(v)?pref.delete(v):pref.add(v);await put('impostazioni',{chiave:'setVerdurePreferite',valore:[...pref]});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();await renderMantieniSwipe(renderSetPreferenzeMenu);}));
-    elV.querySelector('[data-set-verd-pref-reset]')?.addEventListener('click',async()=>{await put('impostazioni',{chiave:'setVerdurePreferite',valore:[]});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();await renderMantieniSwipe(renderSetPreferenzeMenu);});
+    elV.querySelectorAll('[data-set-verd-pref]').forEach(b=>b.addEventListener('click',async()=>{const v=b.dataset.setVerdPref;pref.has(v)?pref.delete(v):pref.add(v);await put('impostazioni',{chiave:'setVerdurePreferite',valore:[...pref]});await renderMantieniSwipe(renderSetPreferenzeMenu);}));
+    elV.querySelector('[data-set-verd-pref-reset]')?.addEventListener('click',async()=>{await put('impostazioni',{chiave:'setVerdurePreferite',valore:[]});await renderMantieniSwipe(renderSetPreferenzeMenu);});
   }
   const nota=document.getElementById('setVerdurePreferiteNota');if(nota){const alte=[...pref].filter(n=>ingredientiJsonMap[n]?.deperibilita==='alta'&&!blockedNames.has(n));nota.textContent=alte.length?'💡 Molto deperibili: '+alte.join(', ')+'; il motore può limitarle a fine settimana.':'';}
 }
@@ -2486,7 +2956,7 @@ async function renderSetVerdure(){
   const [varianti,ingredienti,cfgRec,resolved]=await Promise.all([getAll('varianti'),getAll('ingredienti'),getOne('impostazioni','setVerdureDisattivate'),risolviSetUtenteCorrente({ingredientWeeklyCaps:{}})]);
   const ingPerId={};for(const i of ingredienti)ingPerId[i.id]=i;
   const disattivate=new Set(cfgRec&&cfgRec.valore?cfgRec.valore:[]);
-  const verdure=varianti.filter(v=>{const base=ingPerId[v.ingredienteId];return base&&base.gruppo==='verdura';});
+  const verdure=varianti.filter(v=>{const base=ingPerId[v.ingredienteId];return base&&(base.gruppo==='verdura'||v.nome.toLowerCase()==='patate');});
   const isClinical=v=>ingredienteEsclusoClinicamenteNelSet(ingPerId[v.ingredienteId],resolved),userOffCount=[...disattivate].filter(id=>{const v=verdure.find(x=>x.id===id);return v&&!isClinical(v);}).length;
   const gruppi=[['fresco','Freschi','#2ecc71'],['fresco_duraturo','Freschi duraturi','#f1c40f'],['confezionato','In scatola','#f39c12'],['surgelato','Surgelati','#54bfe8']];
   const maxEsclusioni=7,alMassimo=userOffCount>=maxEsclusioni;let html='';
@@ -2504,7 +2974,7 @@ async function renderSetVerdure(){
       const ric=await getOne('impostazioni','verduraRicorrente');if(ric&&ric.valore===vid){await avviso('Questa verdura è programmata come ricorrente. Togli prima la programmazione ricorrente oppure scegli un’altra verdura.');return;}
       const current=[...lista].filter(id=>{const v=verdure.find(x=>x.id===id);return v&&!isClinical(v);}).length;if(current>=maxEsclusioni){await avviso('Puoi escludere al massimo 7 verdure. Riattivane una prima di escluderne un’altra.');return;}lista.add(vid);
     }
-    await put('impostazioni',{chiave:'setVerdureDisattivate',valore:[...lista]});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();await renderMantieniSwipe(renderSetVerdure);
+    await put('impostazioni',{chiave:'setVerdureDisattivate',valore:[...lista]});await renderMantieniSwipe(renderSetVerdure);
   }));
 }
 
@@ -2611,7 +3081,6 @@ document.getElementById('btnResetColazionePref')?.addEventListener('click', asyn
    completo, nessuna reinterpretazione dei record legacy qui. */
 async function caricaConfigCarboidrati(){
   const statiRec=await getOne('impostazioni','configCarboidratiStati');
-  await aggiornaTettoCarbLimitatiSet();
   inizializzaStatoCaselleCarb();
   const normalized=statiRec&&statiRec.valore||{};
   for(const tipo of CONFIG_CARB_TIPI){
@@ -2673,18 +3142,18 @@ async function componiSecondoContorno(proteinaId, contornoId, cottura){
       }
     }
   }
-  /* L'olio EVO non viene più sommato qui con una quota fissa (era
-     ALLOCAZIONE_CONDIMENTO_PASTO, rimossa): la quota canonica per pasto
-     principale (oilGramsPerMainMeal) è applicata da
-     motor-v12.js:normalizzaRealizzazioniOlio sulle realizzazioni reali,
-     mai su questo percorso legacy (senza chiamanti raggiungibili oggi:
-     voce.secondoId non viene mai scritto con un valore reale dal motore
-     attuale). */
+  // Aggiungi allocazione condimento
+  nutrizione.kcal += CONDIMENTO_KCAL;
+  nutrizione.prot += CONDIMENTO_PROT;
+  nutrizione.carb += CONDIMENTO_CARB;
+  nutrizione.grassi += CONDIMENTO_GRASSI;
   return {
     nome: nomeComposto,
     proteinaId: proteinaId || null,
     contornoId: contornoId || null,
-    nutrizione
+    nutrizione,
+    condimentoGrammi: ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.grammi,
+    condimentoKcal: CONDIMENTO_KCAL
   };
 }
 /* Helper: trova variante per nome (usato da componiSecondoContorno) */
@@ -2943,7 +3412,7 @@ async function mostraVista(nome){
   if(nome==='menu') renderMenuSettimanale();
   if(nome==='ricette') renderRicette();
   if(nome==='inventario') renderInventario();
-  if(nome==='set'){ setDraft={voci:new Map(),modificata:false}; tabellaProteineDraft=null; tabellaProteineAnteprima=null; await aggiornaTettoCarbLimitatiSet(); renderSet(); renderCaselleCarboidrati(); aggiornaStatoConfigCarb(); renderSetTabellaGiorno(); renderSetPreferenzeMenu(); }
+  if(nome==='set'){ setDraft={voci:new Map(),modificata:false}; tabellaProteineDraft=null; tabellaProteineAnteprima=null; renderSet(); renderCaselleCarboidrati(); aggiornaStatoConfigCarb(); renderSetTabellaGiorno(); renderSetPreferenzeMenu(); }
   if(nome==='impostazioni')renderInfoVersioniRemote();
   if(nome==='nutrizionista')renderConfigAvanzata();
 }
@@ -3019,7 +3488,7 @@ async function renderSetCerealiGradimento(){
   const [basi,rec,resolved]=await Promise.all([getAll('ingredienti'),getOne('impostazioni','cerealiNonGraditi'),risolviSetUtenteCorrente({ingredientWeeklyCaps:{}})]),box=document.getElementById('setCerealiGradimento');if(!box)return;
   const cereals=basi.filter(b=>b.gruppo==='carboidrati').sort((a,b)=>a.nome.localeCompare(b.nome,'it')),off=new Set(rec&&rec.valore||[]),allowed=cereals.filter(b=>!ingredienteEsclusoClinicamenteNelSet(b,resolved)),allowedIds=new Set(allowed.map(b=>b.id));
   box.innerHTML=cereals.map(b=>{const clinical=ingredienteEsclusoClinicamenteNelSet(b,resolved);return `<button type="button" data-cereale-gradimento="${b.id}" class="${clinical?'inactive-red piano':(off.has(b.id)?'active':'')}" ${clinical?'disabled title="Escluso dal piano nutrizionista"':''}>${b.nome}${clinical?' · piano':''}</button>`;}).join('');
-  box.querySelectorAll('[data-cereale-gradimento]:not([disabled])').forEach(btn=>btn.addEventListener('click',async()=>{const id=btn.dataset.cerealeGradimento;if(off.has(id))off.delete(id);else{const offAllowed=[...off].filter(x=>allowedIds.has(x));if(offAllowed.length>=Math.max(0,allowed.length-1)){await avviso('Deve restare almeno un cereale consentito dal piano disponibile.');return;}off.add(id);}await put('impostazioni',{chiave:'cerealiNonGraditi',valore:[...off]});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();renderSetCerealiGradimento();}));
+  box.querySelectorAll('[data-cereale-gradimento]:not([disabled])').forEach(btn=>btn.addEventListener('click',async()=>{const id=btn.dataset.cerealeGradimento;if(off.has(id))off.delete(id);else{const offAllowed=[...off].filter(x=>allowedIds.has(x));if(offAllowed.length>=Math.max(0,allowed.length-1)){await avviso('Deve restare almeno un cereale consentito dal piano disponibile.');return;}off.add(id);}await put('impostazioni',{chiave:'cerealiNonGraditi',valore:[...off]});renderSetCerealiGradimento();}));
 }
 
 document.querySelectorAll('[data-close]').forEach(btn=>{
@@ -7100,15 +7569,19 @@ async function aggiornaListaSpesaAutomatica(scartoSettimane){
           }
         }
       }
-      /* La quota di olio EVO NON viene più aggiunta qui con un valore fisso
-         (era ALLOCAZIONE_CONDIMENTO_PASTO, rimossa): la quota canonica per
-         pasto principale (oilGramsPerMainMeal) è già inclusa nelle
-         quantità effettive delle realizzazioni reali (applicata da
-         motor-v12.js:normalizzaRealizzazioniOlio) e viene già aggregata dal
-         ramo motoreNuovo sopra, come qualunque altro ingrediente - nessuna
-         seconda somma qui. Questo blocco copriva solo il vecchio percorso
-         "multi" senza realizzazioni, mai raggiungibile dal motore attuale
-         (voce.secondoId non viene mai scritto con un valore reale). */
+      // Condimento: se il secondo di questo pasto è una base proteica componibile,
+      // aggiungi la quota fissa di olio EVO al fabbisogno — NON è un ingrediente
+      // della ricetta componente, è un contributo fisso dal PDF
+      if(voce.modo==='multi' && voce.secondoId && !(voce.realizzazioni&&voce.realizzazioni.length)){
+        const ricettaSecondoSpesa = await getOne('ricette', voce.secondoId);
+        if(ricettaSecondoSpesa && ricettaSecondoSpesa.componente === COMPONENTE_PROTEINA){
+          const varOlio = varianti.find(v=>v.nome.toLowerCase()==='olio extravergine oliva');
+          if(varOlio){
+            const olioPerPasto = ALLOCAZIONE_CONDIMENTO_PASTO.olio_evo.grammi * porzioniSel;
+            fabbisogno[varOlio.id] = (fabbisogno[varOlio.id]||0) + olioPerPasto;
+          }
+        }
+      }
     }
   }
 

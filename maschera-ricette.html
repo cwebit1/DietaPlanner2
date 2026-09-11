@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maschera creazione ricette — nuovo ricettario</title>
+<style>
+  :root{--bg:#141a12;--card:#1c2419;--card2:#222b1e;--border:#2f3b29;--text:#e9efe4;--dim:#9fae94;--accent:#8fce55;--warn:#e0954a;--bad:#e0594a;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,sans-serif;font-size:14px;padding-bottom:60px;}
+  h1{font-size:1.05rem;margin:0;padding:12px;border-bottom:1px solid var(--border);}
+  h2{font-size:0.9rem;color:var(--accent);margin:0 0 6px;}
+  section{padding:12px;border-bottom:1px solid var(--border);}
+  label{display:block;font-size:0.76rem;color:var(--dim);margin-top:8px;margin-bottom:2px;}
+  input[type=text],input[type=password],select,textarea{
+    width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);
+    border-radius:6px;padding:6px 8px;font-size:0.85rem;
+  }
+  textarea{font-family:monospace;font-size:0.72rem;min-height:140px;white-space:pre;}
+  .help{font-size:0.7rem;color:var(--dim);margin-top:3px;line-height:1.4;}
+  .ingrediente-riga{display:flex;gap:6px;align-items:center;padding:4px 0;border-bottom:1px solid var(--border);}
+  .ingrediente-riga input[type=checkbox]{width:auto;flex:0 0 auto;}
+  .ingrediente-riga .nome-ingr{flex:0 0 40%;font-size:0.8rem;}
+  .ingrediente-riga input[type=text]{flex:1;}
+  .compat-condimenti{flex:0 0 100%;margin:5px 0 2px 22px;padding:6px 8px;background:var(--card2);border:1px solid var(--border);border-radius:6px;}
+  .compat-condimenti .titolo{font-size:0.68rem;color:var(--dim);margin-bottom:4px;}
+  .compat-condimenti .opzioni{display:flex;flex-wrap:wrap;gap:6px;}
+  .compat-condimenti label{display:flex;align-items:center;gap:4px;margin:0;font-size:0.7rem;color:var(--text);}
+  .btn-add{background:var(--card2);border:1px dashed var(--border);color:var(--accent);border-radius:6px;padding:6px 10px;font-size:0.78rem;width:100%;margin-top:8px;}
+  .btn-add:disabled{opacity:0.4;border-style:solid;color:var(--dim);}
+  .btn-main{background:var(--accent);color:#12220a;border:none;border-radius:8px;padding:10px 16px;font-weight:700;font-size:0.9rem;cursor:pointer;width:100%;margin-top:10px;}
+  .btn-secondary{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;font-size:0.82rem;width:100%;margin-top:6px;}
+  .stato{font-size:0.72rem;color:var(--dim);margin-top:4px;}
+  .stato.ok{color:var(--accent);}
+  .stato.err{color:var(--bad);}
+  .array-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;}
+  .voce-salvata{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;}
+  .voce-salvata .indice{color:var(--accent);font-weight:700;font-size:0.8rem;}
+  .voce-salvata .riepilogo{font-size:0.76rem;color:var(--dim);margin:4px 0;}
+  .voce-salvata .azioni{display:flex;gap:6px;margin-top:6px;}
+  .voce-salvata .azioni button{flex:1;padding:5px;font-size:0.72rem;border-radius:6px;border:1px solid var(--border);background:var(--card2);color:var(--text);}
+  .voce-salvata .azioni button.elimina{color:var(--bad);}
+  .badge-editing{background:var(--warn);color:#221200;font-size:0.7rem;padding:2px 8px;border-radius:10px;margin-left:6px;}
+  .ingr-full-riga{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px;margin-top:6px;}
+  .ingr-full-riga .campi{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px;}
+  .ingr-full-riga input{font-size:0.78rem;padding:5px;}
+  .ingr-full-riga button.elimina{background:var(--bad);color:#fff;border:none;border-radius:6px;padding:4px 8px;font-size:0.7rem;margin-top:4px;width:100%;}
+
+  .blocco{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;position:relative;}
+  .blocco .etichetta-blocco{font-size:0.72rem;color:var(--dim);text-transform:uppercase;letter-spacing:0.5px;}
+  .blocco button.rimuovi-blocco{position:absolute;top:8px;right:8px;background:var(--bad);color:#fff;border:none;border-radius:6px;padding:3px 8px;font-size:0.7rem;}
+  .toolbar-blocchi{display:flex;gap:6px;margin-top:8px;}
+  .toolbar-blocchi button{flex:1;}
+  .contatore-slot{font-size:0.72rem;color:var(--dim);margin-top:4px;}
+
+  .gruppo-div{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px;margin-top:8px;}
+  .selettore-univoco{display:flex;flex-wrap:wrap;gap:5px;margin-top:6px;}
+  .selettore-univoco button{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:14px;padding:5px 10px;font-size:0.76rem;}
+  .selettore-univoco button.attivo{background:var(--accent);color:#12220a;border-color:var(--accent);font-weight:700;}
+  .flag-mostra{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:0.78rem;color:var(--dim);}
+  .flag-mostra input{width:auto;}
+</style>
+</head>
+<body>
+
+<h1>🧩 Maschera creazione ricette — nuovo ricettario</h1>
+
+<section>
+  <h2>0. Connessione GitHub (per ingredienti-new.json e db-ricette.json)</h2>
+  <label>Token GitHub (mai salvato)</label>
+  <input type="password" id="ghToken" placeholder="ghp_...">
+  <label>Repo</label>
+  <input type="text" id="ghRepo" value="cwebit1/DietaPlanner">
+  <label>Branch</label>
+  <input type="text" id="ghBranch" value="main">
+  <button class="btn-main" onclick="connettiGithub()">🔌 Connetti</button>
+  <div class="stato" id="statoConnetti"></div>
+</section>
+
+<section>
+  <h2>Sfoglia ricette salvate</h2>
+  <div style="display:flex; gap:6px; align-items:center;">
+    <button class="btn-secondary" style="margin:0; flex:0 0 auto; width:auto; padding:8px 12px;" onclick="sfogliaPrecedente()">◀</button>
+    <select id="selettoreSfoglia" style="flex:1;" onchange="sfogliaVaiA(this.value)"></select>
+    <button class="btn-secondary" style="margin:0; flex:0 0 auto; width:auto; padding:8px 12px;" onclick="sfogliaSuccessiva()">▶</button>
+    <button class="btn-main" style="margin:0; flex:0 0 auto; width:auto; padding:8px 14px;" onclick="sfogliaSalva()">💾</button>
+  </div>
+</section>
+
+<section>
+  <h2>Composizione ricetta</h2>
+  <div class="stato" id="statoIngredienti">Ingredienti non ancora caricati.</div>
+  <label>Ambito stack condiviso (opzionale)</label>
+  <input type="text" id="campoStackScope" placeholder="es. sughi_verdure">
+  <div id="gruppo1"></div>
+  <div id="gruppo2"></div>
+  <div id="gruppo3"></div>
+  <div id="gruppo4"></div>
+</section>
+
+<section>
+  <h2 id="titoloSalva">2. Salva questa voce</h2>
+  <button class="btn-secondary" onclick="nuovaRicetta()">➕ Nuova ricetta (svuota i campi)</button>
+  <button class="btn-main" onclick="salvaVoce()">💾 Salva voce</button>
+  <button class="btn-secondary" id="btnAnnullaModifica" style="display:none;" onclick="annullaModifica()">Annulla modifica</button>
+  <div class="stato" id="statoSalvaVoce"></div>
+</section>
+
+<section>
+  <h2>3. Voci salvate (<span id="contatoreVoci">0</span>) — db-ricette.json</h2>
+  <button class="btn-secondary" onclick="caricaRicetteDaGithub()">⬇️ Carica db-ricette.json da GitHub</button>
+  <button class="btn-main" onclick="salvaRicetteSuGithub()">⬆️ Salva tutte le voci su GitHub</button>
+  <div class="stato" id="statoRicetteGh"></div>
+  <div id="listaVociSalvate" style="margin-top:8px;"><div class="stato">Nessuna voce salvata ancora.</div></div>
+</section>
+
+<section>
+  <h2>4. JSON di tutte le voci salvate</h2>
+  <button class="btn-secondary" onclick="mostraJSONTotale()">Mostra JSON completo</button>
+  <textarea id="outputTotale" readonly placeholder="Premi il pulsante sopra"></textarea>
+</section>
+
+<section>
+  <h2>5. Gestione ingredienti (ingredienti-new.json) — elimina, rinomina, aggiungi</h2>
+  <button class="btn-secondary" onclick="caricaIngredientiDaGithub()">⬇️ Carica ingredienti-new.json da GitHub</button>
+  <button class="btn-main" onclick="salvaIngredientiSuGithub()">⬆️ Salva ingredienti su GitHub</button>
+  <div class="stato" id="statoIngredientiGh"></div>
+  <button class="btn-add" onclick="aggiungiIngredienteNuovo()">+ aggiungi nuovo ingrediente</button>
+  <div class="selettore-univoco" id="filtroIngredientiFull"></div>
+  <div id="listaIngredientiFull" style="margin-top:8px;"></div>
+</section>
+
+<script>
+let INGREDIENTI = null;
+let INGREDIENTI_SHA = null;
+let VOCI = JSON.parse(localStorage.getItem('maschera_voci') || '[]');
+let RICETTE_DATA = null;
+let RICETTE_SHA = null;
+let INDICE_IN_MODIFICA = null;
+let contatoreBlocchi = 0;
+
+// gruppo puo' essere una stringa singola o un array (es. Pomodori gratinati = ["carboidrati","verdura"])
+function gruppoContiene(gruppoIngrediente, gruppoCercato) {
+  if (Array.isArray(gruppoIngrediente)) return gruppoIngrediente.includes(gruppoCercato);
+  return gruppoIngrediente === gruppoCercato;
+}
+
+const MAPPA_CLASSE = {
+  C:  { gruppo: 'carboidrati' },
+  V:  { gruppo: 'verdura' },
+  PC: { gruppo: 'proteine', sottotipi: ['carne_bianca','carne_rossa','affettati'] },
+  PP: { gruppo: 'proteine', sottotipi: ['pesce_bianco','pesce_azzurro','pesce_grande','pesce_conservato','crostacei','molluschi'] },
+  PF: { gruppo: 'proteine', sottotipi: ['formaggio_fresco','formaggio_stagionato'] },
+  PU: { gruppo: 'proteine', sottotipi: ['uova'] },
+  PL: { gruppo: 'proteine', sottotipi: ['legumi'] },
+};
+
+// ============== utilita' base64/GitHub ==============
+function b64EncodeUtf8(str){
+  return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (_,p1)=>String.fromCharCode('0x'+p1)));
+}
+function b64DecodeUtf8(str){
+  return decodeURIComponent(atob(str.replace(/\n/g,'')).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));
+}
+function ghApiUrl(path){
+  const repo = document.getElementById('ghRepo').value.trim();
+  return `https://api.github.com/repos/${repo}/contents/${path}`;
+}
+function ghToken(){ return document.getElementById('ghToken').value.trim(); }
+function ghBranch(){ return document.getElementById('ghBranch').value.trim() || 'main'; }
+
+async function ghLoad(path){
+  const token = ghToken();
+  if (!token) throw new Error('Inserisci il token GitHub.');
+  const res = await fetch(ghApiUrl(path) + `?ref=${encodeURIComponent(ghBranch())}`, {
+    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json' }
+  });
+  if (!res.ok) throw new Error(`GitHub GET ${res.status}: ${(await res.json()).message || res.statusText}`);
+  const meta = await res.json();
+  return { json: JSON.parse(b64DecodeUtf8(meta.content)), sha: meta.sha };
+}
+async function ghSave(path, obj, sha, message){
+  const token = ghToken();
+  if (!token) throw new Error('Inserisci il token GitHub.');
+  const res = await fetch(ghApiUrl(path), {
+    method: 'PUT',
+    headers: { 'Authorization': 'token ' + token, 'Accept': 'application/vnd.github+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, content: b64EncodeUtf8(JSON.stringify(obj, null, 2)), sha, branch: ghBranch() })
+  });
+  const resJson = await res.json();
+  if (!res.ok) throw new Error(`GitHub PUT ${res.status}: ${resJson.message || res.statusText}`);
+  return resJson;
+}
+
+// ============== caricamento automatico sola lettura ingredienti (per i filtri sequenza) ==============
+(async () => {
+  try {
+    const res = await fetch('ingredienti-new.json?nocache=' + Date.now());
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const d = await res.json();
+    INGREDIENTI = d.ingredienti;
+    document.getElementById('statoIngredienti').textContent = `Caricati ${Object.keys(INGREDIENTI).length} ingredienti da ingredienti-new.json (versione ${d.versione}).`;
+  } catch (err) {
+    document.getElementById('statoIngredienti').textContent = 'Caricamento automatico non riuscito: ' + err.message;
+  }
+  renderListaVoci();
+})();
+
+// ============== Connetti: carica entrambi i file insieme ==============
+async function connettiGithub() {
+  const stato = document.getElementById('statoConnetti');
+  stato.textContent = 'Connetto...'; stato.className = 'stato';
+  try {
+    await caricaRicetteDaGithub();
+    await caricaIngredientiDaGithub();
+    stato.textContent = `Connesso — ${VOCI.length} ricette e ${Object.keys(INGREDIENTI_FULL.ingredienti).length} ingredienti caricati da GitHub.`;
+    stato.className = 'stato ok';
+  } catch (err) {
+    stato.textContent = 'Errore: ' + err.message;
+    stato.className = 'stato err';
+  }
+}
+
+// ============== 1. TRE GRUPPI IDENTICI ==============
+const OPZIONI_SELETTORE = ['C','PC','PP','PF','PU','PL','V','Condimenti','Nessuno'];
+
+function creaGruppo(idGruppo) {
+  const el = document.getElementById(idGruppo);
+  delete el.dataset.categoriaAttiva; // pulizia esplicita: l'innerHTML sotto non resetta il dataset dell'elemento contenitore
+  const isCondimenti = (idGruppo === 'gruppo4');
+  el.innerHTML = `
+    <div class="gruppo-div" data-gruppo="${idGruppo}">
+      <label>Testo 1</label>
+      <input type="text" class="campo-testo1">
+      <div class="selettore-univoco">
+        ${OPZIONI_SELETTORE.map(o => `<button type="button" class="opzione-selettore" data-valore="${o}" onclick="selezionaOpzione('${idGruppo}','${o}')">${o}</button>`).join('')}
+      </div>
+      <div class="array-block campo-ingredienti"><div class="stato">Seleziona una categoria.</div></div>
+      <div class="campo-composizioni" style="display:none;"></div>
+      ${isCondimenti ? '' : `
+      <label>Cotture compatibili</label>
+      <div style="display:flex; gap:6px;">
+        <input type="text" class="campo-nuova-cottura" placeholder="es. al forno">
+        <button type="button" class="btn-add" style="width:auto; margin:0; flex:0 0 auto; padding:6px 10px;" onclick="aggiungiCottura('${idGruppo}')">+ aggiungi</button>
+        <button type="button" class="btn-add" style="width:auto; margin:0; flex:0 0 auto; padding:6px 10px; color:var(--bad); border-color:var(--bad);" onclick="eliminaCotturaSelezionata('${idGruppo}')">✕ elimina</button>
+      </div>
+      <div class="array-block campo-cotture"><div class="stato">Nessuna cottura aggiunta.</div></div>
+      <label>Testo 2 (campo vuoto, per quando la cottura non è prevista)</label>
+      <input type="text" class="campo-testo2">
+      `}
+      <div class="flag-mostra">
+        <input type="checkbox" class="campo-flag-mostra">
+        <label style="margin:0;">Mostra/nascondi nomi ingredienti sulla ricetta</label>
+      </div>
+    </div>
+  `;
+}
+creaGruppo('gruppo1');
+creaGruppo('gruppo2');
+creaGruppo('gruppo3');
+creaGruppo('gruppo4');
+
+function aggiungiCottura(idGruppo, stackPre, rollPre) {
+  const el = document.getElementById(idGruppo);
+  const input = el.querySelector('.campo-nuova-cottura');
+  const nome = input.value.trim();
+  if (!nome) return;
+  const box = el.querySelector('.campo-cotture');
+  if (box.querySelector('.stato')) box.innerHTML = '';
+  const riga = document.createElement('div');
+  riga.className = 'ingrediente-riga';
+  const stack = stackPre !== undefined ? stackPre : 1;
+  const roll = rollPre !== undefined ? rollPre : 1;
+  riga.innerHTML = `<input type="checkbox" class="cottura-check" data-nome="${nome}" data-stack="${stack}" data-roll="${roll}" checked><span class="nome-ingr">${nome}</span>`;
+  box.appendChild(riga);
+  input.value = '';
+}
+
+function eliminaCotturaSelezionata(idGruppo) {
+  const el = document.getElementById(idGruppo);
+  const box = el.querySelector('.campo-cotture');
+  const selezionate = [...box.querySelectorAll('.cottura-check:checked')];
+  selezionate.forEach(chk => chk.closest('.ingrediente-riga').remove());
+  if (!box.querySelector('.cottura-check')) box.innerHTML = '<div class="stato">Nessuna cottura aggiunta.</div>';
+}
+
+function selezionaOpzione(idGruppo, valore) {
+  const el = document.getElementById(idGruppo);
+  el.querySelectorAll('.opzione-selettore').forEach(b => b.classList.toggle('attivo', b.dataset.valore === valore));
+  el.dataset.categoriaAttiva = valore;
+  renderIngredientiGruppo(idGruppo, valore);
+}
+
+function renderIngredientiGruppo(idGruppo, valore, preselezionati) {
+  const el = document.getElementById(idGruppo);
+  const box = el.querySelector('.campo-ingredienti');
+  if (!valore || valore === 'Nessuno') { box.innerHTML = '<div class="stato">Seleziona una categoria.</div>'; return; }
+  if (!INGREDIENTI) { box.innerHTML = '<div class="stato">Ingredienti non ancora caricati.</div>'; return; }
+
+  let nomi;
+  if (valore === 'Condimenti') {
+    nomi = Object.keys(INGREDIENTI).sort();
+  } else {
+    const filtro = MAPPA_CLASSE[valore];
+    nomi = Object.keys(INGREDIENTI).filter(nome => {
+      const ing = INGREDIENTI[nome];
+      if (!gruppoContiene(ing.gruppo, filtro.gruppo)) return false;
+      if (filtro.sottotipi) return filtro.sottotipi.includes(ing.sottotipo);
+      return true;
+    }).sort();
+  }
+  if (!nomi.length) { box.innerHTML = '<div class="stato">Nessun ingrediente trovato per questa categoria.</div>'; return; }
+
+  const set = new Map((preselezionati || []).map(p => typeof p === 'string' ? [p, {}] : [p.nome, p]));
+  box.innerHTML = nomi.map(nome => {
+    const pre = set.get(nome);
+    const stack = pre && pre.stack !== undefined ? pre.stack : 1;
+    const roll = pre && pre.roll !== undefined ? pre.roll : 1;
+    const dose = pre && pre.dose !== undefined ? pre.dose : '';
+    const condimentiCompatibili = pre && Array.isArray(pre.condimentiCompatibili) ? pre.condimentiCompatibili : null;
+    const condimentiEncoded = encodeURIComponent(JSON.stringify(condimentiCompatibili));
+    return `
+    <div class="ingrediente-riga ingrediente-riga-due-colonne" data-condimenti-iniziali="${condimentiEncoded}">
+      <label class="colonna-sx">
+        <input type="checkbox" class="ingr-check" data-nome="${nome}" data-stack="${stack}" data-roll="${roll}" ${set.has(nome) ? 'checked' : ''}>
+        <span class="nome-ingr">${nome}</span>
+      </label>
+      <input type="number" class="campo-dose colonna-dx" placeholder="g" value="${dose}">
+      <div class="compat-condimenti" style="display:none;"></div>
+    </div>
+  `;
+  }).join('');
+  box.querySelectorAll('.ingr-check').forEach(chk => chk.addEventListener('change', aggiornaCompatibilitaCondimenti));
+  aggiornaCompatibilitaCondimenti();
+}
+
+function condimentiSelezionatiCorrenti() {
+  const out = [];
+  for (const id of ['gruppo1','gruppo2','gruppo3','gruppo4']) {
+    const el = document.getElementById(id);
+    if (!el || el.dataset.categoriaAttiva !== 'Condimenti') continue;
+    el.querySelectorAll('.ingr-check:checked').forEach(chk => out.push(chk.dataset.nome));
+  }
+  return [...new Set(out)];
+}
+
+function aggiornaCompatibilitaCondimenti() {
+  const condimenti = condimentiSelezionatiCorrenti();
+  for (const id of ['gruppo1','gruppo2','gruppo3','gruppo4']) {
+    const el = document.getElementById(id);
+    if (!el || el.dataset.categoriaAttiva === 'Condimenti' || el.dataset.categoriaAttiva === 'Nessuno') continue;
+
+    el.querySelectorAll('.ingrediente-riga').forEach(riga => {
+      const principale = riga.querySelector(':scope > label .ingr-check');
+      const box = riga.querySelector(':scope > .compat-condimenti');
+      if (!principale || !box) return;
+      if (!principale.checked || !condimenti.length) {
+        box.style.display = 'none';
+        box.innerHTML = '';
+        return;
+      }
+
+      const correnti = [...box.querySelectorAll('.compat-cond-check:checked')].map(x => x.dataset.nome);
+      let iniziali = null;
+      try {
+        iniziali = JSON.parse(decodeURIComponent(riga.dataset.condimentiIniziali || 'null'));
+      } catch (e) {}
+      const scelti = correnti.length
+        ? new Set(correnti)
+        : new Set(Array.isArray(iniziali) ? iniziali : condimenti);
+
+      box.style.display = 'block';
+      box.innerHTML = '<div class="titolo">Condimenti compatibili con '+principale.dataset.nome+'</div><div class="opzioni">'+
+        condimenti.map(nome => '<label><input type="checkbox" class="compat-cond-check" data-nome="'+nome.replace(/"/g,'&quot;')+'" '+(scelti.has(nome)?'checked':'')+'> '+nome+'</label>').join('')+
+        '</div>';
+      riga.dataset.condimentiIniziali = encodeURIComponent(JSON.stringify([...scelti].filter(x => condimenti.includes(x))));
+      box.querySelectorAll('.compat-cond-check').forEach(chk => chk.addEventListener('change', () => {
+        const attivi=[...box.querySelectorAll('.compat-cond-check:checked')].map(x=>x.dataset.nome);
+        riga.dataset.condimentiIniziali=encodeURIComponent(JSON.stringify(attivi));
+      }));
+    });
+  }
+}
+
+function leggiGruppo(idGruppo) {
+  const el = document.getElementById(idGruppo);
+  const testo1 = el.querySelector('.campo-testo1').value.trim();
+  const categoria = el.dataset.categoriaAttiva || 'Nessuno';
+  const ingredienti = [...el.querySelectorAll('.ingr-check:checked')].map(chk => {
+    const riga = chk.closest('.ingrediente-riga');
+    const campoDose = riga ? riga.querySelector('.campo-dose') : null;
+    const dose = campoDose && campoDose.value !== '' ? Number(campoDose.value) : undefined;
+    const obj = { nome: chk.dataset.nome, stack: Number(chk.dataset.stack) || 1, roll: Number(chk.dataset.roll) || 1 };
+    if (dose !== undefined) obj.dose = dose;
+    const compat = [...riga.querySelectorAll('.compat-cond-check:checked')].map(x => x.dataset.nome);
+    if (riga.querySelector('.compat-condimenti') && condimentiSelezionatiCorrenti().length) obj.condimentiCompatibili = compat;
+    return obj;
+  });
+  const campoTesto2 = el.querySelector('.campo-testo2');
+  const testo2 = campoTesto2 ? campoTesto2.value.trim() : '';
+  const cotture = [...el.querySelectorAll('.cottura-check:checked')].map(chk => ({
+    nome: chk.dataset.nome, stack: Number(chk.dataset.stack) || 1, roll: Number(chk.dataset.roll) || 1
+  }));
+  const mostraNomi = el.querySelector('.campo-flag-mostra').checked;
+  let composizioni=[];
+  try { composizioni=JSON.parse(decodeURIComponent(el.dataset.composizioni||'%5B%5D')); } catch(e) {}
+  const out={ testo1, categoria, ingredienti, cotture, testo2, mostraNomi };
+  if(composizioni.length)out.composizioni=composizioni;
+  return out;
+}
+
+function scriviGruppo(idGruppo, dati) {
+  const el = document.getElementById(idGruppo);
+  const composizioni=Array.isArray(dati.composizioni)?dati.composizioni:[];
+  el.dataset.composizioni=encodeURIComponent(JSON.stringify(composizioni));
+  const boxComposizioni=el.querySelector('.campo-composizioni');
+  if(boxComposizioni&&composizioni.length){
+    boxComposizioni.style.display='block';
+    boxComposizioni.innerHTML='<div class="stato">Composizioni fisse: '+composizioni.map(c=>c.nome+' ['+(c.ingredienti||[]).map(i=>i.nome+(i.dose!==undefined?' '+i.dose+'g':'')).join(' + ')+']').join(' · ')+'</div>';
+  }
+  el.querySelector('.campo-testo1').value = dati.testo1 || '';
+  const campoTesto2 = el.querySelector('.campo-testo2');
+  if (campoTesto2) campoTesto2.value = dati.testo2 || '';
+  el.querySelector('.campo-flag-mostra').checked = !!dati.mostraNomi;
+  const boxCotture = el.querySelector('.campo-cotture');
+  if (boxCotture && dati.cotture && dati.cotture.length) {
+    boxCotture.innerHTML = dati.cotture.map(c => {
+      const nome = typeof c === 'string' ? c : c.nome;
+      const stack = typeof c === 'string' ? 1 : (c.stack !== undefined ? c.stack : 1);
+      const roll = typeof c === 'string' ? 1 : (c.roll !== undefined ? c.roll : 1);
+      return `<div class="ingrediente-riga"><input type="checkbox" class="cottura-check" data-nome="${nome}" data-stack="${stack}" data-roll="${roll}" checked><span class="nome-ingr">${nome}</span></div>`;
+    }).join('');
+  }
+  if (dati.categoria && dati.categoria !== 'Nessuno') {
+    el.querySelectorAll('.opzione-selettore').forEach(b => b.classList.toggle('attivo', b.dataset.valore === dati.categoria));
+    el.dataset.categoriaAttiva = dati.categoria;
+    renderIngredientiGruppo(idGruppo, dati.categoria, dati.ingredienti);
+  }
+}
+
+function leggiFormCorrente() {
+  const gruppi = [leggiGruppo('gruppo1'), leggiGruppo('gruppo2'), leggiGruppo('gruppo3'), leggiGruppo('gruppo4')];
+  const classiUsate = new Set();
+  gruppi.forEach(g => { if (g.categoria && g.categoria !== 'Nessuno' && g.categoria !== 'Condimenti') classiUsate.add(g.categoria); });
+  const out = { gruppi };
+  const stackScope = document.getElementById('campoStackScope').value.trim();
+  if (stackScope) out.stackScope = stackScope;
+  if (classiUsate.size) out.classe = classiUsate.size === 1 ? [...classiUsate][0] : [...classiUsate];
+  return out;
+}
+
+function svuotaForm() {
+  document.getElementById('campoStackScope').value = '';
+  creaGruppo('gruppo1');
+  creaGruppo('gruppo2');
+  creaGruppo('gruppo3');
+  creaGruppo('gruppo4');
+}
+
+async function salvaVoce() {
+  const dati = leggiFormCorrente();
+  let indiceSalvato;
+  let creata;
+  if (INDICE_IN_MODIFICA !== null) {
+    dati.id = VOCI[INDICE_IN_MODIFICA].id;
+    VOCI[INDICE_IN_MODIFICA] = dati;
+    indiceSalvato = INDICE_IN_MODIFICA;
+    creata = false;
+  } else {
+    const idMassimoEsistente = VOCI.reduce((max, v) => Math.max(max, v.id || 0), 0);
+    dati.id = idMassimoEsistente + 1;
+    VOCI.push(dati);
+    indiceSalvato = VOCI.length - 1;
+    creata = true;
+  }
+  localStorage.setItem('maschera_voci', JSON.stringify(VOCI));
+  renderListaVoci();
+  modificaVoce(indiceSalvato); // resto sulla stessa voce, non svuoto il form
+
+  const statoSalva = document.getElementById('statoSalvaVoce');
+  if (statoSalva) { statoSalva.textContent = 'Salvo su GitHub...'; statoSalva.className = 'stato'; }
+  if (!RICETTE_SHA) {
+    if (statoSalva) { statoSalva.textContent = `${creata ? 'Creata' : 'Aggiornata'} id${dati.id} in locale, ma non ho lo sha del file — premi prima "Connetti" per collegarti a GitHub, poi risalva.`; statoSalva.className = 'stato err'; }
+    return;
+  }
+  try {
+    const nuovaVersione = (RICETTE_DATA.versione || 1) + 1;
+    const output = Object.assign({}, RICETTE_DATA, { versione: nuovaVersione, ricette: VOCI });
+    const resJson = await ghSave('db-ricette.json', output, RICETTE_SHA, `Maschera: ${creata ? 'creo' : 'aggiorno'} id ${dati.id}`);
+    RICETTE_SHA = resJson.content.sha;
+    RICETTE_DATA = output;
+    if (statoSalva) { statoSalva.textContent = `${creata ? 'Creata' : 'Aggiornata'} id${dati.id} — salvata online su GitHub, commit ${resJson.commit.sha.slice(0,7)}.`; statoSalva.className = 'stato ok'; }
+  } catch (err) {
+    if (statoSalva) { statoSalva.textContent = `Salvata solo in locale — errore nel salvataggio su GitHub: ${err.message}`; statoSalva.className = 'stato err'; }
+  }
+}
+
+function nuovaRicetta() {
+  INDICE_IN_MODIFICA = null;
+  document.getElementById('btnAnnullaModifica').style.display = 'none';
+  document.getElementById('titoloSalva').textContent = '2. Salva questa voce';
+  svuotaForm();
+  const statoSalva = document.getElementById('statoSalvaVoce');
+  if (statoSalva) { statoSalva.textContent = 'Nuova ricetta vuota, pronta da compilare.'; statoSalva.className = 'stato'; }
+}
+
+function modificaVoce(indice) {
+  INDICE_IN_MODIFICA = indice;
+  const dati = VOCI[indice];
+  svuotaForm();
+  document.getElementById('campoStackScope').value = dati.stackScope || '';
+  const idGruppi = ['gruppo1', 'gruppo2', 'gruppo3', 'gruppo4'];
+  (dati.gruppi || []).forEach((g, i) => scriviGruppo(idGruppi[i], g));
+  aggiornaCompatibilitaCondimenti();
+  document.getElementById('btnAnnullaModifica').style.display = 'block';
+  document.getElementById('titoloSalva').innerHTML = '2. Salva questa voce <span class="badge-editing">stai modificando id ' + dati.id + '</span>';
+  window.scrollTo(0, 0);
+}
+
+function annullaModifica() {
+  INDICE_IN_MODIFICA = null;
+  document.getElementById('btnAnnullaModifica').style.display = 'none';
+  document.getElementById('titoloSalva').textContent = '2. Salva questa voce';
+  svuotaForm();
+}
+
+function eliminaVoce(indice) {
+  VOCI.splice(indice, 1);
+  localStorage.setItem('maschera_voci', JSON.stringify(VOCI));
+  renderListaVoci();
+}
+
+function riepilogoTesto(v) {
+  return (v.gruppi || []).map(g => {
+    const pezzi = [];
+    if (g.testo1) pezzi.push(g.testo1);
+    if (g.categoria && g.categoria !== 'Nessuno') {
+      const nomi = (g.ingredienti || []).map(i => typeof i === 'string' ? i : i.nome).join('/');
+      pezzi.push(`[${g.categoria}: ${nomi}]`);
+    }
+    if (g.testo2) pezzi.push(g.testo2);
+    return pezzi.join(' ');
+  }).filter(Boolean).join(' | ');
+}
+
+// ============== Barra "Sfoglia ricette salvate" ==============
+function popolaSelettoreSfoglia() {
+  const sel = document.getElementById('selettoreSfoglia');
+  const idxCorrente = INDICE_IN_MODIFICA;
+  sel.innerHTML = VOCI.map((v, i) => {
+    const classi = Array.isArray(v.classe) ? v.classe.join(', ') : (v.classe || '');
+    return `<option value="${i}" ${i === idxCorrente ? 'selected' : ''}>id${v.id} ${classi}</option>`;
+  }).join('');
+  if (idxCorrente !== null && VOCI[idxCorrente]) sel.value = idxCorrente; // forza l'aggiornamento visivo, non solo l'attributo
+}
+
+function sfogliaVaiA(indiceStr) {
+  const indice = Number(indiceStr);
+  if (Number.isNaN(indice) || !VOCI[indice]) return;
+  modificaVoce(indice);
+}
+
+function sfogliaPrecedente() {
+  if (!VOCI.length) return;
+  const attuale = INDICE_IN_MODIFICA !== null ? INDICE_IN_MODIFICA : 0;
+  const nuovo = (attuale - 1 + VOCI.length) % VOCI.length;
+  modificaVoce(nuovo);
+}
+
+function sfogliaSuccessiva() {
+  if (!VOCI.length) return;
+  const attuale = INDICE_IN_MODIFICA !== null ? INDICE_IN_MODIFICA : -1;
+  const nuovo = (attuale + 1) % VOCI.length;
+  modificaVoce(nuovo);
+}
+
+function sfogliaSalva() {
+  salvaVoce();
+}
+
+function renderListaVoci() {
+  popolaSelettoreSfoglia();
+  document.getElementById('contatoreVoci').textContent = VOCI.length;
+  const box = document.getElementById('listaVociSalvate');
+  if (!VOCI.length) { box.innerHTML = '<div class="stato">Nessuna voce salvata ancora.</div>'; return; }
+  box.innerHTML = VOCI.map((v, i) => `
+    <div class="voce-salvata">
+      <span class="indice">id${v.id != null ? v.id : '?'}</span> — classe: ${JSON.stringify(v.classe) || '(nessuna)'}
+      <div class="riepilogo">${riepilogoTesto(v)}</div>
+      <div class="azioni">
+        <button onclick="modificaVoce(${i})">Modifica</button>
+        <button class="elimina" onclick="eliminaVoce(${i})">Elimina</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function mostraJSONTotale() {
+  document.getElementById('outputTotale').value = JSON.stringify(VOCI, null, 2);
+}
+
+// ============== 3. Lettura/salvataggio db-ricette.json su GitHub ==============
+async function caricaRicetteDaGithub() {
+  const stato = document.getElementById('statoRicetteGh');
+  stato.textContent = 'Carico...'; stato.className = 'stato';
+  try {
+    const { json, sha } = await ghLoad('db-ricette.json');
+    RICETTE_DATA = json;
+    RICETTE_SHA = sha;
+    VOCI = json.ricette || [];
+    localStorage.setItem('maschera_voci', JSON.stringify(VOCI));
+    renderListaVoci();
+    if (VOCI.length) modificaVoce(0); // carico subito la prima voce nei gruppi, non solo nel selettore
+    stato.textContent = `Caricate ${VOCI.length} voci (versione ${json.versione}, sha ${sha.slice(0,7)}).`;
+    stato.className = 'stato ok';
+  } catch (err) {
+    stato.textContent = 'Errore: ' + err.message;
+    stato.className = 'stato err';
+  }
+}
+
+async function salvaRicetteSuGithub() {
+  const stato = document.getElementById('statoRicetteGh');
+  if (!RICETTE_SHA) { stato.textContent = 'Carica prima db-ricette.json da GitHub (serve lo sha per aggiornare).'; stato.className = 'stato err'; return; }
+  stato.textContent = 'Salvo...'; stato.className = 'stato';
+  try {
+    const nuovaVersione = (RICETTE_DATA.versione || 1) + 1;
+    const output = Object.assign({}, RICETTE_DATA, { versione: nuovaVersione, ricette: VOCI });
+    const resJson = await ghSave('db-ricette.json', output, RICETTE_SHA, `Maschera: aggiorno db-ricette.json (${VOCI.length} voci, v${nuovaVersione})`);
+    RICETTE_SHA = resJson.content.sha;
+    RICETTE_DATA = output;
+    stato.textContent = `Salvato — commit ${resJson.commit.sha.slice(0,7)}, versione ${nuovaVersione}.`;
+    stato.className = 'stato ok';
+  } catch (err) {
+    stato.textContent = 'Errore: ' + err.message;
+    stato.className = 'stato err';
+  }
+}
+
+// ============== 5. Gestione ingredienti-new.json: elimina, rinomina, aggiungi ==============
+let INGREDIENTI_ELIMINATI = new Set();
+function eliminaRigaIngrediente(btn) {
+  const riga = btn.closest('.ingr-full-riga');
+  const nomeOriginale = riga.dataset.nomeOriginale;
+  if (nomeOriginale) INGREDIENTI_ELIMINATI.add(nomeOriginale);
+  riga.remove();
+}
+
+
+async function caricaIngredientiDaGithub() {
+  const stato = document.getElementById('statoIngredientiGh');
+  stato.textContent = 'Carico...'; stato.className = 'stato';
+  try {
+    const { json, sha } = await ghLoad('ingredienti-new.json');
+    INGREDIENTI_FULL = json;
+    INGREDIENTI_SHA = sha;
+    INGREDIENTI_ELIMINATI = new Set();
+    renderIngredientiFull();
+    stato.textContent = `Caricati ${Object.keys(json.ingredienti).length} ingredienti (versione ${json.versione}, sha ${sha.slice(0,7)}).`;
+    stato.className = 'stato ok';
+  } catch (err) {
+    stato.textContent = 'Errore: ' + err.message;
+    stato.className = 'stato err';
+  }
+}
+let FILTRO_INGREDIENTI_FULL = 'Tutti';
+
+function ingredienteRientraInCategoria(dati, categoria) {
+  const filtro = MAPPA_CLASSE[categoria];
+  if (!filtro) return false;
+  if (!gruppoContiene(dati.gruppo, filtro.gruppo)) return false;
+  if (filtro.sottotipi) return filtro.sottotipi.includes(dati.sottotipo);
+  return true;
+}
+function ingredienteNonCategorizzato(dati) {
+  return !Object.keys(MAPPA_CLASSE).some(cat => ingredienteRientraInCategoria(dati, cat));
+}
+
+function impostaFiltroIngredientiFull(valore) {
+  FILTRO_INGREDIENTI_FULL = valore;
+  renderIngredientiFull();
+}
+
+function renderIngredientiFull() {
+  const boxFiltro = document.getElementById('filtroIngredientiFull');
+  const opzioniFiltro = ['Tutti', ...Object.keys(MAPPA_CLASSE), 'Non in categoria'];
+  boxFiltro.innerHTML = opzioniFiltro.map(o =>
+    `<button type="button" class="${o === FILTRO_INGREDIENTI_FULL ? 'attivo' : ''}" onclick="impostaFiltroIngredientiFull('${o}')">${o}</button>`
+  ).join('');
+
+  const box = document.getElementById('listaIngredientiFull');
+  if (!INGREDIENTI_FULL) { box.innerHTML = '<div class="stato">Carica prima ingredienti-new.json da GitHub.</div>'; return; }
+
+  let nomi = Object.keys(INGREDIENTI_FULL.ingredienti).sort();
+  if (FILTRO_INGREDIENTI_FULL === 'Non in categoria') {
+    nomi = nomi.filter(n => ingredienteNonCategorizzato(INGREDIENTI_FULL.ingredienti[n]));
+  } else if (FILTRO_INGREDIENTI_FULL !== 'Tutti') {
+    nomi = nomi.filter(n => ingredienteRientraInCategoria(INGREDIENTI_FULL.ingredienti[n], FILTRO_INGREDIENTI_FULL));
+  }
+
+  if (!nomi.length) { box.innerHTML = '<div class="stato">Nessun ingrediente per questo filtro.</div>'; return; }
+
+  box.innerHTML = nomi.map(nome => {
+    const d = INGREDIENTI_FULL.ingredienti[nome];
+    return `
+      <div class="ingr-full-riga" data-nome-originale="${nome}">
+        <input type="text" class="campo-rinomina" value="${nome}" placeholder="nome">
+        <div class="campi">
+          <input type="text" class="campo-gruppo" value="${d.gruppo || ''}" placeholder="gruppo">
+          <input type="text" class="campo-sottotipo" value="${d.sottotipo || ''}" placeholder="sottotipo">
+        </div>
+        <button class="elimina" onclick="eliminaRigaIngrediente(this)">Elimina</button>
+      </div>
+    `;
+  }).join('');
+}
+
+function aggiungiIngredienteNuovo() {
+  const box = document.getElementById('listaIngredientiFull');
+  if (!INGREDIENTI_FULL) { alert('Carica prima ingredienti-new.json da GitHub.'); return; }
+  const div = document.createElement('div');
+  div.className = 'ingr-full-riga';
+  div.dataset.nomeOriginale = '';
+  div.innerHTML = `
+    <input type="text" class="campo-rinomina" value="" placeholder="nome nuovo ingrediente">
+    <div class="campi">
+      <input type="text" class="campo-gruppo" value="" placeholder="gruppo (es. verdura)">
+      <input type="text" class="campo-sottotipo" value="" placeholder="sottotipo (opzionale)">
+    </div>
+    <button class="elimina" onclick="eliminaRigaIngrediente(this)">Elimina</button>
+  `;
+  box.prepend(div);
+}
+
+async function salvaIngredientiSuGithub() {
+  const stato = document.getElementById('statoIngredientiGh');
+  if (!INGREDIENTI_SHA) { stato.textContent = 'Carica prima ingredienti-new.json da GitHub (serve lo sha per aggiornare).'; stato.className = 'stato err'; return; }
+  stato.textContent = 'Salvo...'; stato.className = 'stato';
+  try {
+    const righe = [...document.querySelectorAll('.ingr-full-riga')];
+    // parto da tutti gli ingredienti esistenti (anche quelli non mostrati per via del filtro attivo)
+    const nuovi = Object.assign({}, INGREDIENTI_FULL.ingredienti);
+    // tolgo prima quelli eliminati esplicitamente (bottone Elimina), anche se non piu' in pagina
+    for (const nome of INGREDIENTI_ELIMINATI) delete nuovi[nome];
+    for (const riga of righe) {
+      const nomeOriginale = riga.dataset.nomeOriginale;
+      // tolgo il vecchio nome se e' stato rinominato (cambia chiave)
+      if (nomeOriginale && nomeOriginale in nuovi) delete nuovi[nomeOriginale];
+    }
+    for (const riga of righe) {
+      const nomeOriginale = riga.dataset.nomeOriginale;
+      const nomeNuovo = riga.querySelector('.campo-rinomina').value.trim();
+      if (!nomeNuovo) continue;
+      const gruppo = riga.querySelector('.campo-gruppo').value.trim();
+      const sottotipo = riga.querySelector('.campo-sottotipo').value.trim();
+      let base = nomeOriginale && INGREDIENTI_FULL.ingredienti[nomeOriginale]
+        ? Object.assign({}, INGREDIENTI_FULL.ingredienti[nomeOriginale])
+        : { kcal: 0, proteine: 0, carboidrati: 0, grassi: 0, deperibilita: '', conservazione: '',
+            porzione: 0, gradimento: 1, stock: 1, formatoRiordino: { valore: null, unita: null },
+            allergeni: [], bloccoManuale: false, nonRichiedeInventario: false };
+      // se contiene una virgola, e' un gruppo multiplo (es. "carboidrati,verdura") -> array, altrimenti stringa singola
+      base.gruppo = gruppo.includes(',') ? gruppo.split(',').map(s => s.trim()).filter(Boolean) : gruppo;
+      if (sottotipo) base.sottotipo = sottotipo; else delete base.sottotipo;
+      nuovi[nomeNuovo] = base;
+    }
+    const nuovaVersione = (INGREDIENTI_FULL.versione || 1) + 1;
+    const output = Object.assign({}, INGREDIENTI_FULL, { versione: nuovaVersione, ingredienti: nuovi });
+    const resJson = await ghSave('ingredienti-new.json', output, INGREDIENTI_SHA, `Maschera: aggiorno ingredienti-new.json (v${nuovaVersione})`);
+    INGREDIENTI_SHA = resJson.content.sha;
+    INGREDIENTI_FULL = output;
+    INGREDIENTI_ELIMINATI = new Set();
+    renderIngredientiFull();
+    stato.textContent = `Salvato — commit ${resJson.commit.sha.slice(0,7)}, versione ${nuovaVersione}, ${Object.keys(nuovi).length} ingredienti.`;
+    stato.className = 'stato ok';
+  } catch (err) {
+    stato.textContent = 'Errore: ' + err.message;
+    stato.className = 'stato err';
+  }
+}
+</script>
+
+</body>
+</html>
