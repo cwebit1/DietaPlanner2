@@ -1,10 +1,10 @@
 {
-  "versione": 1,
+  "versione": 2,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
-      "percorsoImmagine": "",
-      "ricettaTestuale": "",
+      "percorsoImmagine": "assets/ricette/nr_1_0.webp",
+      "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Portare a bollore l'acqua leggermente salata. Versare la farina di polenta (preferibilmente a grana fine o \"fioretto\" per una maggiore cremosità) a pioggia, mescolando continuamente e energicamente con una frusta per evitare la formazione di grumi.\n2. Abbassare la fiamma e cuocere a fuoco medio-basso per circa 25-30 minuti, continuando a mescolare con un cucchiaio di legno. La consistenza finale deve essere morbida e cremosa, ma abbastanza soda da mantenere la forma una volta impiattata.\n3. A fuoco spento, incorporare il gorgonzola dolce tagliato a piccoli cubetti. Mescolare delicatamente finché il formaggio non si scioglie completamente, creando una crema uniforme e vellutata.\n\n🎨 Impiattamento e Accorgimenti per la Foto\nLa superficie deve apparire naturalmente lucida grazie al formaggio fuso. Non aggiungere olio a crudo. È concessa solo una minuscola e sottile spolverata di pepe nero macinato al momento per creare un punto focale visivo elegante, senza appesantire il piatto.",
       "disponibile": true
     },
     {
