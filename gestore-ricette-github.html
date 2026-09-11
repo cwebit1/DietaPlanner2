@@ -11,7 +11,7 @@
     h1{font-size:1.15rem;margin:0 0 10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar input[type=search]{flex:1;min-width:210px}
     .head-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.head-row h1{margin:0 0 10px}
     #toggleSettings{margin-bottom:10px;padding:7px 10px;font-size:.85rem}
-    .tokenbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.tokenbar input{flex:1;min-width:220px}
+    .tokenbar{display:none;gap:8px;flex-wrap:wrap;margin-top:8px}.tokenbar.open{display:flex}.tokenbar input{flex:1;min-width:220px}
     .tokenbar .hint{width:100%;color:var(--muted);font-size:.78rem;margin-top:2px}
     button,input,textarea,select{font:inherit;color:inherit;background:#121a13;border:1px solid var(--line);border-radius:9px;padding:9px 11px}
     button{cursor:pointer;font-weight:700}button.primary{background:var(--green);color:#101510;border-color:var(--green)}button:disabled{opacity:.45;cursor:default}
@@ -34,7 +34,7 @@
       <h1>Gestore ricette, foto e testi</h1>
       <button id="toggleSettings" type="button" aria-expanded="false">Impostazioni ▾</button>
     </div>
-    <div class="tokenbar" id="settingsPanel" hidden>
+    <div class="tokenbar" id="settingsPanel">
       <input id="token" type="password" placeholder="Personal Access Token GitHub (contents:write)" autocomplete="off">
       <input id="owner" value="cwebit1" placeholder="owner" style="max-width:140px">
       <input id="repo" value="DietaPlanner2" placeholder="repo" style="max-width:170px">
@@ -305,10 +305,9 @@
     document.getElementById('download').addEventListener('click',downloadFile);
     document.getElementById('toggleSettings').addEventListener('click',()=>{
       const pannello=document.getElementById('settingsPanel');
-      const aperto=!pannello.hidden;
-      pannello.hidden=aperto;
-      document.getElementById('toggleSettings').setAttribute('aria-expanded',String(!aperto));
-      document.getElementById('toggleSettings').textContent=aperto?'Impostazioni ▾':'Impostazioni ▴';
+      const aperto=pannello.classList.toggle('open');
+      document.getElementById('toggleSettings').setAttribute('aria-expanded',String(aperto));
+      document.getElementById('toggleSettings').textContent=aperto?'Impostazioni ▴':'Impostazioni ▾';
     });
 
     (async()=>{
