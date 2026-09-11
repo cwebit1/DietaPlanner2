@@ -2131,3 +2131,33 @@ copiati in Base64.
 **SHA della copia integrale:** `f7960877b99f3983627474fd06e1f89701acbb12`.
 
 ---
+
+## 26. Trasferimento del solo header R1 su index — 11 settembre 2026
+
+**Intervento richiesto:** iniziare l'integrazione progressiva del restyling
+trasferendo esclusivamente l'header di R1 nell'`index.html` funzionante di
+`DietaPlanner2`, senza modificare ancora calendario, contenuti, bottom bar o
+altre viste.
+
+**Correzione applicata:** sostituita la precedente intestazione compatta con la
+struttura R1: marchio tipografico DietaPlanner, payoff «Piani sani, giorni
+migliori», foglia centrale, saluto su due righe e avatar Google a destra. Le
+proporzioni desktop e Android sono circoscritte alla classe `.app-header`, così
+non alterano intestazioni o componenti interni condivisi.
+
+**Funzioni preservate:** mantenuti gli identificatori `headerVersione`,
+`headerGreeting` e `btnAccountHeader`; l'avatar continua a ricevere la foto
+Google e ad aprire le impostazioni account. Il saluto dinamico ora conserva la
+struttura su due righe di R1 e il testo approvato «Buon Appetito!».
+
+**Invarianti:** nessuna modifica a calendario, pagina Pasto, navigazione
+inferiore, renderer, IndexedDB, motore o database.
+
+**Verifiche:** otto script inline compilati senza errori; diff limitato a CSS,
+markup e aggiornamento del saluto dell'header; `git diff --check` pulito.
+
+**File modificato:** `index.html`.
+
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

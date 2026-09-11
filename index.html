@@ -45,25 +45,34 @@ h1,h2,h3{margin:0;}
 button{font-family:inherit;}
 .hidden{display:none !important;}
 
-/* Header */
-header{
+/* Header R1 — struttura grafica trasferita senza alterare le funzioni account. */
+.app-header{
   position:sticky;top:0;z-index:20;
-  background:var(--bg);
-  padding:16px 16px 10px;
+  height:77px;padding:7px 28px;
   border-bottom:1px solid var(--border);
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
+  color:#fff;background:linear-gradient(135deg,#174f39,#0c3d2b);
+  display:grid;grid-template-columns:minmax(0,1fr) auto auto;
+  align-items:center;gap:20px;
 }
-header .title{font-size:1.15rem;font-weight:800;letter-spacing:-0.01em;}
-header .title span{color:var(--accent);}
-header .sub{font-size:0.75rem;color:var(--text-dim);margin-top:2px;}
-.header-app{min-width:0;flex:1;padding-top:2px;}
-.header-user{min-width:132px;display:flex;flex-direction:column;align-items:flex-end;text-align:right;gap:2px;}
-.account-button{width:24px;height:24px;border-radius:50%;padding:0;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;font-size:.72rem;}
+.header-brand{min-width:0;}
+.header-brand-title{font:56px/1 Georgia,serif;letter-spacing:-2.5px;white-space:nowrap;}
+.header-tagline{margin-top:2px;font-size:9px;letter-spacing:5.4px;text-transform:uppercase;white-space:nowrap;}
+.header-leaf{width:27px;height:37px;border-radius:100% 0 100% 0;background:#c7d9a3;transform:rotate(-42deg);position:relative;}
+.header-leaf:after{content:"";position:absolute;left:13px;top:5px;width:1px;height:31px;background:#779268;transform:rotate(-8deg);}
+.header-welcome{justify-self:end;display:flex;align-items:center;gap:15px;min-width:0;}
+.header-greeting{display:flex;flex-direction:column;gap:4px;max-width:190px;font-size:15px;line-height:1.18;color:#fff;font-weight:500;white-space:normal;text-align:left;}
+.account-button{width:42px;height:42px;border:2px solid rgba(255,255,255,.72);border-radius:50%;padding:0;display:grid;place-items:center;overflow:hidden;flex:0 0 auto;background:#eff3ec;color:#174b35;font-size:.9rem;box-shadow:0 3px 12px rgba(0,0,0,.18);}
 .account-button img{width:100%;height:100%;object-fit:cover;}
-.header-greeting{max-width:190px;font-size:.72rem;line-height:1.2;color:var(--text);font-weight:600;white-space:normal;}
+@media(max-width:430px){
+  .app-header{height:52px;padding:4px 14px;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;}
+  .header-brand-title{font-size:30px;letter-spacing:-1.3px;}
+  .header-tagline{margin-top:2px;font-size:4.8px;letter-spacing:2.8px;}
+  .header-leaf{width:17px;height:24px;}
+  .header-leaf:after{left:8px;top:3px;height:20px;}
+  .header-welcome{gap:6px;}
+  .header-greeting{max-width:none;gap:3px;font-size:8.5px;line-height:1.18;}
+  .account-button{width:28px;height:28px;border-width:1px;font-size:.68rem;}
+}
 .account-status{display:flex;align-items:center;gap:10px;min-width:0;}
 .account-status img{width:42px;height:42px;border-radius:50%;object-fit:cover;flex:0 0 auto;}
 .account-identity{min-width:0;flex:1;}
@@ -664,14 +673,15 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   </div>
 </div>
 
-<header>
-  <div class="header-app">
-    <div class="title">Dieta<span>·</span>Planner <span id="headerVersione" style="font-size:0.58rem;font-weight:400;color:var(--text-dim);vertical-align:super;margin-left:4px;"></span></div>
-    <div class="sub">Pranzo e cena, senza sprechi</div>
+<header class="app-header" data-ui-role="app-header">
+  <div class="header-brand">
+    <div class="header-brand-title">DietaPlanner <span id="headerVersione" style="font:400 .34em/1 -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#c7d9a3;vertical-align:super;margin-left:4px;"></span></div>
+    <div class="header-tagline">Piani sani, giorni migliori</div>
   </div>
-  <div class="header-user">
-    <button class="account-button" id="btnAccountHeader" aria-label="Account Google" title="Account Google">👤</button>
+  <span class="header-leaf" aria-hidden="true"></span>
+  <div class="header-welcome">
     <div class="header-greeting hidden" id="headerGreeting"></div>
+    <button class="account-button" id="btnAccountHeader" aria-label="Account Google" title="Account Google">👤</button>
   </div>
 </header>
 
@@ -1112,7 +1122,7 @@ function renderAccount(user){
     const avatar=user.photoURL?`<img src="${escAuth(user.photoURL)}" alt="">`:'👤';
     headerButton.innerHTML=avatar;
     const nome=String(user.displayName||'').trim().split(/\s+/)[0]||'Utente';
-    greeting.textContent=`Ciao ${nome}, Buon appetito 🥂`;
+    greeting.innerHTML=`<span>Ciao ${escAuth(nome)},</span><span>Buon Appetito!</span>`;
     greeting.classList.remove('hidden');
     content.innerHTML=`<div class="account-status">${avatar}<div class="account-identity"><strong>${escAuth(user.displayName||'Utente')}</strong><span class="meta">${escAuth(user.email)}</span></div></div><button class="secondary" id="btnLogoutGoogle" style="margin-top:12px;">Esci dall’account</button><div class="meta" style="margin-top:8px;">Account collegato. La sincronizzazione completa verrà attivata dopo la verifica dello schema storico.</div>`;
     document.getElementById('btnLogoutGoogle')?.addEventListener('click',async()=>{
