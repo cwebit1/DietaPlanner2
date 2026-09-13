@@ -696,13 +696,16 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .dot{width:6px;height:6px;border-radius:50%;background:var(--border);}
 #view-piano .dot.active{background:var(--accent);}
 #view-piano .meal-copy{padding:0 10px 8px;}
-#view-piano .dish-row{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:5px;align-items:center;}
+#view-piano .dish-row{display:grid;grid-template-columns:minmax(0,1fr) 38px 38px;gap:5px;align-items:center;}
 #view-piano .dish-title{margin:0;font:700 1rem/1.08 Georgia,serif;overflow-wrap:anywhere;}
 #view-piano .dish-kind{display:inline-block;margin-right:4px;color:var(--accent);font:800 .55rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
-#view-piano .favorite{color:#f1c40f;}
-#view-piano .favorite svg{width:25px;height:25px;fill:currentColor;stroke:#b98908;}
-#view-piano .favorite.active svg{animation:pasto-star-spin 2.8s linear infinite;}
+#view-piano .special-toggle{color:#f1c40f;}
+#view-piano .special-toggle svg{width:25px;height:25px;fill:currentColor;stroke:#b98908;}
+#view-piano .special-toggle.active{box-shadow:inset 0 0 0 2px rgba(241,196,15,.35);}
+#view-piano .special-toggle.active svg{animation:pasto-star-spin 2.8s linear infinite;}
+#view-piano .favorite-toggle{color:#f1c40f;font-size:1.35rem;line-height:1;}
+#view-piano .favorite-toggle.active{background:#4a421d;border-color:#8f7920;}
 @keyframes pasto-star-spin{to{transform:rotate(360deg)}}
 #view-piano .ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:5px 0 7px;}
 #view-piano .ingredient{display:grid;grid-template-columns:27px minmax(0,1fr);align-items:center;min-width:0;}
@@ -711,10 +714,14 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .ingredient-name small{display:block;margin-top:2px;color:var(--text-dim);font-size:.62rem;}
 #view-piano .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-top:7px;border-top:1px solid var(--border);}
 #view-piano .actions.readonly{grid-template-columns:1fr;}
+#view-piano .actions.special-actions{grid-template-columns:1fr 1fr;}
 #view-piano .action{height:34px;padding:0 7px;border:1px solid var(--border);border-radius:9px;background:var(--panel-2);color:var(--text);font-size:.7rem;font-weight:750;}
 #view-piano .action.primary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-color:var(--accent-dim);background:var(--accent-dim);color:var(--accent);}
 #view-piano .action.primary .icon{justify-self:end;margin-right:5px;font-size:1rem;}
 #view-piano .action.primary .chev{justify-self:end;font-size:1.25rem;}
+#view-piano .action.restore{background:transparent;color:var(--accent);border-color:var(--accent-dim);}
+#view-piano .action.choose-special{border-color:#b8473f;background:#702923;color:#fff;}
+#view-piano .action.special-confirmed{border-color:var(--accent-dim);background:var(--accent-dim);color:var(--accent);}
 #view-piano .meal-meta{padding:0 10px 8px;color:var(--text-dim);font-size:.7rem;}
 #view-piano .meal-empty{padding:18px 12px;color:var(--text-dim);font-size:.78rem;text-align:center;}
 #view-piano .meal-empty .primary{width:100%;margin-top:11px;}
@@ -4403,7 +4410,7 @@ async function renderColazione(giorno, elementId){
       mappaVisualePasto(),
       voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
     ]);
-    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true);
+    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true,{specialeAperto:!!pannelloSpecialeAperto[pianoId]});
   }
 
   const tutteRicetteCS = await getAll('ricette');
@@ -4418,7 +4425,7 @@ async function renderColazione(giorno, elementId){
     <div style="padding-top:10px;">
       <div class="meta" style="margin-bottom:8px;">Anteprima: <strong style="color:var(--text);">${draftDescrizione}</strong> · ${Math.round(draftNutri.kcal)} kcal</div>
 
-      <details class="pasto-sub-panel" style="margin-bottom:10px;">
+      <details class="pasto-sub-panel" style="margin-bottom:10px;" ${pannelloSpecialeAperto[pianoId]?'open':''}>
         <summary>🎂 Colazione speciale: ${csDraft ? csDraft.nome : 'nessuna'}</summary>
         <div class="meta" style="margin:8px 0 6px;">Concesse 1-2 volte a settimana. ${tettoCS ? 'Tetto settimanale raggiunto.' : ''}</div>
         <div class="tabgroup">
@@ -4468,6 +4475,12 @@ async function renderColazione(giorno, elementId){
     el.classList.toggle('pasto-card-aperta',draft.aperta);
     const expander=el.querySelector('[data-colazione-expander]');
     if(expander){expander.textContent=draft.aperta?'⌃':'⌄';expander.setAttribute('aria-expanded',String(draft.aperta));expander.title=draft.aperta?'Nascondi modifiche':'Mostra modifiche';}
+  });
+  el.querySelector('[data-rs-col-special-toggle]')?.addEventListener('click',async()=>{
+    if(!colazioniSpeciali.length){await avviso('Non ci sono ancora colazioni speciali disponibili nel ricettario.');return;}
+    pannelloSpecialeAperto[pianoId]=!pannelloSpecialeAperto[pianoId];
+    if(pannelloSpecialeAperto[pianoId])draft.aperta=true;
+    renderColazione(giorno,elementId);
   });
   el.querySelector('[data-colazione-expander]')?.addEventListener('click',e=>{
     draft.aperta=!draft.aperta;
@@ -4978,9 +4991,25 @@ async function targetNuovoMotorePerPasto(giorno,pasto){
 async function ricettaNuovoDaRealizzazione(realizzazione){
   if(!realizzazione||!realizzazione.ricettaId)return null;
   if(window.DietaPlannerMotorV12&&DietaPlannerMotorV12.materializzaRealizzazione){
-    return await DietaPlannerMotorV12.materializzaRealizzazione(realizzazione);
+    const materializzata=await DietaPlannerMotorV12.materializzaRealizzazione(realizzazione);
+    if(materializzata)return materializzata;
   }
-  return await getOne('ricette',realizzazione.ricettaId);
+  const ricetta=await getOne('ricette',realizzazione.ricettaId);
+  if(!ricetta)return null;
+  if(!Array.isArray(realizzazione.ingredientiEffettivi))return ricetta;
+  const copia=structuredClone(ricetta);
+  copia.nome=realizzazione.nomeEffettivo||copia.nome;
+  copia.ingredienti=structuredClone(realizzazione.ingredientiEffettivi);
+  if(realizzazione.nutrientiEffettivi){
+    copia.nutrienti=structuredClone(realizzazione.nutrientiEffettivi);
+    copia.nutrizioneManualeTotale={
+      kcal:Number(copia.nutrienti.kcal)||0,
+      prot:Number(copia.nutrienti.proteine)||0,
+      carb:Number(copia.nutrienti.carboidrati)||0,
+      grassi:Number(copia.nutrienti.grassi)||0
+    };
+  }
+  return copia;
 }
 
 /* Dati visuali letti in sola lettura dal catalogo parallelo. Il fallback non
@@ -5050,7 +5079,8 @@ function htmlIngredientiPastoRs(ricetta,mappaVarianti){
     return '<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(nome,variante)+'</span><span class="ingredient-name">'+escPastoRs(nome)+(quantita?'<small>'+escPastoRs(quantita)+'</small>':'')+'</span></div>';
   }).join('');
 }
-function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarianti,kcal,modificabile,preferite){
+function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarianti,kcal,modificabile,preferite,opzioni){
+  opzioni=opzioni||{};
   const ricette=(materializzate||[]).filter(Boolean);
   if(!ricette.length)return '';
   const stella='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2-4.5-4.4 6.3-.9Z"/></svg>';
@@ -5063,17 +5093,23 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
       +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div>'+htmlFotoPastoRs(prossima,fotoProssima,'photo-peek',true)+'</div></div>'
       +'<div class="dots">'+dots+'</div>'
       +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</span>'+escPastoRs(ricetta.nome)+'</h3>'
-      +'<button class="round-action favorite'+(preferite&&preferite.has(String(ricetta.id))?' active':'')+'" type="button" data-rs-star="'+escPastoRs(ricetta.id)+'" title="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'" aria-label="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'">'+stella+'</button></div>'
+      +(modificabile?'<button class="round-action special-toggle'+(opzioni.speciale?' active':'')+'" type="button" data-rs-special-toggle title="'+(opzioni.speciale?'Chiudi i piatti speciali':'Apri i piatti speciali')+'" aria-label="'+(opzioni.speciale?'Chiudi i piatti speciali':'Apri i piatti speciali')+'">'+stella+'</button>':'')
+      +'<button class="round-action favorite-toggle'+(preferite&&preferite.has(String(ricetta.id))?' active':'')+'" type="button" data-rs-favorite="'+escPastoRs(ricetta.id)+'" title="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'" aria-label="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'">♥</button></div>'
       +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti)+'</div>'
-      +'<div class="actions'+(modificabile?'':' readonly')+'">'+(modificabile?'<button class="action" data-nm-alternativa><b>⟳</b> Alternativa</button><button class="action" data-nm-salvafrigo>♻️ Salvafrigo</button>':'')+'<button class="action primary" data-rs-details="'+escPastoRs(ricetta.id)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div></div></section>';
+      +'<div class="actions'+(modificabile?'':' readonly')+(opzioni.speciale?' special-actions':'')+'">'
+      +(modificabile?(opzioni.speciale
+        ?'<button class="action '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'special-confirmed':'choose-special')+'" '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'disabled':'data-rs-special-set="'+escPastoRs(ricetta.id)+'"')+'><b>★</b> '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'Pasto speciale impostato':'Imposta come pasto')+'</button>'
+        :'<button class="action" data-nm-alternativa><b>⟳</b> '+(opzioni.propostaAttiva?'Cambia':'Cambia piatto')+'</button>'+(opzioni.propostaAttiva?'<button class="action restore" data-nm-ripristina>Ripristina</button>':'<button class="action" data-nm-salvafrigo>♻️ Salvafrigo</button>')):'')
+      +'<button class="action primary" data-rs-details="'+escPastoRs(ricetta.id)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div></div></section>';
   };
   const originali=ricette.map(slidePer);
   const slides=ricette.length>1?[originali[originali.length-1],...originali,originali[0]].join(''):originali[0];
   return htmlTestataPastoRs(pasto)
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="'+ricette.length+'"><div class="track">'+slides+'</div></div><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div>'
-    +'<div class="meal-meta">'+Math.round(kcal)+' kcal · per il pasto completo'+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
+    +'<div class="meal-meta">'+(opzioni.speciale?'Piatti speciali · scorri per scegliere':Math.round(kcal)+' kcal · per il pasto completo')+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
 }
-function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile){
+function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
+  opzioni=opzioni||{};
   const fintaRicetta=ricettaSpeciale||{id:'colazione-standard',nome:descrizione||'Colazione'};
   const foto=ricettaSpeciale?immaginePastoRs(ricettaSpeciale,mappaVisuale):'';
   const perId=new Map((varianti||[]).map(v=>[String(v.id),v]));
@@ -5097,11 +5133,12 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
   const ingredientiHtml=(ingredienti.slice(0,3).map(x=>'<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(x.nome)+'</span><span class="ingredient-name">'+escPastoRs(x.nome)+(x.quantita?'<small>'+escPastoRs(x.quantita)+'</small>':'')+'</span></div>').join(''))||'<div class="ingredient"><span class="food-icon">•</span><span class="ingredient-name">Componi la colazione</span></div>';
   const azioni=modificabile===false
     ? '<div class="actions readonly"><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>'
-    : '<div class="actions"><button class="action" data-rs-col-edit><b>⟳</b> Modifica</button><button class="action" data-rs-col-recipe>Ricetta</button><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>';
+    : '<div class="actions"><button class="action" data-rs-col-edit><b>⟳</b> Cambia piatto</button><button class="action" data-rs-col-recipe>Ricetta</button><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>';
   return htmlTestataPastoRs('colazione')
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="1"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
     +'<div class="photo-row" style="grid-template-columns:minmax(0,1fr);padding-right:9px"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div></div><div class="dots"><i class="dot active"></i></div>'
-    +'<div class="meal-copy"><div class="dish-row" style="grid-template-columns:minmax(0,1fr)"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
+    +'<div class="meal-copy"><div class="dish-row" style="grid-template-columns:minmax(0,1fr)'+(modificabile===false?'':' 38px')+'"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3>'
+    +(modificabile===false?'':'<button class="round-action special-toggle'+(opzioni.specialeAperto||ricettaSpeciale?' active':'')+'" type="button" data-rs-col-special-toggle title="Colazioni speciali" aria-label="Apri le colazioni speciali"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2-4.5-4.4 6.3-.9Z"/></svg></button>')+'</div>'
     +'<div class="ingredients">'+ingredientiHtml+'</div>'+azioni+'</div></section></div></div></div>'
     +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona'+(voce&&voce.consumato?' · ✓ consumata':'')+'</div>';
 }
@@ -5153,6 +5190,63 @@ function attivaCaroselloPastoRs(el){
    Piano (cambio giorno o pagina), vedi renderPiano(). */
 const bozzePropostaPasto = {};
 
+function voceSpecialePastoRs(giorno,pasto,voce,ricetta){
+  const baseRealizzazione={
+    ricettaId:ricetta.id,
+    recipeModelId:ricetta.recipeModelId||null,
+    copertura:Array.isArray(ricetta.classe)?ricetta.classe.filter(Boolean):[ricetta.classe].filter(Boolean),
+    condimentoVarianteIndex:Number(ricetta.condimentoVarianteIndex)||0
+  };
+  const realizzazione=window.DietaPlannerMotorV12&&typeof DietaPlannerMotorV12.snapshotRealizzazione==='function'
+    ?DietaPlannerMotorV12.snapshotRealizzazione(baseRealizzazione,ricetta)
+    :Object.assign(baseRealizzazione,{
+      schemaQuantita:1,
+      nomeEffettivo:ricetta.nome||null,
+      ingredientiEffettivi:structuredClone(ricetta.ingredienti||[]),
+      nutrientiEffettivi:structuredClone(ricetta.nutrienti||ricetta.nutrizioneManualeTotale||{})
+    });
+  const originale=voce.programmatoOriginale||{
+    realizzazioni:structuredClone(voce.realizzazioni||[]),
+    bilancioVerdura:structuredClone(voce.bilancioVerdura||null),
+    categoriaTarget:voce.categoriaTarget||null,
+    carboidratoPianificato:voce.carboidratoPianificato||null,
+    programmatoIl:voce.programmatoIl||null
+  };
+  return {
+    id:giorno+'_'+pasto,
+    modo:'unico',
+    motoreNuovo:true,
+    ricettaId:ricetta.id,
+    realizzazioni:[realizzazione],
+    porzioni:voce.porzioni||1,
+    origine:'utente-speciale',
+    programmatoIl:new Date().toISOString(),
+    categoriaTarget:voce.categoriaTarget||null,
+    programmatoOriginale:originale
+  };
+}
+
+async function tettoPastiSpecialiRs(giorno,pianoId,ricette){
+  const data=new Date(giorno+'T12:00:00');
+  const lunedi=new Date(data);
+  lunedi.setDate(data.getDate()-((data.getDay()+6)%7));
+  const domenica=new Date(lunedi);domenica.setDate(lunedi.getDate()+6);
+  const iso=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const inizio=iso(lunedi),fine=iso(domenica),perId=new Map((ricette||[]).map(r=>[String(r.id),r]));
+  const [piano,configRec]=await Promise.all([getAll('piano'),getOne('impostazioni','configAvanzata')]);
+  const config=configAvanzataEffettivaSalvata(configRec&&configRec.valore||{});
+  const massimo=Number(config.specialMealsMax);
+  if(!Number.isFinite(massimo))return {raggiunto:false,massimo:null};
+  let conteggio=0;
+  for(const voce of (piano||[])){
+    const dataVoce=String(voce.id||'').slice(0,10);
+    if(voce.id===pianoId||dataVoce<inizio||dataVoce>fine)continue;
+    const ids=[voce.ricettaId,...(voce.realizzazioni||[]).map(r=>r.ricettaId)].filter(Boolean);
+    if(ids.some(id=>perId.get(String(id))&&perId.get(String(id)).piattoSpeciale))conteggio++;
+  }
+  return {raggiunto:conteggio>=massimo,massimo};
+}
+
 function classiVsgUi(ricetta){return new Set((Array.isArray(ricetta&&ricetta.classe)?ricetta.classe:[ricetta&&ricetta.classe]).filter(Boolean));}
 function ricettaCopreRigaVsg(ricetta,tipo){
   const tokens=classiVsgUi(ricetta);
@@ -5203,9 +5297,12 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   el.classList.toggle('meal',!elementId);
   const id=giorno+'_'+pasto;
   const voce=await getOne('piano',id); // sempre il pasto reale: la proposta non salvata vive solo nel pannello a parte
+  const realizzazioniProgrammate=voce&&voce.realizzazioni&&voce.realizzazioni.length
+    ?voce.realizzazioni
+    :(voce&&voce.ricettaId?[{ricettaId:voce.ricettaId}]:[]);
   const title=LABEL_PASTO[pasto].toUpperCase()+':';
   const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  if(!voce||!(voce.realizzazioni&&voce.realizzazioni.length)){
+  if(!voce||!realizzazioniProgrammate.length){
     /* Finestra Pasto: un pasto inesistente e' "concluso" solo dopo la
        chiusura della sua fascia oraria (fasciaPastoSuperata), mai per il
        solo fatto che il giorno sia oggi o passato - quella regola vale
@@ -5224,13 +5321,17 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   }
 
   /* Rendering statico e immediato: nessuna elaborazione anticipata delle
-     alternative C/P/V (niente statoRollPasto qui) - la ricerca di una
-     proposta parte solo quando l'utente preme Alternativa/Salvafrigo/
-     Rigenera, mai durante il semplice rendering del pasto salvato. */
+     alternative C/P/V. Una bozza già richiesta sostituisce solo la resa
+     del carosello; il record programmato resta intatto fino alla conferma. */
   let html='';
   let kcal=0;
+  const bozzaAttiva=bozzePropostaPasto[id]||null;
+  const voceVisuale=bozzaAttiva?bozzaAttiva.voce:voce;
+  const realizzazioniVisuali=voceVisuale.realizzazioni&&voceVisuale.realizzazioni.length
+    ?voceVisuale.realizzazioni
+    :(voceVisuale.ricettaId?[{ricettaId:voceVisuale.ricettaId}]:[]);
   const materializzate=[];
-  for(const x of voce.realizzazioni){
+  for(const x of realizzazioniVisuali){
     const rr=await ricettaNuovoDaRealizzazione(x);
     if(!rr)continue;
     materializzate.push(rr);
@@ -5238,15 +5339,34 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   }
 
   const modificabile=!voce.consumato&&!fasciaPastoSuperata(giorno,pasto);
-  const [visuale,variantiPasto,ricetteSalvatePasto]=await Promise.all([mappaVisualePasto(),getAll('varianti'),getAll('ricette')]);
+  const [visuale,variantiPasto,ricetteSalvatePasto,ricetteAmmessePasto]=await Promise.all([
+    mappaVisualePasto(),getAll('varianti'),getAll('ricette'),
+    typeof ricetteAmmesse==='function'?ricetteAmmesse(false):getAll('ricette')
+  ]);
   const mappaVariantiPasto=new Map((variantiPasto||[]).map(v=>[String(v.id),v]));
   const preferitePasto=new Set((ricetteSalvatePasto||[]).filter(r=>r.preferita).map(r=>String(r.id)));
-  html+=htmlCaroselloPastoRs(materializzate,voce,pasto,visuale,mappaVariantiPasto,kcal,modificabile,preferitePasto);
+  const idsAmmessiPasto=new Set((ricetteAmmessePasto||[]).map(r=>String(r.id)));
+  let specialeConfermato=null;
+  for(const real of realizzazioniProgrammate){
+    const ricettaReale=bozzaAttiva?await ricettaNuovoDaRealizzazione(real):materializzate.find(r=>String(r.id)===String(real.ricettaId));
+    if(ricettaReale&&ricettaReale.piattoSpeciale){specialeConfermato=ricettaReale;break;}
+  }
+  if(!(id in pannelloSpecialeAperto))pannelloSpecialeAperto[id]=!!specialeConfermato;
+  const specialiPasto=(ricetteSalvatePasto||[])
+    .filter(r=>r.piattoSpeciale&&!r.colazioneSpeciale&&!r.esclusa&&r.disponibile!==false&&idsAmmessiPasto.has(String(r.id)))
+    .sort((a,b)=>String(a.id)===String(specialeConfermato&&specialeConfermato.id)?-1:String(b.id)===String(specialeConfermato&&specialeConfermato.id)?1:a.nome.localeCompare(b.nome,'it'));
+  const modalitaSpeciale=modificabile&&!!pannelloSpecialeAperto[id]&&specialiPasto.length>0;
+  const materializzateMostrate=modalitaSpeciale?specialiPasto:materializzate;
+  html+=htmlCaroselloPastoRs(materializzateMostrate,voceVisuale,pasto,visuale,mappaVariantiPasto,kcal,modificabile,preferitePasto,{
+    speciale:modalitaSpeciale,
+    specialeConfermatoId:specialeConfermato&&specialeConfermato.id,
+    propostaAttiva:!!bozzaAttiva
+  });
   const ruoliPresenti=new Set(righeVsgUniche(materializzate).flatMap(r=>r.tipi));
   const ruoliMancanti=[['C','carboidrato'],['P','proteina'],['V','verdura']].filter(([tipo])=>!ruoliPresenti.has(tipo)).map(([,nome])=>nome);
-  if(ruoliMancanti.length)html+='<div class="meal-meta" style="color:var(--warn);">⚠ Da completare: '+esc(ruoliMancanti.join(', '))+'</div>';
+  if(!modalitaSpeciale&&ruoliMancanti.length)html+='<div class="meal-meta" style="color:var(--warn);">⚠ Da completare: '+esc(ruoliMancanti.join(', '))+'</div>';
   const avvisoPasto=(voce.avvisoProgrammazione&&voce.avvisoProgrammazione.messaggio)||voce.avvisoCarboidrato||'';
-  if(avvisoPasto)html+='<div class="meal-meta" style="color:var(--warn);">⚠ '+esc(avvisoPasto)+'</div>';
+  if(!modalitaSpeciale&&avvisoPasto)html+='<div class="meal-meta" style="color:var(--warn);">⚠ '+esc(avvisoPasto)+'</div>';
 
   if(voce.programmatoOriginale&&Array.isArray(voce.programmatoOriginale.realizzazioni)){
     const originali=[];
@@ -5265,16 +5385,52 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
 
   el.innerHTML=html;
   el.classList.add('meal');
+  el.classList.toggle('special-mode',modalitaSpeciale);
   attivaCaroselloPastoRs(el);
   el.querySelectorAll('[data-rs-details]').forEach(btn=>btn.addEventListener('click',()=>{
-    const ricetta=materializzate.find(r=>String(r.id)===String(btn.dataset.rsDetails));
-    if(ricetta)apriModalDettaglioRicetta(ricetta,voce);
+    const ricetta=materializzateMostrate.find(r=>String(r.id)===String(btn.dataset.rsDetails));
+    if(ricetta)apriModalDettaglioRicetta(ricetta,voceVisuale);
   }));
-  el.querySelectorAll('[data-rs-star]').forEach(btn=>btn.addEventListener('click',async()=>{
-    await toggleFavorito(btn.dataset.rsStar);
+  el.querySelectorAll('[data-rs-favorite]').forEach(btn=>btn.addEventListener('click',async()=>{
+    await toggleFavorito(btn.dataset.rsFavorite);
     await renderBloccoNuovoMotore(pasto,giorno,elementId);
   }));
   if(!modificabile)return;
+
+  el.querySelectorAll('[data-rs-special-toggle]').forEach(btn=>btn.addEventListener('click',async()=>{
+    if(!specialiPasto.length){await avviso('Non ci sono ancora piatti speciali disponibili nel ricettario.');return;}
+    pannelloSpecialeAperto[id]=!modalitaSpeciale;
+    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+  }));
+
+  el.querySelectorAll('[data-rs-special-set]').forEach(btn=>btn.addEventListener('click',async()=>{
+    const ricetta=specialiPasto.find(r=>String(r.id)===String(btn.dataset.rsSpecialSet));
+    if(!ricetta)return;
+    const tetto=await tettoPastiSpecialiRs(giorno,id,ricetteSalvatePasto);
+    if(tetto.raggiunto){await avviso('Hai già raggiunto il tetto di '+tetto.massimo+' pasti speciali questa settimana.');return;}
+    btn.disabled=true;
+    btn.textContent='Salvataggio…';
+    try{
+      const speciale=voceSpecialePastoRs(giorno,pasto,voce,ricetta);
+      await DietaPlannerMotorV12.salvaRoll(speciale);
+      await segnaRicettaUsata(ricetta.id);
+      delete bozzePropostaPasto[id];
+      pannelloSpecialeAperto[id]=true;
+      await renderBloccoNuovoMotore(pasto,giorno,elementId);
+      if(giorno===giornoSelezionato)renderNutrizioneGiorno();
+      aggiornaListaSpesaAutomatica(0);aggiornaListaSpesaAutomatica(1);
+    }catch(err){
+      console.error('[pasto speciale] salvataggio',err);
+      btn.disabled=false;
+      btn.textContent='Imposta come pasto';
+      await avviso('Salvataggio del piatto speciale non riuscito: '+(err.message||err));
+    }
+  }));
+
+  el.querySelectorAll('[data-nm-ripristina]').forEach(btn=>btn.addEventListener('click',async()=>{
+    delete bozzePropostaPasto[id];
+    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+  }));
 
   const impostaCaricamento=(btn,inCorso,etichetta)=>{
     if(!btn)return;
@@ -5375,7 +5531,7 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId){
       return; // la bozza precedente resta quella visibile, non viene sostituita da un esito vuoto
     }
     bozzePropostaPasto[id]={modalita:bozza.modalita,voce:risultato};
-    await renderPannelloPropostaPasto(id,giorno,pasto,elementId);
+    await renderBloccoNuovoMotore(pasto,giorno,elementId);
   });
 
   cont.querySelector('[data-nm-annulla-proposta]')?.addEventListener('click',async()=>{
