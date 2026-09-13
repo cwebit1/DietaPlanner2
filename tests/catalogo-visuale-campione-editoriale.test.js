@@ -21,7 +21,7 @@ global.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.
 require('../motor-v12.js');
 const M=global.DietaPlannerMotorV12;
 
-const ID_LOTTO=['nr_6_1','nr_13_24','nr_2_4','nr_11_1','nr_10_6','nr_12_24','nr_9_0','nr_19_12','nr_43_2','nr_5_0','nr_12_0','nr_37_0'];
+const ID_LOTTO=['nr_6_1','nr_13_24','nr_2_4','nr_11_1','nr_10_6','nr_12_24','nr_9_0','nr_19_12','nr_43_2','nr_5_0','nr_12_0','nr_8_0'];
 
 (async()=>{
   const init=await M.inizializza({basePath:''});

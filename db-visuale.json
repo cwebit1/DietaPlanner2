@@ -1,5 +1,5 @@
 {
-  "versione": 5,
+  "versione": 6,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -290,7 +290,24 @@
       "idRicetta": "nr_8_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo saporito, dove il farro perlato si arricchisce della cremosità del taleggio fuso e della sapidità dello speck croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente, poi cuocilo in acqua bollente leggermente salata finché non risulta tenero ma ancora leggermente al dente.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Rosola lo speck",
+          "testo": "Nel frattempo taglia {nrv_speck} a listarelle sottili e falle rosolare in padella finché non diventano leggermente croccanti ai bordi.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Manteca con il taleggio",
+          "testo": "Scola il farro e versalo ancora caldo in padella con lo speck, unisci {nrv_taleggio} a pezzetti e mescola finché il formaggio non si scioglie in una crema avvolgente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_8_1",
@@ -2017,28 +2034,7 @@
       "idRicetta": "nr_37_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true,
-      "descrizione": "Un primo di mare saporito, le linguine si legano al sugo profumato delle cozze aperte in tegame.",
-      "procedimentoStrutturato": [
-        {
-          "titolo": "Pulisci le cozze",
-          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso rimasto attaccato al guscio."
-        },
-        {
-          "titolo": "Apri le cozze",
-          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
-          "timerSecondi": 300
-        },
-        {
-          "titolo": "Prepara il sugo",
-          "testo": "Filtra il liquido di cottura delle cozze, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
-        },
-        {
-          "titolo": "Manteca la pasta",
-          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolale al dente e saltale nel tegame con le cozze e il loro sugo, mescolando bene perché la pasta si insaporisca a dovere.",
-          "timerSecondi": 600
-        }
-      ]
+      "disponibile": true
     },
     {
       "idRicetta": "nr_37_1",

@@ -2762,3 +2762,45 @@ fase non viene dichiarato un collaudo visivo locale: la pubblicazione di
 `d09df11ec7185cf37231e034fc8706e3917481af`.
 
 ---
+
+## Correzione campione editoriale: nr_37_0 sostituita con nr_8_0 — 11 settembre 2026
+
+**Motivo:** durante la compilazione del campione di 12 ricette (voce
+precedente) è emersa un'anomalia nel catalogo funzionale: `nr_37_0`
+("Linguine con Cozze e pomodoro") non ha il pomodoro tra gli ingredienti
+realmente tracciati, nonostante il nome del piatto lo dichiari — e
+l'anomalia è sistemica su tutta la famiglia "con pomodoro" a base di
+molluschi/crostacei (`nr_37_*`, `nr_38_*`). Segnalazione dettagliata
+salvata in un file dedicato, `docs/ANOMALIE_DA_RISOLVERE.md`, per
+condividerla e risolverla a monte nel catalogo funzionale — fuori dal
+perimetro di questo intervento editoriale.
+
+**Correzione:** rimossi `descrizione` e `procedimentoStrutturato` da
+`nr_37_0` (tornata ai soli quattro campi storici). Compilata al suo
+posto `nr_8_0` ("Farro perlato con Taleggio e Speck"), stessa categoria
+del campione ("più passaggi") — tre ingredienti reali (farro perlato,
+taleggio, speck), nessuna anomalia, tre fasi di preparazione distinte
+(cottura del farro, rosolatura dello speck, mantecatura con il
+formaggio).
+
+Il campione resta di 12 record; `db-visuale.json` incrementato di 1
+ulteriormente per questa correzione.
+
+**Verifica visiva reale (screenshot):** descrizione sotto il titolo,
+quantità corrette (75g farro, 20g taleggio, 30g speck) risolte
+correttamente sia nella lista ingredienti sia nei riferimenti inline,
+due timer renderizzati (25:00 e 3:00), timer cliccato e sceso a 24:59
+dopo ~1,5 secondi (countdown reale).
+
+**Test aggiornato:** `tests/catalogo-visuale-campione-editoriale.test.js`,
+lista ID del lotto aggiornata (`nr_37_0` → `nr_8_0`) — ok. Suite
+completa (48 file): 5 fallimenti pre-esistenti già documentati (stavolta
+il test proteine flaky non si è presentato in questo giro, coerente con
+la sua natura intermittente nota), nessuna nuova regressione.
+
+**File modificati:** `db-visuale.json`,
+`tests/catalogo-visuale-campione-editoriale.test.js`.
+**File aggiunto:** `docs/ANOMALIE_DA_RISOLVERE.md`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
