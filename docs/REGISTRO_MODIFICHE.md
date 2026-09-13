@@ -3554,3 +3554,60 @@ tracciati (ceci 135g, olio 10g) risolti correttamente nel testo.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Quattordicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_36_0`
+(piselli surgelati con cipolla rossa), `nr_37_0`..`nr_37_8`, `nr_38_0`..
+`nr_38_5` (pasta con cozze/vongole/gamberetti surgelati), `nr_39_0`
+(seppie con piselli), `nr_40_0` (pesce spada con patate lesse),
+`nr_40_1` (polpo surgelato con patate lesse), `nr_41_0`, `nr_41_1`
+(sardine/sgombro al forno), `nr_42_0`..`nr_42_3` (insalate fredde cous
+cous/farro con tofu e verdure).
+
+**Anomalia nota, non aggirata questa volta:** `nr_37_0`..`nr_37_8` e
+`nr_38_0`..`nr_38_5` sono la famiglia "con pomodoro" già segnalata in
+`docs/ANOMALIE_DA_RISOLVERE.md` (pomodoro nel nome ma mai tra gli
+ingredienti tracciati). Su indicazione esplicita, questa volta non li
+ho saltati né sostituiti: li ho compilati descrivendo solo la
+composizione realmente presente (pasta + mollusco/crostaceo, sugo
+ottenuto dal loro stesso liquido di cottura), senza nominare o
+referenziare un pomodoro inesistente nella ricetta concreta. L'anomalia
+resta comunque valida e aperta nel file dedicato, da risolvere a monte
+nel catalogo funzionale.
+
+**Verifica online per un dubbio reale:** per "Polpo surgelato con
+Patate lesse" (`nr_40_1`) ho cercato la cottura del polpo su più fonti,
+non essendo sicuro dei tempi per una porzione di 250g (le fonti danno
+tempi per polpi interi da 500g-1kg, 25-40 minuti). Ho scelto **20
+minuti**, in linea con l'indicazione proporzionale per porzioni più
+piccole già segnalata in una delle fonti, verificato anche dal vivo in
+browser.
+
+**Versione:** `db-visuale.json` incrementata di 1 (19 → 20).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 312 → dopo: 337 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (337/337);
+- nessun riferimento a un pomodoro inesistente nei 15 record della
+  famiglia anomala, verificato leggendo il testo generato prima del
+  commit;
+- timer presenti solo sulle preparazioni con vera cottura;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_40_1` (Polpo surgelato con
+patate lesse) aperta a 1 persona — timer 20:00 su entrambe le cotture.
+
+**Primo ID ancora da compilare:** `nr_42_4`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

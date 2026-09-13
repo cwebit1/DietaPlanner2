@@ -1,5 +1,5 @@
 {
-  "versione": 19,
+  "versione": 20,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -6175,151 +6175,614 @@
       "idRicetta": "nr_36_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, i piselli surgelati stufati con la dolcezza della cipolla rossa.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la cipolla",
+          "testo": "Affetta sottilmente {nrv_cipolla_rossa} e falla appassire in padella con un filo d'olio a fuoco basso.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Aggiungi i piselli",
+          "testo": "Unisci {nrv_piselli_surgelati} e prosegui la cottura mescolando di tanto in tanto, finché non risultano teneri.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, le linguine si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare rapido, le linguine saltate con i gamberetti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scongela e prepara i gamberetti",
+          "testo": "Lascia scongelare {nrv_gamberetti_surgelati}, poi scolali bene dall'acqua in eccesso."
+        },
+        {
+          "titolo": "Salta i gamberetti",
+          "testo": "Fai saltare i gamberetti in padella con un filo d'olio per pochi minuti, finché non diventano rosati e ben caldi.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolala al dente e saltala in padella con i gamberetti, mescolando bene perché la pasta si insaporisca.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, le linguine si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, gli spaghetti si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_spaghetti} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare rapido, gli spaghetti saltate con i gamberetti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scongela e prepara i gamberetti",
+          "testo": "Lascia scongelare {nrv_gamberetti_surgelati}, poi scolali bene dall'acqua in eccesso."
+        },
+        {
+          "titolo": "Salta i gamberetti",
+          "testo": "Fai saltare i gamberetti in padella con un filo d'olio per pochi minuti, finché non diventano rosati e ben caldi.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_spaghetti} in acqua bollente, scolala al dente e saltala in padella con i gamberetti, mescolando bene perché la pasta si insaporisca.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, gli spaghetti si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_spaghetti} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, i tagliolini all'uovo si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare rapido, i tagliolini all'uovo saltate con i gamberetti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scongela e prepara i gamberetti",
+          "testo": "Lascia scongelare {nrv_gamberetti_surgelati}, poi scolali bene dall'acqua in eccesso."
+        },
+        {
+          "titolo": "Salta i gamberetti",
+          "testo": "Fai saltare i gamberetti in padella con un filo d'olio per pochi minuti, finché non diventano rosati e ben caldi.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente, scolala al dente e saltala in padella con i gamberetti, mescolando bene perché la pasta si insaporisca.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, i tagliolini all'uovo si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, le linguine si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, le linguine si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, gli spaghetti si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_spaghetti} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, gli spaghetti si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_spaghetti} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, i tagliolini all'uovo si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente, scolala al dente e saltala nel tegame con le cozze e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_38_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare, i tagliolini all'uovo si legano al sugo profumato delle vongole aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le vongole",
+          "testo": "Sciacqua bene {nrv_vongole} sotto acqua corrente, eliminando eventuali residui e il bisso o la sabbia rimasti attaccati al guscio."
+        },
+        {
+          "titolo": "Apri le vongole",
+          "testo": "Metti le vongole in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il condimento",
+          "testo": "Filtra il liquido di cottura, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente, scolala al dente e saltala nel tegame con le vongole e il loro condimento, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_39_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di mare saporito, le seppie stufate insieme ai piselli fino a diventare tenere.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le seppie",
+          "testo": "Taglia {nrv_seppie} ad anelli o a pezzi regolari."
+        },
+        {
+          "titolo": "Cuoci in umido",
+          "testo": "Fai rosolare le seppie in un tegame con un filo d'olio, poi aggiungi {nrv_piselli_surgelati} e prosegui la cottura a fuoco basso, coperto, finché le seppie non risultano tenere.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_40_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo completo, il pesce spada accompagnato dalle patate lesse.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lessa le patate",
+          "testo": "Cuoci {nrv_patate} in acqua bollente salata finché non risultano tenere alla forchetta.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Cuoci il pesce spada",
+          "testo": "Nel frattempo scalda una padella e cuoci {nrv_pesce_spada} pochi minuti per lato, finché la polpa non diventa opaca e si sfalda facilmente.",
+          "timerSecondi": 360
+        },
+        {
+          "titolo": "Componi il piatto",
+          "testo": "Scola le patate, tagliale a pezzi se preferisci, e servile insieme al pesce spada."
+        }
+      ]
     },
     {
       "idRicetta": "nr_40_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di mare classico, il polpo servito con le patate lesse.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci il polpo",
+          "testo": "Immergi {nrv_polpo_surgelato} in acqua bollente e lascialo cuocere finché la polpa non risulta tenera alla forchetta.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Lessa le patate",
+          "testo": "Nel frattempo cuoci {nrv_patate} in un'altra pentola con acqua bollente salata, finché non risultano tenere.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Componi il piatto",
+          "testo": "Scola polpo e patate, taglia il polpo a pezzi e servili insieme, conditi con un filo d'olio."
+        }
+      ]
     },
     {
       "idRicetta": "nr_41_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce azzurro, le sardine al forno diventano dorate in superficie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le sardine",
+          "testo": "Scalda il forno e disponi {nrv_sardine_fresche} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non risulta dorata e la polpa cotta fino al centro.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_41_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce azzurro, lo sgombro al forno diventa dorato e saporito.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara lo sgombro",
+          "testo": "Scalda il forno e disponi {nrv_sgombro_fresco} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non risulta dorata e la polpa cotta fino al centro.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, il cous cous con il tofu e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, il cous cous con il tofu e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda vivace, il cous cous con il tofu e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Sgrana il cous cous con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il farro perlato con il tofu e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_4",
