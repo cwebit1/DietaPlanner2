@@ -698,7 +698,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-copy{padding:0 10px 8px;}
 #view-piano .dish-row{display:grid;grid-template-columns:minmax(0,1fr) 38px;gap:5px;align-items:center;}
 #view-piano .dish-title{margin:0;font:700 1rem/1.08 Georgia,serif;overflow-wrap:anywhere;}
-#view-piano .dish-kind{display:block;margin-bottom:3px;color:var(--accent);font:800 .55rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
+#view-piano .dish-kind{display:inline-block;margin-right:4px;color:var(--accent);font:800 .55rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
 #view-piano .favorite{color:#f1c40f;}
 #view-piano .favorite svg{width:25px;height:25px;fill:currentColor;stroke:#b98908;}
@@ -716,6 +716,8 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .action.primary .icon{justify-self:end;margin-right:5px;font-size:1rem;}
 #view-piano .action.primary .chev{justify-self:end;font-size:1.25rem;}
 #view-piano .meal-meta{padding:0 10px 8px;color:var(--text-dim);font-size:.7rem;}
+#view-piano .meal-empty{padding:18px 12px;color:var(--text-dim);font-size:.78rem;text-align:center;}
+#view-piano .meal-empty .primary{width:100%;margin-top:11px;}
 #view-piano .meal-proposal{margin:10px;padding:11px;border:1px solid var(--accent-dim);border-radius:10px;background:var(--panel-2);animation:pasto-proposal-in .28s linear;}
 @keyframes pasto-proposal-in{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
 #view-piano .meal-proposal .pasto-griglia-compatta{margin-top:7px;}
@@ -726,6 +728,12 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 @keyframes pasto-out-down{to{transform:translateY(100%)}}
 @keyframes pasto-in-down{from{transform:translateY(-100%)}to{transform:translateY(0)}}
 
+@media(min-width:500px){
+  #view-piano .photo-row{height:165px;}
+  #view-piano .carousel-next{top:64px;}
+  #view-piano .dish-title{font-size:1.2rem;}
+}
+
 @media(max-width:430px){
   #view-piano .giorni-riga{height:43px;margin:0 -14px;border-radius:0;grid-template-columns:22px minmax(0,1fr) 22px;padding:0;}
   #view-piano .giorni{gap:3px;}
@@ -735,35 +743,6 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   #view-piano .pasto-page-head{padding:10px 1px 7px;gap:5px;}
   #view-piano .pasto-page-head h1{font-size:23px;letter-spacing:-.6px;white-space:nowrap;}
   #view-piano .btn-calendario{width:27px;height:27px;font-size:1rem;}
-  #view-piano .pasto-block.meal{border-radius:12px;margin-bottom:8px;}
-  #view-piano .meal-head{height:31px;grid-template-columns:29px minmax(0,1fr) auto;padding:0 8px;}
-  #view-piano .meal-symbol{font-size:19px;}
-  #view-piano .meal-name{font-size:14px;letter-spacing:.2px;}
-  #view-piano .meal-time{font-size:9px;}
-  #view-piano .photo-row{height:82px;gap:7px;padding-left:8px;}
-  #view-piano .photo-main,#view-piano .photo-fallback{border-radius:8px;}
-  #view-piano .photo-peek{border-radius:8px 0 0 8px;}
-  #view-piano .photo-fallback{padding:7px;}
-  #view-piano .photo-fallback b{font-size:.7rem;}
-  #view-piano .photo-fallback span{font-size:.5rem;}
-  #view-piano .carousel-next{right:12px;top:26px;width:31px;height:31px;font-size:22px;}
-  #view-piano .dots{height:11px;gap:6px;}
-  #view-piano .meal-copy{padding:0 8px 6px;}
-  #view-piano .dish-row{grid-template-columns:minmax(0,1fr) 34px;gap:3px;}
-  #view-piano .dish-title{font-size:13px;line-height:1.05;}
-  #view-piano .dish-kind{font-size:7px;margin-bottom:2px;}
-  #view-piano .round-action{width:34px;height:34px;}
-  #view-piano .favorite svg{width:100%;height:100%;}
-  #view-piano .ingredients{gap:4px;margin:1px 0 5px;}
-  #view-piano .ingredient{grid-template-columns:23px minmax(0,1fr);}
-  #view-piano .food-icon{font-size:19px;}
-  #view-piano .ingredient-name{font-size:8px;}
-  #view-piano .ingredient-name small{font-size:7.5px;margin-top:0;}
-  #view-piano .actions{padding-top:5px;gap:4px;}
-  #view-piano .action{height:27px;padding:0 3px;border-radius:8px;font-size:8px;}
-  #view-piano .action.primary .icon{margin-right:3px;font-size:12px;}
-  #view-piano .action.primary .chev{font-size:15px;}
-  #view-piano .meal-meta{padding:0 8px 6px;font-size:.58rem;}
   #view-piano .meal-proposal{margin:7px;padding:8px;}
   #view-piano .meal-proposal .row{gap:4px!important;}
   #view-piano .meal-proposal .row button{font-size:.62rem;}
@@ -4313,7 +4292,7 @@ async function htmlRiepilogoColazione(componenti, colazioneSpecialeId, varianti,
 async function renderColazione(giorno, elementId){
   giorno = giorno || giornoSelezionato;
   const el = document.getElementById(elementId || 'blocColazione');
-  if(!elementId) el.classList.remove('meal');
+  if(!elementId) el.classList.add('meal');
   const pianoId = giorno+'_colazione';
   let voce = await getOne('piano', pianoId);
   const varianti = await getAll('varianti');
@@ -4333,7 +4312,7 @@ async function renderColazione(giorno, elementId){
     return;
   }
   if(fasciaPastoSuperata(giorno,'colazione') && !haContenutoColazione){
-    el.innerHTML='<div class="pasto-header">'+ICONA_PASTO.colazione+' Colazione</div><div class="pasto-concluso">— pasto concluso —</div>';
+    el.innerHTML=elementId?'<div class="pasto-header">'+ICONA_PASTO.colazione+' Colazione</div><div class="pasto-concluso">— pasto concluso —</div>':htmlStatoPastoRs('colazione','— pasto concluso —');
     return;
   }
 
@@ -4386,6 +4365,16 @@ async function renderColazione(giorno, elementId){
   let html = elementId ? '' : `<div class="pasto-header">${ICONA_PASTO.colazione} Colazione</div>`;
 
   if(voce.consumato){
+    if(!elementId){
+      const [visualeColazione,ricettaSpecialeAttuale]=await Promise.all([
+        mappaVisualePasto(),
+        voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
+      ]);
+      el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false);
+      attivaCaroselloPastoRs(el);
+      el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
+      return;
+    }
     const riepilogoScaduto = (voce.componenti || voce.colazioneSpecialeId)
       ? await htmlRiepilogoColazione(voce.componenti,voce.colazioneSpecialeId,varianti,'data-info-colazione="1"')
       : '<div class="meta">Nessuna colazione</div>';
@@ -4414,7 +4403,7 @@ async function renderColazione(giorno, elementId){
       mappaVisualePasto(),
       voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
     ]);
-    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale);
+    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true);
   }
 
   const tutteRicetteCS = await getAll('ricette');
@@ -5015,7 +5004,17 @@ function etichettaPortataPastoRs(ricetta){
   return ({primo:'Primo',secondo:'Secondo',contorno:'Contorno',unico:'Piatto unico',modulare:'Preparazione'})[tipo]||'Piatto';
 }
 function orarioPastoRs(pasto){
-  return pasto==='pranzo'?'12:00 – 14:30':pasto==='cena'?'19:00 – 21:30':'';
+  const fascia=FASCE_ORARIE_PASTO[pasto];
+  if(!fascia)return '';
+  const ora=n=>String(n).padStart(2,'0')+':00';
+  return ora(fascia[0])+' – '+ora(fascia[1]);
+}
+function htmlTestataPastoRs(pasto){
+  const simbolo=pasto==='cena'?'☾':'☀';
+  return '<header class="meal-head"><span class="meal-symbol '+(pasto==='cena'?'':'sun')+'">'+simbolo+'</span><span class="meal-name">'+escPastoRs(LABEL_PASTO[pasto]).toUpperCase()+'</span><span class="meal-time">'+orarioPastoRs(pasto)+'</span></header>';
+}
+function htmlStatoPastoRs(pasto,messaggio,azioneHtml){
+  return htmlTestataPastoRs(pasto)+'<div class="meal-empty">'+escPastoRs(messaggio)+(azioneHtml||'')+'</div>';
 }
 function immaginePastoRs(ricetta,mappaVisuale){
   const record=mappaVisuale.get(String(ricetta&&ricetta.id||''));
@@ -5070,11 +5069,11 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
   };
   const originali=ricette.map(slidePer);
   const slides=ricette.length>1?[originali[originali.length-1],...originali,originali[0]].join(''):originali[0];
-  return '<header class="meal-head"><span class="meal-symbol '+(pasto==='pranzo'?'sun':'')+'">'+(pasto==='pranzo'?'☀':'☾')+'</span><span class="meal-name">'+escPastoRs(LABEL_PASTO[pasto]).toUpperCase()+'</span><span class="meal-time">'+orarioPastoRs(pasto)+'</span></header>'
+  return htmlTestataPastoRs(pasto)
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="'+ricette.length+'"><div class="track">'+slides+'</div></div><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div>'
     +'<div class="meal-meta">'+Math.round(kcal)+' kcal · per il pasto completo'+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
 }
-function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale){
+function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile){
   const fintaRicetta=ricettaSpeciale||{id:'colazione-standard',nome:descrizione||'Colazione'};
   const foto=ricettaSpeciale?immaginePastoRs(ricettaSpeciale,mappaVisuale):'';
   const perId=new Map((varianti||[]).map(v=>[String(v.id),v]));
@@ -5096,12 +5095,15 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
     }
   }
   const ingredientiHtml=(ingredienti.slice(0,3).map(x=>'<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(x.nome)+'</span><span class="ingredient-name">'+escPastoRs(x.nome)+(x.quantita?'<small>'+escPastoRs(x.quantita)+'</small>':'')+'</span></div>').join(''))||'<div class="ingredient"><span class="food-icon">•</span><span class="ingredient-name">Componi la colazione</span></div>';
-  return '<header class="meal-head"><span class="meal-symbol sun">☀</span><span class="meal-name">COLAZIONE</span><span class="meal-time">07:00 – 09:00</span></header>'
+  const azioni=modificabile===false
+    ? '<div class="actions readonly"><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>'
+    : '<div class="actions"><button class="action" data-rs-col-edit><b>⟳</b> Modifica</button><button class="action" data-rs-col-recipe>Ricetta</button><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>';
+  return htmlTestataPastoRs('colazione')
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="1"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
     +'<div class="photo-row" style="grid-template-columns:minmax(0,1fr);padding-right:9px"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div></div><div class="dots"><i class="dot active"></i></div>'
     +'<div class="meal-copy"><div class="dish-row" style="grid-template-columns:minmax(0,1fr)"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
-    +'<div class="ingredients">'+ingredientiHtml+'</div><div class="actions"><button class="action" data-rs-col-edit><b>⟳</b> Modifica</button><button class="action" data-rs-col-recipe>Ricetta</button><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div></div></section></div></div></div>'
-    +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona</div>';
+    +'<div class="ingredients">'+ingredientiHtml+'</div>'+azioni+'</div></section></div></div></div>'
+    +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona'+(voce&&voce.consumato?' · ✓ consumata':'')+'</div>';
 }
 function attivaCaroselloPastoRs(el){
   el.querySelectorAll('[data-rs-photo]').forEach(img=>img.addEventListener('error',()=>{
@@ -5198,7 +5200,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   giorno=giorno||giornoSelezionato;
   const el=document.getElementById(elementId||(pasto==='pranzo'?'blocPranzo':'blocCena'));
   if(!el)return;
-  el.classList.remove('meal');
+  el.classList.toggle('meal',!elementId);
   const id=giorno+'_'+pasto;
   const voce=await getOne('piano',id); // sempre il pasto reale: la proposta non salvata vive solo nel pannello a parte
   const title=LABEL_PASTO[pasto].toUpperCase()+':';
@@ -5210,8 +5212,8 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
        per la Programmazione, non per questa pagina. Prima della
        chiusura fascia resta "non ancora programmato", con il comando
        per generarlo. Nessun record viene creato qui in nessun caso. */
-    if(fasciaPastoSuperata(giorno,pasto)){el.innerHTML='<div class="pasto-titolo-compatto">'+title+'</div><div class="pasto-griglia-compatta"><div class="pasto-riga-griglia"><span class="pasto-riga-icone">🍞🥩🥬</span><span class="pasto-riga-piatto pasto-concluso">— pasto concluso —</span><span class="pasto-riga-comando"></span></div></div>';return;}
-    el.innerHTML='<div class="pasto-titolo-compatto">'+title+'</div><div class="meta" style="margin-bottom:10px;">Nessun pasto programmato.</div><button class="primary" data-nm-genera>Genera pasto</button>';
+    if(fasciaPastoSuperata(giorno,pasto)){el.innerHTML=elementId?'<div class="pasto-titolo-compatto">'+title+'</div><div class="pasto-griglia-compatta"><div class="pasto-riga-griglia"><span class="pasto-riga-icone">🍞🥩🥬</span><span class="pasto-riga-piatto pasto-concluso">— pasto concluso —</span><span class="pasto-riga-comando"></span></div></div>':htmlStatoPastoRs(pasto,'— pasto concluso —');return;}
+    el.innerHTML=elementId?'<div class="pasto-titolo-compatto">'+title+'</div><div class="meta" style="margin-bottom:10px;">Nessun pasto programmato.</div><button class="primary" data-nm-genera>Genera pasto</button>':htmlStatoPastoRs(pasto,'Nessun pasto programmato.','<button class="primary" data-nm-genera>Genera pasto</button>');
     el.querySelector('[data-nm-genera]').addEventListener('click',async()=>{
       delete bozzePropostaPasto[id];
       const target=await targetNuovoMotorePerPasto(giorno,pasto);
