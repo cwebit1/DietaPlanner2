@@ -3597,3 +3597,59 @@ degli stati Pasto e delle fasce reali riuscito; `git diff --check` pulito.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Completamento dei comandi nella pagina Pasto restilizzata — 13 settembre 2026
+
+**Difetto corretto:** il primo collegamento dei caroselli aveva mantenuto le
+azioni funzionali `Alternativa`, `Salvafrigo` e `Dettagli`, ma non aveva ancora
+trasferito l'intera struttura di comando del prototipo Pasto: cambio visivo del
+piatto proposto, ripristino immediato del programmato e selettore dedicato ai
+piatti speciali. La stella grafica era inoltre stata collegata ai Preferiti,
+mentre nel prototipo identifica l'apertura degli Speciali.
+
+**Correzione applicata:** `Cambia piatto` usa la pipeline reale già esistente
+dell'anteprima Alternativa; la proposta sostituisce a video il contenuto del
+carosello ma resta soltanto in memoria. `Ripristina` scarta quella bozza e
+rimostra il pasto programmato. Il pannello conserva `Imposta come pasto`,
+`Rigenera` e `Annulla`, e solo la conferma continua a scrivere su IndexedDB.
+`Salvafrigo` mantiene lo stesso comportamento di anteprima indipendente.
+
+La stella apre ora il carosello delle ricette marcate `piattoSpeciale`, non
+escluse e disponibili. La scelta esplicita `Imposta come pasto` crea uno
+snapshot atomico tramite l'API già esistente del motore, conserva il pasto
+programmato originale, rispetta il tetto settimanale `specialMealsMax` e salva
+tramite `salvaRoll`. Un piatto speciale già impostato riapre la modalità
+Speciali come stato predefinito. La colazione usa la medesima stella per aprire
+il selettore di colazioni speciali già esistente, mantenendo tetto settimanale e
+conferma `Sostituisci colazione`. Le ricette speciali salvate nel formato
+precedente con il solo `ricettaId` restano renderizzabili.
+
+**Preferiti e lucchetto:** i Preferiti restano disponibili con un pulsante
+separato, senza cambiare `toggleFavorito`. Il lucchetto non è stato inserito
+nella pagina Pasto, come scelto esplicitamente da Cwe, perché il blocco reale
+resta una funzione della sola bozza di Programmazione.
+
+**CSS:** sono state aggiunte esclusivamente le regole necessarie alla
+disposizione dei pulsanti e ai loro stati normale, attivo, ripristino, selezione
+speciale e speciale confermato. Nessun altro restyling è stato applicato.
+
+**Scope:** codice modificato esclusivamente in `index-restyling.html`.
+`index.html`, `restyling-preview.html`, `index-pasto-restyling.html`,
+`motor-v12.js`, database, cataloghi e strumenti sono rimasti invariati. Il
+registro è l'unico secondo file aggiornato, come richiesto dalle istruzioni
+operative. Nessun file è stato rinominato.
+
+**Verifiche prima del push:** compilazione dei 4 script inline riuscita;
+contratto renderer verificato negli stati normale, proposta, Speciali e
+speciale confermato; tetto settimanale degli Speciali verificato includendo la
+sostituzione dello slot corrente; snapshot speciale verificato atomico con
+originale conservato; test `lotto-pasto-anteprima-non-salvata` riuscito su dieci
+generazioni senza scritture; test snapshot V/S/G riuscito; assenza del
+lucchetto Pasto confermata; `git diff --check` pulito.
+
+**Commit del codice:** `5e981f527c8520fd28b37e41da4334a40ec7b1a1`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
