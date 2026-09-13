@@ -8,7 +8,7 @@
     :root{color-scheme:dark;--bg:#111711;--card:#1b251c;--line:#526548;--green:#87a86c;--gold:#d7b35a;--red:#e57373;--text:#f4f5ef;--muted:#aeb9aa}
     *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 system-ui,sans-serif}
     header{position:sticky;top:0;z-index:2;background:rgba(17,23,17,.96);border-bottom:1px solid var(--line);padding:14px 18px}
-    h1{font-size:1.15rem;margin:0 0 10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}.toolbar input[type=search]{flex:1;min-width:210px}
+    h1{font-size:1.15rem;margin:0 0 10px}.toolbar{display:flex;gap:8px;flex-wrap:wrap}
     .head-row{display:flex;align-items:center;justify-content:space-between;gap:10px}.head-row h1{margin:0 0 10px}
     #toggleSettings{margin-bottom:10px;padding:7px 10px;font-size:.85rem}
     .tokenbar{display:none;gap:8px;flex-wrap:wrap;margin-top:8px}.tokenbar.open{display:flex}.tokenbar input{flex:1;min-width:220px}
@@ -23,6 +23,7 @@
     .photo{display:flex;gap:12px;align-items:flex-start;margin-top:12px}
     .thumb{width:120px;height:75px;border-radius:8px;border:1px solid var(--line);object-fit:cover;background:#0b0f0b;flex:none}
     .photo-controls{flex:1;min-width:0}
+    .file-input{display:none}
     .badge{display:inline-block;margin-left:7px;padding:2px 7px;border:1px solid var(--gold);border-radius:999px;color:var(--gold);font-size:.7rem}
     .empty{padding:30px;text-align:center;color:var(--muted)}
     #log{max-width:1100px;margin:0 auto 20px;padding:0 16px;font:12px ui-monospace,monospace;color:var(--muted);white-space:pre-wrap}
@@ -42,14 +43,6 @@
       <div class="hint">Il token resta solo in memoria per questa sessione: non viene salvato da nessuna parte, va incollato di nuovo ogni volta che apri la pagina.</div>
     </div>
     <div class="toolbar" style="margin-top:8px">
-      <input id="search" type="search" placeholder="Cerca nome o ID ricetta">
-      <select id="filter" aria-label="Filtro">
-        <option value="all">Tutte</option>
-        <option value="enabled">Disponibili</option>
-        <option value="disabled">Non disponibili</option>
-        <option value="incomplete">Senza foto o testo</option>
-        <option value="orphan">ID non più nel ricettario</option>
-      </select>
       <button id="download">Scarica JSON</button>
       <button id="save" class="primary" disabled>Salva su GitHub</button>
     </div>
@@ -131,21 +124,6 @@
       document.getElementById('status').innerHTML='<strong>'+rows.length+'</strong> record · <strong>'+disabled+'</strong> non disponibili · <strong>'+incomplete+'</strong> incompleti'+(orphan?' · <strong>'+orphan+'</strong> ID orfani':'')+((state.dirty||state.pendingPhotos.size)?' · modifiche non salvate su GitHub':'');
     }
 
-    function visibleRows(){
-      const query=document.getElementById('search').value.trim().toLowerCase();
-      const filter=document.getElementById('filter').value;
-      return state.catalog.ricette.filter(row=>{
-        const current=state.currentIds.has(row.idRicetta);
-        const name=state.names.get(row.idRicetta)||'';
-        if(query&&!name.toLowerCase().includes(query)&&!row.idRicetta.toLowerCase().includes(query))return false;
-        if(filter==='enabled'&&row.disponibile===false)return false;
-        if(filter==='disabled'&&row.disponibile!==false)return false;
-        if(filter==='incomplete'&&row.percorsoImmagine&&row.ricettaTestuale)return false;
-        if(filter==='orphan'&&current)return false;
-        return true;
-      });
-    }
-
     function estensionePerTipo(tipo){
       if(tipo==='image/png')return 'png';
       if(tipo==='image/jpeg')return 'jpg';
@@ -176,7 +154,7 @@
 
     function render(){
       renderStatus();
-      const rows=visibleRows();
+      const rows=state.catalog.ricette;
       const list=document.getElementById('list');
       if(!rows.length){list.innerHTML='<div class="empty">Nessuna ricetta corrispondente.</div>';return;}
       list.innerHTML=rows.map(row=>{
@@ -189,7 +167,8 @@
           '<label class="availability"><input type="checkbox" data-field="disponibile" '+(row.disponibile!==false?'checked':'')+'> <span>'+(row.disponibile!==false?'Disponibile':'Non disponibile')+'</span></label></div>'+
           '<div class="photo">'+(anteprimaSrc?'<img class="thumb" src="'+esc(anteprimaSrc)+'" alt="">':'<div class="thumb"></div>')+
           '<div class="photo-controls">'+
-            '<input type="file" accept="image/*" data-action="foto">'+
+            '<button type="button" data-action="scegli-foto">Sfoglia</button>'+
+            '<input class="file-input" type="file" accept="image/*" data-action="foto">'+
             '<label class="field">Percorso immagine<input data-field="percorsoImmagine" value="'+esc(row.percorsoImmagine)+'" readonly placeholder="assets/ricette/'+esc(row.idRicetta)+'.webp"></label>'+
           '</div></div>'+
           '<label class="field">Ricetta testuale<textarea data-field="ricettaTestuale" placeholder="Ingredienti, dosi e procedimento…">'+esc(row.ricettaTestuale)+'</textarea></label></article>';
@@ -284,6 +263,10 @@
       }
       markDirty();
     });
+    document.getElementById('list').addEventListener('click',event=>{
+      const trigger=event.target.closest('[data-action="scegli-foto"]');
+      if(trigger)trigger.nextElementSibling.click();
+    });
     document.getElementById('list').addEventListener('change',async event=>{
       if(event.target.dataset.action!=='foto')return;
       const file=event.target.files[0];if(!file)return;
@@ -298,8 +281,6 @@
         markDirty();render();
       }catch(errore){alert('Impossibile elaborare la foto: '+errore.message);}
     });
-    document.getElementById('search').addEventListener('input',render);
-    document.getElementById('filter').addEventListener('change',render);
     document.getElementById('token').addEventListener('input',aggiornaPulsanteSalva);
     document.getElementById('save').addEventListener('click',()=>salvaSuGitHub());
     document.getElementById('download').addEventListener('click',downloadFile);
