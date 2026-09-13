@@ -2703,3 +2703,62 @@ un ingrediente, ma segnalo la circostanza.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Anteprima funzionale dei caroselli Pasto su `index-restyling.html` — 13 settembre 2026
+
+**Obiettivo:** creare un ambiente di restyling che parta dall'applicazione
+completa e funzionante, senza sovrascrivere la precedente
+`restyling-preview.html`, nella quale sono già presenti decisioni grafiche da
+conservare. `index.html` resta la sorgente funzionale pubblicata e non è stato
+rinominato in questa fase.
+
+**Nuovo file:** `index-restyling.html`, nato come copia byte-per-byte
+dell'`index.html` corrente e poi riallineato agli ultimi interventi sui
+contenuti editoriali delle ricette. Il file conserva quindi tutte le viste,
+gli store IndexedDB, i modal, il motore e le funzioni dell'app completa.
+
+**Restyling Pasto:** colazione, pranzo e cena sono presentati in card con
+testata, immagine, indicatori di pagina, titolo, ingredienti e azioni. Pranzo
+e cena scorrono orizzontalmente tra le realizzazioni reali del pasto; il
+pulsante freccia e lo swipe aggiornano il piatto visibile. Le immagini vengono
+lette in sola lettura da `db-visuale.json` tramite `idRicetta`; quando il
+percorso non è ancora compilato o l'immagine non viene caricata, compare un
+fallback grafico esplicito senza rompere il carosello.
+
+**Azioni preservate:** `Dettagli` apre il modal ricetta reale, la stella usa il
+salvataggio preferiti già esistente, `Alternativa` e `Salvafrigo` continuano a
+generare soltanto una bozza in memoria. La proposta resta separata dal pasto
+salvato e viene persistita esclusivamente da `Imposta come pasto`; `Rigenera`
+e `Annulla` mantengono il contratto precedente. Nei pasti consumati o fuori
+fascia sono nascoste le azioni di modifica e resta disponibile `Dettagli`.
+La colazione mantiene integralmente editor a gruppi, colazioni speciali,
+preferita, sostituzione e informazioni nutrizionali.
+
+**Retrocompatibilità e scope:** nessuna modifica a `motor-v12.js`, ai database,
+alla lista della spesa, alla Programmazione, agli spuntini o alle altre viste.
+`restyling-preview.html` è rimasto identico al repository. Non è stato eseguito
+il rename finale: avverrà soltanto dopo il collaudo e l'approvazione visiva
+dell'anteprima pubblicata.
+
+**Metadati UI:** aggiunti binding dichiarativi confinati alla preview
+funzionale (`data-page="meal"`, `data-meal-slot`, `data-ui-role`,
+`data-recipe-id`, `data-dish-kind`, `data-logical-index`) per mantenere il
+collegamento tra resa grafica e dati reali.
+
+**Verifiche:** parsing sintattico dei 4 script inline; test fascia oraria
+eseguito contro `index-restyling.html` → ok; test contratto
+Alternativa/Salvafrigo/Imposta → ok; test catalogo visuale e contenuti
+editoriali → ok; prova isolata del markup dei caroselli (due slide, fallback
+foto, azioni modificabili/sola lettura, colazione) → ok; controllo delle
+differenze rispetto a `index.html` limitato ai blocchi di restyling descritti.
+Il browser cloud non può aprire URL `localhost` o `file://`, quindi in questa
+fase non viene dichiarato un collaudo visivo locale: la pubblicazione di
+`index-restyling.html` fornisce l'URL separato necessario per la verifica reale.
+
+**File aggiunto:** `index-restyling.html`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+**SHA dell'intervento grafico:**
+`d09df11ec7185cf37231e034fc8706e3917481af`.
+
+---
