@@ -31,12 +31,17 @@ require('../motor-v12.js');
   await global.DietaPlannerMotorV12.inizializza({basePath:''});
   const ricette=global.DietaPlannerMotorV12.getRicette().map(r=>{
     const prima=perId.get(r.id)||{};
-    return {
+    const out={
       idRicetta:r.id,
       percorsoImmagine:String(prima.percorsoImmagine||''),
       ricettaTestuale:String(prima.ricettaTestuale||''),
       disponibile:prima.disponibile!==false
     };
+    /* Campi editoriali facoltativi: preservati inalterati se l'ID resta
+       valido, mai generati o compilati automaticamente da questo script. */
+    if(typeof prima.descrizione==='string'&&prima.descrizione)out.descrizione=prima.descrizione;
+    if(Array.isArray(prima.procedimentoStrutturato)&&prima.procedimentoStrutturato.length)out.procedimentoStrutturato=prima.procedimentoStrutturato;
+    return out;
   });
   const output={versione:Number(precedente.versione)||1,ricette};
   fs.writeFileSync(target,JSON.stringify(output,null,2)+'\n');

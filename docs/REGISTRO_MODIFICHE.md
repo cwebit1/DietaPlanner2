@@ -2533,3 +2533,82 @@ fare al primo utilizzo.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Contenuti editoriali (descrizione, procedimento strutturato) collegati a db-visuale.json — 11 settembre 2026
+
+**Obiettivo:** collegare i contenuti editoriali già supportati dal
+dettaglio ricetta (descrizione, procedimento strutturato con titolo/
+testo/timer, introdotti nella voce precedente) a `db-visuale.json`,
+mantenendoli completamente separati dal catalogo funzionale e
+nutrizionale. `db-ricette.json` e `ingredienti-new.json` non sono stati
+toccati.
+
+**Schema `db-visuale.json`:** i quattro campi storici (`idRicetta`,
+`percorsoImmagine`, `ricettaTestuale`, `disponibile`) restano
+obbligatori e senza rinomini. Due campi nuovi, entrambi facoltativi:
+`descrizione` (stringa) e `procedimentoStrutturato` (array di
+`{titolo, testo, timerSecondi}`, con `timerSecondi` facoltativo e,
+quando presente, intero positivo). Nessun placeholder o valore finto
+per i record non ancora compilati.
+
+**Collegamento runtime (`motor-v12.js`):** nuovo accessor di sola
+lettura `getContenutoVisualeRicetta(idRicetta)`, che restituisce una
+copia (`clone`) del record visuale con lo stesso ID o `null` se
+assente. Non introduce una seconda lettura di `db-visuale.json`: legge
+`state.dbVisuale`, già caricato da `inizializza()`. Foto e contenuti
+editoriali restano fuori dallo store funzionale `ricette` e da
+qualunque calcolo del motore — verificato con un test che applica un
+record visuale carico di contenuti editoriali e conferma che la
+ricetta funzionale resta bit per bit identica, `disponibile` a parte.
+
+**Risoluzione in `apriModalDettaglioRicetta` (`index.html`):** nuove
+funzioni `risolviDescrizioneRicetta`/`risolviProcedimentoStrutturatoRicetta`
+con precedenza fissa — override locale sull'oggetto ricetta (controllo
+di presenza della chiave, non di verità) → record del catalogo visuale
+→ fallback al procedimento classico. Un `procedimentoStrutturato: []`
+esplicito sulla ricetta locale seleziona il fallback legacy senza mai
+essere scavalcato dal contenuto visuale. Le ricette personali senza
+record in `db-visuale.json` continuano a funzionare solo con i campi
+salvati sull'oggetto ricetta, invariato.
+
+**Gestori (`gestore-ricette.html`, `gestore-ricette-github.html`):**
+`normalizeRecord` ora preserva `descrizione` e `procedimentoStrutturato`
+se già presenti nell'input, invece di ricostruire il record con i soli
+quattro campi storici (il difetto segnalato). Aggiunti campi di
+modifica per descrizione e procedimento strutturato (un passo per riga,
+formato `titolo | testo | secondi`); textarea vuota = campo omesso, mai
+un array vuoto finto. Nessun Cerca/Filtro aggiunto a
+`gestore-ricette-github.html`.
+
+**`tools/sincronizza-db-visuale.js`:** preserva `descrizione` e
+`procedimentoStrutturato` per gli ID rimasti validi, senza generarne il
+contenuto — verificato con una copia di prova, file reale non toccato
+durante la verifica.
+
+**Test (`tests/catalogo-visuale-disponibilita.test.js`, riscritto):**
+i quattro campi storici restano obbligatori e nessun campo oltre ai sei
+noti è ammesso; i due nuovi campi, quando presenti, rispettano i tipi
+attesi (`descrizione` stringa, `procedimentoStrutturato` array di
+oggetti con `timerSecondi` intero positivo se presente); nessun ID
+duplicato; corrispondenza invariata dei 420 ID concreti; i gestori e lo
+script di sincronizzazione preservano i campi nuovi (verifica di
+sorgente); il motore usa solo `disponibile` per la logica funzionale
+(verifica comportamentale); prova mirata della precedenza
+locale → visuale → fallback legacy, estratta dal sorgente reale di
+`index.html` ed eseguita isolatamente (corretto un problema tecnico di
+confronto tra array di realm diversi durante la scrittura del test:
+estrazione con `new Function` invece di `vm.createContext`, altrimenti
+`assert.deepEqual` falliva a torto su array strutturalmente identici).
+
+**Test eseguiti:** `tests/catalogo-visuale-disponibilita.test.js` → ok;
+suite completa (47 file) → stessi 6 fallimenti pre-esistenti già
+documentati nelle voci precedenti (5 strutturali invariati + il test
+proteine già flaky prima di questo intervento), nessuna nuova
+regressione; controllo sintattico di tutti i file modificati; `git diff
+--check` pulito.
+
+**File modificati:** `motor-v12.js`, `index.html`, `gestore-ricette.html`,
+`gestore-ricette-github.html`, `tools/sincronizza-db-visuale.js`,
+`tests/catalogo-visuale-disponibilita.test.js`.
+
+---

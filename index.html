@@ -5700,9 +5700,34 @@ function risolviRiferimentiIngredienteTesto(testoEscapato, ricetta, varianti, sc
     return formattaQuantita(variante, grammiPerFormato*scala);
   });
 }
+/* Risoluzione dei contenuti editoriali (descrizione, procedimento
+   strutturato) con precedenza fissa:
+   1. proprietà presente direttamente sull'oggetto ricetta (override
+      locale) - controllo di presenza della chiave, non di verità: un
+      "procedimentoStrutturato: []" locale è un override esplicito
+      valido (seleziona il procedimento classico) e non deve mai essere
+      scavalcato dal record del catalogo visuale;
+   2. altrimenti il record del catalogo visuale con lo stesso idRicetta
+      (via getContenutoVisualeRicetta, sola lettura);
+   3. altrimenti nessuna delle due fonti: fallback al vecchio
+      "procedimento" (gestito a valle, qui si restituisce semplicemente
+      niente). */
+function risolviDescrizioneRicetta(ricetta, contenutoVisuale){
+  if(Object.prototype.hasOwnProperty.call(ricetta,'descrizione')) return ricetta.descrizione;
+  if(contenutoVisuale && typeof contenutoVisuale.descrizione==='string') return contenutoVisuale.descrizione;
+  return null;
+}
+function risolviProcedimentoStrutturatoRicetta(ricetta, contenutoVisuale){
+  if(Object.prototype.hasOwnProperty.call(ricetta,'procedimentoStrutturato')) return Array.isArray(ricetta.procedimentoStrutturato) ? ricetta.procedimentoStrutturato : [];
+  if(contenutoVisuale && Array.isArray(contenutoVisuale.procedimentoStrutturato)) return contenutoVisuale.procedimentoStrutturato;
+  return [];
+}
 async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModifica){
   if(!ricetta) return;
   pulisciTimerDettaglioRicetta();
+  const contenutoVisuale = (typeof DietaPlannerMotorV12!=='undefined' && DietaPlannerMotorV12.getContenutoVisualeRicetta && ricetta.id)
+    ? DietaPlannerMotorV12.getContenutoVisualeRicetta(ricetta.id)
+    : null;
   let voce = null, porzioniSel;
   if(typeof voceOPorzioni === 'object' && voceOPorzioni !== null){
     voce = voceOPorzioni;
@@ -5727,8 +5752,9 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
   document.getElementById('modalDettaglioTitolo').innerHTML =
     `<span style="flex:1;">${ricetta.nome}</span> ${stellaBtn(ricetta)} ${isUnicoDettaglio ? `<button class="small" data-speciale="${ricetta.id}">${ricetta.piattoSpeciale?'🍽 Togli speciale':'🍽 Piatto speciale'}</button>` : ''}`;
 
-  const descrizioneHtml = ricetta.descrizione
-    ? `<div class="meta" style="margin-top:6px;white-space:pre-wrap;">${escCampoNuovoRicetta(ricetta.descrizione)}</div>`
+  const descrizioneRisolta = risolviDescrizioneRicetta(ricetta, contenutoVisuale);
+  const descrizioneHtml = descrizioneRisolta
+    ? `<div class="meta" style="margin-top:6px;white-space:pre-wrap;">${escCampoNuovoRicetta(descrizioneRisolta)}</div>`
     : '';
 
   const nutriAttuale = await nutrizionePerPersona(ricetta);
@@ -5769,7 +5795,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
     }).join('\n');
     corpoHtml += `
       <label>Descrizione (facoltativa — 2-4 frasi discorsive, non uno slogan)</label>
-      <textarea id="modalEditDescrizione" rows="3" placeholder="Racconta il piatto come lo spiegheresti a voce...">${escCampoNuovoRicetta(ricetta.descrizione||'')}</textarea>
+      <textarea id="modalEditDescrizione" rows="3" placeholder="Racconta il piatto come lo spiegheresti a voce...">${escCampoNuovoRicetta(risolviDescrizioneRicetta(ricetta,contenutoVisuale)||'')}</textarea>
       <label>Gruppo proteico coperto</label>
       <select id="modalEditGruppoProteico">
         <option value="" ${!ricetta.gruppoProteico?'selected':''}>— nessuno / piatto senza proteina animale —</option>
@@ -5789,7 +5815,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       <div class="meta" style="margin-top:10px;">Procedimento (un passo per riga):</div>
       <textarea id="modalEditProcedimento" rows="6">${(ricetta.procedimento||[]).join('\n')}</textarea>
       <div class="meta" style="margin-top:10px;">Procedimento strutturato (facoltativo — se compilato, sostituisce quello sopra nella visualizzazione). Un passo per riga, formato: titolo | testo discorsivo (puoi usare {variantId} per richiamare una quantità) | secondi timer (facoltativo):</div>
-      <textarea id="modalEditProcedimentoStrutturato" rows="6" placeholder="Soffritto | Fai scaldare l'olio a fuoco medio e lascia che la cipolla appassisca dolcemente, senza fretta | 300">${(ricetta.procedimentoStrutturato||[]).map(p=>`${p.titolo||''} | ${p.testo||''} | ${p.timerSecondi||''}`).join('\n')}</textarea>
+      <textarea id="modalEditProcedimentoStrutturato" rows="6" placeholder="Soffritto | Fai scaldare l'olio a fuoco medio e lascia che la cipolla appassisca dolcemente, senza fretta | 300">${risolviProcedimentoStrutturatoRicetta(ricetta,contenutoVisuale).map(p=>`${p.titolo||''} | ${p.testo||''} | ${p.timerSecondi||''}`).join('\n')}</textarea>
       <div class="meta" style="margin-top:10px;">Note personali (facoltative — varianti, trucchi, quantità di sale che usi tu, ecc.):</div>
       <textarea id="modalEditNote" rows="3" placeholder="Es. io uso mezza cipolla in meno, oppure aggiungo un pizzico di peperoncino...">${ricetta.notePersonali||''}</textarea>
       <div class="meta" style="margin-top:10px;">Valori nutrizionali TOTALI per l'intera ricetta — <b>facoltativi</b>: se li lasci vuoti, restano quelli già calcolati sopra dagli ingredienti (hanno sempre la precedenza sul calcolo automatico, utile solo se qualche ingrediente è "libero" e non è nel database):</div>
@@ -5809,7 +5835,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       </div>
     `;
   } else {
-    const passiStrutturati = Array.isArray(ricetta.procedimentoStrutturato) ? ricetta.procedimentoStrutturato.filter(p=>p&&(p.testo||p.titolo)) : [];
+    const passiStrutturati = risolviProcedimentoStrutturatoRicetta(ricetta, contenutoVisuale).filter(p=>p&&(p.testo||p.titolo));
     let procedimentoHtml;
     if(passiStrutturati.length){
       procedimentoHtml = passiStrutturati.map((passo,indice)=>{

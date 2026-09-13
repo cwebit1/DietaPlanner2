@@ -3148,6 +3148,19 @@ function getRicette(){ return state.ricetteConcrete.slice(); }
 function getRicetteDisponibili(){ return state.ricetteConcrete.filter(r=>r.disponibile!==false); }
 function getRicetta(id){ return state.ricetteById.get(id)||null; }
 function stato(){ return {pronto:state.pronto,versioneRicette:state.dbRicette&&state.dbRicette.versione||0,ricetteConcrete:state.ricetteConcrete.length}; }
+/* Accessor di sola lettura per i contenuti editoriali del catalogo
+   visuale (descrizione, procedimento strutturato). Foto e stato
+   disponibile restano gestiti solo da applicaDisponibilitaCatalogoVisuale;
+   questo accessor non scrive mai sullo store funzionale "ricette" e non
+   deve influenzare generazione, nutrizione, frequenze, inventario o
+   lista della spesa - serve solo all'interfaccia per mostrare i
+   contenuti editoriali nel dettaglio ricetta. Nessun ID trovato: null,
+   mai un record fittizio. */
+function getContenutoVisualeRicetta(idRicetta){
+  const record=Array.isArray(state.dbVisuale&&state.dbVisuale.ricette)?state.dbVisuale.ricette:[];
+  const trovato=record.find(r=>r&&String(r.idRicetta)===String(idRicetta));
+  return trovato?clone(trovato):null;
+}
 
 global.DietaPlannerMotorV12={
   inizializza,stato,getRicette,getRicetteDisponibili,getRicetta,
@@ -3168,6 +3181,6 @@ global.DietaPlannerMotorV12={
   ingredienteVerduraQuantificabile,coperturaVerduraRicette,ridimensionaVerdureRicetta,completaResiduoVerduraRicette,punteggioVerduraProgrammazione,ordinaVerdureProgrammazione,
   prioritaVerdureProgrammazionePasti,ricettaAmmessa,
   registraUtilizzo,categoriaPrincipale,copertura,scoreCopertura,pastoCompletoPerToken,ruoliVerduraDaClasse,calcolaBilancioVSG,caricaConfigurazioneNutrizionaleRisolta,migraStatoCarboidratiCanonicoSeNecessario,carbKeyNome,carbKeysRicetta,preparaBudgetCarboidrati,creaSequenzaCarboidrati,creaSequenzaProteine,carbRicettaAmmesso,consumaBudgetCarboidrati,accumulaConteggiPasto,pastoRispettaConteggi,stablePartition,ordinaPerVerdurePreferite,ordinaCarboidratiPerPocoTempo,caricaPreferenzeUtenteSet,
-  applicaDisponibilitaCatalogoVisuale,invalidaConfigRuntime
+  applicaDisponibilitaCatalogoVisuale,invalidaConfigRuntime,getContenutoVisualeRicetta
 };
 })(typeof window!=='undefined'?window:globalThis);

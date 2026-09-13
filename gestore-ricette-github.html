@@ -76,13 +76,45 @@
     const esc=value=>{const d=document.createElement('div');d.textContent=String(value??'');return d.innerHTML;};
     const log=line=>{const el=document.getElementById('log');el.textContent=(new Date().toLocaleTimeString()+'  '+line+'\n')+el.textContent;};
 
+    /* I quattro campi storici sono sempre presenti (default se assenti).
+       I due campi editoriali nuovi sono facoltativi e vengono preservati
+       SOLO se gia' presenti nell'input: mai un placeholder o un valore
+       finto per un record non ancora compilato. */
     function normalizeRecord(row){
-      return {
+      const out={
         idRicetta:String(row&&row.idRicetta||''),
         percorsoImmagine:String(row&&row.percorsoImmagine||''),
         ricettaTestuale:String(row&&row.ricettaTestuale||''),
         disponibile:!(row&&row.disponibile===false)
       };
+      if(row&&typeof row.descrizione==='string'&&row.descrizione)out.descrizione=row.descrizione;
+      if(row&&Array.isArray(row.procedimentoStrutturato)&&row.procedimentoStrutturato.length){
+        out.procedimentoStrutturato=row.procedimentoStrutturato.map(p=>{
+          const passo={titolo:String(p&&p.titolo||''),testo:String(p&&p.testo||'')};
+          const secondi=Number(p&&p.timerSecondi);
+          if(Number.isInteger(secondi)&&secondi>0)passo.timerSecondi=secondi;
+          return passo;
+        });
+      }
+      return out;
+    }
+    /* Formato di modifica per i passi strutturati: un passo per riga,
+       "titolo | testo | secondi timer" (gli ultimi due separatori sono
+       facoltativi). Textarea vuota = nessun procedimento strutturato
+       (campo omesso, fallback al procedimento classico a valle). */
+    function procedimentoStrutturatoInTesto(righe){
+      return (righe||[]).map(p=>`${p.titolo||''} | ${p.testo||''} | ${p.timerSecondi||''}`).join('\n');
+    }
+    function testoInProcedimentoStrutturato(testo){
+      const righe=(testo||'').split('\n').map(r=>r.trim()).filter(Boolean);
+      if(!righe.length)return undefined;
+      return righe.map(riga=>{
+        const [titolo,testoPasso,secondi]=riga.split('|').map(s=>s===undefined?'':s.trim());
+        const passo={titolo:titolo||'',testo:testoPasso||''};
+        const n=parseInt(secondi,10);
+        if(Number.isInteger(n)&&n>0)passo.timerSecondi=n;
+        return passo;
+      });
     }
 
     function applyCatalog(input){
@@ -171,7 +203,9 @@
             '<input class="file-input" type="file" accept="image/*" data-action="foto">'+
             '<label class="field">Percorso immagine<input data-field="percorsoImmagine" value="'+esc(row.percorsoImmagine)+'" readonly placeholder="assets/ricette/'+esc(row.idRicetta)+'.webp"></label>'+
           '</div></div>'+
-          '<label class="field">Ricetta testuale<textarea data-field="ricettaTestuale" placeholder="Ingredienti, dosi e procedimento…">'+esc(row.ricettaTestuale)+'</textarea></label></article>';
+          '<label class="field">Ricetta testuale<textarea data-field="ricettaTestuale" placeholder="Ingredienti, dosi e procedimento…">'+esc(row.ricettaTestuale)+'</textarea></label>'+
+          '<label class="field">Descrizione (facoltativa — 2-4 frasi discorsive)<textarea data-field="descrizione" placeholder="Racconta il piatto come lo spiegheresti a voce…">'+esc(row.descrizione||'')+'</textarea></label>'+
+          '<label class="field">Procedimento strutturato (facoltativo — un passo per riga: titolo | testo | secondi timer)<textarea data-field="procedimentoStrutturatoTesto" placeholder="Soffritto | Fai scaldare l\'olio e lascia appassire la cipolla | 300">'+esc(procedimentoStrutturatoInTesto(row.procedimentoStrutturato))+'</textarea></label></article>';
       }).join('');
     }
 
@@ -256,7 +290,14 @@
     document.getElementById('list').addEventListener('input',event=>{
       const field=event.target.dataset.field;if(!field)return;
       const card=event.target.closest('[data-id]');const row=state.catalog.ricette.find(r=>r.idRicetta===card.dataset.id);if(!row)return;
+      if(field==='procedimentoStrutturatoTesto'){
+        const parsato=testoInProcedimentoStrutturato(event.target.value);
+        if(parsato)row.procedimentoStrutturato=parsato;else delete row.procedimentoStrutturato;
+        markDirty();
+        return;
+      }
       row[field]=field==='disponibile'?event.target.checked:event.target.value;
+      if(field==='descrizione'&&!row.descrizione)delete row.descrizione;
       if(field==='disponibile'){
         card.classList.toggle('off',!row.disponibile);
         event.target.nextElementSibling.textContent=row.disponibile?'Disponibile':'Non disponibile';
