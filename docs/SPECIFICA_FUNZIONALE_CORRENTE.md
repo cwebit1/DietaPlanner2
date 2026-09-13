@@ -288,6 +288,42 @@ Sono due meccaniche collegate ma distinte.
 - I piatti speciali non scaricano inventario quando il loro dato strutturale
   dichiara che non lo richiedono.
 
+### Scansione prodotti durante la spesa — decisione approvata 13/09/2026
+
+- La PWA potrà usare la fotocamera dello smartphone per leggere i codici a
+  barre dei prodotti acquistati. Il formato ordinario di riferimento è
+  EAN-13; il lettore potrà riconoscere anche gli altri formati supportati,
+  compresi eventuali QR, senza assumere che ogni QR identifichi un alimento.
+- `ingredienti-new.json` resta il catalogo nutrizionale canonico e non viene
+  riempito con marche, confezioni o codici commerciali. I prodotti acquistabili
+  vivono in un archivio parallelo che collega ogni codice a un `variantId`.
+- Il record commerciale conserva almeno il codice come stringa, il
+  `variantId`, il nome commerciale, la quantità della confezione e la relativa
+  unità (`g`, `ml` o `pz`). Marca e composizione multipla della confezione
+  possono essere conservate come metadati descrittivi, ma l'inventario riceve
+  sempre una quantità totale normalizzata nella stessa unità della variante.
+- Dopo la lettura l'app mostra il prodotto e la quantità riconosciuti e chiede
+  conferma prima di aggiornare l'inventario. La conferma aggiunge la quantità
+  esatta; più confezioni dello stesso prodotto vengono sommate. Il consumo
+  reale continua a sottrarre le quantità effettive già usate dalle ricette.
+- Un codice già associato viene risolto localmente, anche senza interrogare
+  ogni volta un servizio esterno. Per un codice sconosciuto l'app può tentare
+  una ricerca esterna, ma il risultato non diventa dato canonico senza
+  conferma. Se non viene trovato, l'utente associa una sola volta prodotto,
+  variante e formato; l'associazione viene poi riutilizzata alle scansioni
+  successive.
+- Codice prodotto e `variantId` restano concetti distinti: più codici
+  commerciali e formati possono puntare allo stesso ingrediente. Nessuna
+  corrispondenza viene dedotta dal solo nome.
+- Un normale EAN identifica il prodotto ma non garantisce scadenza o lotto.
+  Questi dati restano manuali, salvo che il codice letto li contenga
+  esplicitamente in un formato supportato; l'app non deve inventarli né
+  dedurli dalla data di scansione.
+- Questa sezione registra il comportamento approvato ma non lo dichiara già
+  implementato: schema persistente, interfaccia Spesa, permessi fotocamera,
+  fallback del lettore e prove su dispositivi Android saranno definiti e
+  verificati nell'intervento dedicato.
+
 ## 8. Ricette e varianti
 
 - Le ricette sono template a quattro gruppi; i gruppi non-Condimenti si

@@ -49,6 +49,11 @@
 | MEAL-02 | Un consumo reale non viene riscritto | HARD | storico | Lotto G/H |
 | MEAL-03 | Inventario viene scalato sul consumo reale | HARD | consumo | Lotto G/H |
 | MEAL-04 | Quantità condivisa da nutrizione/inventario/spesa/storico | HARD | realizzazione | Lotto G/H |
+| INV-01 | La pagina Spesa legge con la fotocamera i codici prodotto, con EAN-13 come formato ordinario | HARD/UX | UI Spesa/scanner | futuro test Android reale |
+| INV-02 | Codici commerciali e formati confezione vivono in un archivio parallelo e risolvono gli ingredienti esclusivamente tramite `variantId` | HARD | catalogo prodotti/adattatore | futuro schema test |
+| INV-03 | Una scansione confermata aggiunge all'inventario la quantità totale normalizzata in `g`, `ml` o `pz`; più confezioni vengono sommate | HARD | inventario | futuro unit + IndexedDB |
+| INV-04 | Un codice sconosciuto richiede conferma o associazione manuale persistente; una ricerca esterna non diventa fonte canonica automaticamente | HARD | scanner/catalogo prodotti | futuro integrazione + browser |
+| INV-05 | EAN non produce scadenza o lotto se tali dati non sono esplicitamente codificati | HARD | scanner/inventario | futuro unit + browser |
 | ROLL-01 | Roll C modifica soltanto C compatibile | HARD | motor v12/UI | Lotto G/H |
 | ROLL-02 | Roll P modifica soltanto P/cottura compatibile | HARD | motor v12/UI | Lotto G/H |
 | ROLL-03 | Roll V modifica soltanto V/condimento compatibile | HARD | motor v12/UI | Lotto G/H |
