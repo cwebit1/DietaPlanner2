@@ -3402,6 +3402,15 @@ solo da Imposta → ok; test delle fasce orarie eseguito sul sorgente
 azioni reali → ok; `git diff --check` → ok. Il collaudo visivo viene completato
 sull'URL GitHub Pages dopo la pubblicazione.
 
+**Collaudo live successivo alla pubblicazione:** verificati data estesa e
+calendario responsive, colazione collegata ai dati reali, pranzo generato con
+tre ricette e cinque slide fisiche per il loop, rotazione completa tramite
+freccia e apertura del modal Dettagli sul piatto visibile. Durante la prova è
+stato individuato e corretto il binding della stella: il salvataggio continuava
+già a usare `toggleFavorito()`, ma la resa leggeva la copia materializzata in
+cache; ora lo stato grafico viene letto dai record reali dello store `ricette`,
+senza modificare motore o modello dati.
+
 **File modificati:** `index-restyling.html`,
 `docs/REGISTRO_MODIFICHE.md`.
 ---
