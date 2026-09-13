@@ -3414,3 +3414,55 @@ senza modificare motore o modello dati.
 **File modificati:** `index-restyling.html`,
 `docs/REGISTRO_MODIFICHE.md`.
 ---
+
+## Undicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_25_0`
+(carote al vapore), `nr_26_0`..`nr_26_19` (insalate a due componenti —
+cinque foglie: lattuga/radicchio/songino/spinaci freschi/valeriana,
+combinate con quattro verdure: carote/cipolla/finocchi/pomodorini, più
+aceto balsamico), `nr_27_0`..`nr_27_3` (arista di maiale alla griglia/
+ai ferri/arrosto, costine di maiale alla griglia).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Verifica online per un dubbio reale:** per "Costine di maiale alla
+griglia" (`nr_27_3`) ho cercato la tecnica su più fonti prima di
+scrivere, non essendo sicuro dei tempi per un taglio con osso che
+richiede più cottura di una fettina. Le fonti indicano un ampio
+intervallo (dai 15-20 minuti per una versione rapida casalinga fino a
+oltre un'ora per la versione da barbecue con marinatura lunga);
+coerente con lo stile semplice e veloce delle altre ricette del
+catalogo, ho scritto **18 minuti**, verificato anche dal vivo in
+browser. Arista di maiale trattata come taglio spesso (stessi tempi già
+usati per il nodino di maiale in un lotto precedente).
+
+**Versione:** `db-visuale.json` incrementata di 1 (16 → 17).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 237 → dopo: 262 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (262/262);
+- concordanze di genere/numero controllate a campione prima del commit
+  (lattuga/radicchio/songino/spinaci/valeriana richiedono verbi e
+  articoli diversi — nessun errore trovato stavolta, a differenza dei
+  due lotti precedenti con bug di template);
+- timer presenti solo su carote al vapore e sulle carni, assenti sulle
+  insalate a crudo;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_27_3` (Costine di maiale
+alla griglia) aperta a 1 persona — timer 18:00 coerente con la ricerca.
+
+**Primo ID ancora da compilare:** `nr_27_4`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

@@ -1,5 +1,5 @@
 {
-  "versione": 16,
+  "versione": 17,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -4876,151 +4876,431 @@
       "idRicetta": "nr_25_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno delicato, le carote cotte al vapore restano morbide mantenendo il loro sapore naturale.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le carote",
+          "testo": "Taglia {nrv_carote} a rondelle o a bastoncini, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Cuoci al vapore",
+          "testo": "Cuoci le carote al vapore finché non risultano tenere alla forchetta ma non sfaldate.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata croccante, la lattuga con la dolcezza croccante delle carote e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_lattuga} e asciugala bene, poi taglia {nrv_carote} a julienne o grattugiale."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata saporita, la lattuga con il sapore deciso della cipolla e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_lattuga} e asciugala bene, poi affetta sottilmente {nrv_cipolla}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fresca, la lattuga con la freschezza dei finocchi e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_lattuga} e asciugala bene, poi taglia {nrv_finocchi} a fette sottili."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata colorata, la lattuga con i pomodorini e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_lattuga} e asciugala bene, poi taglia {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata croccante, il radicchio con la dolcezza croccante delle carote e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_radicchio} e asciugalo bene, poi taglia {nrv_carote} a julienne o grattugiale."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata saporita, il radicchio con il sapore deciso della cipolla e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_radicchio} e asciugalo bene, poi affetta sottilmente {nrv_cipolla}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fresca, il radicchio con la freschezza dei finocchi e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_radicchio} e asciugalo bene, poi taglia {nrv_finocchi} a fette sottili."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata colorata, il radicchio con i pomodorini e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_radicchio} e asciugalo bene, poi taglia {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata croccante, il songino con la dolcezza croccante delle carote e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_songino} e asciugalo bene, poi taglia {nrv_carote} a julienne o grattugiale."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata saporita, il songino con il sapore deciso della cipolla e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_songino} e asciugalo bene, poi affetta sottilmente {nrv_cipolla}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fresca, il songino con la freschezza dei finocchi e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_songino} e asciugalo bene, poi taglia {nrv_finocchi} a fette sottili."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata colorata, il songino con i pomodorini e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_songino} e asciugalo bene, poi taglia {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata croccante, gli spinaci con la dolcezza croccante delle carote e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_spinaci_freschi} e asciugali bene, poi taglia {nrv_carote} a julienne o grattugiale."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata saporita, gli spinaci con il sapore deciso della cipolla e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_spinaci_freschi} e asciugali bene, poi affetta sottilmente {nrv_cipolla}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fresca, gli spinaci con la freschezza dei finocchi e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_spinaci_freschi} e asciugali bene, poi taglia {nrv_finocchi} a fette sottili."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata colorata, gli spinaci con i pomodorini e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_spinaci_freschi} e asciugali bene, poi taglia {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata croccante, la valeriana con la dolcezza croccante delle carote e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_valeriana} e asciugala bene, poi taglia {nrv_carote} a julienne o grattugiale."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata saporita, la valeriana con il sapore deciso della cipolla e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_valeriana} e asciugala bene, poi affetta sottilmente {nrv_cipolla}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fresca, la valeriana con la freschezza dei finocchi e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_valeriana} e asciugala bene, poi taglia {nrv_finocchi} a fette sottili."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_26_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata colorata, la valeriana con i pomodorini e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Lava {nrv_valeriana} e asciugala bene, poi taglia {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'arista di maiale alla griglia con un tocco leggermente affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia, meglio se a fiamma viva o a carbone, prima di appoggiarvi {nrv_arista_di_maiale}."
+        },
+        {
+          "titolo": "Griglia l'arista",
+          "testo": "Cuoci su entrambi i lati a fuoco moderato, girando di tanto in tanto, finché la carne non risulta cotta fino al centro senza bruciare in superficie.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'arista di maiale ai ferri cotta in padella o bistecchiera.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera o la padella a griglia prima di appoggiarvi {nrv_arista_di_maiale}."
+        },
+        {
+          "titolo": "Cuoci l'arista",
+          "testo": "Cuoci su entrambi i lati a fuoco medio, girando di tanto in tanto, finché il centro non risulta cotto.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo classico, l'arista di maiale arrosto al forno resta morbida e succosa.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'arista",
+          "testo": "Scalda il forno e adagia {nrv_arista_di_maiale} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, girandola a metà cottura perché si dori in modo uniforme.",
+          "timerSecondi": 1200
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, le costine di maiale alla griglia con la carne che si stacca facilmente dall'osso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia a fuoco moderato, non troppo vivace, perché le costine cuociano senza bruciare in superficie."
+        },
+        {
+          "titolo": "Griglia le costine",
+          "testo": "Cuoci le costine girandole spesso su tutti i lati, finché la carne non risulta ben cotta e si stacca facilmente dall'osso.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_4",
