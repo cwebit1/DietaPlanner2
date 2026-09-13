@@ -2883,3 +2883,55 @@ introdotta da questo lotto.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Terzo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_2_18`,
+`nr_2_19` (platessa cartoccio/ferri), `nr_2_20`, `nr_2_21`, `nr_2_22`,
+`nr_2_23` (sogliola forno/limone/cartoccio/ferri), `nr_3_0`, `nr_3_1`
+(salsiccia maiale/tacchino al forno), `nr_6_0`, `nr_6_2` (pasta corta e
+tagliolini al pomodoro fresco), `nr_7_0`, `nr_7_1` (pasta alla norma
+melanzane), `nr_8_1`, `nr_8_2`, `nr_8_3` (orzo/pasta corta/pasta
+integrale con taleggio e speck), `nr_9_1`, `nr_9_2`, `nr_9_3` (insalate
+fredde con uova sode e pomodoro: farro/orzo/riso), `nr_10_0`, `nr_10_1`,
+`nr_10_2` (insalate fredde cous cous con emmental), `nr_10_3`, `nr_10_4`,
+`nr_10_5` (insalate fredde cous cous con mozzarella), `nr_10_7`
+(insalata fredda cous cous con feta e carote).
+
+**Fonti:** ogni ricetta risolta tramite `DietaPlannerMotorV12.getRicetta(id)`
+per ingredienti, variantId e quantità reali. Nessuna `ricettaTestuale`
+legacy presente su questi 25 record, quindi nessuna fonte aggiuntiva da
+riusare oltre alla composizione concreta.
+
+**Versione:** `db-visuale.json` incrementata di 1 per l'intero lotto
+(7 → 8).
+
+**Controlli eseguiti** (con asserzioni bloccanti nello script di
+compilazione per ordine e non sovrascrittura, oltre alla verifica a
+posteriori):
+- record completi prima del lotto: 37 → dopo: 62 (+25 esatti);
+- ordine dei record rispettato, nessun salto, nessuna sovrascrittura di
+  record già completi;
+- ogni `{variantId}` richiamato nei testi risolto contro gli
+  ingredienti reali della rispettiva ricetta concreta;
+- timer sempre interi positivi, presenti solo per vere fasi di attesa o
+  cottura (assenti nei passi di solo taglio/composizione delle insalate
+  fredde, presenti per cotture e tempi di raffreddamento in frigorifero);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati su nessuno dei 25 record;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 62 record verificati; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa (48 file): stessi fallimenti pre-esistenti già
+documentati nelle voci precedenti, nessuna nuova regressione.
+
+**Primo ID ancora da compilare:** `nr_10_8`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

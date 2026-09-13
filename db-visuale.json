@@ -1,5 +1,5 @@
 {
-  "versione": 7,
+  "versione": 8,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -489,49 +489,146 @@
       "idRicetta": "nr_2_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato, la platessa al cartoccio cuoce in pochi minuti trattenendo tutta la sua morbidezza.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Chiudi la platessa nel cartoccio",
+          "testo": "Avvolgi {nrv_platessa} in un foglio di carta da forno, chiudendo bene i bordi: essendo così sottile, cuocerà quasi per intero nel proprio vapore."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci per pochi minuti, il tempo necessario perché il cartoccio si scaldi e la polpa diventi opaca e morbidissima.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo rapido, la platessa ai ferri cuoce in pochi istanti su ciascun lato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_platessa}, così sottile da richiedere solo pochi istanti di contatto diretto."
+        },
+        {
+          "titolo": "Griglia velocemente",
+          "testo": "Cuoci pochi istanti per lato, giusto il tempo che la superficie si segni leggermente e la polpa diventi opaca.",
+          "timerSecondi": 180
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo elegante e leggero, la sogliola al forno resta morbidissima e si sfalda con facilità.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la sogliola",
+          "testo": "Scalda il forno e adagia {nrv_sogliola} in una teglia, distribuendola in uno strato uniforme."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la polpa non diventa opaca e si stacca in scaglie sottili e morbide alla pressione della forchetta.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato, la sogliola scottata in padella e profumata con il limone.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scotta la sogliola",
+          "testo": "Scalda una padella antiaderente e adagia {nrv_sogliola}, girandola con delicatezza perché è molto sottile e si rompe facilmente.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Profuma col limone",
+          "testo": "Bagna con succo di limone fresco e concludi la cottura in pochi istanti, mantenendo la polpa morbida e umida.",
+          "timerSecondi": 120
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo raffinato, la sogliola al cartoccio cuoce dolcemente restando succosa.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Chiudi il cartoccio",
+          "testo": "Avvolgi {nrv_sogliola} in un foglio di carta da forno, sigillando bene i lembi per trattenere tutta l'umidità."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci per pochi minuti: il vapore trattenuto dentro il cartoccio renderà la sogliola morbidissima e profumata.",
+          "timerSecondi": 540
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, la sogliola ai ferri va girata con cura per non romperla.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_sogliola}, che essendo molto sottile e delicata richiede una cottura breve."
+        },
+        {
+          "titolo": "Griglia con attenzione",
+          "testo": "Cuoci pochi istanti per lato, girandola con delicatezza quando si stacca facilmente dalla griglia.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_3_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, la salsiccia di maiale cotta al forno diventa dorata e croccante fuori.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la salsiccia",
+          "testo": "Scalda il forno e disponi {nrv_salsiccia_di_maiale} in una teglia, bucherellandola leggermente perché non scoppi in cottura."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e croccante, mentre l'interno risulta cotto e succoso.",
+          "timerSecondi": 1200
+        }
+      ]
     },
     {
       "idRicetta": "nr_3_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo più leggero, la salsiccia di tacchino cotta al forno resta comunque saporita e dorata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la salsiccia di tacchino",
+          "testo": "Scalda il forno e disponi {nrv_salsiccia_di_tacchino} in una teglia, bucherellandola leggermente in superficie."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché non risulta dorata fuori e ben cotta all'interno, senza seccarsi troppo essendo più magra della versione di maiale.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_5_0",
@@ -555,7 +652,24 @@
       "idRicetta": "nr_6_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e genuino, la pasta corta condita con un sugo fresco di pomodoro appena scottato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo denso e brillante.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Scola la pasta al dente e versala nella padella col sugo, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_6_1",
@@ -584,19 +698,70 @@
       "idRicetta": "nr_6_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i tagliolini all'uovo che si legano a un sugo leggero di pomodoro fresco.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i tagliolini",
+          "testo": "Cuoci {nrv_tagliolini_all_uovo} in acqua bollente salata, tenendo conto che i tagliolini freschi cuociono più in fretta della pasta secca.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si restringono in un sugo leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Scola i tagliolini al dente e uniscili al sugo, mescolando delicatamente perché si insaporiscano senza rompersi."
+        }
+      ]
     },
     {
       "idRicetta": "nr_7_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo siciliano, la pasta corta con le melanzane che si sciolgono in un sugo saporito.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Cuoci le melanzane",
+          "testo": "Taglia {nrv_melanzane} a cubetti e falle cuocere in padella finché non diventano morbide e leggermente dorate.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Unisci pasta e melanzane",
+          "testo": "Scola la pasta al dente e saltala in padella con le melanzane, mescolando finché non si amalgamano in un condimento omogeneo."
+        }
+      ]
     },
     {
       "idRicetta": "nr_7_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, la pasta integrale che si sposa con la morbidezza delle melanzane cotte.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta integrale",
+          "testo": "Cuoci {nrv_pasta_integrale} in acqua bollente salata secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 660
+        },
+        {
+          "titolo": "Cuoci le melanzane",
+          "testo": "Taglia {nrv_melanzane} a cubetti e falle rosolare in padella finché non risultano morbide e dorate in superficie.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Manteca insieme",
+          "testo": "Scola la pasta e uniscila alle melanzane in padella, saltando qualche istante perché il condimento avvolga bene ogni pezzo."
+        }
+      ]
     },
     {
       "idRicetta": "nr_8_0",
@@ -625,19 +790,70 @@
       "idRicetta": "nr_8_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, l'orzo perlato che si arricchisce della cremosità del taleggio e della sapidità dello speck.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci l'orzo",
+          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente salata finché i chicchi non risultano morbidi ma non sfaldati.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Rosola lo speck",
+          "testo": "Nel frattempo taglia {nrv_speck} a listarelle e falle rosolare in padella finché non diventano leggermente croccanti.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Manteca col taleggio",
+          "testo": "Scola l'orzo e versalo in padella con lo speck, unisci {nrv_taleggio} a pezzetti e mescola finché il formaggio non si scioglie in una crema avvolgente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_8_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo goloso, la pasta corta condita con taleggio fuso e speck croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Rosola lo speck",
+          "testo": "Nel frattempo taglia {nrv_speck} a listarelle sottili e falle rosolare in padella finché non diventano croccanti ai bordi.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Manteca con il taleggio",
+          "testo": "Scola la pasta e versala in padella con lo speck, unisci {nrv_taleggio} a pezzetti e mescola a fuoco basso finché non si scioglie completamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_8_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo saporito, la pasta integrale che si lega alla cremosità del taleggio e alla sapidità dello speck.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta integrale",
+          "testo": "Cuoci {nrv_pasta_integrale} in acqua bollente salata secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 660
+        },
+        {
+          "titolo": "Rosola lo speck",
+          "testo": "Nel frattempo taglia {nrv_speck} a listarelle e rosolale in padella finché non risultano leggermente croccanti.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Manteca col taleggio",
+          "testo": "Scola la pasta e uniscila allo speck in padella, aggiungi {nrv_taleggio} a pezzetti e mescola finché il formaggio non si scioglie in una crema morbida."
+        }
+      ]
     },
     {
       "idRicetta": "nr_9_0",
@@ -667,55 +883,211 @@
       "idRicetta": "nr_9_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto unico fresco e completo, ideale da gustare freddo nelle giornate calde.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci le uova sode",
+          "testo": "Metti {nrv_uova} in un pentolino con acqua fredda e portale a bollore, lasciandole cuocere finché il tuorlo non risulta completamente rappreso.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Cuoci il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} e cuocilo in acqua bollente salata finché non risulta tenero ma ancora leggermente sodo.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova sode a spicchi, uniscili al farro ormai freddo e lascia raffreddare bene in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_9_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda nutriente, l'orzo si accompagna alle uova sode e al pomodoro fresco.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci le uova sode",
+          "testo": "Metti {nrv_uova} in un pentolino con acqua fredda e portale a bollore, cuocendole finché il tuorlo non risulta ben sodo.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Cuoci l'orzo",
+          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente salata finché i chicchi non diventano teneri, poi scolalo e lascialo intiepidire.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Componi l'insalata",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, mescola tutto con l'orzo freddo e lascia riposare in frigorifero prima di portare in tavola.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_9_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto unico rinfrescante, il riso freddo arricchito da uova sode e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci le uova sode",
+          "testo": "Metti {nrv_uova} in un pentolino con acqua fredda e portale a bollore, lasciandole cuocere finché il tuorlo non si rapprende del tutto.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Cuoci il riso",
+          "testo": "Cuoci {nrv_riso} in acqua bollente salata finché i chicchi non risultano teneri, poi scolalo e lascialo raffreddare.",
+          "timerSecondi": 900
+        },
+        {
+          "titolo": "Assembla e raffredda",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, uniscili al riso freddo e lascia riposare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, il cous cous si accompagna alla dolcezza dell'emmental e alla freschezza delle verdure.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Taglia emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti, {nrv_pomodorini} a metà e {nrv_cetriolo} a rondelle o a dadini."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda colorata, il cous cous con emmental, pomodorini e carote croccanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia assorbire tutto il liquido, sgranandolo con una forchetta.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti, {nrv_pomodorini} a metà e grattugia o taglia a julienne {nrv_carote}."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Mescola tutti gli ingredienti con il cous cous ormai tiepido e lascia raffreddare bene in frigorifero prima di portare in tavola.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sfiziosa, il cous cous con emmental, pomodorini e peperoni croccanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché il liquido non è stato assorbito del tutto.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Taglia gli ingredienti",
+          "testo": "Taglia {nrv_emmental} a cubetti, {nrv_pomodorini} a metà e {nrv_peperoni} a listarelle sottili."
+        },
+        {
+          "titolo": "Componi l'insalata",
+          "testo": "Sgrana il cous cous, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire, così i sapori si amalgamano.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il cous cous con mozzarella filante e verdure croccanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia assorbire tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Taglia mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti, {nrv_pomodorini} a metà e {nrv_cetriolo} a dadini."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, il cous cous con mozzarella, pomodorini e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara gli ingredienti",
+          "testo": "Taglia {nrv_mozzarella} a cubetti, {nrv_pomodorini} a metà e {nrv_carote} a julienne o grattugiate."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Mescola tutto con il cous cous ormai tiepido e lascia raffreddare in frigorifero prima di portare in tavola.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda vivace, il cous cous con mozzarella, pomodorini e peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia assorbire il liquido, sgranandolo con una forchetta.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Taglia gli ingredienti",
+          "testo": "Taglia {nrv_mozzarella} a cubetti, {nrv_pomodorini} a metà e {nrv_peperoni} a listarelle sottili."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Componi l'insalata mescolando tutti gli ingredienti con il cous cous e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_6",
@@ -744,7 +1116,24 @@
       "idRicetta": "nr_10_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sapida, il cous cous con la feta e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara feta e carote",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_8",
