@@ -3361,5 +3361,47 @@ aperta a 1 persona — timer 12:00 coerente con la fonte consultata.
 
 **File modificati:** `db-visuale.json`.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+---
 
+## Correzione architetturale del restyling Pasto — 13 settembre 2026
+
+**Correzione rispetto alla voce precedente:** `index-restyling.html` resta la
+sorgente dominante per funzionalità, dati, IndexedDB, motore, stato e
+persistenza; la pagina Pasto adotta invece come riferimento grafico dominante
+`index-pasto-restyling.html`. Il calendario della stessa pagina riprende la
+versione già perfezionata in `restyling-preview.html`.
+
+**Pagina Pasto:** colazione, pranzo e cena usano la struttura grafica del
+prototipo Pasto: testata con fascia oraria, foto principale e anticipazione del
+piatto successivo, indicatori, titolo, ingredienti, preferito e azioni. I
+caroselli di pranzo e cena sono circolari e funzionano tramite freccia o swipe
+orizzontale; la colazione mantiene il proprio configuratore completo sotto la
+nuova scheda grafica.
+
+**Funzioni preservate:** Dettagli continua ad aprire il modal reale; Preferiti
+continua a usare il salvataggio esistente; Alternativa e Salvafrigo generano
+esclusivamente una proposta in memoria. Imposta come pasto resta l'unica azione
+che salva la proposta, mentre Rigenera e Annulla conservano il comportamento
+precedente. Fasce orarie, stato consumato, persistenza e caricamento delle
+immagini tramite `idRicetta` non sono stati riscritti.
+
+**Calendario:** lo scorrimento e la selezione restano quelli funzionali
+esistenti. Sono cambiati soltanto disposizione, dimensioni responsive e resa
+del giorno attivo/odierno; sotto il selettore viene mostrata la data estesa del
+giorno selezionato. Non è stata aggiunta la funzione “Copia giorno”, assente
+nell'applicazione funzionale.
+
+**Scope confermato:** nessuna modifica a `index.html`,
+`restyling-preview.html`, `index-pasto-restyling.html`, `motor-v12.js`, database,
+cataloghi o altre viste. Nessun file è stato rinominato.
+
+**Verifiche prima della pubblicazione:** parsing sintattico dei 4 script inline
+→ ok; test reale Alternativa/Salvafrigo/Rigenera senza scritture e salvataggio
+solo da Imposta → ok; test delle fasce orarie eseguito sul sorgente
+`index-restyling.html` → ok; contratto del markup, loop circolare, swipe e
+azioni reali → ok; `git diff --check` → ok. Il collaudo visivo viene completato
+sull'URL GitHub Pages dopo la pubblicazione.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
 ---
