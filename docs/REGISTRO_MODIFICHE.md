@@ -2935,3 +2935,66 @@ documentati nelle voci precedenti, nessuna nuova regressione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Correzione cottura cereali a chicco e rapporto acqua/polenta — 13 settembre 2026
+
+**Motivo:** revisione del testo compilato per riso, farro perlato e
+orzo perlato quando cotti come chicco singolo (non come pasta secca):
+"lessa in acqua bollente e scola" lasciava indeterminato il rapporto
+acqua/chicco, informazione non ininfluente per la riuscita del piatto
+e comunque assente dal testo. Stesso problema, più grave, sulla
+polenta: "porta a bollore l'acqua e versa la farina" senza indicare
+quanta acqua rispetto alla farina — lì il rapporto è determinante
+(troppa acqua non fa rapprendere la polenta, troppo poca crea grumi e
+rischio di bruciature).
+
+**Correzione — cereali a chicco (riso, farro perlato, orzo perlato):**
+sostituita la cottura "lessa e scola" con il metodo ad assorbimento
+(lavaggio del chicco, cottura a fuoco minimo coperto con rapporto
+d'acqua preciso sul peso del chicco, riposo finale a vapore):
+
+- riso: acqua = 1,5× il peso, assorbimento 12 min, riposo 10 min;
+- farro perlato: acqua = 2× il peso, assorbimento 18 min, riposo 10 min;
+- orzo perlato: acqua = 2× il peso, assorbimento 16 min, riposo 10 min.
+
+Il cous cous resta escluso da questa correzione: non è un chicco da
+lessare, ma semola precotta che si reidrata con acqua bollente in
+rapporto 1:1 — il testo già scritto per il cous cous era corretto e non
+è stato toccato.
+
+**Correzione — polenta:** rapporto acqua/farina indicato esplicitamente
+nel testo del primo passo ("una quantità d'acqua pari a circa quattro
+volte il peso di {nrv_polenta}"), invece di "l'acqua" generica.
+
+**Record corretti** (12, tutti già compilati in lotti precedenti,
+nessuno nuovo): `nr_1_0`, `nr_1_1` (polenta — solo rapporto acqua),
+`nr_1_2`, `nr_1_3` (farro), `nr_1_4`, `nr_1_5` (orzo), `nr_1_6`,
+`nr_1_7` (riso), `nr_8_1` (orzo, mantenute invariate rosolatura speck e
+mantecatura taleggio), `nr_9_1` (farro), `nr_9_2` (orzo), `nr_9_3`
+(riso) — per questi ultimi tre mantenuti invariati il passo delle uova
+sode e l'assemblaggio finale dell'insalata fredda.
+
+**Non toccato:** `descrizione` di tutti i 12 record (restava valida),
+`idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile`,
+qualunque altro record. Il totale dei record compilati resta 62 — è una
+correzione di contenuto su record già completi, non un nuovo lotto.
+
+**Versione:** `db-visuale.json` incrementata di 1 (8 → 9).
+
+**Verifica visiva reale (screenshot):** `nr_9_3` aperta a 1 persona —
+sequenza corretta (uova sode, lavaggio riso, assorbimento 12:00, riposo
+a vapore 10:00, assemblaggio 30:00), quantità inline risolte
+correttamente (75g, 2 pz, 200g).
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 62 record verificati, nessun riferimento
+`{variantId}` rotto dalla riscrittura; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa: stessi fallimenti pre-esistenti già documentati
+(in questa esecuzione compare anche `lotto-set-proteine-menu-reale.test.js`,
+stessa flakiness nota, non nuova), nessuna regressione introdotta dalla
+correzione. `git diff --check` pulito.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

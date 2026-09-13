@@ -1,5 +1,5 @@
 {
-  "versione": 8,
+  "versione": 9,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -10,7 +10,7 @@
       "procedimentoStrutturato": [
         {
           "titolo": "Versa la polenta",
-          "testo": "Porta a bollore l'acqua salata e versa {nrv_polenta} a pioggia, mescolando energicamente con una frusta per evitare che si formino grumi."
+          "testo": "Porta a bollore una quantità d'acqua pari a circa quattro volte il peso di {nrv_polenta}, salandola leggermente, poi versa la farina a pioggia, mescolando energicamente con una frusta per evitare che si formino grumi."
         },
         {
           "titolo": "Cuoci mescolando",
@@ -32,7 +32,7 @@
       "procedimentoStrutturato": [
         {
           "titolo": "Versa la polenta a pioggia",
-          "testo": "Porta a bollore l'acqua salata e versa {nrv_polenta} poco alla volta, mescolando di continuo con una frusta perché non si formino grumi."
+          "testo": "Porta a bollore una quantità d'acqua pari a circa quattro volte il peso di {nrv_polenta}, salandola leggermente, poi versala poco alla volta, mescolando di continuo con una frusta perché non si formino grumi."
         },
         {
           "titolo": "Porta a cottura",
@@ -53,13 +53,22 @@
       "descrizione": "Un primo dal carattere rustico, il farro perlato mantecato con la cremosità intensa del gorgonzola.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Cuoci il farro",
-          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente, poi lessalo in acqua bollente salata finché non risulta tenero fuori ma ancora leggermente sodo al centro.",
-          "timerSecondi": 1500
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
         },
         {
-          "titolo": "Scola e manteca",
-          "testo": "Scola il farro tenendo da parte un mestolo di acqua di cottura, poi rimettilo in pentola e unisci {nrv_gorgonzola} a pezzetti, mescolando con energia finché il formaggio non si scioglie in una crema che avvolge i chicchi."
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Manteca col gorgonzola",
+          "testo": "Sgrana il farro con una forchetta e unisci {nrv_gorgonzola} a pezzetti, mescolando finché il formaggio non si scioglie in una crema che avvolge i chicchi."
         }
       ]
     },
@@ -71,13 +80,22 @@
       "descrizione": "Un piatto sostanzioso, dove il farro dal morso deciso si ammorbidisce nella cremosità dolce del taleggio.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Lessa il farro",
-          "testo": "Sciacqua bene {nrv_farro_perlato} e cuocilo in abbondante acqua salata finché i chicchi non risultano teneri, mantenendo comunque una leggera consistenza al morso.",
-          "timerSecondi": 1500
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Manteca col taleggio",
-          "testo": "Scola il farro e, ancora caldo, uniscilo a {nrv_taleggio} tagliato a pezzetti, mescolando finché il formaggio non si scioglie avvolgendo completamente i chicchi."
+          "testo": "Sgrana il farro con una forchetta e unisci {nrv_taleggio} a pezzetti, mescolando finché il formaggio non si scioglie avvolgendo completamente i chicchi."
         }
       ]
     },
@@ -89,13 +107,22 @@
       "descrizione": "Un primo delicato, l'orzo perlato dal morso rotondo si lega alla sapidità intensa del gorgonzola.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Cuoci l'orzo",
-          "testo": "Versa {nrv_orzo_perlato} in acqua bollente salata e lascialo cuocere finché i chicchi non risultano morbidi ma non sfaldati.",
-          "timerSecondi": 1200
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Unisci il gorgonzola",
-          "testo": "Scola l'orzo e, mentre è ancora caldo, aggiungi {nrv_gorgonzola} a pezzi, mescolando finché non si scioglie creando una crema morbida che avvolge ogni chicco."
+          "testo": "Sgrana l'orzo con una forchetta e aggiungi {nrv_gorgonzola} a pezzi, mescolando finché non si scioglie creando una crema morbida che avvolge ogni chicco."
         }
       ]
     },
@@ -107,13 +134,22 @@
       "descrizione": "Un primo semplice e nutriente, l'orzo perlato reso cremoso dal taleggio fuso.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Lessa l'orzo perlato",
-          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente leggermente salata finché non diventa tenero, mantenendo una leggera resistenza al morso.",
-          "timerSecondi": 1200
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Manteca col taleggio",
-          "testo": "Scola l'orzo e uniscilo subito a {nrv_taleggio} a tocchetti, mescolando con decisione finché il formaggio non si scioglie completamente, legando il piatto in una crema morbida."
+          "testo": "Sgrana l'orzo con una forchetta e unisci {nrv_taleggio} a tocchetti, mescolando con decisione finché il formaggio non si scioglie completamente, legando il piatto in una crema morbida."
         }
       ]
     },
@@ -125,13 +161,22 @@
       "descrizione": "Un primo veloce e cremoso, il riso lessato che si arricchisce della sapidità del gorgonzola fuso.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Lessa il riso",
-          "testo": "Cuoci {nrv_riso} in abbondante acqua bollente salata finché i chicchi non risultano morbidi ma ancora leggermente sodi al centro.",
-          "timerSecondi": 900
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Manteca col gorgonzola",
-          "testo": "Scola il riso e, ancora caldo, unisci {nrv_gorgonzola} a pezzetti, mescolando energicamente finché non si scioglie in una crema che avvolge ogni chicco."
+          "testo": "Sgrana il riso con una forchetta e unisci {nrv_gorgonzola} a pezzetti, mescolando energicamente finché non si scioglie in una crema che avvolge ogni chicco."
         }
       ]
     },
@@ -143,13 +188,22 @@
       "descrizione": "Un piatto rapido e confortante, il riso lessato reso morbido e filante dal taleggio fuso.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Cuoci il riso",
-          "testo": "Versa {nrv_riso} in acqua bollente salata e lascialo cuocere finché i chicchi non risultano teneri, senza scuocerli.",
-          "timerSecondi": 900
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Aggiungi il taleggio",
-          "testo": "Scola il riso e mescolalo subito con {nrv_taleggio} a tocchetti, finché il formaggio non si scioglie regalando al piatto una consistenza morbida e cremosa."
+          "testo": "Sgrana il riso con una forchetta e mescolalo subito con {nrv_taleggio} a tocchetti, finché il formaggio non si scioglie regalando al piatto una consistenza morbida e cremosa."
         }
       ]
     },
@@ -794,9 +848,18 @@
       "descrizione": "Un primo rustico, l'orzo perlato che si arricchisce della cremosità del taleggio e della sapidità dello speck.",
       "procedimentoStrutturato": [
         {
-          "titolo": "Cuoci l'orzo",
-          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente salata finché i chicchi non risultano morbidi ma non sfaldati.",
-          "timerSecondi": 1200
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Rosola lo speck",
@@ -805,7 +868,7 @@
         },
         {
           "titolo": "Manteca col taleggio",
-          "testo": "Scola l'orzo e versalo in padella con lo speck, unisci {nrv_taleggio} a pezzetti e mescola finché il formaggio non si scioglie in una crema avvolgente."
+          "testo": "Unisci l'orzo sgranato allo speck in padella, aggiungi {nrv_taleggio} a pezzetti e mescola finché il formaggio non si scioglie in una crema avvolgente."
         }
       ]
     },
@@ -892,13 +955,22 @@
           "timerSecondi": 600
         },
         {
-          "titolo": "Cuoci il farro",
-          "testo": "Sciacqua {nrv_farro_perlato} e cuocilo in acqua bollente salata finché non risulta tenero ma ancora leggermente sodo.",
-          "timerSecondi": 1500
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Assembla l'insalata",
-          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova sode a spicchi, uniscili al farro ormai freddo e lascia raffreddare bene in frigorifero prima di servire.",
+          "testo": "Lascia raffreddare il farro, poi taglia {nrv_pomodoro_fresco} a pezzi e le uova sode a spicchi, uniscili al farro ormai freddo e lascia raffreddare bene in frigorifero prima di servire.",
           "timerSecondi": 1800
         }
       ]
@@ -916,13 +988,22 @@
           "timerSecondi": 600
         },
         {
-          "titolo": "Cuoci l'orzo",
-          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente salata finché i chicchi non diventano teneri, poi scolalo e lascialo intiepidire.",
-          "timerSecondi": 1200
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Componi l'insalata",
-          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, mescola tutto con l'orzo freddo e lascia riposare in frigorifero prima di portare in tavola.",
+          "testo": "Lascia raffreddare l'orzo, poi taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, mescola tutto con l'orzo freddo e lascia riposare in frigorifero prima di portare in tavola.",
           "timerSecondi": 1800
         }
       ]
@@ -940,13 +1021,22 @@
           "timerSecondi": 600
         },
         {
-          "titolo": "Cuoci il riso",
-          "testo": "Cuoci {nrv_riso} in acqua bollente salata finché i chicchi non risultano teneri, poi scolalo e lascialo raffreddare.",
-          "timerSecondi": 900
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
         },
         {
           "titolo": "Assembla e raffredda",
-          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, uniscili al riso freddo e lascia riposare in frigorifero prima di servire.",
+          "testo": "Lascia raffreddare il riso, poi taglia {nrv_pomodoro_fresco} a pezzi e le uova a spicchi, uniscili al riso freddo e lascia riposare in frigorifero prima di servire.",
           "timerSecondi": 1800
         }
       ]
