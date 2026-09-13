@@ -3221,3 +3221,43 @@ documentati, nessuna nuova regressione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Ottavo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_14_5`..
+`nr_14_9` (crackers con pecorino/provola/ricotta/stracchino/tomino),
+`nr_14_10`..`nr_14_19` (gallette di riso con i dieci formaggi della
+famiglia), `nr_14_20`..`nr_14_29` (taralli con gli stessi dieci
+formaggi). Tutti spuntini a freddo, un solo passo, nessun timer.
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Versione:** `db-visuale.json` incrementata di 1 (13 → 14).
+
+**Controlli eseguiti — set ridotto, su richiesta esplicita, per
+limitare l'uso di token:** da questo lotto in poi, per ogni lotto,
+eseguiti solo `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) e `tests/catalogo-visuale-disponibilita.test.js`, oltre a
+`git diff --check` e alla validità JSON. La suite completa (48 file)
+non viene più rieseguita ad ogni lotto: rieseguita per sette lotti
+consecutivi senza mai un fallimento causato da `db-visuale.json`, i
+suoi fallimenti pre-esistenti sono sempre gli stessi e indipendenti dal
+contenuto editoriale.
+
+- record completi prima del lotto: 162 → dopo: 187 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (187/187);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Primo ID ancora da compilare:** `nr_16_0`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

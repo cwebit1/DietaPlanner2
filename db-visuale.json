@@ -1,5 +1,5 @@
 {
-  "versione": 13,
+  "versione": 14,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -3374,151 +3374,326 @@
       "idRicetta": "nr_14_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, i crackers, croccanti, con la sapidità decisa del pecorino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con una scaglia di {nrv_pecorino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino saporito, i crackers, croccanti, con il sapore deciso della provola.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con una fetta di {nrv_provola}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino leggero, i crackers, croccanti, con la dolcezza morbida della ricotta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e spalma su ciascuno un po' di {nrv_ricotta}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino cremoso, i crackers, croccanti, con la cremosità dello stracchino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e spalma su ciascuno un po' di {nrv_stracchino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino delicato, i crackers, croccanti, con il sapore delicato del tomino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con una fetta di {nrv_tomino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, le gallette di riso, leggere e croccanti, con la morbidezza cremosa del brie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con una fetta di {nrv_brie}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino semplice, le gallette di riso, leggere e croccanti, con la cremosità delicata della crescenza.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e spalma su ciascuna un po' di {nrv_crescenza}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino sapido, le gallette di riso, leggere e croccanti, con la sapidità decisa della feta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con un pezzetto di {nrv_feta} sbriciolata, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino essenziale, le gallette di riso, leggere e croccanti, con la sapidità intensa del grana.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con una scaglia di {nrv_grana}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino fresco, le gallette di riso, leggere e croccanti, con la morbidezza della mozzarella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con un pezzetto di {nrv_mozzarella}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, le gallette di riso, leggere e croccanti, con la sapidità decisa del pecorino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con una scaglia di {nrv_pecorino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino saporito, le gallette di riso, leggere e croccanti, con il sapore deciso della provola.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con una fetta di {nrv_provola}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino leggero, le gallette di riso, leggere e croccanti, con la dolcezza morbida della ricotta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e spalma su ciascuna un po' di {nrv_ricotta}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino cremoso, le gallette di riso, leggere e croccanti, con la cremosità dello stracchino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e spalma su ciascuna un po' di {nrv_stracchino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino delicato, le gallette di riso, leggere e croccanti, con il sapore delicato del tomino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_gallette_di_riso} su un piatto e completa ciascuna con una fetta di {nrv_tomino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, i taralli, sfiziosi e croccanti, con la morbidezza cremosa del brie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con un pezzetto di {nrv_brie}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino semplice, i taralli, sfiziosi e croccanti, con la cremosità della crescenza.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e spalma su ciascuno un po' di {nrv_crescenza}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino sapido, i taralli, sfiziosi e croccanti, con la sapidità decisa della feta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con un pezzetto di {nrv_feta} sbriciolata, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino essenziale, i taralli, sfiziosi e croccanti, con la sapidità intensa del grana.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con una scaglia di {nrv_grana}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_24",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino fresco, i taralli, sfiziosi e croccanti, con la morbidezza della mozzarella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con un pezzetto di {nrv_mozzarella}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_25",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, i taralli, sfiziosi e croccanti, con la sapidità decisa del pecorino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con una scaglia di {nrv_pecorino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_26",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino saporito, i taralli, sfiziosi e croccanti, con il sapore deciso della provola.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con una fetta di {nrv_provola}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_27",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino leggero, i taralli, sfiziosi e croccanti, con la dolcezza morbida della ricotta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e spalma su ciascuno un po' di {nrv_ricotta}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_28",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino cremoso, i taralli, sfiziosi e croccanti, con la cremosità dello stracchino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e spalma su ciascuno un po' di {nrv_stracchino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_29",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino delicato, i taralli, sfiziosi e croccanti, con il sapore delicato del tomino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_taralli} su un piatto e completa ciascuno con una fetta di {nrv_tomino}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_0",
