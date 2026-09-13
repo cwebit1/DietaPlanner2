@@ -1,5 +1,5 @@
 {
-  "versione": 18,
+  "versione": 19,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -5756,151 +5756,420 @@
       "idRicetta": "nr_27_29",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di pollo arrosto al forno resta morbido se non troppo cotto.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il petto di pollo",
+          "testo": "Scalda il forno e adagia {nrv_petto_di_pollo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, senza prolungare troppo la cottura per non seccarla.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_30",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, il petto di tacchino alla griglia va cotto con attenzione per non seccarlo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_petto_di_tacchino}."
+        },
+        {
+          "titolo": "Griglia il petto di tacchino",
+          "testo": "Cuoci su entrambi i lati finché non risulta cotto fino al centro, senza prolungare troppo essendo una carne molto magra.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_31",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, il petto di tacchino ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_petto_di_tacchino}."
+        },
+        {
+          "titolo": "Cuoci il petto di tacchino",
+          "testo": "Cuoci su entrambi i lati finché non risulta cotto fino al centro, senza seccarlo.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_32",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di tacchino arrosto al forno in modo delicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il petto di tacchino",
+          "testo": "Scalda il forno e adagia {nrv_petto_di_tacchino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, controllando per non seccarla essendo molto magra.",
+          "timerSecondi": 840
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_33",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, la salsiccia alla griglia diventa dorata e croccante fuori.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia e bucherella leggermente {nrv_salsiccia} perché non scoppi in cottura."
+        },
+        {
+          "titolo": "Griglia la salsiccia",
+          "testo": "Cuoci girandola spesso finché la superficie non diventa dorata e croccante e l'interno risulta ben cotto.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_34",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, la salsiccia ai ferri pronta in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera e bucherella leggermente {nrv_salsiccia}."
+        },
+        {
+          "titolo": "Cuoci la salsiccia",
+          "testo": "Cuoci girandola spesso finché non risulta dorata fuori e ben cotta all'interno.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_35",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo semplice, la salsiccia arrosto al forno diventa dorata e croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la salsiccia",
+          "testo": "Scalda il forno e disponi {nrv_salsiccia} in una teglia, bucherellandola leggermente."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e croccante, mentre l'interno risulta cotto e succoso.",
+          "timerSecondi": 1200
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_36",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, la salsiccia di maiale alla griglia diventa dorata e croccante fuori.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia e bucherella leggermente {nrv_salsiccia_di_maiale} perché non scoppi in cottura."
+        },
+        {
+          "titolo": "Griglia la salsiccia",
+          "testo": "Cuoci girandola spesso finché la superficie non diventa dorata e croccante e l'interno risulta ben cotto.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_37",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, la salsiccia di maiale ai ferri pronta in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera e bucherella leggermente {nrv_salsiccia_di_maiale}."
+        },
+        {
+          "titolo": "Cuoci la salsiccia",
+          "testo": "Cuoci girandola spesso finché non risulta dorata fuori e ben cotta all'interno.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_38",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo classico, la salsiccia di maiale arrosto al forno diventa dorata e succosa.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la salsiccia",
+          "testo": "Scalda il forno e disponi {nrv_salsiccia_di_maiale} in una teglia, bucherellandola leggermente."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e croccante, mentre l'interno risulta cotto e succoso.",
+          "timerSecondi": 1200
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_39",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo più leggero, la salsiccia di tacchino alla griglia resta comunque saporita.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia e bucherella leggermente {nrv_salsiccia_di_tacchino}."
+        },
+        {
+          "titolo": "Griglia la salsiccia",
+          "testo": "Cuoci girandola spesso finché la superficie non diventa dorata e l'interno risulta ben cotto, senza seccarla troppo.",
+          "timerSecondi": 540
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_40",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, la salsiccia di tacchino ai ferri pronta in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera e bucherella leggermente {nrv_salsiccia_di_tacchino}."
+        },
+        {
+          "titolo": "Cuoci la salsiccia",
+          "testo": "Cuoci girandola spesso finché non risulta dorata fuori e ben cotta all'interno.",
+          "timerSecondi": 540
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_41",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, la salsiccia di tacchino arrosto al forno resta dorata e saporita.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la salsiccia",
+          "testo": "Scalda il forno e disponi {nrv_salsiccia_di_tacchino} in una teglia, bucherellandola leggermente."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché non risulta dorata fuori e ben cotta all'interno, senza seccarsi troppo essendo più magra della versione di maiale.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_42",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, le sovracosce di pollo alla griglia restano succose grazie alla pelle.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_sovracosce_di_pollo}, meglio partendo dal lato della pelle."
+        },
+        {
+          "titolo": "Griglia le sovracosce",
+          "testo": "Cuoci su entrambi i lati per un tempo maggiore rispetto al petto, finché la pelle non risulta dorata e croccante e la carne cotta fino all'osso.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_43",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, le sovracosce di pollo ai ferri richiedono più tempo di un petto.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_sovracosce_di_pollo}."
+        },
+        {
+          "titolo": "Cuoci le sovracosce",
+          "testo": "Cuoci su entrambi i lati per un tempo più lungo rispetto a un taglio magro, finché la pelle non risulta croccante e la carne cotta fino all'osso.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_44",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, le sovracosce di pollo arrosto al forno diventano dorate e croccanti in superficie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le sovracosce",
+          "testo": "Scalda il forno e disponi {nrv_sovracosce_di_pollo} in una teglia con la pelle rivolta verso l'alto."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la pelle non risulta dorata e croccante e la carne si stacca facilmente dall'osso.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_28_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Una zuppa rustica e nutriente, il mix di cereali e legumi cotto lentamente fino a diventare morbido.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci il mix",
+          "testo": "Versa {nrv_mix_cereali_e_legumi} in una pentola con abbondante acqua o brodo, porta a bollore e lascia sobbollire finché cereali e legumi non risultano teneri.",
+          "timerSecondi": 1800
+        },
+        {
+          "titolo": "Servi la zuppa",
+          "testo": "Regola di sale se necessario e servi la zuppa calda, magari con un filo d'olio a crudo."
+        }
+      ]
     },
     {
       "idRicetta": "nr_31_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto fresco e veloce, la bresaola magra accompagnata dalla rucola croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi il piatto",
+          "testo": "Disponi {nrv_bresaola} su un piatto e completa con {nrv_rucola}, condendo con un filo d'olio se preferisci."
+        }
+      ]
     },
     {
       "idRicetta": "nr_32_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un panino pratico e veloce, farcito con il prosciutto crudo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi il panino",
+          "testo": "Taglia {nrv_panino} a metà e farciscilo con {nrv_prosciutto_crudo}."
+        }
+      ]
     },
     {
       "idRicetta": "nr_33_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un antipasto classico, la dolcezza del melone che si sposa con la sapidità del prosciutto crudo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi il piatto",
+          "testo": "Taglia {nrv_melone} a fette e avvolgile con {nrv_prosciutto_crudo}, oppure disponi i due ingredienti affiancati nel piatto."
+        }
+      ]
     },
     {
       "idRicetta": "nr_34_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno essenziale, i ceci conditi con un filo di olio extravergine di oliva.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e condisci",
+          "testo": "Scalda {nrv_ceci} in un pentolino, poi condiscili con {nrv_olio_extravergine_oliva} prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_34_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno semplice, i fagioli borlotti conditi con un filo di olio extravergine di oliva.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e condisci",
+          "testo": "Scalda {nrv_fagioli_borlotti} in un pentolino, poi condiscili con {nrv_olio_extravergine_oliva} prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_34_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno delicato, i fagioli cannellini conditi con un filo di olio extravergine di oliva.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e condisci",
+          "testo": "Scalda {nrv_fagioli_cannellini} in un pentolino, poi condiscili con {nrv_olio_extravergine_oliva} prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_34_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rustico, le lenticchie condite con un filo di olio extravergine di oliva.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e condisci",
+          "testo": "Scalda {nrv_lenticchie} in un pentolino, poi condiscile con {nrv_olio_extravergine_oliva} prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_35_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale essenziale, il tofu scaldato e completato con pepe nero.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a fette o a cubetti regolari."
+        },
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda il tofu in padella, girandolo delicatamente, e completa con una generosa macinata di pepe nero.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_36_0",

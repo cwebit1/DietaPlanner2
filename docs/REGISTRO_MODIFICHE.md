@@ -3510,3 +3510,47 @@ arrosto) aperta a 1 persona — timer 25:00, quantità corretta.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Tredicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_27_29`
+(petto di pollo arrosto), `nr_27_30`..`nr_27_32` (petto di tacchino),
+`nr_27_33`..`nr_27_35` (salsiccia), `nr_27_36`..`nr_27_38` (salsiccia
+di maiale), `nr_27_39`..`nr_27_41` (salsiccia di tacchino), `nr_27_42`..
+`nr_27_44` (sovracosce di pollo), `nr_28_0` (zuppa di mix cereali e
+legumi), `nr_31_0` (bresaola e rucola), `nr_32_0` (panino al prosciutto
+crudo), `nr_33_0` (prosciutto crudo e melone), `nr_34_0`..`nr_34_3`
+(ceci/fagioli borlotti/fagioli cannellini/lenticchie con olio
+extravergine d'oliva — qui l'olio è un ingrediente realmente tracciato,
+10g, richiamato con `{variantId}` invece che come condimento generico),
+`nr_35_0` (tofu al pepe).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Versione:** `db-visuale.json` incrementata di 1 (18 → 19).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 287 → dopo: 312 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo
+  (312/312), incluso il nuovo caso con l'olio extravergine tracciato;
+- timer presenti solo sulle preparazioni con vera cottura, assenti sui
+  piatti freddi (bresaola, panino, prosciutto e melone);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_34_0` (Ceci con olio
+extravergine di oliva) aperta a 1 persona — entrambi gli ingredienti
+tracciati (ceci 135g, olio 10g) risolti correttamente nel testo.
+
+**Primo ID ancora da compilare:** `nr_36_0`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
