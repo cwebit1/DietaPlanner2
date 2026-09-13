@@ -2435,3 +2435,39 @@ include il browser Chromium.
 `4f650bbc1f5cd02f2c9371692c35f929c9c9b737`.
 
 ---
+
+## Specifica scansione EAN e quantità di giacenza — 13 settembre 2026
+
+**Richiesta di Cwe:** salvare l'implementazione concordata per identificare i
+prodotti durante la spesa tramite la fotocamera e usare i dati delle
+confezioni per rendere più precise le quantità in giacenza.
+
+**Decisione registrata:** la PWA leggerà principalmente codici EAN-13, con
+eventuale supporto agli altri formati riconosciuti. I dati commerciali non
+verranno inseriti in `ingredienti-new.json`: un archivio parallelo collegherà
+codice, prodotto e quantità della confezione al `variantId` nutrizionale. La
+scansione dovrà mostrare prodotto e quantità e richiedere conferma prima di
+aggiornare l'inventario; più confezioni verranno sommate e i consumi reali
+continueranno a sottrarre le quantità effettive.
+
+**Codici sconosciuti:** una ricerca esterna potrà proporre dati, ma non sarà
+fonte canonica senza conferma. In assenza di risultato l'utente assocerà una
+sola volta codice, variante e formato; l'associazione locale verrà riutilizzata
+alle scansioni successive. Un normale EAN non fornisce automaticamente
+scadenza o lotto, che resteranno manuali salvo presenza esplicita nel codice.
+
+**Stato:** requisito approvato e documentato, non ancora implementato nel
+runtime. L'intervento futuro dovrà definire schema persistente, interfaccia
+Spesa, lettore/fallback, permessi fotocamera e test Android reali.
+
+**File modificati:** `docs/SPECIFICA_FUNZIONALE_CORRENTE.md`,
+`docs/REQUIREMENTS-MATRIX.md`.
+
+**Verifiche eseguite:** controllo del diff completo; `git diff --check`;
+presenza della nuova sezione funzionale e dei requisiti `INV-01`–`INV-05`.
+Nessun file applicativo, catalogo o valore nutrizionale è stato modificato.
+
+**SHA della registrazione funzionale:**
+`11fa86ed8dd4b95611b00b22b6640d41fbeb5372`.
+
+---
