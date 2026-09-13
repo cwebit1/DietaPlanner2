@@ -1,5 +1,5 @@
 {
-  "versione": 12,
+  "versione": 13,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -2924,55 +2924,164 @@
       "idRicetta": "nr_13_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, l'hamburger di tacchino ai ferri con la superficie leggermente segnata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_hamburger_di_tacchino}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'hamburger di vitello cotto alla piastra resta tenero.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_hamburger_di_vitello}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di vitello cotto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_vitello} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato, l'hamburger di vitello rosolato in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci {nrv_hamburger_di_vitello} su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, l'hamburger di vitello ai ferri con un tocco affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_hamburger_di_vitello}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta ben cotto.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo sostanzioso, il nodino di maiale cotto alla piastra resta succoso nonostante lo spessore.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra a fuoco medio-alto prima di appoggiarvi {nrv_nodino_di_maiale}."
+        },
+        {
+          "titolo": "Cuoci il nodino",
+          "testo": "Cuoci su entrambi i lati per un tempo maggiore rispetto a una fettina sottile, così che il centro cuocia bene senza bruciare la superficie.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, il nodino di maiale cotto al forno in modo uniforme fino al centro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il nodino",
+          "testo": "Scalda il forno e adagia {nrv_nodino_di_maiale} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, dato lo spessore maggiore rispetto a una fettina sottile.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, il nodino di maiale rosolato in padella e cotto a fuoco più dolce.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Rosola il nodino",
+          "testo": "Scalda un filo d'olio in padella e rosola {nrv_nodino_di_maiale} a fuoco vivo su entrambi i lati.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Completa la cottura",
+          "testo": "Abbassa la fiamma e prosegui la cottura coperto, così il centro cuoce bene senza seccare l'esterno.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, il nodino di maiale ai ferri richiede qualche minuto in più per lo spessore.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_nodino_di_maiale}."
+        },
+        {
+          "titolo": "Griglia il nodino",
+          "testo": "Cuoci su entrambi i lati per un tempo più lungo rispetto a un taglio sottile, finché il centro non risulta cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_24",
@@ -3001,97 +3110,265 @@
       "idRicetta": "nr_13_25",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di pollo cotto al forno resta morbido se non troppo asciugato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il petto di pollo",
+          "testo": "Scalda il forno e adagia {nrv_petto_di_pollo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, senza prolungare troppo la cottura per non seccarla.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_26",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, il petto di pollo rosolato in padella resta succoso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci il petto di pollo",
+          "testo": "Cuoci {nrv_petto_di_pollo} su entrambi i lati finché non risulta dorato fuori e cotto fino al centro, senza seccarsi.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_27",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di pollo ai ferri con la superficie leggermente segnata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_petto_di_pollo}."
+        },
+        {
+          "titolo": "Griglia il petto di pollo",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta completamente cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_28",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, il petto di tacchino cotto alla piastra va tenuto d'occhio per non seccarlo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_petto_di_tacchino}."
+        },
+        {
+          "titolo": "Cuoci il petto di tacchino",
+          "testo": "Cuoci su entrambi i lati finché non risulta cotto fino al centro, senza prolungare troppo essendo una carne molto magra.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_29",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di tacchino cotto al forno in modo delicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il petto di tacchino",
+          "testo": "Scalda il forno e adagia {nrv_petto_di_tacchino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, controllando per non seccarla essendo molto magra.",
+          "timerSecondi": 840
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_30",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, il petto di tacchino rosolato in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci il petto di tacchino",
+          "testo": "Cuoci {nrv_petto_di_tacchino} su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_31",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, il petto di tacchino ai ferri con la superficie leggermente segnata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_petto_di_tacchino}."
+        },
+        {
+          "titolo": "Griglia il petto di tacchino",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta cotto, senza seccarlo troppo.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_32",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, le sovracosce di pollo alla piastra restano succose grazie alla pelle.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_sovracosce_di_pollo}, meglio partendo dal lato della pelle."
+        },
+        {
+          "titolo": "Cuoci le sovracosce",
+          "testo": "Cuoci su entrambi i lati per un tempo maggiore rispetto al petto, finché la pelle non risulta dorata e croccante e la carne cotta fino all'osso.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_33",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, le sovracosce di pollo al forno diventano dorate e croccanti in superficie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le sovracosce",
+          "testo": "Scalda il forno e disponi {nrv_sovracosce_di_pollo} in una teglia con la pelle rivolta verso l'alto."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la pelle non risulta dorata e croccante e la carne si stacca facilmente dall'osso.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_34",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, le sovracosce di pollo in padella con la pelle resa croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Rosola le sovracosce",
+          "testo": "Scalda la padella e adagia {nrv_sovracosce_di_pollo} dal lato della pelle, lasciandola rosolare senza muoverla.",
+          "timerSecondi": 360
+        },
+        {
+          "titolo": "Completa la cottura",
+          "testo": "Gira le sovracosce, abbassa la fiamma e prosegui la cottura coperto finché la carne non è cotta fino all'osso.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_35",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, le sovracosce di pollo ai ferri richiedono più tempo di un petto.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_sovracosce_di_pollo}."
+        },
+        {
+          "titolo": "Griglia le sovracosce",
+          "testo": "Cuoci su entrambi i lati per un tempo più lungo rispetto a un taglio magro, finché la pelle non risulta croccante e la carne cotta fino all'osso.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino rapido, i crackers croccanti con la morbidezza cremosa del brie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con una fetta di {nrv_brie}, servendo subito perché il crackers resti croccante."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino semplice, i crackers con la cremosità delicata della crescenza.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e spalma su ciascuno un po' di {nrv_crescenza}, servendo subito."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino sapido, i crackers con la sapidità decisa della feta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con un pezzetto di {nrv_feta} sbriciolata."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino essenziale, i crackers con la sapidità intensa del grana.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con una scaglia di {nrv_grana}."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Uno spuntino fresco, i crackers con la morbidezza della mozzarella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Componi lo spuntino",
+          "testo": "Disponi {nrv_crackers} su un piatto e completa ciascuno con un pezzetto di {nrv_mozzarella}, servendo subito perché il crackers resti croccante."
+        }
+      ]
     },
     {
       "idRicetta": "nr_14_5",

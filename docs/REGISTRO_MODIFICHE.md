@@ -3168,3 +3168,56 @@ subito dopo. Nessuna nuova regressione introdotta da questo lotto.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Settimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_13_15`
+(hamburger di tacchino ai ferri), `nr_13_16`..`nr_13_19` (hamburger di
+vitello), `nr_13_20`..`nr_13_23` (nodino di maiale), `nr_13_25`..
+`nr_13_27` (petto di pollo — piastra già fatta come `nr_13_24`),
+`nr_13_28`..`nr_13_31` (petto di tacchino), `nr_13_32`..`nr_13_35`
+(sovracosce di pollo), `nr_14_0`..`nr_14_4` (crackers con brie/
+crescenza/feta/grana/mozzarella).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Distinzioni tecniche reali applicate, non timer copiati:** il nodino
+di maiale (taglio con osso, più spesso di una fettina) ha tempi più
+lunghi e, in padella, un passaggio aggiuntivo a fuoco più basso per
+cuocere il centro senza bruciare l'esterno. Le sovracosce di pollo
+(carne con pelle e osso) hanno tempi più lunghi del petto in tutti i
+metodi, con menzione della pelle da rosolare/rendere croccante. Il
+petto di tacchino, carne molto magra, ha testo che segnala di non
+prolungare troppo la cottura per non seccarlo. I crackers con formaggio
+sono composizioni a freddo senza cottura, un solo passo, nessun timer.
+
+**Versione:** `db-visuale.json` incrementata di 1 (12 → 13).
+
+**Controlli eseguiti:**
+- record completi prima del lotto: 137 → dopo: 162 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta;
+- timer interi positivi solo per vere cotture (assenti sui crackers);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_13_33` (Sovracosce di pollo
+al forno) e `nr_14_0` (Crackers con Brie) aperte a 1 persona — quantità
+e timer corretti in entrambe.
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 162 record verificati; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa (48 file): stessi fallimenti pre-esistenti già
+documentati, nessuna nuova regressione.
+
+**Primo ID ancora da compilare:** `nr_14_5`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
