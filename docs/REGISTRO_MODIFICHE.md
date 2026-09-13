@@ -2471,3 +2471,65 @@ Nessun file applicativo, catalogo o valore nutrizionale è stato modificato.
 `11fa86ed8dd4b95611b00b22b6640d41fbeb5372`.
 
 ---
+
+## Dettaglio ricetta: descrizione estesa, passi discorsivi, timer, barratura — 11 settembre 2026
+
+**Cosa cambia:** in `apriModalDettaglioRicetta` (`index.html`), tre
+campi facoltativi e additivi, mai una conversione di massa del
+catalogo:
+
+- `ricetta.descrizione` (testo libero, 2-4 frasi discorsive): mostrata
+  sotto il titolo se presente, altrimenti nessuna riga.
+- `ricetta.procedimentoStrutturato` (array di `{titolo, testo,
+  timerSecondi}`), alternativo — non aggiuntivo — a `procedimento`:
+  usato al posto del procedimento piatto SOLO se presente e non vuoto;
+  il testo di ogni passo è pensato per essere discorsivo e descrittivo,
+  non un comando secco. Dentro `testo`, un riferimento `{variantId}`
+  viene risolto ESCLUSIVAMENTE contro `ricetta.ingredienti[].variantId`
+  e sostituito con la quantità scalata corrente; un riferimento senza
+  corrispondenza resta visibile e invariato nel testo, nessun errore.
+- Timer per passo (solo se `timerSecondi>0`): countdown semplice
+  avviato da un pulsante, nessuna libreria nuova. Gli id degli
+  `setInterval` attivi sono raccolti in un `Set` locale
+  (`_timerDettaglioRicetta`) e cancellati esplicitamente sia all'inizio
+  di ogni chiamata di `apriModalDettaglioRicetta` (copre il re-render
+  dopo il cambio porzioni, che qui richiama la funzione da capo) sia
+  alla chiusura di `modalDettaglio`, osservata con un `MutationObserver`
+  sulla classe `hidden` dell'overlay — copre tutti i punti del codice
+  che chiudono quel modal, non solo il pulsante di chiusura standard.
+  Nessuna persistenza.
+- Passo barrato al click sul testo (non sul titolo, non sul pulsante
+  timer): solo visivo (`text-decoration`), non scritto da nessuna
+  parte, si azzera automaticamente ad ogni re-render perché il DOM
+  viene ricreato. Vale sia sui passi strutturati sia sul procedimento
+  piatto esistente.
+- Escaping HTML applicato SOLO ai tre campi nuovi (descrizione, titolo
+  e testo dei passi strutturati), tramite `escCampoNuovoRicetta`: il
+  rendering legacy di `procedimento` e degli ingredienti resta
+  invariato, non è stato toccato.
+- Editor esteso con una textarea per la descrizione e una per il
+  procedimento strutturato (formato `titolo | testo | secondi`, una
+  riga per passo), entrambe facoltative; la textarea del procedimento
+  piatto resta disponibile e continua a funzionare come oggi per chi
+  non la compila.
+
+**Non toccato, verificato esplicitamente:** il selettore porzioni e il
+suo comportamento attuale (ricalcolo dal vivo + persistenza su
+`piano`), il calcolo nutrizionale, la logica della lista della spesa,
+`motor-v12.js`, le altre viste che mostrano ricette in forma ridotta
+(righe pasto, riepilogo menù, gestore ricette), l'import/export del
+catalogo.
+
+**Verifica eseguita:** controllo sintattico dell'intero file
+(estrazione di tutti gli script inline, `node --check`, esito pulito);
+test isolato della funzione di escaping e di risoluzione dei
+riferimenti `{variantId}` (riferimento trovato scalato correttamente,
+riferimento assente lasciato invariato, tag HTML nel testo libero
+correttamente neutralizzato); `git diff --check` pulito. Non è stata
+eseguita una verifica visuale in browser reale in questa sessione — da
+fare al primo utilizzo.
+
+**File modificato:** `index.html`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

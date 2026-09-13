@@ -5645,8 +5645,64 @@ async function segnaRicettaUsata(ricettaId){
 
 
 /* ---- Modal: dettaglio ricetta (procedimento) ---- */
+/* ---- Timer dei passi ricetta: raccolti localmente, mai persistiti.
+   Cancellati esplicitamente prima di ogni re-render della funzione e
+   alla chiusura di modalDettaglio (osservando il cambio di classe
+   'hidden' sull'overlay, cosi' funziona indipendentemente da quale
+   punto del codice chiude il modal). ---- */
+const _timerDettaglioRicetta = new Set();
+function pulisciTimerDettaglioRicetta(){
+  for(const id of _timerDettaglioRicetta) clearInterval(id);
+  _timerDettaglioRicetta.clear();
+}
+(function(){
+  const overlay = document.getElementById('modalDettaglio');
+  if(!overlay) return;
+  new MutationObserver(()=>{ if(overlay.classList.contains('hidden')) pulisciTimerDettaglioRicetta(); })
+    .observe(overlay, {attributes:true, attributeFilter:['class']});
+})();
+function formattaTimerPasso(secondi){
+  const m = Math.floor(secondi/60), s = secondi%60;
+  return m+':'+String(s).padStart(2,'0');
+}
+function avviaTimerPasso(bottone, secondiTotali){
+  let rimanenti = secondiTotali;
+  bottone.textContent = formattaTimerPasso(rimanenti);
+  bottone.disabled = true;
+  const intervalId = setInterval(()=>{
+    rimanenti--;
+    if(rimanenti<=0){
+      clearInterval(intervalId);
+      _timerDettaglioRicetta.delete(intervalId);
+      bottone.textContent = 'Fatto ✓';
+      return;
+    }
+    bottone.textContent = formattaTimerPasso(rimanenti);
+  }, 1000);
+  _timerDettaglioRicetta.add(intervalId);
+}
+/* Escaping HTML SOLO per i nuovi campi testo libero (descrizione, titolo
+   e testo dei passi strutturati) - il rendering legacy di procedimento
+   e ingredienti resta invariato, non va escapato qui. */
+function escCampoNuovoRicetta(valore){
+  return String(valore??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+/* Riferimenti inline {variantId} nel testo di un passo strutturato:
+   risolti ESCLUSIVAMENTE contro ricetta.ingredienti[].variantId. Un
+   riferimento che non trova corrispondenza resta visibile e invariato
+   nel testo (nessuna sostituzione, nessun errore). */
+function risolviRiferimentiIngredienteTesto(testoEscapato, ricetta, varianti, scala){
+  return testoEscapato.replace(/\{([^{}]+)\}/g, (match, variantId)=>{
+    const ing = (ricetta.ingredienti||[]).find(i=>i.variantId===variantId);
+    if(!ing) return match;
+    const variante = varianti.find(v=>v.id===ing.variantId) || null;
+    const grammiPerFormato = ing.unita==='pz' ? (Number(ing.grammi)||Number(ing.quantita)||0) : (Number(ing.quantita)||0);
+    return formattaQuantita(variante, grammiPerFormato*scala);
+  });
+}
 async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModifica){
   if(!ricetta) return;
+  pulisciTimerDettaglioRicetta();
   let voce = null, porzioniSel;
   if(typeof voceOPorzioni === 'object' && voceOPorzioni !== null){
     voce = voceOPorzioni;
@@ -5671,6 +5727,10 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
   document.getElementById('modalDettaglioTitolo').innerHTML =
     `<span style="flex:1;">${ricetta.nome}</span> ${stellaBtn(ricetta)} ${isUnicoDettaglio ? `<button class="small" data-speciale="${ricetta.id}">${ricetta.piattoSpeciale?'🍽 Togli speciale':'🍽 Piatto speciale'}</button>` : ''}`;
 
+  const descrizioneHtml = ricetta.descrizione
+    ? `<div class="meta" style="margin-top:6px;white-space:pre-wrap;">${escCampoNuovoRicetta(ricetta.descrizione)}</div>`
+    : '';
+
   const nutriAttuale = await nutrizionePerPersona(ricetta);
   const inaffidabile = nutrizioneInaffidabile(ricetta);
   const nutriHtml = `
@@ -5685,6 +5745,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
   `;
 
   let corpoHtml = `
+    ${descrizioneHtml}
     <label style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">Porzioni da preparare (solo per la spesa)</label>
     <select id="modalDettaglioPorzioni" style="max-width:160px;">
       <option value="1" ${porzioniSel===1?'selected':''}>1 persona</option>
@@ -5707,6 +5768,8 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       return `${nome}, ${i.quantita||0}`;
     }).join('\n');
     corpoHtml += `
+      <label>Descrizione (facoltativa — 2-4 frasi discorsive, non uno slogan)</label>
+      <textarea id="modalEditDescrizione" rows="3" placeholder="Racconta il piatto come lo spiegheresti a voce...">${escCampoNuovoRicetta(ricetta.descrizione||'')}</textarea>
       <label>Gruppo proteico coperto</label>
       <select id="modalEditGruppoProteico">
         <option value="" ${!ricetta.gruppoProteico?'selected':''}>— nessuno / piatto senza proteina animale —</option>
@@ -5725,6 +5788,8 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       <textarea id="modalEditIngredienti" placeholder="pomodoro fresco, 100&#10;olio extravergine oliva, 10&#10;petto di pollo, 120" rows="4">${ingredientiTestoEdit}</textarea>
       <div class="meta" style="margin-top:10px;">Procedimento (un passo per riga):</div>
       <textarea id="modalEditProcedimento" rows="6">${(ricetta.procedimento||[]).join('\n')}</textarea>
+      <div class="meta" style="margin-top:10px;">Procedimento strutturato (facoltativo — se compilato, sostituisce quello sopra nella visualizzazione). Un passo per riga, formato: titolo | testo discorsivo (puoi usare {variantId} per richiamare una quantità) | secondi timer (facoltativo):</div>
+      <textarea id="modalEditProcedimentoStrutturato" rows="6" placeholder="Soffritto | Fai scaldare l'olio a fuoco medio e lascia che la cipolla appassisca dolcemente, senza fretta | 300">${(ricetta.procedimentoStrutturato||[]).map(p=>`${p.titolo||''} | ${p.testo||''} | ${p.timerSecondi||''}`).join('\n')}</textarea>
       <div class="meta" style="margin-top:10px;">Note personali (facoltative — varianti, trucchi, quantità di sale che usi tu, ecc.):</div>
       <textarea id="modalEditNote" rows="3" placeholder="Es. io uso mezza cipolla in meno, oppure aggiungo un pizzico di peperoncino...">${ricetta.notePersonali||''}</textarea>
       <div class="meta" style="margin-top:10px;">Valori nutrizionali TOTALI per l'intera ricetta — <b>facoltativi</b>: se li lasci vuoti, restano quelli già calcolati sopra dagli ingredienti (hanno sempre la precedenza sul calcolo automatico, utile solo se qualche ingrediente è "libero" e non è nel database):</div>
@@ -5744,7 +5809,21 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       </div>
     `;
   } else {
-    const procedimentoHtml = (ricetta.procedimento||[]).map(p=>`<li>${p}</li>`).join('');
+    const passiStrutturati = Array.isArray(ricetta.procedimentoStrutturato) ? ricetta.procedimentoStrutturato.filter(p=>p&&(p.testo||p.titolo)) : [];
+    let procedimentoHtml;
+    if(passiStrutturati.length){
+      procedimentoHtml = passiStrutturati.map((passo,indice)=>{
+        const titoloHtml = passo.titolo ? `<div class="passo-titolo" style="font-weight:700;">${escCampoNuovoRicetta(passo.titolo)}</div>` : '';
+        const testoRisolto = risolviRiferimentiIngredienteTesto(escCampoNuovoRicetta(passo.testo||''), ricetta, varianti, scala);
+        const secondi = Number(passo.timerSecondi)||0;
+        const timerHtml = secondi>0
+          ? `<button type="button" class="small" data-timer-passo="${indice}" data-timer-secondi="${secondi}" style="margin-top:6px;">⏱ ${formattaTimerPasso(secondi)}</button>`
+          : '';
+        return `<li style="margin-bottom:10px;">${titoloHtml}<span data-passo-testo="${indice}" style="cursor:pointer;">${testoRisolto}</span>${timerHtml}</li>`;
+      }).join('');
+    } else {
+      procedimentoHtml = (ricetta.procedimento||[]).map((p,indice)=>`<li data-passo-testo="${indice}" style="cursor:pointer;">${p}</li>`).join('');
+    }
     const tipoPortataRic = ricetta.tipoPortata || 'unico';
     let sezioneCarbo = '';
     if(tipoPortataRic==='unico' || tipoPortataRic==='secondo'){
@@ -5765,6 +5844,17 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
 
   document.getElementById('modalDettaglioContenuto').innerHTML = corpoHtml;
   apriModalInAlto('modalDettaglio');
+
+  document.getElementById('modalDettaglioContenuto').querySelectorAll('[data-timer-passo]').forEach(bottone=>{
+    bottone.addEventListener('click', ()=>{
+      avviaTimerPasso(bottone, Number(bottone.dataset.timerSecondi)||0);
+    });
+  });
+  document.getElementById('modalDettaglioContenuto').querySelectorAll('[data-passo-testo]').forEach(span=>{
+    span.addEventListener('click', ()=>{
+      span.style.textDecoration = span.style.textDecoration==='line-through' ? '' : 'line-through';
+    });
+  });
 
   document.getElementById('modalDettaglioPorzioni').addEventListener('change', async (e)=>{
     const nuove = parseInt(e.target.value);
@@ -5821,6 +5911,15 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
       .split('\n').map(s=>s.trim()).filter(Boolean);
     const nuoveNote = document.getElementById('modalEditNote').value.trim();
     ricetta.procedimento = nuovoProcedimento;
+    ricetta.descrizione = document.getElementById('modalEditDescrizione').value.trim() || null;
+    const righeProcedimentoStrutturato = document.getElementById('modalEditProcedimentoStrutturato').value
+      .split('\n').map(s=>s.trim()).filter(Boolean);
+    ricetta.procedimentoStrutturato = righeProcedimentoStrutturato.length
+      ? righeProcedimentoStrutturato.map(riga=>{
+          const [titolo,testo,secondi] = riga.split('|').map(s=>s===undefined?'':s.trim());
+          return {titolo:titolo||null, testo:testo||'', timerSecondi:secondi?parseInt(secondi)||null:null};
+        })
+      : null;
     ricetta.notePersonali = nuoveNote;
     ricetta.gruppoProteico = document.getElementById('modalEditGruppoProteico').value;
     const tipoPortataScelto = document.getElementById('modalEditTipoPortata').value;
