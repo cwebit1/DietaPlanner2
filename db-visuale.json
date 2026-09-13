@@ -1,5 +1,5 @@
 {
-  "versione": 17,
+  "versione": 18,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -5306,151 +5306,451 @@
       "idRicetta": "nr_27_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, le costine di maiale ai ferri con la carne che si stacca dall'osso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera o la griglia da fornello a fuoco moderato prima di appoggiarvi {nrv_costine_di_maiale}."
+        },
+        {
+          "titolo": "Cuoci le costine",
+          "testo": "Cuoci girandole spesso su tutti i lati, finché la carne non risulta ben cotta e si stacca facilmente dall'osso.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, le costine di maiale arrosto al forno diventano morbide e ben cotte.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le costine",
+          "testo": "Scalda il forno e disponi {nrv_costine_di_maiale} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta ben cotta e si stacca facilmente dall'osso, girandole a metà cottura.",
+          "timerSecondi": 1500
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo rapido, la fettina di manzo alla griglia con un tocco affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia, meglio se a fiamma viva, prima di appoggiarvi {nrv_fettina_di_manzo}."
+        },
+        {
+          "titolo": "Griglia la fettina",
+          "testo": "Cuoci pochi minuti per lato, finché la superficie non si segna mantenendo l'interno succoso.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, la fettina di manzo ai ferri pronta in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_fettina_di_manzo}."
+        },
+        {
+          "titolo": "Cuoci la fettina",
+          "testo": "Cuoci pochi minuti per lato, finché la carne non risulta cotta al punto desiderato.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, la fettina di manzo arrosto al forno resta morbida.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la fettina",
+          "testo": "Scalda il forno e adagia {nrv_fettina_di_manzo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta uniformemente, senza seccarsi troppo essendo una fettina sottile.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, l'hamburger di pollo alla griglia con un tocco affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_hamburger_di_pollo}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, l'hamburger di pollo ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_hamburger_di_pollo}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di pollo arrosto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_pollo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'hamburger di suino alla griglia ben dorato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_hamburger_di_suino}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta ben dorata e l'interno completamente cotto.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo rapido, l'hamburger di suino ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_hamburger_di_suino}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché non risulta ben dorato e cotto fino al centro.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di suino arrosto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_suino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto, senza parti rosate.",
+          "timerSecondi": 960
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, l'hamburger di tacchino alla griglia resta comunque succoso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_hamburger_di_tacchino}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, l'hamburger di tacchino ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_hamburger_di_tacchino}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, l'hamburger di tacchino arrosto al forno in modo delicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_tacchino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta ben cotto, senza seccarsi troppo essendo una carne magra.",
+          "timerSecondi": 840
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'hamburger di vitello alla griglia resta tenero.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_hamburger_di_vitello}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato, l'hamburger di vitello ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_hamburger_di_vitello}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di vitello arrosto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_vitello} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, il magro di vitello alla griglia resta tenero se non troppo cotto.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_magro_di_vitello}."
+        },
+        {
+          "titolo": "Griglia il magro di vitello",
+          "testo": "Cuoci pochi minuti per lato, finché la superficie non si segna mantenendo l'interno morbido.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato, il magro di vitello ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_magro_di_vitello}."
+        },
+        {
+          "titolo": "Cuoci il magro di vitello",
+          "testo": "Cuoci pochi minuti per lato, finché la carne non risulta cotta al punto desiderato senza indurirsi.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, il magro di vitello arrosto al forno resta morbido.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il magro di vitello",
+          "testo": "Scalda il forno e adagia {nrv_magro_di_vitello} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta uniformemente, controllando per non seccarla essendo un taglio magro.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_24",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo sostanzioso, il nodino di maiale alla griglia richiede più tempo per lo spessore del taglio.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia a fuoco medio-alto prima di appoggiarvi {nrv_nodino_di_maiale}."
+        },
+        {
+          "titolo": "Griglia il nodino",
+          "testo": "Cuoci su entrambi i lati per un tempo maggiore rispetto a un taglio sottile, finché il centro non risulta cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_25",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, il nodino di maiale ai ferri va cotto più a lungo di una fettina sottile.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_nodino_di_maiale}."
+        },
+        {
+          "titolo": "Cuoci il nodino",
+          "testo": "Cuoci su entrambi i lati per un tempo più lungo rispetto a un taglio sottile, finché il centro non risulta cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_26",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo classico, il nodino di maiale arrosto al forno cuoce in modo uniforme fino al centro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il nodino",
+          "testo": "Scalda il forno e adagia {nrv_nodino_di_maiale} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta fino al centro, dato lo spessore maggiore rispetto a una fettina sottile.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_27",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il petto di pollo alla griglia con la superficie leggermente segnata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarvi {nrv_petto_di_pollo}."
+        },
+        {
+          "titolo": "Griglia il petto di pollo",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta completamente cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_28",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, il petto di pollo ai ferri pronto in pochi minuti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la bistecchiera",
+          "testo": "Scalda bene la bistecchiera prima di appoggiarvi {nrv_petto_di_pollo}."
+        },
+        {
+          "titolo": "Cuoci il petto di pollo",
+          "testo": "Cuoci su entrambi i lati finché non risulta cotto fino al centro, senza seccarlo.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_27_29",

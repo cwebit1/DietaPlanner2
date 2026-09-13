@@ -3466,3 +3466,47 @@ alla griglia) aperta a 1 persona — timer 18:00 coerente con la ricerca.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Dodicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_27_4`,
+`nr_27_5` (costine di maiale ai ferri/arrosto), `nr_27_6`..`nr_27_8`
+(fettina di manzo), `nr_27_9`..`nr_27_11` (hamburger di pollo),
+`nr_27_12`..`nr_27_14` (hamburger di suino), `nr_27_15`..`nr_27_17`
+(hamburger di tacchino), `nr_27_18`..`nr_27_20` (hamburger di vitello),
+`nr_27_21`..`nr_27_23` (magro di vitello), `nr_27_24`..`nr_27_26`
+(nodino di maiale), `nr_27_27`, `nr_27_28` (petto di pollo) — tutti nei
+metodi griglia/ferri/arrosto (famiglia parallela a quella già vista con
+piastra/forno/padella/ferri: alcuni ID condividono lo stesso nome
+visualizzato di ricette già compilate in lotti precedenti ma sono
+record concreti distinti, ciascuno compilato indipendentemente con
+contenuto coerente).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Versione:** `db-visuale.json` incrementata di 1 (17 → 18).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 262 → dopo: 287 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (287/287);
+- timer differenziati per taglio: hamburger e fettine sottili più
+  brevi, nodino e costine (tagli spessi/con osso) più lunghi, coerente
+  con le distinzioni già introdotte nei lotti precedenti;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_27_5` (Costine di maiale
+arrosto) aperta a 1 persona — timer 25:00, quantità corretta.
+
+**Primo ID ancora da compilare:** `nr_27_29`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
