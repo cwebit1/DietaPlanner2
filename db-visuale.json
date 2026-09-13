@@ -1,5 +1,5 @@
 {
-  "versione": 22,
+  "versione": 23,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -8229,151 +8229,636 @@
       "idRicetta": "nr_43_43",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il farro condito con un saltato veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il farro ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_44",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il farro condito con un saltato veloce di piselli e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il farro ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_45",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il farro condito con un saltato veloce di piselli e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il farro ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_46",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo classico, il farro condito con un sugo fresco di pomodoro e basilico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo leggero, profumando con qualche foglia di basilico fresco spezzettata a mano.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Unisci il farro ancora caldo al sugo, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_47",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e saporito, il farro con aglio, olio e pomodorini.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il soffritto",
+          "testo": "Scalda {nrv_olio_extravergine_oliva} in padella con uno spicchio di aglio tagliato sottile, lasciandolo profumare senza farlo bruciare.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Aggiungi i pomodorini",
+          "testo": "Unisci {nrv_pomodorini} tagliati a metà e falli saltare finché non si ammorbidiscono leggermente.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il farro ancora caldo al soffritto con i pomodorini, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_48",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_49",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_50",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_51",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_52",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di piselli e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_53",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di piselli e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un condimento leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto di verdure, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_54",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo classico, il cous cous condito con un sugo fresco di pomodoro e basilico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo leggero, profumando con qualche foglia di basilico fresco spezzettata a mano.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Unisci il cous cous ancora caldo al sugo, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_55",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e saporito, il cous cous con aglio, olio e pomodorini.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il soffritto",
+          "testo": "Scalda {nrv_olio_extravergine_oliva} in padella con uno spicchio di aglio tagliato sottile, lasciandolo profumare senza farlo bruciare.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Aggiungi i pomodorini",
+          "testo": "Unisci {nrv_pomodorini} tagliati a metà e falli saltare finché non si ammorbidiscono leggermente.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca il cereale",
+          "testo": "Unisci il cous cous ancora caldo al soffritto con i pomodorini, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_56",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_57",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_58",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_59",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_60",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di piselli e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_piselli_surgelati} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_61",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di piselli e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza per non romperli, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_piselli_surgelati} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola, maneggiandoli con delicatezza, e conditeli con il sugo di verdure senza mescolare troppo energicamente."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_62",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo classico, i ravioli ricotta e spinaci con un sugo fresco di pomodoro e basilico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo leggero, profumando con qualche foglia di basilico fresco spezzettata a mano.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Scola i ravioli con una schiumarola e conditeli delicatamente con il sugo, senza romperli."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_63",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo saporito, i ravioli ricotta e spinaci con aglio, olio e pomodorini.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci i ravioli",
+          "testo": "Cuoci {nrv_ravioli_ricotta_e_spinaci} in acqua bollente leggermente salata, con delicatezza, finché non vengono a galla.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il soffritto",
+          "testo": "Nel frattempo scalda {nrv_olio_extravergine_oliva} in padella con uno spicchio di aglio tagliato sottile, lasciandolo profumare senza farlo bruciare.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Aggiungi i pomodorini",
+          "testo": "Unisci {nrv_pomodorini} tagliati a metà e falli saltare finché non si ammorbidiscono leggermente.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Condisci i ravioli",
+          "testo": "Scola i ravioli con una schiumarola e conditeli delicatamente con il soffritto e i pomodorini."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_64",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, gli gnocchi conditi con un saltato veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci gli gnocchi",
+          "testo": "Cuoci {nrv_gnocchi} in acqua bollente salata: sono pronti quando vengono a galla, di solito in un paio di minuti.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci gli gnocchi",
+          "testo": "Scola gli gnocchi con una schiumarola appena vengono a galla e conditeli subito con il sugo di verdure."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_65",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, gli gnocchi conditi con un saltato veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci gli gnocchi",
+          "testo": "Cuoci {nrv_gnocchi} in acqua bollente salata: sono pronti quando vengono a galla, di solito in un paio di minuti.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci gli gnocchi",
+          "testo": "Scola gli gnocchi con una schiumarola appena vengono a galla e conditeli subito con il sugo di verdure."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_66",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, gli gnocchi conditi con un saltato veloce di zucchine e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci gli gnocchi",
+          "testo": "Cuoci {nrv_gnocchi} in acqua bollente salata: sono pronti quando vengono a galla, di solito in un paio di minuti.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_zucchine} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci gli gnocchi",
+          "testo": "Scola gli gnocchi con una schiumarola appena vengono a galla e conditeli subito con il sugo di verdure."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_67",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo rustico, gli gnocchi conditi con un saltato veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci gli gnocchi",
+          "testo": "Cuoci {nrv_gnocchi} in acqua bollente salata: sono pronti quando vengono a galla, di solito in un paio di minuti.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Condisci gli gnocchi",
+          "testo": "Scola gli gnocchi con una schiumarola appena vengono a galla e conditeli subito con il sugo di verdure."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_68",

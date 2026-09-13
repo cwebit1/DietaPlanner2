@@ -3708,3 +3708,52 @@ corretto.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Diciassettesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_43_43`..
+`nr_43_47` (completamento farro perlato), `nr_43_48`..`nr_43_55`
+(cous cous, stesse combinazioni come piatto caldo mantecato),
+`nr_43_56`..`nr_43_63` (ravioli ricotta e spinaci), `nr_43_64`..
+`nr_43_67` (gnocchi, prime 4 combinazioni).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Distinzioni tecniche reali per tipo di pasta:** i ravioli ricotta e
+spinaci sono trattati come pasta ripiena delicata (cottura gentile,
+"vengono a galla" come indicatore di cottura invece di un tempo fisso
+di bollitura, scolatura con schiumarola per non romperli, mescolatura
+delicata col condimento). Gli gnocchi hanno lo stesso indicatore
+"vengono a galla" ma con tempo molto più breve (circa 2 minuti,
+coerente con la loro reale velocità di cottura), scolati appena
+riemergono.
+
+**Versione:** `db-visuale.json` incrementata di 1 (22 → 23).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 387 → dopo: 412 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (412/412);
+- timer coerenti con la reale velocità di cottura di ciascun formato di
+  pasta (ravioli 4 min, gnocchi 2 min, diversi dai tempi della pasta
+  secca usati altrove);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_43_64` (Gnocchi con
+zucchine e melanzane) aperta a 1 persona — timer 2:00 sulla cottura
+degli gnocchi, coerente con la loro velocità reale.
+
+**Primo ID ancora da compilare:** `nr_43_68` — **restano solo 8 record
+su 420**, tutti nella stessa famiglia gnocchi/uova, da completare nel
+prossimo turno.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
