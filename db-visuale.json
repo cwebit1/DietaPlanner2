@@ -1,5 +1,5 @@
 {
-  "versione": 15,
+  "versione": 16,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -4430,97 +4430,273 @@
       "idRicetta": "nr_18_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno amarognolo e fresco, il radicchio condito con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il radicchio",
+          "testo": "Lava {nrv_radicchio} e tagliuzzalo grossolanamente con le mani o con un coltello."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi il radicchio in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_18_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno delicato, il songino condito con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il songino",
+          "testo": "Lava {nrv_songino} e asciugalo bene, così il condimento aderisce meglio alle foglie."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi il songino in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_18_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, gli spinaci crudi conditi con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava gli spinaci",
+          "testo": "Lava {nrv_spinaci_freschi} e asciugali bene, eliminando eventuali gambi troppo duri."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi gli spinaci in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_18_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno leggero, la valeriana condita con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava la valeriana",
+          "testo": "Lava {nrv_valeriana} e asciugala bene, così il condimento aderisce meglio alle foglie."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi la valeriana in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, le carote condite con basilico e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le carote",
+          "testo": "Taglia {nrv_carote} a julienne o grattugiale, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le carote in un piatto, profuma con qualche foglia di basilico fresco spezzettata a mano e completa con un filo di aceto balsamico."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, le carote con la cipolla rossa e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_carote} a julienne o grattugiale e affetta sottilmente {nrv_cipolla_rossa}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, le carote con il sedano e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_carote} a julienne o grattugiale e affetta sottilmente {nrv_sedano}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, il cetriolo condito con basilico e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il cetriolo",
+          "testo": "Taglia {nrv_cetriolo} a fette o a dadini, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi il cetriolo in un piatto, profuma con qualche foglia di basilico fresco spezzettata a mano e completa con un filo di aceto balsamico."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rinfrescante, il cetriolo con la cipolla rossa e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_cetriolo} a fette o a dadini e affetta sottilmente {nrv_cipolla_rossa}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, il cetriolo con il sedano e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_cetriolo} a fette o a dadini e affetta sottilmente {nrv_sedano}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, i finocchi conditi con basilico e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia i finocchi",
+          "testo": "Taglia {nrv_finocchi} a fette sottili, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi i finocchi in un piatto, profuma con qualche foglia di basilico fresco spezzettata a mano e completa con un filo di aceto balsamico."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, i finocchi con la cipolla rossa e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_finocchi} a fette sottili e affetta sottilmente {nrv_cipolla_rossa}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, i finocchi con il sedano e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_finocchi} a fette sottili e affetta sottilmente {nrv_sedano}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno colorato, i peperoni conditi con basilico e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia i peperoni",
+          "testo": "Taglia {nrv_peperoni} a listarelle sottili, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi i peperoni in un piatto, profuma con qualche foglia di basilico fresco spezzettata a mano e completa con un filo di aceto balsamico."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno vivace, i peperoni con la cipolla rossa e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_peperoni} a listarelle sottili e affetta sottilmente {nrv_cipolla_rossa}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, i peperoni con il sedano e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_peperoni} a listarelle sottili e affetta sottilmente {nrv_sedano}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_12",
@@ -4543,55 +4719,158 @@
       "idRicetta": "nr_19_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, il pomodoro con la cipolla rossa e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} a fette o a spicchi e affetta sottilmente {nrv_cipolla_rossa}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, il pomodoro con il sedano e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara le verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} a fette o a spicchi e affetta sottilmente {nrv_sedano}."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi le verdure in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_20_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno essenziale, il pomodoro fresco condito con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il pomodoro",
+          "testo": "Taglia {nrv_pomodoro_fresco} a fette o a spicchi, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi il pomodoro in un piatto e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_21_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno croccante, le carote tagliate a julienne pronte in pochi istanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le carote",
+          "testo": "Taglia {nrv_carote} a julienne sottile, con un coltello o con l'apposito attrezzo."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Condisci le carote con un filo d'olio e le spezie che preferisci prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_22_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco e agrumato, i finocchi crudi conditi con succo d'arancia.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia i finocchi",
+          "testo": "Taglia {nrv_finocchi} a fette sottili, con un coltello o una mandolina."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Condisci i finocchi con succo d'arancia fresco e un filo d'olio prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_22_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno delicato, i finocchi cotti al vapore restano morbidi mantenendo il loro sapore.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia i finocchi",
+          "testo": "Taglia {nrv_finocchi} a spicchi non troppo sottili."
+        },
+        {
+          "titolo": "Cuoci al vapore",
+          "testo": "Cuoci i finocchi al vapore finché non risultano teneri alla forchetta ma non sfaldati.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_23_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno leggero, le zucchine grigliate con le tipiche righe dorate.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le zucchine",
+          "testo": "Taglia {nrv_zucchine} a fette non troppo sottili, nel senso della lunghezza."
+        },
+        {
+          "titolo": "Griglia le zucchine",
+          "testo": "Scalda bene la griglia e cuoci le zucchine su entrambi i lati finché non compaiono le righe dorate e la polpa risulta morbida.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_23_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno classico, le zucchine trifolate in padella restano saporite e leggermente croccanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le zucchine",
+          "testo": "Taglia {nrv_zucchine} a rondelle sottili."
+        },
+        {
+          "titolo": "Cuoci in padella",
+          "testo": "Scalda un filo d'olio in padella e cuoci le zucchine a fuoco vivace per qualche minuto, poi abbassa la fiamma e prosegui mescolando di tanto in tanto, finché non risultano morbide ma non sfatte.",
+          "timerSecondi": 720
+        }
+      ]
     },
     {
       "idRicetta": "nr_24_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno estivo, le melanzane grigliate con un leggero sapore affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia le melanzane",
+          "testo": "Taglia {nrv_melanzane} a fette non troppo sottili, nel senso della lunghezza."
+        },
+        {
+          "titolo": "Griglia le melanzane",
+          "testo": "Scalda bene la griglia e cuoci le melanzane su entrambi i lati finché non risultano morbide e leggermente segnate.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_25_0",

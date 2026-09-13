@@ -3311,3 +3311,55 @@ pesce e verdure (testo corretto dopo la correzione)/raffreddamento
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Decimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_18_1`..
+`nr_18_4` (insalate di foglia singola con aceto balsamico: radicchio,
+songino, spinaci freschi, valeriana), `nr_19_0`..`nr_19_11`, `nr_19_13`,
+`nr_19_14` (insalate a due verdure con aceto — carote/cetriolo/finocchi/
+peperoni/pomodoro fresco combinati con basilico, cipolla rossa o
+sedano; `nr_19_12` già completa), `nr_20_0` (pomodoro fresco e aceto,
+porzione singola), `nr_21_0` (carote julienne), `nr_22_0` (finocchi
+all'arancia, crudi), `nr_22_1` (finocchi al vapore), `nr_23_0`
+(zucchine grigliate), `nr_23_1` (zucchine trifolate), `nr_24_0`
+(melanzane grigliate).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Verifica online per un dubbio reale:** per "Zucchine trifolate"
+(`nr_23_1`) ho cercato la tecnica su più fonti di settore prima di
+scrivere tempi e procedimento, non essendo sicuro del dettaglio esatto.
+Confermato: taglio a rondelle, rosolatura a fuoco vivace per qualche
+minuto poi cottura più lenta mescolando, tempo totale nell'ordine dei
+10-15 minuti — scritto **12 minuti**, verificato anche dal vivo in
+browser (timer 12:00 corretto). Finocchi al vapore, zucchine/melanzane
+grigliate scritte con tempi ragionevoli in base alla tecnica nota, senza
+bisogno di verifica aggiuntiva.
+
+**Versione:** `db-visuale.json` incrementata di 1 (15 → 16).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 212 → dopo: 237 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (237/237);
+- timer presenti solo sulle preparazioni con vera cottura (finocchi al
+  vapore, zucchine grigliate/trifolate, melanzane grigliate), assenti
+  sulle insalate a crudo;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_23_1` (Zucchine trifolate)
+aperta a 1 persona — timer 12:00 coerente con la fonte consultata.
+
+**Primo ID ancora da compilare:** `nr_25_0`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
