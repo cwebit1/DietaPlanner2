@@ -3061,3 +3061,58 @@ documentati, nessuna nuova regressione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Quinto lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_10_33`,
+`nr_10_34`, `nr_10_35` (insalate fredde riso con feta), `nr_11_0`
+(uova sode), `nr_11_2` (uova in camicia), `nr_11_3` (uova al tegamino),
+`nr_11_4` (uova in frittata), `nr_12_1`..`nr_12_5` (ceci in cinque
+varianti), `nr_12_6`..`nr_12_11` (fagioli borlotti in sei varianti),
+`nr_12_12`..`nr_12_17` (fagioli cannellini in sei varianti), `nr_12_18`
+(lenticchie all'olio e rosmarino).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto** (a
+differenza di `nr_37_0`, qui la composizione degli ingredienti
+corrisponde sempre al nome del piatto).
+
+**Verifica online per un dubbio reale:** per "Uova in camicia"
+(`nr_11_2`) ho cercato la tecnica su fonti di settore prima di scrivere
+il procedimento, per non inventare tempi o passaggi. Confermato: acqua
+a leggero sobbollore (non bollore pieno) con un cucchiaio di aceto,
+vortice per far avvolgere l'albume al tuorlo, **3 minuti** di cottura.
+Il testo scritto riflette questa fonte, verificato anche dal vivo in
+browser (timer 3:00 corretto).
+
+**Versione:** `db-visuale.json` incrementata di 1 (10 → 11).
+
+**Controlli eseguiti:**
+- record completi prima del lotto: 87 → dopo: 112 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta;
+- timer interi positivi solo per vere fasi di cottura/attesa (assenti
+  sui contorni di legumi "in insalata", presenti su cotture e sui
+  passaggi a caldo);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_11_2` (Uova in camicia)
+aperta a 1 persona — sequenza corretta, timer 3:00 confermato coerente
+con la fonte consultata.
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 112 record verificati; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa (48 file): stessi fallimenti pre-esistenti già
+documentati, nessuna nuova regressione.
+
+**Primo ID ancora da compilare:** `nr_12_19`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

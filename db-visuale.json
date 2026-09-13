@@ -1,5 +1,5 @@
 {
-  "versione": 10,
+  "versione": 11,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -2020,25 +2020,115 @@
       "idRicetta": "nr_10_33",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sapida, il riso con la feta e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_34",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il riso con la feta e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_35",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, il riso con la feta e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_11_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno proteico semplicissimo, le uova sode pronte in pochi passaggi.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci le uova",
+          "testo": "Metti {nrv_uova} in un pentolino con acqua fredda, portale a bollore e lasciale cuocere finché il tuorlo non risulta completamente rappreso.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Raffredda e sgusciale",
+          "testo": "Scola le uova e passale subito sotto l'acqua fredda: il brusco sbalzo di temperatura facilita il distacco del guscio."
+        }
+      ]
     },
     {
       "idRicetta": "nr_11_1",
@@ -2062,19 +2152,64 @@
       "idRicetta": "nr_11_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto delicato, l'albume avvolge il tuorlo che resta morbido e cremoso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'acqua",
+          "testo": "Porta l'acqua a un leggero sobbollore con un cucchiaio di aceto, senza farla bollire con forza."
+        },
+        {
+          "titolo": "Crea il vortice e immergi l'uovo",
+          "testo": "Rompi {nrv_uova} una alla volta in una ciotolina, crea un vortice nell'acqua con un cucchiaio e fai scivolare delicatamente l'uovo al centro."
+        },
+        {
+          "titolo": "Cuoci e scola",
+          "testo": "Lascia cuocere senza toccare l'uovo finché l'albume non si rapprende avvolgendo il tuorlo, che deve restare morbido, poi scolalo con una schiumarola.",
+          "timerSecondi": 180
+        }
+      ]
     },
     {
       "idRicetta": "nr_11_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, le uova al tegamino con l'albume rappreso e il tuorlo ancora morbido.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in una padella antiaderente a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci le uova",
+          "testo": "Rompi {nrv_uova} direttamente in padella, distanziandole, e lasciale cuocere finché l'albume non si rapprende, mantenendo il tuorlo morbido al centro.",
+          "timerSecondi": 180
+        }
+      ]
     },
     {
       "idRicetta": "nr_11_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto semplice e versatile, la frittata soffice e dorata su entrambi i lati.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Sbatti le uova",
+          "testo": "Rompi {nrv_uova} in una ciotola e sbattile con una forchetta finché non si amalgamano bene."
+        },
+        {
+          "titolo": "Cuoci la frittata",
+          "testo": "Versa le uova in padella calda con un filo d'olio e lascia rapprendere il fondo a fuoco medio-basso, senza mescolare.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Gira e completa",
+          "testo": "Aiutandoti con un piatto o un coperchio, gira la frittata e cuoci anche l'altro lato finché non risulta dorata.",
+          "timerSecondi": 120
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_0",
@@ -2094,109 +2229,250 @@
       "idRicetta": "nr_12_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, i ceci scaldati con un tocco piccante e la croccantezza dei semi di sesamo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_ceci} in un pentolino con un filo d'olio piccante, mescolando di tanto in tanto e completando con una spolverata di semi di sesamo.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rustico, i ceci scaldati con aglio e un tocco di peperoncino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_ceci} in un pentolino con uno spicchio d'aglio e un pezzetto di peperoncino, mescolando finché non sono ben caldi e profumati.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno essenziale, i ceci scaldati con una generosa macinata di pepe nero.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda {nrv_ceci} in un pentolino, mescolando di tanto in tanto, e completa con una generosa macinata di pepe nero appena prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rapido, i ceci saltati in padella fino a scaldarsi e insaporirsi leggermente.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Salta i ceci",
+          "testo": "Scalda un filo d'olio in padella e salta {nrv_ceci} a fuoco vivo per qualche minuto, mescolando spesso finché non risultano ben caldi e leggermente dorati ai bordi.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, i ceci conditi a freddo, pronti in pochi istanti.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Sciacqua {nrv_ceci} se necessario, poi condiscili a freddo con un filo d'olio, sale e le spezie che preferisci, mescolando bene prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rustico, i fagioli borlotti scaldati e profumati con rosmarino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e profuma i fagioli",
+          "testo": "Scalda {nrv_fagioli_borlotti} in un pentolino con un rametto di rosmarino, mescolando di tanto in tanto finché non sono ben caldi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, i fagioli borlotti scaldati con un tocco piccante e semi di sesamo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_fagioli_borlotti} in un pentolino con un filo d'olio piccante, completando con una spolverata di semi di sesamo prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno deciso, i fagioli borlotti scaldati con aglio e peperoncino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_fagioli_borlotti} in un pentolino con uno spicchio d'aglio e un pezzetto di peperoncino, mescolando finché non sono ben caldi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno semplice, i fagioli borlotti scaldati e completati con pepe nero macinato al momento.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda {nrv_fagioli_borlotti} in un pentolino, mescolando di tanto in tanto, e completa con una macinata di pepe nero prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rapido, i fagioli borlotti saltati in padella finché non si scaldano bene.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Salta i fagioli",
+          "testo": "Scalda un filo d'olio in padella e salta {nrv_fagioli_borlotti} a fuoco vivo, mescolando spesso finché non risultano ben caldi.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, i fagioli borlotti conditi a freddo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Sciacqua {nrv_fagioli_borlotti} se necessario, poi condiscili a freddo con un filo d'olio e le spezie che preferisci, mescolando bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno delicato, i fagioli cannellini scaldati con rosmarino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e profuma",
+          "testo": "Scalda {nrv_fagioli_cannellini} in un pentolino con un rametto di rosmarino, mescolando finché non sono ben caldi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, i fagioli cannellini scaldati con un tocco piccante e sesamo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_fagioli_cannellini} in un pentolino con un filo d'olio piccante, completando con una spolverata di semi di sesamo.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rustico, i fagioli cannellini scaldati con aglio e peperoncino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_fagioli_cannellini} in un pentolino con uno spicchio d'aglio e un pezzetto di peperoncino, mescolando finché non sono ben caldi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno essenziale, i fagioli cannellini scaldati con pepe nero macinato al momento.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda {nrv_fagioli_cannellini} in un pentolino, mescolando di tanto in tanto, e completa con una macinata di pepe nero.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rapido, i fagioli cannellini saltati in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Salta i fagioli",
+          "testo": "Scalda un filo d'olio in padella e salta {nrv_fagioli_cannellini} a fuoco vivo, mescolando spesso finché non risultano ben caldi.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, i fagioli cannellini conditi a freddo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Sciacqua {nrv_fagioli_cannellini} se necessario, poi condiscili a freddo con un filo d'olio e le spezie che preferisci."
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rustico, le lenticchie scaldate e profumate con rosmarino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e profuma le lenticchie",
+          "testo": "Scalda {nrv_lenticchie} in un pentolino con un rametto di rosmarino, mescolando di tanto in tanto finché non sono ben calde.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_19",
