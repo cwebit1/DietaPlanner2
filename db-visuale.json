@@ -1,5 +1,5 @@
 {
-  "versione": 11,
+  "versione": 12,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -2478,31 +2478,70 @@
       "idRicetta": "nr_12_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno saporito, le lenticchie scaldate con un tocco piccante e semi di sesamo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_lenticchie} in un pentolino con un filo d'olio piccante, completando con una spolverata di semi di sesamo prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno deciso, le lenticchie scaldate con aglio e peperoncino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda {nrv_lenticchie} in un pentolino con uno spicchio d'aglio e un pezzetto di peperoncino, mescolando finché non sono ben calde.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno essenziale, le lenticchie scaldate e completate con pepe nero macinato al momento.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda {nrv_lenticchie} in un pentolino, mescolando di tanto in tanto, e completa con una macinata di pepe nero prima di servire.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno rapido, le lenticchie saltate in padella finché non si scaldano bene.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Salta le lenticchie",
+          "testo": "Scalda un filo d'olio in padella e salta {nrv_lenticchie} a fuoco vivo, mescolando spesso finché non risultano ben calde.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco, le lenticchie condite a freddo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Sciacqua {nrv_lenticchie} se necessario, poi condiscile a freddo con un filo d'olio e le spezie che preferisci."
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_24",
@@ -2526,121 +2565,360 @@
       "idRicetta": "nr_12_25",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale saporito, il tofu scaldato con un tocco piccante e semi di sesamo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a fette o a cubetti regolari, così assorbe meglio il condimento."
+        },
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda il tofu in padella con un filo d'olio piccante, completando con una spolverata di semi di sesamo.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_26",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale deciso, il tofu scaldato con aglio e peperoncino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a fette o a cubetti regolari, in modo che si insaporisca in modo uniforme."
+        },
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda il tofu in padella con uno spicchio d'aglio e un pezzetto di peperoncino, girandolo delicatamente.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_27",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale essenziale, il tofu scaldato e completato con pepe nero.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a fette o a cubetti regolari."
+        },
+        {
+          "titolo": "Scalda e pepa",
+          "testo": "Scalda il tofu in padella, girandolo delicatamente, e completa con una generosa macinata di pepe nero.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_28",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale rapido, il tofu saltato in padella fino a scaldarsi e dorarsi leggermente.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a cubetti regolari."
+        },
+        {
+          "titolo": "Salta il tofu",
+          "testo": "Scalda un filo d'olio in padella e salta il tofu a fuoco vivo, girandolo spesso finché non risulta leggermente dorato ai bordi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_29",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale fresco, il tofu condito a freddo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a cubetti regolari."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Condisci il tofu a freddo con un filo d'olio e le spezie che preferisci, mescolando delicatamente prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo rapido, la fettina di manzo cotta alla piastra resta saporita e succosa.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra a fuoco alto, così {nrv_fettina_di_manzo} si sigilla subito appena appoggiata."
+        },
+        {
+          "titolo": "Cuoci la fettina",
+          "testo": "Cuoci la fettina pochi minuti per lato, giusto il tempo che si formi una leggera crosticina in superficie mantenendo l'interno succoso.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, la fettina di manzo cotta al forno resta morbida.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la fettina",
+          "testo": "Scalda il forno e adagia {nrv_fettina_di_manzo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la carne non risulta cotta uniformemente, senza seccarsi troppo essendo una fettina sottile.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, la fettina di manzo rosolata in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco vivo."
+        },
+        {
+          "titolo": "Rosola la fettina",
+          "testo": "Cuoci {nrv_fettina_di_manzo} pochi minuti per lato, finché non risulta rosolata fuori e cotta al punto giusto dentro.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, la fettina di manzo ai ferri con un leggero tocco affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia o la bistecchiera prima di appoggiarvi {nrv_fettina_di_manzo}."
+        },
+        {
+          "titolo": "Griglia la fettina",
+          "testo": "Cuoci pochi minuti per lato, finché la superficie non si segna e la carne risulta cotta al punto desiderato.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, l'hamburger di pollo cotto alla piastra resta succoso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_hamburger_di_pollo}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto, senza più tracce rosate.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di pollo cotto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_pollo} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, l'hamburger di pollo rosolato in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci {nrv_hamburger_di_pollo} su entrambi i lati finché non risulta dorato fuori e ben cotto all'interno.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, l'hamburger di pollo ai ferri con la superficie leggermente segnata.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_hamburger_di_pollo}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta completamente cotto.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'hamburger di suino cotto alla piastra ben dorato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_hamburger_di_suino}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta ben dorata e l'interno completamente cotto.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo pratico, l'hamburger di suino cotto al forno in modo uniforme.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_suino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta completamente cotto, senza parti rosate.",
+          "timerSecondi": 960
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo rapido, l'hamburger di suino rosolato in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci {nrv_hamburger_di_suino} su entrambi i lati finché non risulta ben dorato e cotto fino al centro.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo gustoso, l'hamburger di suino ai ferri con un tocco affumicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_hamburger_di_suino}."
+        },
+        {
+          "titolo": "Griglia l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non si segna e l'interno risulta ben cotto.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo magro, l'hamburger di tacchino cotto alla piastra resta comunque succoso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la piastra prima di appoggiarvi {nrv_hamburger_di_tacchino}."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci su entrambi i lati finché la superficie non risulta dorata e l'interno completamente cotto.",
+          "timerSecondi": 360
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, l'hamburger di tacchino cotto al forno in modo delicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'hamburger",
+          "testo": "Scalda il forno e disponi {nrv_hamburger_di_tacchino} in una teglia."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la superficie non diventa dorata e l'interno risulta ben cotto, senza seccarsi troppo essendo una carne magra.",
+          "timerSecondi": 840
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo veloce, l'hamburger di tacchino rosolato in padella.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda un filo d'olio in padella a fuoco medio."
+        },
+        {
+          "titolo": "Cuoci l'hamburger",
+          "testo": "Cuoci {nrv_hamburger_di_tacchino} su entrambi i lati finché non risulta dorato fuori e cotto fino al centro.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_15",

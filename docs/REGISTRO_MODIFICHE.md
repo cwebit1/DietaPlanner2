@@ -3116,3 +3116,55 @@ documentati, nessuna nuova regressione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Sesto lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_12_19`..
+`nr_12_23` (lenticchie in cinque varianti), `nr_12_25`..`nr_12_29`
+(tofu in cinque varianti, coerenti con `nr_12_24` già compilata in un
+lotto precedente), `nr_13_0`..`nr_13_3` (fettina di manzo: piastra/
+forno/padella/ferri), `nr_13_4`..`nr_13_7` (hamburger di pollo),
+`nr_13_8`..`nr_13_11` (hamburger di suino), `nr_13_12`..`nr_13_14`
+(hamburger di tacchino: piastra/forno/padella — "ai ferri" resta fuori
+da questo lotto, è `nr_13_15`, il prossimo da compilare).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Versione:** `db-visuale.json` incrementata di 1 (11 → 12).
+
+**Controlli eseguiti:**
+- record completi prima del lotto: 112 → dopo: 137 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta;
+- timer interi positivi solo per vere cotture (assenti sui contorni "in
+  insalata" e sul taglio del tofu, presenti su ogni cottura a caldo,
+  variati realisticamente per metodo: più brevi per piastra/padella,
+  più lunghi per il forno, coerente con come si comportano davvero
+  queste cotture);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_13_3` (Fettina di manzo ai
+ferri) aperta a 1 persona — quantità corretta (125g), timer 4:00
+coerente con una fettina sottile ai ferri.
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 137 record verificati; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa (48 file): stessi fallimenti pre-esistenti già
+documentati, più un fallimento isolato di
+`tests/lotto-programmazione-lucchetti.test.js` (aggiunto da un'altra
+sessione, riguarda lucchetti/Programmazione, mai toccati da questo
+lotto) risultato transitorio — rieseguito singolarmente è passato
+subito dopo. Nessuna nuova regressione introdotta da questo lotto.
+
+**Primo ID ancora da compilare:** `nr_13_15`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
