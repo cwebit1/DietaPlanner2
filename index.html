@@ -5843,7 +5843,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
         const testoRisolto = risolviRiferimentiIngredienteTesto(escCampoNuovoRicetta(passo.testo||''), ricetta, varianti, scala);
         const secondi = Number(passo.timerSecondi)||0;
         const timerHtml = secondi>0
-          ? `<button type="button" class="small" data-timer-passo="${indice}" data-timer-secondi="${secondi}" style="margin-top:6px;">⏱ ${formattaTimerPasso(secondi)}</button>`
+          ? `<button type="button" class="small" data-timer-passo="${indice}" data-timer-secondi="${secondi}" style="display:block;margin-top:6px;">⏱ ${formattaTimerPasso(secondi)}</button>`
           : '';
         return `<li style="margin-bottom:10px;">${titoloHtml}<span data-passo-testo="${indice}" style="cursor:pointer;">${testoRisolto}</span>${timerHtml}</li>`;
       }).join('');
