@@ -2998,3 +2998,66 @@ correzione. `git diff --check` pulito.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Quarto lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_10_8`
+(cous cous con feta e peperoni), `nr_10_9`..`nr_10_32` — famiglia di
+insalate fredde farro/orzo/riso combinate con tre formaggi (emmental,
+mozzarella, feta) e tre coppie di verdure (pomodorini + cetriolo,
+carote o peperoni). Prima applicazione su un lotto nuovo dello standard
+di cottura ad assorbimento per farro/orzo/riso appena concordato.
+
+**Fonti:** ogni ricetta risolta tramite `DietaPlannerMotorV12.getRicetta(id)`.
+Per farro/orzo/riso, i tre passi di cottura sono lo stesso set fisso
+(lavaggio, assorbimento con rapporto d'acqua e tempo per cereale,
+riposo a vapore) usato nella correzione precedente — riutilizzato
+identico su richiesta esplicita, perché descrive la stessa tecnica
+fisica; a variare per ogni combinazione sono la descrizione e i passi
+di preparazione formaggio/verdure e assemblaggio, scritti caso per
+caso.
+
+**Bug trovato e corretto prima del commit:** nella generazione dei
+passi per le combinazioni con la feta (6 record: `nr_10_15`, `nr_10_16`,
+`nr_10_17`, `nr_10_24`, `nr_10_25`, `nr_10_26`), il testo del passo
+"Prepara feta e verdure" iniziava con la minuscola ("sbriciola
+grossolanamente...") per un errore nel template che assemblava la
+frase. Corretto prima di eseguire i controlli finali e il commit —
+verificato con una lettura diretta del JSON e poi dal vivo in browser.
+
+**Versione:** `db-visuale.json` incrementata di 1 per l'intero lotto
+(9 → 10).
+
+**Controlli eseguiti:**
+- record completi prima del lotto: 62 → dopo: 87 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura di record già completi
+  (asserzioni bloccanti nello script di compilazione);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta;
+- timer interi positivi solo per le fasi di cottura/attesa reali
+  (lavaggio e composizione formaggio/verdure senza timer, cottura e
+  raffreddamento in frigorifero con timer);
+- nessun titolo o testo vuoto (incluso il controllo di capitalizzazione
+  dopo la correzione del bug);
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_10_15` aperta a 1 persona —
+sequenza lavaggio/assorbimento (18:00)/riposo a vapore (10:00)/
+preparazione feta e verdure/composizione e raffreddamento (30:00),
+testo corretto e ben capitalizzato dopo la correzione.
+
+**Test:** `tests/catalogo-visuale-campione-editoriale.test.js`
+(cumulativo) → ok, 87 record verificati; `tests/catalogo-visuale-disponibilita.test.js`
+→ ok. Suite completa (48 file): stessi fallimenti pre-esistenti già
+documentati, nessuna nuova regressione.
+
+**Primo ID ancora da compilare:** `nr_10_33`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

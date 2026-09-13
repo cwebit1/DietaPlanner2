@@ -1,5 +1,5 @@
 {
-  "versione": 9,
+  "versione": 10,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -1229,151 +1229,792 @@
       "idRicetta": "nr_10_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda vivace, il cous cous con la sapidità della feta e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il farro perlato con la dolcezza dell'emmental e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sostanziosa, il farro perlato con la dolcezza dell'emmental e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda saporita, il farro perlato con la dolcezza dell'emmental e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il farro perlato con la morbidezza della mozzarella e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il farro perlato con la morbidezza della mozzarella e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda vivace, il farro perlato con la morbidezza della mozzarella e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sapida, il farro perlato con la sapidità della feta e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il farro perlato con la sapidità della feta e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, il farro perlato con la sapidità della feta e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, l'orzo perlato con la dolcezza dell'emmental e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, l'orzo perlato con la dolcezza dell'emmental e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda gustosa, l'orzo perlato con la dolcezza dell'emmental e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, l'orzo perlato con la morbidezza della mozzarella e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda morbida, l'orzo perlato con la morbidezza della mozzarella e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda colorata, l'orzo perlato con la morbidezza della mozzarella e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_24",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sapida, l'orzo perlato con la sapidità della feta e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_25",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, l'orzo perlato con la sapidità della feta e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_26",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, l'orzo perlato con la sapidità della feta e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara feta e verdure",
+          "testo": "Sbriciola grossolanamente {nrv_feta} e taglia {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci la feta e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_27",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, il riso con la dolcezza dell'emmental e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_28",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, il riso con la dolcezza dell'emmental e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_29",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda saporita, il riso con la dolcezza dell'emmental e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara emmental e verdure",
+          "testo": "Taglia {nrv_emmental} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci emmental e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_30",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il riso con la morbidezza della mozzarella e la croccantezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_cetriolo} a dadini, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_31",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il riso con la morbidezza della mozzarella e la dolcezza croccante delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_carote} a julienne o grattugiate, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_32",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda vivace, il riso con la morbidezza della mozzarella e il sapore deciso dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara mozzarella e verdure",
+          "testo": "Taglia {nrv_mozzarella} a cubetti e {nrv_peperoni} a listarelle sottili, poi unisci {nrv_pomodorini} tagliati a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci mozzarella e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_33",
