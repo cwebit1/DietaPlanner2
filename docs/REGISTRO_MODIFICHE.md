@@ -3661,3 +3661,50 @@ correzione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Sedicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_43_18`..
+`nr_43_23` (completamento pasta integrale con verdure/pomodoro-
+basilico/aglio-olio-pomodorini), `nr_43_24`..`nr_43_31` (riso, stessa
+famiglia di combinazioni ma come piatto caldo mantecato, non insalata
+fredda), `nr_43_32`..`nr_43_39` (orzo perlato), `nr_43_40`..`nr_43_42`
+(farro perlato, prime tre combinazioni).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Nota tecnica:** per riso/orzo perlato/farro perlato con verdure
+(caldi, non insalata fredda) è stato applicato lo stesso standard di
+cottura ad assorbimento già concordato, seguito da un soffritto di
+verdure preparato a parte e poi unito al cereale ancora caldo — non un
+"sugo per pasta", ma una mantecatura del cereale, distinta
+correttamente nel testo. Applicata anche qui la correzione già imparata
+nel lotto precedente: aglio (0g) mai referenziato con `{variantId}`.
+
+**Versione:** `db-visuale.json` incrementata di 1 (21 → 22).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 362 → dopo: 387 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (387/387);
+- nessun riferimento a ingredienti a quantità zero come quantità reale;
+- timer coerenti con la cottura ad assorbimento per ciascun cereale;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_43_24` (Riso con zucchine e
+melanzane) aperta a 1 persona — sequenza lavaggio/assorbimento (12:00)/
+riposo a vapore (10:00)/soffritto verdure (8:00)/mantecatura, tutto
+corretto.
+
+**Primo ID ancora da compilare:** `nr_43_43`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
