@@ -1,5 +1,5 @@
 {
-  "versione": 4,
+  "versione": 5,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -77,7 +77,23 @@
       "idRicetta": "nr_2_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce delicato, il merluzzo cotto al forno resta morbido e si sfalda facilmente con la forchetta.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il merluzzo",
+          "testo": "Accendi il forno e portalo a temperatura, poi adagia {nrv_merluzzo} in una teglia, senza sovrapporre i tranci perché cuociano in modo uniforme."
+        },
+        {
+          "titolo": "Inforna e cuoci",
+          "testo": "Cuoci il merluzzo in forno finché la polpa diventa opaca e si stacca a scaglie morbide al tocco della forchetta, senza seccarsi.",
+          "timerSecondi": 900
+        },
+        {
+          "titolo": "Servi caldo",
+          "testo": "Sforna il merluzzo e servilo subito, magari accompagnandolo con il suo stesso fondo di cottura raccolto sul fondo della teglia."
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_5",
@@ -209,7 +225,19 @@
       "idRicetta": "nr_5_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno sfizioso, i pomodori gratinati diventano morbidi dentro e leggermente dorati in superficie.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Disponi i pomodori",
+          "testo": "Disponi {nrv_pomodori_gratinati} in una teglia, distanziandoli un poco l'uno dall'altro perché cuociano in modo uniforme."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci in forno finché la superficie non risulta dorata e leggermente croccante, mentre l'interno resta morbido.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_6_0",
@@ -221,7 +249,24 @@
       "idRicetta": "nr_6_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo piatto semplice e genuino, dove la pasta integrale si lega a un sugo fresco di pomodoro appena scottato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore abbondante acqua salata e cuoci {nrv_pasta_integrale} secondo i tempi indicati sulla confezione, mescolando di tanto in tanto perché non si attacchi.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Nel frattempo taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non rilasciano il loro liquido, restringendosi in un sugo rosso e brillante.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Scola la pasta al dente e versala direttamente nella padella con il sugo, mescolando qualche istante a fuoco vivo perché i sapori si amalgamino e la pasta risulti ben condita."
+        }
+      ]
     },
     {
       "idRicetta": "nr_6_2",
@@ -269,7 +314,25 @@
       "idRicetta": "nr_9_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto unico fresco e completo, pensato per essere gustato freddo nelle giornate più calde.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci le uova sode",
+          "testo": "Metti {nrv_uova} in un pentolino con acqua fredda e portale a bollore, lasciandole cuocere finché il tuorlo non risulta completamente rappreso.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido, sgranandolo poi con una forchetta.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e le uova sode a spicchi, uniscili al cous cous ormai freddo e lascia raffreddare bene in frigorifero prima di portare in tavola.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_9_1",
@@ -329,7 +392,24 @@
       "idRicetta": "nr_10_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca e sfiziosa, dove il cous cous si accompagna alla sapidità della feta e alla croccantezza delle verdure.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascialo assorbire tutto il liquido finché i chicchi non risultano sgranati e morbidi.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Taglia le verdure e la feta",
+          "testo": "Nel frattempo taglia {nrv_pomodorini} a metà e {nrv_cetriolo} a cubetti, poi sbriciola grossolanamente {nrv_feta} con le mani o con una forchetta."
+        },
+        {
+          "titolo": "Unisci e lascia raffreddare",
+          "testo": "Sgrana il cous cous con una forchetta, unisci le verdure e la feta e lascia raffreddare in frigorifero prima di servire, così i sapori si amalgamano meglio.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_10_7",
@@ -515,7 +595,19 @@
       "idRicetta": "nr_11_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto veloce e confortante, le uova strapazzate cotte lentamente fino a diventare morbide e cremose.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Sbatti le uova",
+          "testo": "Rompi {nrv_uova} in una ciotola e sbattile con una forchetta finché tuorlo e albume non si uniscono in un composto omogeneo."
+        },
+        {
+          "titolo": "Cuoci mescolando",
+          "testo": "Versa le uova in padella calda e cuocile a fuoco basso, mescolando di continuo con una spatola: si rapprenderanno a piccole nuvole morbide, senza asciugarsi troppo.",
+          "timerSecondi": 180
+        }
+      ]
     },
     {
       "idRicetta": "nr_11_2",
@@ -539,7 +631,15 @@
       "idRicetta": "nr_12_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno pratico e veloce, i ceci scaldati e profumati con rosmarino.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda e profuma i ceci",
+          "testo": "Scalda {nrv_ceci} in un pentolino con un rametto di rosmarino, mescolando di tanto in tanto finché non sono ben caldi.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_1",
@@ -683,7 +783,19 @@
       "idRicetta": "nr_12_24",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo vegetale semplice, il tofu insaporito con olio e rosmarino resta morbido e delicato.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il tofu",
+          "testo": "Taglia {nrv_tofu} a fette o a cubetti regolari, così assorbe meglio il condimento e si scalda in modo uniforme."
+        },
+        {
+          "titolo": "Scalda e insaporisci",
+          "testo": "Scalda il tofu in padella con un rametto di rosmarino, girandolo delicatamente finché non si riscalda in superficie senza asciugarsi.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_12_25",
@@ -863,7 +975,24 @@
       "idRicetta": "nr_13_24",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero e veloce, il petto di pollo cotto alla piastra fino a diventare dorato fuori e succoso dentro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Metti la piastra a scaldare bene a fuoco medio-alto, così {nrv_petto_di_pollo} si sigilla subito appena appoggiato senza rilasciare troppi liquidi."
+        },
+        {
+          "titolo": "Cuoci il petto di pollo",
+          "testo": "Adagia il petto di pollo sulla piastra calda e lascialo cuocere senza spostarlo troppo spesso, finché non si forma una crosticina dorata e uniforme sulla superficie.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Gira e completa la cottura",
+          "testo": "Gira il petto di pollo e prosegui la cottura sull'altro lato finché anche questo risulta dorato e la carne, punzecchiata al centro, non rilascia più liquidi rosati.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_13_25",
@@ -1361,7 +1490,18 @@
       "idRicetta": "nr_19_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco e leggero, il pomodoro condito con basilico e un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Taglia il pomodoro",
+          "testo": "Taglia {nrv_pomodoro_fresco} a fette o a spicchi, secondo il taglio che preferisci."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi il pomodoro in un piatto, profuma con qualche foglia di basilico fresco spezzettata a mano e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_19_13",
@@ -1877,7 +2017,28 @@
       "idRicetta": "nr_37_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo di mare saporito, le linguine si legano al sugo profumato delle cozze aperte in tegame.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Pulisci le cozze",
+          "testo": "Sciacqua bene {nrv_cozze} sotto acqua corrente, eliminando eventuali residui e il bisso rimasto attaccato al guscio."
+        },
+        {
+          "titolo": "Apri le cozze",
+          "testo": "Metti le cozze in un tegame largo con un filo d'olio e falle aprire a fuoco vivo, scuotendo il tegame di tanto in tanto: quelle che restano chiuse vanno scartate.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Filtra il liquido di cottura delle cozze, che diventerà la base saporita del condimento, e tieni da parte i molluschi sgusciati o ancora nel loro guscio, secondo la tua preferenza."
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Cuoci {nrv_linguine} in acqua bollente, scolale al dente e saltale nel tegame con le cozze e il loro sugo, mescolando bene perché la pasta si insaporisca a dovere.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_37_1",
@@ -2081,7 +2242,24 @@
       "idRicetta": "nr_43_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo piatto colorato, la pasta corta condita con un sugo veloce di zucchine e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché le zucchine non si ammorbidiscono e il pomodoro non si scioglie in un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_3",

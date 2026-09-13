@@ -2612,3 +2612,94 @@ regressione; controllo sintattico di tutti i file modificati; `git diff
 `tests/catalogo-visuale-disponibilita.test.js`.
 
 ---
+
+## Campione editoriale: 12 ricette compilate in db-visuale.json — 11 settembre 2026
+
+**Obiettivo:** compilare `descrizione` e `procedimentoStrutturato` su un
+campione rappresentativo di 12 ricette concrete (su 420), per verificare
+qualità editoriale, resa grafica, timer e riferimenti alle quantità
+prima di un'eventuale compilazione estesa. Nessuna modifica
+all'architettura, a `db-ricette.json`, a `ingredienti-new.json` o a
+`index.html`.
+
+**12 ID compilati**, con la categoria rappresentata:
+- `nr_6_1` — Pasta integrale al Pomodoro fresco (primo)
+- `nr_13_24` — Petto di pollo alla piastra (secondo di carne)
+- `nr_2_4` — Merluzzo al forno (secondo di pesce)
+- `nr_11_1` — Uova strapazzate (uova)
+- `nr_10_6` — insalata fredda di Cous cous con Feta e pomodorini e cetriolo (formaggio)
+- `nr_12_24` — Tofu all'olio e rosmarino (legumi/tofu)
+- `nr_9_0` — insalata fredda di Cous cous con Uova sode e Pomodoro fresco (preparazione fredda, anche ingredienti in pezzi)
+- `nr_19_12` — Insalata di Pomodoro fresco e Basilico fresco con Aceto balsamico (verdure)
+- `nr_43_2` — Pasta corta con zucchine e pomodoro (combinazione con sugo)
+- `nr_5_0` — Pomodori gratinati (ingredienti in pezzi)
+- `nr_12_0` — Ceci all'olio e rosmarino (ricetta semplice, un solo passo)
+- `nr_37_0` — Linguine con Cozze e pomodoro (più passaggi, 4 fasi distinte)
+
+**Fonti:** ogni ricetta risolta tramite `DietaPlannerMotorV12.getRicetta(id)`
+per leggere ingredienti, variantId e quantità realmente presenti. Nessun
+ingrediente, guarnizione o quantità inventati. Nella ricetta verdure
+(`nr_19_12`), basilico fresco e aceto balsamico hanno quantità 0g nel
+catalogo (condimenti a piacere): non richiamati con `{variantId}`
+proprio perché non hanno una quantità scalabile reale da mostrare.
+Nella ricetta con cozze (`nr_37_0`), il pomodoro non è un ingrediente
+tracciato separatamente nonostante il nome del piatto: non è stato
+inserito alcun riferimento a un pomodoro inesistente nella composizione
+concreta.
+
+**Versione:** `db-visuale.json` incrementata di 1 per l'intero lotto (una
+sola volta, non per record).
+
+**Verifica visiva reale (browser headless, screenshot effettivi, non
+descrizione teorica):**
+- `nr_37_0` (timer + più passaggi): descrizione sotto il titolo,
+  quantità corrette (75g linguine, 250g cozze), 2 timer renderizzati
+  (5:00 e 10:00). Cliccato un timer: sceso a 4:58 dopo ~2 secondi,
+  countdown reale funzionante. Cliccato il testo del primo passo:
+  barratura (`text-decoration: line-through`) applicata. Cambiate le
+  porzioni da 1 a 2: quantità raddoppiate (150g/500g) sia nella lista
+  ingredienti sia nei riferimenti inline nel testo dei passi, timer
+  riazzerati a 5:00/10:00 (non più in conto alla rovescia), barratura
+  azzerata (nessuna decorazione residua) — conferma che
+  `pulisciTimerDettaglioRicetta()` e il re-render completo funzionano
+  come da correzione precedente.
+- `nr_9_0` (quantità inline + ingredienti in pezzi): con 1 persona,
+  "Uova: 2 pz" e riferimento inline coerente ("Metti 2 pz..."). Cambiate
+  le porzioni a 3: "Uova: 6 pz" e il riferimento inline aggiornato a
+  "Metti 6 pz...", stesso scaling per cous cous (75g→225g) e pomodoro
+  (200g→600g).
+- `nr_19_12` (nessun timer, ingredienti a quantità zero non
+  referenziati): descrizione sotto il titolo, procedimento in due passi
+  senza timer (corretto, nessuna cottura/attesa reale), nessun campo
+  vuoto o placeholder visibile nonostante basilico e aceto a 0g.
+
+**Validazione automatica aggiunta:**
+`tests/catalogo-visuale-campione-editoriale.test.js` — verifica
+esattamente 12 record compilati in questo lotto (né uno di più né uno di
+meno, e corrispondenza esatta con gli ID previsti), titoli e testi non
+vuoti, `timerSecondi` intero positivo quando presente, ogni
+`{variantId}` richiamato nel testo risolto contro gli ingredienti REALI
+della relativa ricetta concreta (letti dal motore, non dal JSON),
+nessuno degli altri 408 record ha guadagnato i due campi nuovi come
+effetto collaterale, 420 ID ancora univoci e completi.
+
+**Test eseguiti:** `tests/catalogo-visuale-campione-editoriale.test.js`
+→ ok; `tests/catalogo-visuale-disponibilita.test.js` → ok; suite
+completa (48 file) → stessi fallimenti pre-esistenti già documentati
+nelle voci precedenti (uno diverso in questo giro per via della
+flakiness già nota e indipendente dal contenuto editoriale, confermata
+tale con esecuzioni ripetute: 2 fallimenti su 5 sia con sia senza
+relazione a questo lotto), nessuna nuova regressione; `git diff --check`
+pulito.
+
+**Dubbio editoriale da segnalare:** per `nr_37_0` non è chiaro se
+l'assenza del pomodoro come ingrediente tracciato (nonostante il nome
+"con Cozze e pomodoro") sia intenzionale nel catalogo funzionale o una
+lacuna di compilazione a monte — non ho aggiunto nulla per non inventare
+un ingrediente, ma segnalo la circostanza.
+
+**File modificati:** `db-visuale.json`.
+**File aggiunto:** `tests/catalogo-visuale-campione-editoriale.test.js`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
