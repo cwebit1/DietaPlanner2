@@ -3611,3 +3611,53 @@ patate lesse) aperta a 1 persona — timer 20:00 su entrambe le cotture.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Quindicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_42_4`..
+`nr_42_11` (insalate fredde farro/orzo/riso con tofu, pomodorini e
+verdure — completamento della famiglia tofu), `nr_43_0`, `nr_43_1`,
+`nr_43_3`..`nr_43_17` (pasta corta/tagliolini all'uovo/pasta integrale
+con combinazioni di zucchine/melanzane/carote/pomodoro/piselli, più le
+varianti pomodoro e basilico e aglio-olio-pomodorini; `nr_43_2` non
+presente nel catalogo).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Bug trovato e corretto prima del commit:** nelle due ricette
+"aglio, olio e pomodorini" (`nr_43_7`, `nr_43_15`), avevo referenziato
+l'aglio con `{nrv_aglio}` — ma l'aglio in queste ricette è tracciato a
+0g (condimento a piacere, come basilico e aceto nei lotti precedenti),
+quindi il riferimento risolveva in "0g tagliato sottile", privo di
+senso. Corretto sostituendo con "uno spicchio di aglio", senza
+quantità inventata né riferimento a una quantità che il catalogo non
+fornisce. Individuato leggendo l'anteprima dal vivo in browser prima
+del commit.
+
+**Versione:** `db-visuale.json` incrementata di 1 (20 → 21).
+
+**Controlli eseguiti** (set ridotto):
+- record completi prima del lotto: 337 → dopo: 362 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (362/362);
+- nessun riferimento a ingredienti a quantità zero (aglio, basilico,
+  aceto) trattato come quantità scalabile reale, dopo la correzione;
+- timer presenti solo sulle fasi di vera cottura;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_43_7` (Pasta corta con
+aglio, olio e pomodorini) aperta a 1 persona, prima e dopo la
+correzione.
+
+**Primo ID ancora da compilare:** `nr_43_18`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

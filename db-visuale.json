@@ -1,5 +1,5 @@
 {
-  "versione": 20,
+  "versione": 21,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -6788,61 +6788,303 @@
       "idRicetta": "nr_42_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sostanziosa, il farro con il tofu, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, il farro con il tofu, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, l'orzo con il tofu, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, l'orzo con il tofu, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, l'orzo con il tofu, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il riso con il tofu, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il riso con il tofu, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_42_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sfiziosa, il riso con il tofu, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara tofu e verdure",
+          "testo": "Taglia {nrv_tofu} a cubetti, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci tofu e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_2",
@@ -6871,91 +7113,356 @@
       "idRicetta": "nr_43_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di piselli e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di piselli e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo classico, la pasta corta condita con un sugo fresco di pomodoro e basilico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo leggero, profumando con qualche foglia di basilico fresco spezzettata a mano.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Scola la pasta al dente e versala nella padella col sugo, saltando qualche istante perché i sapori si amalgamino."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e saporito, la pasta corta con aglio, olio e pomodorini.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_corta} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara il soffritto",
+          "testo": "Scalda {nrv_olio_extravergine_oliva} in padella con uno spicchio di aglio tagliato sottile, lasciandolo profumare senza farlo bruciare.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Aggiungi i pomodorini",
+          "testo": "Unisci {nrv_pomodorini} tagliati a metà e falli saltare finché non si ammorbidiscono leggermente.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e saltala nel soffritto con i pomodorini, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di pomodoro e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_pomodoro_fresco} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di piselli e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di piselli e pomodoro.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_piselli_surgelati} e {nrv_pomodoro_fresco} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo classico, i tagliolini all'uovo condita con un sugo fresco di pomodoro e basilico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il sugo",
+          "testo": "Taglia {nrv_pomodoro_fresco} a pezzi e falli scaldare in padella finché non si sciolgono in un sugo leggero, profumando con qualche foglia di basilico fresco spezzettata a mano.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca e servi",
+          "testo": "Scola la pasta al dente e versala nella padella col sugo, saltando qualche istante perché i sapori si amalgamino."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e saporito, i tagliolini all'uovo con aglio, olio e pomodorini.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_tagliolini_all_uovo} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Prepara il soffritto",
+          "testo": "Scalda {nrv_olio_extravergine_oliva} in padella con uno spicchio di aglio tagliato sottile, lasciandolo profumare senza farlo bruciare.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Aggiungi i pomodorini",
+          "testo": "Unisci {nrv_pomodorini} tagliati a metà e falli saltare finché non si ammorbidiscono leggermente.",
+          "timerSecondi": 240
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e saltala nel soffritto con i pomodorini, mescolando bene perché si insaporisca."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di zucchine e melanzane.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_integrale} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 660
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_melanzane} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di zucchine e carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci la pasta",
+          "testo": "Porta a bollore l'acqua salata e cuoci {nrv_pasta_integrale} secondo i tempi indicati sulla confezione.",
+          "timerSecondi": 660
+        },
+        {
+          "titolo": "Prepara il sugo di verdure",
+          "testo": "Taglia {nrv_zucchine} e {nrv_carote} a cubetti piccoli e falli saltare in padella finché non si ammorbidiscono, creando un sughetto leggero.",
+          "timerSecondi": 480
+        },
+        {
+          "titolo": "Manteca la pasta",
+          "testo": "Scola la pasta al dente e uniscila al sugo di verdure, saltando qualche istante a fuoco vivo perché si insaporisca bene."
+        }
+      ]
     },
     {
       "idRicetta": "nr_43_18",
