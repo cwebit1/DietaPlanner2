@@ -3261,3 +3261,53 @@ contenuto editoriale.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Nono lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+
+**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_16_0`..
+`nr_16_23` — insalate fredde cous cous/farro/orzo/riso combinate con
+tonno o salmone affumicato e tre coppie di verdure (pomodorini +
+cetriolo, carote o peperoni), più semi di sesamo (quantità 0g nel
+catalogo, non referenziato con `{variantId}` per lo stesso motivo già
+visto con basilico/aceto in un lotto precedente). `nr_18_0` (Insalata
+di Lattuga e Aceto balsamico).
+
+**Nessuna anomalia di catalogo riscontrata in questo lotto.**
+
+**Bug trovato e corretto prima del commit** (stesso tipo già visto nel
+quarto lotto): nel passo "Prepara pesce e verdure" di tutti i 24 record
+`nr_16_*`, il testo iniziava con la minuscola ("taglia..."/"sgocciola...")
+per lo stesso errore di template nella concatenazione della frase.
+Corretto — capitalizzazione sistemata su tutti e 24 i record e, in più,
+rimossa una ripetizione goffa ("taglia... taglia...") nelle 12
+combinazioni con il salmone affumicato, resa più scorrevole in un'unica
+elencazione dei tagli. Verificato a posteriori leggendo il JSON e poi
+dal vivo in browser prima del commit.
+
+**Versione:** `db-visuale.json` incrementata di 1 (14 → 15).
+
+**Controlli eseguiti** (set ridotto, come da indicazione):
+- record completi prima del lotto: 187 → dopo: 212 (+25 esatti);
+- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — verificato dal test cumulativo (212/212);
+- nessun titolo o testo vuoto, incluso il controllo di capitalizzazione
+  dopo la correzione;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_16_9` (insalata fredda di
+farro perlato con salmone affumicato) aperta a 1 persona — sequenza
+lavaggio/assorbimento (18:00)/riposo a vapore (10:00)/preparazione
+pesce e verdure (testo corretto dopo la correzione)/raffreddamento
+(30:00), quantità inline coerenti.
+
+**Primo ID ancora da compilare:** `nr_18_1`.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

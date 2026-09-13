@@ -1,5 +1,5 @@
 {
-  "versione": 14,
+  "versione": 15,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -3699,151 +3699,732 @@
       "idRicetta": "nr_16_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il cous cous con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, il cous cous con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda saporita, il cous cous con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il cous cous con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il cous cous con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sfiziosa, il cous cous con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cous cous",
+          "testo": "Versa {nrv_cous_cous} in una ciotola, copri con acqua bollente e lascia riposare finché non ha assorbito tutto il liquido.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Sgrana il cous cous con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il farro perlato con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sostanziosa, il farro perlato con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda saporita, il farro perlato con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il farro perlato con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, il farro perlato con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, il farro perlato con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente finché l'acqua non esce limpida, eliminando l'amido superficiale."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il farro in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza scoperchiare.",
+          "timerSecondi": 1080
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il farro coperto per qualche minuto: il vapore trattenuto termina la cottura rendendo i chicchi teneri ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il farro, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, l'orzo perlato con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, l'orzo perlato con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda gustosa, l'orzo perlato con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, l'orzo perlato con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda rustica, l'orzo perlato con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda decisa, l'orzo perlato con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava l'orzo",
+          "testo": "Sciacqua {nrv_orzo_perlato} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa l'orzo in pentola con una quantità d'acqua pari al doppio del suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza sollevare il coperchio.",
+          "timerSecondi": 960
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare l'orzo coperto: il vapore residuo completa la cottura, lasciando i chicchi morbidi ma ancora ben distinti.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare l'orzo, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_18",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda leggera, il riso con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_19",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda semplice, il riso con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_20",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda saporita, il riso con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Sgocciola {nrv_tonno} e sminuzzalo grossolanamente con una forchetta, taglia {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_21",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda fresca, il riso con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_cetriolo} a dadini e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Componi e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_22",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda delicata, il riso con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_carote} a julienne o grattugiate e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Unisci e raffredda",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_16_23",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un'insalata fredda sfiziosa, il riso con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava il riso",
+          "testo": "Sciacqua {nrv_riso} sotto acqua corrente finché non esce limpida, per eliminare l'amido in eccesso e ottenere chicchi più separati."
+        },
+        {
+          "titolo": "Cuoci ad assorbimento",
+          "testo": "Versa il riso in una pentola con una quantità d'acqua pari a una volta e mezza il suo peso, porta a bollore, poi abbassa al minimo, copri e lascia cuocere senza mai sollevare il coperchio.",
+          "timerSecondi": 720
+        },
+        {
+          "titolo": "Lascia riposare a vapore",
+          "testo": "Spegni il fuoco e lascia riposare il riso coperto, senza scoprirlo: il vapore residuo completa la cottura rendendo i chicchi sodi e ben separati.",
+          "timerSecondi": 600
+        },
+        {
+          "titolo": "Prepara pesce e verdure",
+          "testo": "Taglia {nrv_salmone_affumicato} a listarelle, {nrv_peperoni} a listarelle sottili e {nrv_pomodorini} a metà, completando con una spolverata di semi di sesamo."
+        },
+        {
+          "titolo": "Assembla l'insalata",
+          "testo": "Lascia raffreddare il riso, sgranalo con una forchetta, unisci pesce e verdure e lascia raffreddare in frigorifero prima di servire.",
+          "timerSecondi": 1800
+        }
+      ]
     },
     {
       "idRicetta": "nr_18_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un contorno fresco e leggero, la lattuga condita con un filo di aceto balsamico.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lava la lattuga",
+          "testo": "Lava {nrv_lattuga} e asciugala bene, così il condimento aderisce meglio alle foglie."
+        },
+        {
+          "titolo": "Condisci e servi",
+          "testo": "Disponi la lattuga in un'insalatiera e completa con un filo di aceto balsamico prima di servire."
+        }
+      ]
     },
     {
       "idRicetta": "nr_18_1",
