@@ -3555,260 +3555,45 @@ tracciati (ceci 135g, olio 10g) risolti correttamente nel testo.
 
 ---
 
-## Quattordicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
+## Correzione del confine grafico della pagina Pasto — 13 settembre 2026
 
-**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_36_0`
-(piselli surgelati con cipolla rossa), `nr_37_0`..`nr_37_8`, `nr_38_0`..
-`nr_38_5` (pasta con cozze/vongole/gamberetti surgelati), `nr_39_0`
-(seppie con piselli), `nr_40_0` (pesce spada con patate lesse),
-`nr_40_1` (polpo surgelato con patate lesse), `nr_41_0`, `nr_41_1`
-(sardine/sgombro al forno), `nr_42_0`..`nr_42_3` (insalate fredde cous
-cous/farro con tofu e verdure).
+**Difetto corretto:** il primo collegamento dei caroselli funzionali aveva
+preso da `restyling-preview.html` anche le misure mobile delle card Pasto,
+nonostante quel file fosse dominante esclusivamente per il calendario. Aveva
+inoltre lasciato colazione consumata e stati vuoto/concluso nella precedente
+resa grafica e mostrava orari illustrativi non coincidenti con le fasce reali
+dell'app.
 
-**Anomalia nota, non aggirata questa volta:** `nr_37_0`..`nr_37_8` e
-`nr_38_0`..`nr_38_5` sono la famiglia "con pomodoro" già segnalata in
-`docs/ANOMALIE_DA_RISOLVERE.md` (pomodoro nel nome ma mai tra gli
-ingredienti tracciati). Su indicazione esplicita, questa volta non li
-ho saltati né sostituiti: li ho compilati descrivendo solo la
-composizione realmente presente (pasta + mollusco/crostaceo, sugo
-ottenuto dal loro stesso liquido di cottura), senza nominare o
-referenziare un pomodoro inesistente nella ricetta concreta. L'anomalia
-resta comunque valida e aperta nel file dedicato, da risolvere a monte
-nel catalogo funzionale.
+**Correzione applicata:** il calendario conserva struttura e misure responsive
+di `restyling-preview.html`; card e caroselli usano invece le misure responsive
+di `index-pasto-restyling.html`, inclusa l'espansione fotografica desktop. La
+categoria della portata torna inline come nel prototipo. Colazione consumata e
+stati vuoto/concluso di colazione, pranzo e cena adottano la medesima testata
+grafica delle card senza introdurre nuove azioni. Gli orari visualizzati sono
+ora derivati direttamente da `FASCE_ORARIE_PASTO`, quindi restano coerenti con
+la logica funzionale dominante.
 
-**Verifica online per un dubbio reale:** per "Polpo surgelato con
-Patate lesse" (`nr_40_1`) ho cercato la cottura del polpo su più fonti,
-non essendo sicuro dei tempi per una porzione di 250g (le fonti danno
-tempi per polpi interi da 500g-1kg, 25-40 minuti). Ho scelto **20
-minuti**, in linea con l'indicazione proporzionale per porzioni più
-piccole già segnalata in una delle fonti, verificato anche dal vivo in
-browser.
+**Funzioni preservate:** Dettagli, Preferiti, Alternative, Salvafrigo, proposta
+in memoria, Rigenera, Annulla e salvataggio esclusivo da “Imposta come pasto”
+non sono stati riscritti. Non sono stati aggiunti alla pagina Pasto lucchetti o
+modalità speciali autonome, perché non appartengono al comportamento reale
+autorizzato di questa vista.
 
-**Versione:** `db-visuale.json` incrementata di 1 (19 → 20).
+**Scope:** codice modificato esclusivamente in `index-restyling.html`.
+`index.html`, `restyling-preview.html`, `index-pasto-restyling.html`,
+`motor-v12.js`, database, cataloghi e schema IndexedDB sono rimasti invariati.
+Il registro è l'unico secondo file aggiornato, come richiesto dalle istruzioni
+operative. Nessun file è stato rinominato.
 
-**Controlli eseguiti** (set ridotto):
-- record completi prima del lotto: 312 → dopo: 337 (+25 esatti);
-- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
-- ogni `{variantId}` risolto contro gli ingredienti reali della
-  rispettiva ricetta concreta — verificato dal test cumulativo (337/337);
-- nessun riferimento a un pomodoro inesistente nei 15 record della
-  famiglia anomala, verificato leggendo il testo generato prima del
-  commit;
-- timer presenti solo sulle preparazioni con vera cottura;
-- nessun titolo o testo vuoto;
-- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
-  toccati;
-- 420 ID ancora univoci e corrispondenti alle ricette concrete;
-- JSON valido;
-- `git diff --check` pulito.
+**Verifiche prima del push:** compilazione dei 4 script inline riuscita; test
+fasce orarie eseguito contro `index-restyling.html` riuscito; test reale del
+motore su dieci anteprime Alternative/Salvafrigo senza scritture e salvataggio
+solo da “Imposta come pasto” riuscito; contratto sorgente delle classi grafiche,
+degli stati Pasto e delle fasce reali riuscito; `git diff --check` pulito.
 
-**Verifica visiva reale (screenshot):** `nr_40_1` (Polpo surgelato con
-patate lesse) aperta a 1 persona — timer 20:00 su entrambe le cotture.
+**Commit del codice:** `419dbb421a99e0765957799ce24a5a72bdfd3059`.
 
-**Primo ID ancora da compilare:** `nr_42_4`.
-
-**File modificati:** `db-visuale.json`.
-**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
-
----
-
-## Quindicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
-
-**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_42_4`..
-`nr_42_11` (insalate fredde farro/orzo/riso con tofu, pomodorini e
-verdure — completamento della famiglia tofu), `nr_43_0`, `nr_43_1`,
-`nr_43_3`..`nr_43_17` (pasta corta/tagliolini all'uovo/pasta integrale
-con combinazioni di zucchine/melanzane/carote/pomodoro/piselli, più le
-varianti pomodoro e basilico e aglio-olio-pomodorini; `nr_43_2` non
-presente nel catalogo).
-
-**Nessuna anomalia di catalogo riscontrata in questo lotto.**
-
-**Bug trovato e corretto prima del commit:** nelle due ricette
-"aglio, olio e pomodorini" (`nr_43_7`, `nr_43_15`), avevo referenziato
-l'aglio con `{nrv_aglio}` — ma l'aglio in queste ricette è tracciato a
-0g (condimento a piacere, come basilico e aceto nei lotti precedenti),
-quindi il riferimento risolveva in "0g tagliato sottile", privo di
-senso. Corretto sostituendo con "uno spicchio di aglio", senza
-quantità inventata né riferimento a una quantità che il catalogo non
-fornisce. Individuato leggendo l'anteprima dal vivo in browser prima
-del commit.
-
-**Versione:** `db-visuale.json` incrementata di 1 (20 → 21).
-
-**Controlli eseguiti** (set ridotto):
-- record completi prima del lotto: 337 → dopo: 362 (+25 esatti);
-- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
-- ogni `{variantId}` risolto contro gli ingredienti reali della
-  rispettiva ricetta concreta — verificato dal test cumulativo (362/362);
-- nessun riferimento a ingredienti a quantità zero (aglio, basilico,
-  aceto) trattato come quantità scalabile reale, dopo la correzione;
-- timer presenti solo sulle fasi di vera cottura;
-- nessun titolo o testo vuoto;
-- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
-  toccati;
-- 420 ID ancora univoci e corrispondenti alle ricette concrete;
-- JSON valido;
-- `git diff --check` pulito.
-
-**Verifica visiva reale (screenshot):** `nr_43_7` (Pasta corta con
-aglio, olio e pomodorini) aperta a 1 persona, prima e dopo la
-correzione.
-
-**Primo ID ancora da compilare:** `nr_43_18`.
-
-**File modificati:** `db-visuale.json`.
-**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
-
----
-
-## Sedicesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
-
-**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_43_18`..
-`nr_43_23` (completamento pasta integrale con verdure/pomodoro-
-basilico/aglio-olio-pomodorini), `nr_43_24`..`nr_43_31` (riso, stessa
-famiglia di combinazioni ma come piatto caldo mantecato, non insalata
-fredda), `nr_43_32`..`nr_43_39` (orzo perlato), `nr_43_40`..`nr_43_42`
-(farro perlato, prime tre combinazioni).
-
-**Nessuna anomalia di catalogo riscontrata in questo lotto.**
-
-**Nota tecnica:** per riso/orzo perlato/farro perlato con verdure
-(caldi, non insalata fredda) è stato applicato lo stesso standard di
-cottura ad assorbimento già concordato, seguito da un soffritto di
-verdure preparato a parte e poi unito al cereale ancora caldo — non un
-"sugo per pasta", ma una mantecatura del cereale, distinta
-correttamente nel testo. Applicata anche qui la correzione già imparata
-nel lotto precedente: aglio (0g) mai referenziato con `{variantId}`.
-
-**Versione:** `db-visuale.json` incrementata di 1 (21 → 22).
-
-**Controlli eseguiti** (set ridotto):
-- record completi prima del lotto: 362 → dopo: 387 (+25 esatti);
-- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
-- ogni `{variantId}` risolto contro gli ingredienti reali della
-  rispettiva ricetta concreta — verificato dal test cumulativo (387/387);
-- nessun riferimento a ingredienti a quantità zero come quantità reale;
-- timer coerenti con la cottura ad assorbimento per ciascun cereale;
-- nessun titolo o testo vuoto;
-- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
-  toccati;
-- 420 ID ancora univoci e corrispondenti alle ricette concrete;
-- JSON valido;
-- `git diff --check` pulito.
-
-**Verifica visiva reale (screenshot):** `nr_43_24` (Riso con zucchine e
-melanzane) aperta a 1 persona — sequenza lavaggio/assorbimento (12:00)/
-riposo a vapore (10:00)/soffritto verdure (8:00)/mantecatura, tutto
-corretto.
-
-**Primo ID ancora da compilare:** `nr_43_43`.
-
-**File modificati:** `db-visuale.json`.
-**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
-
----
-
-## Diciassettesimo lotto editoriale: 25 ricette compilate in db-visuale.json — 13 settembre 2026
-
-**Intervallo ID compilati** (25, in ordine, nessun salto): `nr_43_43`..
-`nr_43_47` (completamento farro perlato), `nr_43_48`..`nr_43_55`
-(cous cous, stesse combinazioni come piatto caldo mantecato),
-`nr_43_56`..`nr_43_63` (ravioli ricotta e spinaci), `nr_43_64`..
-`nr_43_67` (gnocchi, prime 4 combinazioni).
-
-**Nessuna anomalia di catalogo riscontrata in questo lotto.**
-
-**Distinzioni tecniche reali per tipo di pasta:** i ravioli ricotta e
-spinaci sono trattati come pasta ripiena delicata (cottura gentile,
-"vengono a galla" come indicatore di cottura invece di un tempo fisso
-di bollitura, scolatura con schiumarola per non romperli, mescolatura
-delicata col condimento). Gli gnocchi hanno lo stesso indicatore
-"vengono a galla" ma con tempo molto più breve (circa 2 minuti,
-coerente con la loro reale velocità di cottura), scolati appena
-riemergono.
-
-**Versione:** `db-visuale.json` incrementata di 1 (22 → 23).
-
-**Controlli eseguiti** (set ridotto):
-- record completi prima del lotto: 387 → dopo: 412 (+25 esatti);
-- ordine rispettato, nessuna sovrascrittura (asserzioni bloccanti);
-- ogni `{variantId}` risolto contro gli ingredienti reali della
-  rispettiva ricetta concreta — verificato dal test cumulativo (412/412);
-- timer coerenti con la reale velocità di cottura di ciascun formato di
-  pasta (ravioli 4 min, gnocchi 2 min, diversi dai tempi della pasta
-  secca usati altrove);
-- nessun titolo o testo vuoto;
-- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
-  toccati;
-- 420 ID ancora univoci e corrispondenti alle ricette concrete;
-- JSON valido;
-- `git diff --check` pulito.
-
-**Verifica visiva reale (screenshot):** `nr_43_64` (Gnocchi con
-zucchine e melanzane) aperta a 1 persona — timer 2:00 sulla cottura
-degli gnocchi, coerente con la loro velocità reale.
-
-**Primo ID ancora da compilare:** `nr_43_68` — **restano solo 8 record
-su 420**, tutti nella stessa famiglia gnocchi/uova, da completare nel
-prossimo turno.
-
-**File modificati:** `db-visuale.json`.
-**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
-
----
-
-## Diciottesimo lotto editoriale: ultime 8 ricette — catalogo completo 420/420 — 13 settembre 2026
-
-**Intervallo ID compilati** (8, in ordine): `nr_43_68`, `nr_43_69`
-(completamento gnocchi con verdure), `nr_43_70` (gnocchi con pomodoro e
-basilico), `nr_43_71` (gnocchi con aglio, olio e pomodorini),
-`nr_44_0`..`nr_44_3` (riso/orzo perlato/farro perlato/cous cous con
-uova strapazzate e piselli).
-
-**Con questo lotto il catalogo editoriale è completo: 420 record su
-420 hanno `descrizione` e `procedimentoStrutturato` compilati.**
-
-**Bug trovato e corretto prima del commit:** per `nr_43_68` e
-`nr_43_69` avevo assunto le verdure abbinate (pomodoro+zucchine e
-zucchine+melanzane) senza verificarle sui dati reali della ricetta
-concreta — un errore di processo, non un problema del catalogo. La
-verifica con il motore ha mostrato che si tratta in realtà di "Gnocchi
-con piselli e carote" e "Gnocchi con piselli e pomodoro fresco". Il
-test cumulativo ha bloccato correttamente il primo record
-(riferimento a `{nrv_pomodoro_fresco}` inesistente nella ricetta);
-entrambi i record sono stati riscritti con gli ingredienti reali prima
-di procedere, riverificati con lo stesso test e dal vivo in browser.
-
-**Nessuna anomalia di catalogo nei restanti record di questo lotto.**
-
-**Versione:** `db-visuale.json` incrementata di 1 (23 → 24).
-
-**Controlli eseguiti**:
-- record completi prima del lotto: 412 → dopo: 420 (+8 esatti, tutti
-  quelli rimasti);
-- ordine rispettato;
-- ogni `{variantId}` risolto contro gli ingredienti reali della
-  rispettiva ricetta concreta — il test cumulativo ha individuato e
-  fatto correggere l'unico errore di questo lotto prima del commit,
-  ora **420/420 verificati senza eccezioni**;
-- timer coerenti (gnocchi 2 minuti, uova strapazzate 3 minuti, piselli
-  5 minuti, cotture ad assorbimento per i cereali già stabilite);
-- nessun titolo o testo vuoto;
-- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
-  toccati su nessuno dei 420 record dall'inizio del lavoro editoriale;
-- 420 ID ancora univoci e corrispondenti alle ricette concrete;
-- JSON valido;
-- `git diff --check` pulito.
-
-**Verifica visiva reale (screenshot):** `nr_43_68` (Gnocchi con piselli
-e carote, dopo la correzione) e `nr_44_0` (Riso con uova strapazzate e
-piselli), entrambe aperte a 1 persona — quantità e timer corretti.
-
-**Stato finale:** 420/420 ricette concrete hanno descrizione e
-procedimento strutturato. Nessun ID ancora da compilare.
-
-**File modificati:** `db-visuale.json`.
-**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
 
 ---
