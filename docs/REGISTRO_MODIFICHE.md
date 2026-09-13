@@ -3757,3 +3757,58 @@ prossimo turno.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Diciottesimo lotto editoriale: ultime 8 ricette — catalogo completo 420/420 — 13 settembre 2026
+
+**Intervallo ID compilati** (8, in ordine): `nr_43_68`, `nr_43_69`
+(completamento gnocchi con verdure), `nr_43_70` (gnocchi con pomodoro e
+basilico), `nr_43_71` (gnocchi con aglio, olio e pomodorini),
+`nr_44_0`..`nr_44_3` (riso/orzo perlato/farro perlato/cous cous con
+uova strapazzate e piselli).
+
+**Con questo lotto il catalogo editoriale è completo: 420 record su
+420 hanno `descrizione` e `procedimentoStrutturato` compilati.**
+
+**Bug trovato e corretto prima del commit:** per `nr_43_68` e
+`nr_43_69` avevo assunto le verdure abbinate (pomodoro+zucchine e
+zucchine+melanzane) senza verificarle sui dati reali della ricetta
+concreta — un errore di processo, non un problema del catalogo. La
+verifica con il motore ha mostrato che si tratta in realtà di "Gnocchi
+con piselli e carote" e "Gnocchi con piselli e pomodoro fresco". Il
+test cumulativo ha bloccato correttamente il primo record
+(riferimento a `{nrv_pomodoro_fresco}` inesistente nella ricetta);
+entrambi i record sono stati riscritti con gli ingredienti reali prima
+di procedere, riverificati con lo stesso test e dal vivo in browser.
+
+**Nessuna anomalia di catalogo nei restanti record di questo lotto.**
+
+**Versione:** `db-visuale.json` incrementata di 1 (23 → 24).
+
+**Controlli eseguiti**:
+- record completi prima del lotto: 412 → dopo: 420 (+8 esatti, tutti
+  quelli rimasti);
+- ordine rispettato;
+- ogni `{variantId}` risolto contro gli ingredienti reali della
+  rispettiva ricetta concreta — il test cumulativo ha individuato e
+  fatto correggere l'unico errore di questo lotto prima del commit,
+  ora **420/420 verificati senza eccezioni**;
+- timer coerenti (gnocchi 2 minuti, uova strapazzate 3 minuti, piselli
+  5 minuti, cotture ad assorbimento per i cereali già stabilite);
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati su nessuno dei 420 record dall'inizio del lavoro editoriale;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Verifica visiva reale (screenshot):** `nr_43_68` (Gnocchi con piselli
+e carote, dopo la correzione) e `nr_44_0` (Riso con uova strapazzate e
+piselli), entrambe aperte a 1 persona — quantità e timer corretti.
+
+**Stato finale:** 420/420 ricette concrete hanno descrizione e
+procedimento strutturato. Nessun ID ancora da compilare.
+
+**File modificati:** `db-visuale.json`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---
