@@ -2804,3 +2804,82 @@ la sua natura intermittente nota), nessuna nuova regressione.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Secondo lotto editoriale: 25 ricette compilate in db-visuale.json — 11 settembre 2026
+
+**Obiettivo:** proseguire la compilazione di `descrizione` e
+`procedimentoStrutturato` in `db-visuale.json`, seguendo rigorosamente
+l'ordine dei record e senza toccare quelli già completi. Lotto di
+esattamente 25 ricette, poi fermo come da istruzioni.
+
+**Intervallo ID compilati** (25, in ordine, nessun salto):
+`nr_1_0`, `nr_1_1`, `nr_1_2`, `nr_1_3`, `nr_1_4`, `nr_1_5`, `nr_1_6`,
+`nr_1_7` (famiglia cereale + formaggio fuso: polenta/farro/orzo/riso ×
+gorgonzola/taleggio), `nr_2_0`, `nr_2_1`, `nr_2_2`, `nr_2_3`, `nr_2_5`,
+`nr_2_6`, `nr_2_7`, `nr_2_8`, `nr_2_9`, `nr_2_10`, `nr_2_11`, `nr_2_12`,
+`nr_2_13`, `nr_2_14`, `nr_2_15`, `nr_2_16`, `nr_2_17` (famiglia pesce
+bianco: branzino/merluzzo/nasello/orata/platessa × forno/limone/
+cartoccio/ferri; `nr_2_4` era già completa dal lotto precedente ed è
+stata saltata correttamente).
+
+**Fonti:** ogni ricetta risolta tramite `DietaPlannerMotorV12.getRicetta(id)`
+per ingredienti, variantId e quantità reali. Per `nr_1_0`, `nr_1_1` e
+`nr_1_2`, che avevano già `ricettaTestuale` legacy compilata, il testo
+esistente è stato usato come riferimento per il procedimento reale
+(cottura polenta/farro, mantecatura col formaggio), riscritto in stile
+proprio senza copiarne le parti relative a impiattamento/fotografia,
+estranee al procedimento. `ricettaTestuale` non è stata toccata su
+nessuno dei 25 record.
+
+**Varietà editoriale:** le 17 ricette di pesce condividono lo stesso
+ingrediente singolo per specie e si distinguono solo per metodo di
+cottura (forno/limone/cartoccio/ferri): ogni testo è stato scritto con
+frasi distinte per specie e metodo (non un unico modello con il nome
+del pesce sostituito), variando tempi realistici in base allo spessore
+e alla delicatezza di ciascuna specie (es. platessa e nasello, molto
+sottili, con timer più brevi di branzino e orata).
+
+**Versione:** `db-visuale.json` incrementata di 1 per l'intero lotto
+(6 → 7).
+
+**Controlli eseguiti prima del commit** (integrati anche come
+asserzioni nello script di compilazione, non solo verificati a
+posteriori):
+- record completi prima del lotto: 12 → dopo: 37 (+25 esatti);
+- ordine dei record rispettato: i 25 ID compilati coincidono
+  esattamente con i primi 25 record incompleti in ordine di apparizione
+  in `db-visuale.json`, nessun salto;
+- nessun record già completo sovrascritto (verifica esplicita prima di
+  ogni scrittura, con eccezione bloccante in caso contrario);
+- ogni `{variantId}` richiamato nei testi risolto contro gli
+  ingredienti reali della rispettiva ricetta concreta;
+- timer sempre interi positivi, presenti solo per vere fasi di attesa o
+  cottura;
+- nessun titolo o testo vuoto;
+- `idRicetta`, `percorsoImmagine`, `ricettaTestuale`, `disponibile` non
+  toccati su nessuno dei 25 record;
+- 420 ID ancora univoci e corrispondenti alle ricette concrete;
+- JSON valido;
+- `git diff --check` pulito.
+
+**Test aggiornato:** `tests/catalogo-visuale-campione-editoriale.test.js`
+reso cumulativo (valida tutti i record compilati finora, non una lista
+fissa per lotto) — verificati tutti e 37 i record completi, incluso il
+lotto precedente. `tests/catalogo-visuale-disponibilita.test.js` → ok.
+
+**Suite completa (48 file):** stessi fallimenti pre-esistenti già
+documentati nelle voci precedenti, con l'aggiunta di
+`tests/menu-layer-sequenziale.test.js` (aggiunto da un'altra sessione,
+non toccato da questo intervento) fallito per la stessa flakiness nota
+di ripetizione macro proteica — verificato che la causa è indipendente
+dal contenuto editoriale (questo lotto non tocca selezione proteine né
+`index.html`/`index-restyling.html`). Nessuna nuova regressione
+introdotta da questo lotto.
+
+**Primo ID ancora da compilare:** `nr_2_18`.
+
+**File modificati:** `db-visuale.json`,
+`tests/catalogo-visuale-campione-editoriale.test.js`.
+**File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
+
+---

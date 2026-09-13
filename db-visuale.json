@@ -1,77 +1,230 @@
 {
-  "versione": 6,
+  "versione": 7,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
       "percorsoImmagine": "assets/ricette/nr_1_0.webp",
       "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Portare a bollore l'acqua leggermente salata. Versare la farina di polenta (preferibilmente a grana fine o \"fioretto\" per una maggiore cremosità) a pioggia, mescolando continuamente e energicamente con una frusta per evitare la formazione di grumi.\n2. Abbassare la fiamma e cuocere a fuoco medio-basso per circa 25-30 minuti, continuando a mescolare con un cucchiaio di legno. La consistenza finale deve essere morbida e cremosa, ma abbastanza soda da mantenere la forma una volta impiattata.\n3. A fuoco spento, incorporare il gorgonzola dolce tagliato a piccoli cubetti. Mescolare delicatamente finché il formaggio non si scioglie completamente, creando una crema uniforme e vellutata.\n\n🎨 Impiattamento e Accorgimenti per la Foto\nLa superficie deve apparire naturalmente lucida grazie al formaggio fuso. Non aggiungere olio a crudo. È concessa solo una minuscola e sottile spolverata di pepe nero macinato al momento per creare un punto focale visivo elegante, senza appesantire il piatto.",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo cremoso e avvolgente, la polenta si scioglie in bocca insieme al gorgonzola fuso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Versa la polenta",
+          "testo": "Porta a bollore l'acqua salata e versa {nrv_polenta} a pioggia, mescolando energicamente con una frusta per evitare che si formino grumi."
+        },
+        {
+          "titolo": "Cuoci mescolando",
+          "testo": "Abbassa la fiamma e continua a cuocere mescolando spesso con un cucchiaio di legno, finché la polenta non diventa morbida, densa e liscia.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Manteca col gorgonzola",
+          "testo": "Spegni il fuoco e incorpora subito {nrv_gorgonzola} a pezzetti, mescolando finché non si scioglie del tutto in una crema uniforme e vellutata."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_1",
       "percorsoImmagine": "assets/ricette/nr_1_1.webp",
       "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Portare a bollore l'acqua leggermente salata. Versare la farina di polenta (preferibilmente a grana fine o \"fioretto\" per una maggiore cremosità) a pioggia, mescolando continuamente e energicamente con una frusta per evitare la formazione di grumi.\n2. Abbassare la fiamma e cuocere a fuoco medio-basso per circa 25-30 minuti, continuando a mescolare con un cucchiaio di legno. La consistenza finale deve essere morbida e cremosa, ma abbastanza soda da mantenere la forma una volta impiattata.\n3. A fuoco spento, incorporare il taleggio tagliato a piccoli cubetti (privato della crosta se si desidera un sapore più delicato). Mescolare delicatamente finché il formaggio non si scioglie completamente, creando una crema uniforme, vellutata e dal gusto avvolgente.\n\n🎨 Impiattamento e Accorgimenti per la Foto\nLa superficie deve apparire naturalmente lucida e vellutata grazie al taleggio fuso. Non aggiungere olio a crudo. È concessa solo una minuscola e sottile spolverata di pepe nero macinato al momento o un piccolo rametto di timo fresco per creare un punto focale visivo elegante e rustico, senza appesantire il piatto.",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto rustico e confortante, la polenta calda avvolta dalla dolcezza cremosa del taleggio.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Versa la polenta a pioggia",
+          "testo": "Porta a bollore l'acqua salata e versa {nrv_polenta} poco alla volta, mescolando di continuo con una frusta perché non si formino grumi."
+        },
+        {
+          "titolo": "Porta a cottura",
+          "testo": "Abbassa la fiamma e prosegui la cottura mescolando spesso, finché la polenta non risulta soda ma ancora morbida al cucchiaio.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Aggiungi il taleggio",
+          "testo": "A fuoco spento unisci {nrv_taleggio} a tocchetti e mescola con decisione finché non si scioglie, regalando alla polenta una consistenza morbida e filante."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_2",
       "percorsoImmagine": "assets/ricette/nr_1_2.webp",
       "ricettaTestuale": "⏱️ Tempi :\nPreparazione: 5 min\nTempi Cottura: 25-30 min \n---- Totale: 30-35 min\n\nProcedimento:\n\n1. Sciacquare il farro perlato sotto acqua corrente. Portare a bollore una pentola di acqua leggermente salata e versare il farro, cuocendo per il tempo indicato sulla confezione (circa 25-30 minuti) fino a quando risulta tenero ma ancora leggermente al dente.\n2. Scolare il farro, riservando un mestolo di acqua di cottura.\n3. A fuoco spento, incorporare il gorgonzola dolce tagliato a piccoli cubetti e un goccio dell'acqua di cottura tenuta da parte. Mescolare energicamente (mantecare) finché il formaggio non si scioglie completamente, creando una crema avvolgente e vellutata che lega i chicchi.\n\n🎨 Impiattamento e Accorgimenti\nPer valorizzare il piatto, disponi il farro al centro creando un piccolo disco basso. La cremosità del gorgonzola fuso renderà il piatto naturalmente lucido e appetitoso. Per un tocco finale elegante, aggiungi una leggerissima spolverata di pepe nero macinato al momento o qualche fogliolina di timo fresco al centro. Evita di aggiungere olio a crudo per non appesantire visivamente il piatto.",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo dal carattere rustico, il farro perlato mantecato con la cremosità intensa del gorgonzola.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci il farro",
+          "testo": "Sciacqua {nrv_farro_perlato} sotto acqua corrente, poi lessalo in acqua bollente salata finché non risulta tenero fuori ma ancora leggermente sodo al centro.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Scola e manteca",
+          "testo": "Scola il farro tenendo da parte un mestolo di acqua di cottura, poi rimettilo in pentola e unisci {nrv_gorgonzola} a pezzetti, mescolando con energia finché il formaggio non si scioglie in una crema che avvolge i chicchi."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto sostanzioso, dove il farro dal morso deciso si ammorbidisce nella cremosità dolce del taleggio.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lessa il farro",
+          "testo": "Sciacqua bene {nrv_farro_perlato} e cuocilo in abbondante acqua salata finché i chicchi non risultano teneri, mantenendo comunque una leggera consistenza al morso.",
+          "timerSecondi": 1500
+        },
+        {
+          "titolo": "Manteca col taleggio",
+          "testo": "Scola il farro e, ancora caldo, uniscilo a {nrv_taleggio} tagliato a pezzetti, mescolando finché il formaggio non si scioglie avvolgendo completamente i chicchi."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_4",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo delicato, l'orzo perlato dal morso rotondo si lega alla sapidità intensa del gorgonzola.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci l'orzo",
+          "testo": "Versa {nrv_orzo_perlato} in acqua bollente salata e lascialo cuocere finché i chicchi non risultano morbidi ma non sfaldati.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Unisci il gorgonzola",
+          "testo": "Scola l'orzo e, mentre è ancora caldo, aggiungi {nrv_gorgonzola} a pezzi, mescolando finché non si scioglie creando una crema morbida che avvolge ogni chicco."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo semplice e nutriente, l'orzo perlato reso cremoso dal taleggio fuso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lessa l'orzo perlato",
+          "testo": "Cuoci {nrv_orzo_perlato} in acqua bollente leggermente salata finché non diventa tenero, mantenendo una leggera resistenza al morso.",
+          "timerSecondi": 1200
+        },
+        {
+          "titolo": "Manteca col taleggio",
+          "testo": "Scola l'orzo e uniscilo subito a {nrv_taleggio} a tocchetti, mescolando con decisione finché il formaggio non si scioglie completamente, legando il piatto in una crema morbida."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un primo veloce e cremoso, il riso lessato che si arricchisce della sapidità del gorgonzola fuso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Lessa il riso",
+          "testo": "Cuoci {nrv_riso} in abbondante acqua bollente salata finché i chicchi non risultano morbidi ma ancora leggermente sodi al centro.",
+          "timerSecondi": 900
+        },
+        {
+          "titolo": "Manteca col gorgonzola",
+          "testo": "Scola il riso e, ancora caldo, unisci {nrv_gorgonzola} a pezzetti, mescolando energicamente finché non si scioglie in una crema che avvolge ogni chicco."
+        }
+      ]
     },
     {
       "idRicetta": "nr_1_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un piatto rapido e confortante, il riso lessato reso morbido e filante dal taleggio fuso.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Cuoci il riso",
+          "testo": "Versa {nrv_riso} in acqua bollente salata e lascialo cuocere finché i chicchi non risultano teneri, senza scuocerli.",
+          "timerSecondi": 900
+        },
+        {
+          "titolo": "Aggiungi il taleggio",
+          "testo": "Scola il riso e mescolalo subito con {nrv_taleggio} a tocchetti, finché il formaggio non si scioglie regalando al piatto una consistenza morbida e cremosa."
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_0",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce raffinato, il branzino cotto al forno resta compatto e succulento.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il branzino",
+          "testo": "Accendi il forno e portalo a temperatura, poi adagia {nrv_branzino} in una teglia leggermente unta, senza sovrapporre i pezzi."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Inforna e cuoci finché la polpa non diventa bianca e compatta, staccandosi in tranci puliti alla pressione della forchetta.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_1",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo fresco e profumato, il branzino cotto in padella con un tocco di limone.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la padella",
+          "testo": "Scalda una padella antiaderente e adagia {nrv_branzino} dal lato della pelle, lasciandolo rosolare senza muoverlo.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Sfuma col limone",
+          "testo": "Gira il branzino, bagna con succo di limone fresco e lascia che il profumo agrumato si sprigioni mentre il pesce completa la cottura.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_2",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce succulento, il branzino cotto al cartoccio trattiene tutto il suo sapore.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Chiudi il cartoccio",
+          "testo": "Avvolgi {nrv_branzino} in un foglio di carta da forno, chiudendolo bene ai lati come un pacchetto sigillato."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci in forno lasciando che il cartoccio si gonfi con il vapore: il pesce cuocerà nei propri succhi, restando morbidissimo e profumato.",
+          "timerSecondi": 1080
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_3",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito e leggero, il branzino cotto ai ferri con la pelle croccante.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia o la bistecchiera, così {nrv_branzino} si sigilla subito a contatto e non si attacca."
+        },
+        {
+          "titolo": "Cuoci ai ferri",
+          "testo": "Cuoci il branzino su entrambi i lati finché la pelle non diventa croccante e la polpa risulta bianca e compatta.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_4",
@@ -99,79 +252,238 @@
       "idRicetta": "nr_2_5",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo semplice e saporito, il merluzzo cotto in padella con succo di limone fresco.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Rosola il merluzzo",
+          "testo": "Scalda la padella e adagia {nrv_merluzzo}, lasciandolo dorare leggermente da un lato prima di girarlo.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Completa con il limone",
+          "testo": "Gira il merluzzo, irrora con succo di limone e prosegui la cottura finché la polpa non diventa bianca e si sfalda facilmente.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_6",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce leggero, il merluzzo al cartoccio cuoce nel proprio vapore restando umido.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cartoccio",
+          "testo": "Avvolgi {nrv_merluzzo} in un foglio di carta da forno ben chiuso, così da trattenere tutti gli umori durante la cottura."
+        },
+        {
+          "titolo": "Cuoci al cartoccio",
+          "testo": "Cuoci in forno finché il cartoccio non si gonfia: aprendolo troverai il pesce cotto a puntino, morbido e succoso.",
+          "timerSecondi": 900
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_7",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo semplice, il merluzzo ai ferri resta morbido con un leggero tocco di croccantezza esterna.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la piastra",
+          "testo": "Scalda bene la griglia prima di appoggiarci {nrv_merluzzo}, così da evitare che si attacchi durante la cottura."
+        },
+        {
+          "titolo": "Griglia il merluzzo",
+          "testo": "Cuoci il merluzzo su entrambi i lati finché non si segna leggermente e la polpa interna diventa opaca e si sfalda facilmente.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_8",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero e delicatissimo, il nasello cotto al forno si sfalda quasi da solo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il nasello",
+          "testo": "Scalda il forno e disponi {nrv_nasello} in una teglia, facendo attenzione a non sovrapporre i filetti, così delicati da poter rompersi facilmente."
+        },
+        {
+          "titolo": "Cuoci brevemente",
+          "testo": "Cuoci in forno per pochi minuti, giusto il tempo che la polpa diventi opaca e si apra a scaglie sottilissime al tocco della forchetta.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_9",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggerissimo, il nasello scottato in padella e profumato con il limone.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scotta il nasello",
+          "testo": "Scalda una padella antiaderente e adagia delicatamente {nrv_nasello}, che essendo molto tenero va girato con attenzione.",
+          "timerSecondi": 180
+        },
+        {
+          "titolo": "Profuma con il limone",
+          "testo": "Bagna con succo di limone e concludi la cottura, giusto il tempo che la polpa diventi opaca e morbidissima.",
+          "timerSecondi": 120
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_10",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicatissimo, il nasello al cartoccio cuoce dolcemente nel proprio vapore.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Chiudi il nasello nel cartoccio",
+          "testo": "Avvolgi {nrv_nasello} in carta da forno, sigillando bene i bordi: la sua carne è così delicata che ha bisogno di una cottura gentile."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci per pochi minuti, il tempo che il vapore trattenuto dentro il cartoccio renda la polpa opaca e morbidissima.",
+          "timerSecondi": 600
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_11",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo leggero, il nasello ai ferri va girato con delicatezza per non romperlo.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di adagiarvi {nrv_nasello}, che essendo molto delicato tende a sfaldarsi se mosso troppo presto."
+        },
+        {
+          "titolo": "Griglia con attenzione",
+          "testo": "Cuoci il nasello su ciascun lato per pochi minuti, girandolo con cura quando si stacca facilmente dalla griglia.",
+          "timerSecondi": 300
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_12",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo di pesce classico, l'orata al forno resta morbida e leggermente dolce.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara l'orata",
+          "testo": "Porta il forno in temperatura e adagia {nrv_orata} in una teglia, così che cuocia in modo uniforme su tutta la superficie."
+        },
+        {
+          "titolo": "Cuoci in forno",
+          "testo": "Cuoci finché la polpa non risulta opaca e si stacca facilmente a scaglie morbide, senza seccarsi ai bordi.",
+          "timerSecondi": 960
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_13",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo mediterraneo, l'orata cotta in padella con l'aroma fresco del limone.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Rosola l'orata",
+          "testo": "Scalda la padella e adagia {nrv_orata}, lasciandola rosolare bene su un lato prima di girarla.",
+          "timerSecondi": 300
+        },
+        {
+          "titolo": "Aggiungi il limone",
+          "testo": "Gira l'orata, bagna con succo di limone fresco e lascia che si insaporisca negli ultimi minuti di cottura.",
+          "timerSecondi": 240
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_14",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo saporito, l'orata al cartoccio conserva profumi e succosità durante la cottura.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara il cartoccio",
+          "testo": "Avvolgi {nrv_orata} in un foglio di carta da forno, chiudendo bene i lembi per trattenere tutti i profumi."
+        },
+        {
+          "titolo": "Cuoci al forno",
+          "testo": "Cuoci finché il cartoccio non si gonfia leggermente: dentro troverai l'orata cotta nel proprio vapore, morbida e saporita.",
+          "timerSecondi": 1020
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_15",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo mediterraneo, l'orata ai ferri con la pelle leggermente abbrustolita.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scalda la griglia",
+          "testo": "Scalda bene la griglia prima di appoggiarci {nrv_orata}, così la pelle si sigilla subito e non si attacca."
+        },
+        {
+          "titolo": "Cuoci ai ferri",
+          "testo": "Griglia l'orata su entrambi i lati finché la pelle non risulta leggermente abbrustolita e la polpa diventa compatta e opaca.",
+          "timerSecondi": 480
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_16",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo delicato e velocissimo, la platessa al forno cuoce in pochi minuti restando morbidissima.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Prepara la platessa",
+          "testo": "Disponi {nrv_platessa} in una teglia già calda, distribuendola in uno strato sottile visto quanto è delicata la sua carne."
+        },
+        {
+          "titolo": "Cuoci pochi minuti",
+          "testo": "Cuoci in forno solo il tempo necessario perché la polpa diventi opaca: essendo molto sottile, la platessa cuoce davvero in fretta.",
+          "timerSecondi": 420
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_17",
       "percorsoImmagine": "",
       "ricettaTestuale": "",
-      "disponibile": true
+      "disponibile": true,
+      "descrizione": "Un secondo velocissimo, la platessa scottata in padella e profumata con il limone.",
+      "procedimentoStrutturato": [
+        {
+          "titolo": "Scotta la platessa",
+          "testo": "Scalda la padella e adagia {nrv_platessa}, così sottile da cuocere quasi all'istante su ciascun lato.",
+          "timerSecondi": 120
+        },
+        {
+          "titolo": "Completa col limone",
+          "testo": "Bagna con succo di limone fresco e spegni subito il fuoco, perché la platessa non ha bisogno di altro tempo di cottura."
+        }
+      ]
     },
     {
       "idRicetta": "nr_2_18",
