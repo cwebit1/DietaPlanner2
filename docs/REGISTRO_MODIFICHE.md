@@ -2408,3 +2408,30 @@ va verificato da te al primo utilizzo reale.
 **File aggiornato:** `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Semplificazione controlli del gestore ricette GitHub — 13 settembre 2026
+
+**Richiesta di Cwe:** rimuovere dal gestore GitHub la ricerca e il filtro e
+correggere il selettore foto, il cui testo nativo usciva dal campo, lasciando
+soltanto il pulsante "Sfoglia".
+
+**Correzione applicata:** eliminati markup, stile, funzione di filtraggio e
+listener relativi a Cerca/Filtro. Il gestore mostra direttamente l'intero
+catalogo nell'ordine esistente. Il controllo file nativo visibile è stato
+sostituito da un pulsante "Sfoglia" autonomo collegato a un input file
+nascosto: selezione, elaborazione e salvataggio della foto restano invariati,
+mentre il testo nativo con il nome del file non può più debordare.
+
+**File modificato:** `gestore-ricette-github.html`.
+
+**Verifiche eseguite:** parsing di tutti gli script inline con `vm.Script`;
+assenza di residui DOM/JavaScript di Cerca e Filtro; presenza del nuovo picker
+foto; `node tests/catalogo-visuale-disponibilita.test.js`; `git diff --check`.
+Tutti i controlli eseguiti sono riusciti. La verifica visiva automatica in
+browser non è stata eseguita perché il runtime Playwright disponibile non
+include il browser Chromium.
+
+**SHA dell'intervento tecnico:**
+`4f650bbc1f5cd02f2c9371692c35f929c9c9b737`.
+
+---
