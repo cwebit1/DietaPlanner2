@@ -3910,3 +3910,66 @@ lucchetto Pasto confermata; `git diff --check` pulito.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Rail verticale e cassetto completo delle azioni Pasto — 14 settembre 2026
+
+**Difetto corretto:** il cambio fra pasto programmato, proposta e catalogo
+Speciali avveniva con una sostituzione istantanea del contenuto e non importava
+il rail verticale vincolante di `restyling-preview.html`. Le azioni erano inoltre
+esposte direttamente sulla card, con due pulsanti tondi ambigui per Speciali e
+Preferiti, mentre `Dettagli` apriva subito il modal ricetta e il pannello della
+proposta viveva fuori dal carosello.
+
+**Correzione applicata:** `index-restyling.html` usa ora un elemento temporaneo
+`.vertical-rail` con clonazione del track uscente prima dell'aggiornamento reale,
+clonazione del track entrante dopo il render e Web Animations API con gli stessi
+fotogrammi, durata `380ms`, easing `cubic-bezier(.4,0,.2,1)` e `fill:forwards`
+del riferimento. Il rail accompagna Alternativa, Salvafrigo, Rigenera e apertura
+Speciali verso il basso; Ripristina, Annulla, conferma della proposta e chiusura
+Speciali verso l'alto. Una guardia per card impedisce richieste e animazioni
+sovrapposte anche dai duplicati del loop orizzontale; `try/finally` rimuove il
+rail, ripristina il track reale e rilascia sempre la guardia. Un esito di
+generazione vuoto non crea il rail e lascia invariati pasto e cassetto.
+
+**Cassetto completo:** la card chiusa mostra come unica azione `Dettagli`, che
+apre verso il basso un cassetto in linea appartenente alla slide e indipendente
+dalla modalità Speciale. Nello stato normale contiene `Pasto speciale`,
+`Salvafrigo`, `Cambia piatto` e il comando `☷ Ricetta`; con una proposta valida
+si apre automaticamente, sostituisce Salvafrigo con `Ripristina`, abbrevia
+`Cambia piatto` in `Cambia` e incorpora il riepilogo non salvato con `Imposta
+come pasto`, `Rigenera` e `Annulla`. Il vecchio pannello esterno non è duplicato.
+Nel catalogo Speciali restano soltanto il comando di uscita, la conferma dello
+speciale visibile e Ricetta. Il cuore è stato rimosso soltanto dalla card: il
+modal ricetta continua a usare `apriModalDettaglioRicetta()` e conserva il
+proprio Preferito.
+
+**Colazione:** la stella tonda è stata rimossa anche dalla card colazione. Il
+cassetto conserva i flussi reali e separati `Colazione speciale`, configurazione,
+`☷ Ricetta`, Info, preferita e sostituzione. L'apertura della configurazione non
+simula un cambio set né usa il motore di pranzo/cena, perché non cambia il
+contenuto principale della card; il compatto esterno alla pagina Pasto conserva
+il proprio expander preesistente.
+
+**Invarianti:** il carosello orizzontale, i cloni di loop, la soglia touch di
+35px, la normalizzazione e `.carousel-next` non sono stati modificati. Le bozze
+Alternativa/Salvafrigo restano esclusivamente in `bozzePropostaPasto`; soltanto
+`DietaPlannerMotorV12.salvaRoll()` eseguito da `Imposta come pasto` persiste la
+proposta. Limiti degli Speciali, modello dati, motore, database e modal ricetta
+sono invariati. `Copia giorno` non è stata introdotta.
+
+**Verifiche eseguite:** compilazione degli 8 script inline riuscita; contratto
+statico di rail, direzioni, cassetti e binding reali riuscito; renderer verificato
+negli stati normale, proposta, Speciale e colazione;
+`lotto-pasto-anteprima-non-salvata`, `lotto-j-vsg-atomic-snapshot`,
+`lotto-j-vsg-rendering` e `lotto-pasto-fascia-oraria` riusciti; `git diff
+--check` pulito. Il test `lotto-j-vsg-roll-salvafrigo` fallisce su
+un'asserzione di sorgente interna a `motor-v12.js`, file non modificato da
+questo intervento. La verifica visiva non è stata dichiarata riuscita: il
+browser disponibile non ha potuto raggiungere il server locale.
+
+**Commit del codice:** `a33c3fe5c0ff2ea7c186072e7554119ffbc9f9a3`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
