@@ -731,22 +731,24 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .vertical-rail{position:absolute;z-index:2;top:0;left:0;width:100%;pointer-events:none;will-change:transform;}
 #view-piano .vertical-rail>.track{width:100%;overflow:hidden;scroll-behavior:auto;background:var(--panel);}
 #view-piano .slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;}
-#view-piano .photo-row{display:grid;grid-template-columns:minmax(0,1fr) 15%;gap:13px;padding-left:17px;overflow:hidden;}
+#view-piano .photo-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr);overflow:hidden;}
 #view-piano .photo-row>div{min-width:0;}
 #view-piano .photo-row>div:first-child{aspect-ratio:18/5;}
-#view-piano .photo-main,#view-piano .photo-peek,#view-piano .photo-placeholder{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
+#view-piano .photo-main,#view-piano .photo-placeholder{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
 #view-piano .photo-main,#view-piano .photo-placeholder{border-radius:14px;}
-#view-piano .photo-peek{border-radius:14px 0 0 14px;}
 #view-piano .photo-placeholder{object-fit:contain;}
-#view-piano .carousel-next{position:absolute;z-index:3;right:20px;top:50px;width:51px;height:51px;padding:0;border:1px solid var(--border);border-radius:50%;background:rgba(32,38,26,.94);color:var(--text);font-size:2.25rem;line-height:1;box-shadow:0 2px 7px rgba(0,0,0,.3);}
-#view-piano .carousel-next[hidden]{display:none;}
+#view-piano .carousel-controls{position:absolute;z-index:3;inset:0;pointer-events:none;}
+#view-piano .carousel-prev,#view-piano .carousel-next{position:absolute;top:50%;transform:translateY(-50%);width:51px;height:51px;padding:0;border:1px solid var(--border);border-radius:50%;background:rgba(32,38,26,.94);color:var(--text);font-size:2.25rem;line-height:1;box-shadow:0 2px 7px rgba(0,0,0,.3);pointer-events:auto;}
+#view-piano .carousel-prev{left:20px;}
+#view-piano .carousel-next{right:20px;}
+#view-piano .carousel-prev[hidden],#view-piano .carousel-next[hidden]{display:none;}
 #view-piano .dots{height:18px;display:flex;align-items:center;justify-content:center;gap:10px;}
 #view-piano .dot{width:10px;height:10px;border-radius:50%;background:var(--border);}
 #view-piano .dot.active{background:var(--accent);}
 #view-piano .meal-copy{padding:0 17px 10px;}
 #view-piano .dish-row{display:block;}
 #view-piano .dish-title{margin:0;font:700 1.5rem/1.15 Georgia,serif;overflow-wrap:anywhere;}
-#view-piano .dish-kind{display:inline-block;margin-right:5px;color:var(--accent);font:700 .6875rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
+#view-piano .dish-kind{display:block;margin:0 0 3px;color:var(--accent);font:700 .6875rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
 #view-piano .special-toggle{color:#f1c40f;}
 #view-piano .special-toggle svg{width:25px;height:25px;fill:currentColor;stroke:#b98908;}
@@ -831,15 +833,15 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   #view-piano .meal-symbol{font-size:1.1875rem;}
   #view-piano .meal-name{font-size:.875rem;letter-spacing:.0125rem;}
   #view-piano .meal-time{font-size:.5625rem;}
-  #view-piano .photo-row{gap:7px;padding-left:8px;}
   #view-piano .photo-main,#view-piano .photo-placeholder{border-radius:8px;}
-  #view-piano .photo-peek{border-radius:8px 0 0 8px;}
-  #view-piano .carousel-next{right:12px;top:26px;width:31px;height:31px;font-size:1.375rem;}
+  #view-piano .carousel-prev,#view-piano .carousel-next{width:31px;height:31px;font-size:1.375rem;}
+  #view-piano .carousel-prev{left:12px;}
+  #view-piano .carousel-next{right:12px;}
   #view-piano .dots{height:11px;gap:6px;}
   #view-piano .dot{width:6px;height:6px;}
   #view-piano .meal-copy{padding:0 8px 6px;}
   #view-piano .dish-title{font-size:.8125rem;line-height:1.05;}
-  #view-piano .dish-kind{margin-right:3px;font-size:.4375rem;}
+  #view-piano .dish-kind{margin:0 0 2px;font-size:.4375rem;}
   #view-piano .ingredients{gap:4px;margin:1px 0 5px;}
   #view-piano .ingredient{grid-template-columns:23px minmax(0,1fr);}
   #view-piano .food-icon{font-size:1.1875rem;}
@@ -5201,9 +5203,7 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
   const cassettoAperto=!!opzioni.cassettoAperto;
   const pianoId=String(opzioni.pianoId||voce&&voce.id||'');
   const slidePer=(ricetta,indice)=>{
-    const prossima=ricette[(indice+1)%ricette.length];
     const foto=immaginePastoRs(ricetta,mappaVisuale);
-    const fotoProssima=immaginePastoRs(prossima,mappaVisuale);
     const dots=ricette.map((_,i)=>'<i class="dot'+(i===indice?' active':'')+'" aria-hidden="true"></i>').join('');
     let comandi='';
     if(modificabile){
@@ -5222,9 +5222,9 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
       ?'<div data-nm-proposta="'+escPastoRs(pianoId)+'"></div>'
       :'';
     return '<section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(ricetta.id)+'" data-dish-kind="'+escPastoRs(ricetta.tipoPortata||'piatto')+'" data-logical-index="'+indice+'" data-bind="dish.imagePath,dish.title,dish.ingredients">'
-      +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div>'+htmlFotoPastoRs(prossima,fotoProssima,'photo-peek',true)+'</div></div>'
+      +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" '+(ricette.length<2?'hidden':'')+'>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div></div>'
       +'<div class="dots">'+dots+'</div>'
-      +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</span>'+escPastoRs(ricetta.nome)+'</h3></div>'
+      +'<div class="meal-copy"><div class="dish-row"><div class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</div><h3 class="dish-title">'+escPastoRs(ricetta.nome)+'</h3></div>'
       +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti)+'</div>'
       +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-details="'+escPastoRs(ricetta.id)+'" aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
       +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div>'+proposta+'</div></div></div></div></section>';
@@ -5233,7 +5233,7 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
   const usaLoop=!!opzioni.speciale&&ricette.length>1;
   const slides=usaLoop?[originali[originali.length-1],...originali,originali[0]].join(''):originali.join('');
   return htmlTestataPastoRs(pasto)
-    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="'+escPastoRs(pasto)+'" data-carousel-count="'+ricette.length+'" data-carousel-loop="'+String(usaLoop)+'"><div class="track">'+slides+'</div></div><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div>'
+    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="'+escPastoRs(pasto)+'" data-carousel-count="'+ricette.length+'" data-carousel-loop="'+String(usaLoop)+'"><div class="track">'+slides+'</div></div></div>'
     +'<div class="meal-meta">'+(opzioni.speciale?'Piatti speciali · scorri per scegliere':Math.round(kcal)+' kcal · per il pasto completo')+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
 }
 function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
@@ -5269,8 +5269,8 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
   comandi+='<button class="action" type="button" data-rs-col-info>Info</button>';
   return htmlTestataPastoRs('colazione')
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="colazione" data-carousel-count="1" data-carousel-loop="false"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
-    +'<div class="photo-row" style="grid-template-columns:minmax(0,1fr);padding-right:9px"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div></div><div class="dots"><i class="dot active"></i></div>'
-    +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
+    +'<div class="photo-row"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" hidden>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" hidden>›</button></div></div><div class="dots"><i class="dot active"></i></div>'
+    +'<div class="meal-copy"><div class="dish-row"><div class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</div><h3 class="dish-title">'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
     +'<div class="ingredients">'+ingredientiHtml+'</div>'
     +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-col-details aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
     +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div><div data-rs-col-config-slot></div></div></div></div></div></section></div></div></div>'
@@ -5290,7 +5290,8 @@ function attivaCaroselloPastoRs(el,pasto,registroStato){
   },{once:true}));
   const carousel=el.querySelector('.carousel[data-carousel-pasto="'+pasto+'"][data-carousel-count]');
   const track=carousel&&carousel.querySelector(':scope>.track');
-  const next=el.querySelector('.carousel-next');
+  const prevButtons=carousel?[...carousel.querySelectorAll('.carousel-prev')]:[];
+  const nextButtons=carousel?[...carousel.querySelectorAll('.carousel-next')]:[];
   const totale=Number(carousel&&carousel.dataset.carouselCount||0);
   if(!track||!totale)return;
 
@@ -5322,9 +5323,12 @@ function attivaCaroselloPastoRs(el,pasto,registroStato){
 
   if(totale===1){
     vaiSubito(0);
-    if(next)next.hidden=true;
+    prevButtons.forEach(btn=>{btn.hidden=true;});
+    nextButtons.forEach(btn=>{btn.hidden=true;});
     return;
   }
+  prevButtons.forEach(btn=>{btn.hidden=false;});
+  nextButtons.forEach(btn=>{btn.hidden=false;});
 
   vaiSubito(usaLoop?1:0);
   if(usaLoop)requestAnimationFrame(()=>vaiSubito(1));
@@ -5336,21 +5340,25 @@ function attivaCaroselloPastoRs(el,pasto,registroStato){
     stato.timer=timer;
   },{passive:true});
 
-  next?.addEventListener('click',()=>{
+  const scorriDi=delta=>{
     const width=larghezza();
     if(!width)return;
     const indice=Math.round(track.scrollLeft/width);
     if(usaLoop){
-      const normalizzato=indice>=totale+1?1:indice;
-      if(normalizzato!==indice)vaiSubito(1);
-      track.scrollTo({left:(normalizzato+1)*width,behavior:'smooth'});
+      const normalizzato=delta>0
+        ?(indice>=totale+1?1:indice)
+        :(indice<=0?totale:indice);
+      if(normalizzato!==indice)vaiSubito(normalizzato);
+      track.scrollTo({left:(normalizzato+delta)*width,behavior:'smooth'});
       clearTimeout(timer);
       timer=setTimeout(normalizzaLoop,430);
       stato.timer=timer;
       return;
     }
-    track.scrollTo({left:((indice+1)%totale)*width,behavior:'smooth'});
-  });
+    track.scrollTo({left:((indice+delta+totale)%totale)*width,behavior:'smooth'});
+  };
+  prevButtons.forEach(btn=>btn.addEventListener('click',()=>scorriDi(-1)));
+  nextButtons.forEach(btn=>btn.addEventListener('click',()=>scorriDi(1)));
 }
 
 function attivaCaroselloPranzoRs(el){
@@ -5415,8 +5423,7 @@ async function switchSetPastoRs(el,direction,aggiorna){
     rail.setAttribute('aria-hidden','true');
     if(direction==='up')rail.append(outgoing,incoming);
     else rail.append(incoming,outgoing);
-    const nextButton=frameEntrante.querySelector('.carousel-next');
-    frameEntrante.insertBefore(rail,nextButton||null);
+    frameEntrante.append(rail);
     outgoing.scrollLeft=scrollUscente;
     incoming.scrollLeft=scrollEntrante;
     trackEntrante.style.visibility='hidden';
