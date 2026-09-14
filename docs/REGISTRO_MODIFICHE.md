@@ -4062,3 +4062,59 @@ bagliore resta verificato per contratto CSS ma non viene dichiarato osservato
 dal vivo.
 
 ---
+
+## Caroselli a chip per le preferenze Set gia' esistenti — 14 settembre 2026
+
+**Ambito:** `index-restyling.html` presenta ora come caroselli orizzontali a
+chip le sole preferenze gia' funzionanti della pagina Set: proteina meno
+gradita, tempo di preparazione, cereali non graditi, verdure da favorire,
+disponibilita' verdure per fascia, verdura ricorrente, esclusioni colazione e i
+cinque gruppi reali della composizione colazione. I contenitori conservano le
+classi usate per mantenere la posizione di scorrimento e ricevono la veste
+`set-swipe`; i controlli generati ricevono `set-chip`, con snap orizzontale,
+scrollbar nascosta e spaziatura finale coerenti con il riferimento ma tradotti
+esclusivamente nelle variabili del tema scuro.
+
+**Semantica degli stati preservata:** lo stato accentato continua a indicare
+una scelta disponibile/preferita per tempo, verdure favorite, verdura
+ricorrente e composizione colazione. La classe presentazionale `off` distingue
+invece proteine limitate, cereali non graditi, verdure non disponibili ed
+esclusioni colazione, senza cambiare le classi storiche `active` e
+`inactive-red` attese dai renderer. Le esclusioni cliniche restano disabilitate
+e il limite reale di massimo 7 verdure escluse non e' stato modificato.
+
+**Persistenza e logica:** listener, chiamate `put`/`delKey`, chiavi e formato
+dei record `impostazioni` sono invariati (`setProteineLimitate`, `setPocoTempo`,
+`cerealiNonGraditi`, `setVerdurePreferite`, `setVerdureDisattivate`,
+`verduraRicorrente`, `verduraRicorrentePasti`,
+`colazioneIngredientiEsclusi`, `colazionePreferita`). Non sono state aggiunte
+regole di validazione e non sono stati modificati `index.html`,
+`motor-v12.js`, `nutrition-config.js` o lo schema IndexedDB.
+
+**Verifiche eseguite:** compilazione dei 4 script inline riuscita; suite
+`lotto-set-preferenze-runtime`, `lotto-e-root-user-set`,
+`lotto-k-verdura-ricorrente-priorita`, `lotto-set-proteine-menu-reale` e
+`lotto-set-proteine-validazione` riuscite insieme (la suite generativa, dopo
+una prima fluttuazione casuale, e' riuscita anche isolata e nel riesame
+completo); `git diff --check` pulito; assenza di `copy-day`/`Copia giorno`
+confermata. Sulla pagina pubblica sono stati rilevati overflow orizzontale e
+scroll snap sui sei contenitori principali, sulle fasce di disponibilita'
+prodotte dal catalogo corrente e su tutti e cinque i gruppi colazione. Per
+ciascuna delle otto preferenze un click reale ha attraversato il renderer e
+prodotto il corretto stato `active` oppure `off`. Portando le verdure escluse a
+7, il contatore ha mostrato `7 / 7 — limite raggiunto`, le 26 verdure ancora
+disponibili sono diventate disabilitate e le 7 escluse sono rimaste
+riattivabili; i dati di prova sono stati poi ripristinati a `0 / 7`. Il
+browser non espone IndexedDB alla propria sandbox di ispezione e il bootstrap
+del profilo locale demo ripristina i dati quando si rientra nella vista: non
+viene quindi dichiarata una lettura diretta del record persistito dal browser.
+Il controllo tramite screenshot non e' stato dichiarato riuscito per un
+timeout del gesto di scorrimento; struttura e stile calcolato sono stati
+verificati sul DOM live.
+
+**Commit del codice:** `1505412c7d15ad0244920ae197edb0e21419e055`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
