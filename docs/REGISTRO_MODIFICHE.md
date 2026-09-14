@@ -4180,3 +4180,36 @@ markup, stato o comportamento del carosello.
 **Commit integrativo del codice:** `ec998091189714f7331eefe197dabae60ec91001`.
 
 ---
+
+## Placeholder PNG panoramico per il carosello Pasto — 14 settembre 2026
+
+**Difetto corretto:** il precedente placeholder vettoriale incorporato aveva
+un rapporto differente dal frame fotografico panoramico. Con
+`object-fit:cover` parte del simbolo poteva essere ritagliata, dando
+l'impressione di una foto spezzata o di un errore grafico.
+
+**Correzione applicata:** aggiunto l'asset reale
+`assets/recipe-placeholder.png`, panoramico, senza testo e con piatto e
+posate interamente contenuti nella zona centrale di sicurezza. Il renderer di
+colazione, pranzo, cena e relative anteprime usa ora questo PNG quando manca
+la fotografia o quando il caricamento della foto fallisce. Solo sul
+placeholder viene usato `object-fit:contain`, così i diversi rapporti
+responsive del frame non possono nasconderne una parte; lo sfondo coordinato
+riempie l'eventuale margine residuo. Le fotografie reali conservano
+`object-fit:cover`.
+
+**Invarianti:** separazione dei caroselli Pranzo/Cena, scroll-snap, freccia,
+loop Speciali, rail verticale, cassetti, motore, dati e IndexedDB non sono
+stati modificati.
+
+**Verifiche eseguite:** PNG generato come asset binario; assenza di testo
+nell'immagine; percorso dell'asset verificato nel renderer; SVG incorporato
+rimosso; compilazione degli 8 script inline riuscita; nessuna riga con spazi
+finali introdotta.
+
+**Commit del codice e dell'asset:** `3cd07a54e45302185fe082897089b4cec1bfd9e2`.
+
+**File modificati:** `index-restyling.html`,
+`assets/recipe-placeholder.png`, `docs/REGISTRO_MODIFICHE.md`.
+
+---
