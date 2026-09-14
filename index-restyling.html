@@ -578,6 +578,16 @@ details{margin-top:14px;}
   border:1px solid var(--border);border-radius:14px;
   padding:14px 14px 20px;margin-bottom:22px;background:var(--panel);position:relative;
 }
+#view-piano .pasto-block.snack-card{padding:0;margin-bottom:11px;overflow:hidden;transition:border-color .2s ease;}
+#view-piano .snack-head{height:48px;padding:0 12px;display:grid;grid-template-columns:auto minmax(0,1fr) 34px;align-items:center;gap:8px;background:var(--panel);}
+#view-piano .snack-symbol{font-size:1.1rem;line-height:1;}
+#view-piano .snack-title{font-size:.9rem;font-weight:800;line-height:1.15;color:var(--text);}
+#view-piano .snack-expander{width:32px;height:32px;padding:0;border:1px solid var(--border);border-radius:9px;background:var(--panel-2);color:var(--accent);font-size:1.15rem;line-height:1;transition:transform .24s cubic-bezier(.4,0,.2,1),border-color .2s ease;}
+#view-piano .snack-expander[aria-expanded="true"]{transform:rotate(180deg);border-color:var(--accent-dim);}
+#view-piano .snack-body-shell{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .24s cubic-bezier(.4,0,.2,1),opacity .2s ease;}
+#view-piano .snack-body-shell.open{grid-template-rows:1fr;opacity:1;}
+#view-piano .snack-body-inner{min-height:0;overflow:hidden;}
+#view-piano .snack-body{padding:12px 14px 14px;border-top:1px solid var(--border);}
 .pasto-contenuto-espandibile{max-height:0;overflow:hidden;opacity:0;margin-top:0;transition:max-height .28s ease,opacity .2s ease,margin-top .28s ease;}
 .pasto-card-aperta .pasto-contenuto-espandibile{max-height:1200px;opacity:1;margin-top:12px;overflow:visible;}
 .pasto-expander{position:absolute;left:50%;bottom:-18px;transform:translateX(-50%);width:38px;height:38px;min-width:38px;padding:0;border-radius:50%;border:1px solid var(--border);background:var(--panel);color:var(--accent);font-size:1.15rem;font-weight:800;line-height:36px;text-align:center;z-index:3;box-shadow:0 3px 9px rgba(0,0,0,.22);}
@@ -742,22 +752,23 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .carousel-prev{left:20px;}
 #view-piano .carousel-next{right:20px;}
 #view-piano .carousel-prev[hidden],#view-piano .carousel-next[hidden]{display:none;}
-#view-piano .dots{height:18px;display:flex;align-items:center;justify-content:center;gap:10px;}
+#view-piano .dots{height:22px;display:flex;align-items:center;justify-content:center;gap:10px;}
 #view-piano .dot{width:10px;height:10px;border-radius:50%;background:var(--border);}
 #view-piano .dot.active{background:var(--accent);}
 #view-piano .meal-copy{padding:0 17px 10px;}
 #view-piano .dish-row{display:block;}
-#view-piano .dish-title{margin:0;font:700 1.5rem/1.15 Georgia,serif;overflow-wrap:anywhere;}
-#view-piano .dish-kind{display:block;margin:0 0 3px;color:var(--accent);font:700 .6875rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
+#view-piano .dish-title{margin:0 0 8px;font:700 1.5rem/1.15 Georgia,serif;overflow-wrap:anywhere;}
+#view-piano .dish-kind{display:block;margin:0 0 5px;color:var(--accent);font:700 .6875rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
 #view-piano .special-toggle{color:#f1c40f;}
 #view-piano .special-toggle svg{width:25px;height:25px;fill:currentColor;stroke:#b98908;}
 #view-piano .special-toggle.active{box-shadow:inset 0 0 0 2px rgba(241,196,15,.35);}
 #view-piano .favorite-toggle{color:#f1c40f;font-size:1.35rem;line-height:1;}
 #view-piano .favorite-toggle.active{background:#4a421d;border-color:#8f7920;}
-#view-piano .ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:3px 0 9px;}
+#view-piano .ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:0 0 9px;}
 #view-piano .ingredient{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;min-width:0;}
-#view-piano .food-icon{font-size:2.125rem;text-align:center;}
+#view-piano .food-icon{height:2.3rem;font-size:2.125rem;line-height:1;text-align:center;display:flex;align-items:center;justify-content:center;}
+#view-piano .food-icon>span,#view-piano .food-icon>img{display:flex;width:100%;height:100%;align-items:center;justify-content:center;object-fit:contain;}
 #view-piano .ingredient-name{min-width:0;font-size:.9375rem;line-height:1.2;overflow-wrap:anywhere;}
 #view-piano .ingredient-name small{display:block;margin-top:2px;color:var(--text-dim);font-size:.875rem;}
 #view-piano .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-top:7px;border-top:1px solid var(--border);}
@@ -839,16 +850,21 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   #view-piano .carousel-prev,#view-piano .carousel-next{width:31px;height:31px;font-size:1.375rem;}
   #view-piano .carousel-prev{left:12px;}
   #view-piano .carousel-next{right:12px;}
-  #view-piano .dots{height:11px;gap:6px;}
+  #view-piano .dots{height:14px;gap:6px;}
   #view-piano .dot{width:6px;height:6px;}
   #view-piano .meal-copy{padding:0 8px 6px;}
-  #view-piano .dish-title{font-size:.8125rem;line-height:1.05;}
-  #view-piano .dish-kind{margin:0 0 2px;font-size:.4375rem;}
-  #view-piano .ingredients{gap:4px;margin:1px 0 5px;}
+  #view-piano .dish-title{margin-bottom:5px;font-size:.8125rem;line-height:1.05;}
+  #view-piano .dish-kind{margin:0 0 3px;font-size:.4375rem;}
+  #view-piano .ingredients{gap:4px;margin:0 0 5px;}
   #view-piano .ingredient{grid-template-columns:23px minmax(0,1fr);}
-  #view-piano .food-icon{font-size:1.1875rem;}
+  #view-piano .food-icon{height:1.1625rem;font-size:1.1625rem;}
   #view-piano .ingredient-name{font-size:.5rem;}
   #view-piano .ingredient-name small{margin-top:0;font-size:.46875rem;}
+  #view-piano .snack-head{height:40px;padding:0 8px;grid-template-columns:auto minmax(0,1fr) 29px;gap:6px;}
+  #view-piano .snack-symbol{font-size:.9rem;}
+  #view-piano .snack-title{font-size:.76rem;}
+  #view-piano .snack-expander{width:28px;height:28px;font-size:1rem;}
+  #view-piano .snack-body{padding:9px 8px 10px;}
   #view-piano .meal-proposal{margin:7px;padding:8px;}
   #view-piano .meal-proposal .row{gap:4px!important;}
   #view-piano .meal-proposal .row button{font-size:.62rem;}
@@ -4402,7 +4418,8 @@ async function renderColazione(giorno, elementId){
   if(!elementId) el.classList.add('meal');
   const pianoId = giorno+'_colazione';
   let voce = await getOne('piano', pianoId);
-  const varianti = await getAll('varianti');
+  const [varianti,ingredientiColazione]=await Promise.all([getAll('varianti'),getAll('ingredienti')]);
+  const mappaIngredientiColazione=new Map((ingredientiColazione||[]).map(x=>[String(x.id),x]));
   if(!voce) voce = {id:pianoId};
   const haContenutoColazione = !!(voce.componenti || voce.colazioneSpecialeId);
   const colazioneScaduta = haContenutoColazione && fasciaPastoSuperata(giorno, 'colazione');
@@ -4477,7 +4494,7 @@ async function renderColazione(giorno, elementId){
         mappaVisualePasto(),
         voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
       ]);
-      el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false,{cassettoAperto:!!cassettiAzioniPasto[pianoId]});
+      el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,mappaIngredientiColazione,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false,{cassettoAperto:!!cassettiAzioniPasto[pianoId]});
       attivaCaroselloColazioneRs(el);
       el.querySelector('[data-rs-col-details]')?.addEventListener('click',()=>{
         cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
@@ -4515,7 +4532,7 @@ async function renderColazione(giorno, elementId){
       mappaVisualePasto(),
       voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
     ]);
-    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true,{
+    html = htmlCaroselloColazioneRs(voce,varianti,mappaIngredientiColazione,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true,{
       specialeAperto:!!pannelloSpecialeAperto[pianoId],
       configurazioneAperta:!!draft.aperta,
       cassettoAperto:!!cassettiAzioniPasto[pianoId]
@@ -4754,15 +4771,41 @@ async function apriModalInfoColazione(componenti, colazioneSpecialeId){
 /* =========================================================
    COLAZIONE / SPUNTINO — versione semplice (no fascia, no modo)
    ========================================================= */
+const spuntiniApertiPastoRs={};
+function htmlBarraSpuntinoRs(pasto,chiaveStato,contenuto){
+  const aperto=!!spuntiniApertiPastoRs[chiaveStato];
+  const corpoId='snackBody_'+chiaveStato.replace(/[^a-z0-9_-]/gi,'_');
+  return '<div class="snack-head"><span class="snack-symbol" aria-hidden="true">'+ICONA_PASTO[pasto]+'</span><span class="snack-title">'+LABEL_PASTO[pasto]+'</span><button class="snack-expander" type="button" data-snack-expander aria-expanded="'+String(aperto)+'" aria-controls="'+corpoId+'" aria-label="'+(aperto?'Comprimi ':'Espandi ')+LABEL_PASTO[pasto]+'">⌄</button></div>'
+    +'<div class="snack-body-shell'+(aperto?' open':'')+'" id="'+corpoId+'" data-snack-body aria-hidden="'+String(!aperto)+'"'+(aperto?'':' inert')+'><div class="snack-body-inner"><div class="snack-body">'+contenuto+'</div></div></div>';
+}
+function attivaBarraSpuntinoRs(el,chiaveStato,principale){
+  el.classList.toggle('snack-card',principale);
+  if(!principale)return;
+  const btn=el.querySelector('[data-snack-expander]');
+  const corpo=el.querySelector('[data-snack-body]');
+  if(!btn||!corpo)return;
+  btn.addEventListener('click',()=>{
+    const aperto=!spuntiniApertiPastoRs[chiaveStato];
+    spuntiniApertiPastoRs[chiaveStato]=aperto;
+    btn.setAttribute('aria-expanded',String(aperto));
+    btn.setAttribute('aria-label',(aperto?'Comprimi ':'Espandi ')+btn.closest('.snack-head').querySelector('.snack-title').textContent);
+    corpo.classList.toggle('open',aperto);
+    corpo.setAttribute('aria-hidden',String(!aperto));
+    corpo.inert=!aperto;
+  });
+}
 async function renderBloccoSemplice(pasto, giorno, elementId){
   giorno = giorno || giornoSelezionato;
   const chiaveStato = giorno+'_'+pasto;
   const idBlocco = {spuntino1:'blocSpuntino1', spuntino2:'blocSpuntino2', spuntino3:'blocSpuntino3'}[pasto];
   const el = document.getElementById(elementId || idBlocco);
+  const principale=!elementId;
   const pianoId = giorno+'_'+pasto;
   let voce = await getOne('piano', pianoId) || {id:pianoId, porzioni:1};
-
-  let corpoHtmlIniziale = elementId ? '' : `<div class="pasto-header">${ICONA_PASTO[pasto]} ${LABEL_PASTO[pasto]}</div>`;
+  const applicaCorpo=contenuto=>{
+    el.innerHTML=principale?htmlBarraSpuntinoRs(pasto,chiaveStato,contenuto):contenuto;
+    attivaBarraSpuntinoRs(el,chiaveStato,principale);
+  };
 
   // pasto già consumato (orario superato): immutabile, sola lettura — niente più
   // Proposte alternative/Rimuovi, coerente con "la flessibilità è nel cibo, il rigore
@@ -4784,11 +4827,11 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
     // Matita (solo icona) sullo spuntino 3 consumato per aggiungere/correggere,
     // solo entro la finestra di 1 giorno
     const btnMatitaSpuntino3 = (entroFinestraSpuntino3 && voce.consumato) ? `<button data-editor-spuntino="${giorno}|${pasto}" title="Aggiungi o correggi questo spuntino" style="background:none;border:none;cursor:pointer;font-size:0.95rem;line-height:1;padding:2px 4px;color:var(--text-dim);vertical-align:middle;">✏️</button>` : '';
-    el.innerHTML = corpoHtmlIniziale + btnEditorSpuntino + (ricettaConsumata ? `
+    applicaCorpo(btnEditorSpuntino + (ricettaConsumata ? `
       <div style="opacity:0.7;">
         <div style="font-weight:700;font-size:0.9rem;"><span class="consumato-spunta">✓</span> ${etichettaCons} ${btnMatitaSpuntino3}</div>
         <div class="meta">${Math.round(nutriCons ? nutriCons.kcal : 0)} kcal (per 1 persona)</div>
-      </div>` : `<div class="meta" style="opacity:0.7;">✓ Nessuno spuntino</div>`);
+      </div>` : `<div class="meta" style="opacity:0.7;">✓ Nessuno spuntino</div>`));
     el.querySelector('[data-editor-spuntino]')?.addEventListener('click', async ()=>{
       await apriModalEditorPasto(giorno, pasto);
     });
@@ -4800,7 +4843,7 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
   // non lo aggiungi tu deliberatamente
   let ricetta = voce.ricettaId ? await getOne('ricette', voce.ricettaId) : null;
 
-  let corpoHtml = corpoHtmlIniziale;
+  let corpoHtml = '';
 
   if(!ricetta){
     corpoHtml += `<div class="meta">Nessuno spuntino — facoltativo, aggiungilo solo se hai fame prima del prossimo pasto principale.</div>`;
@@ -4830,7 +4873,7 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
       <div class="contenuto" id="altContenuto_${elementId?'menu_':''}${chiaveStato}"></div>
     </details>
   ` : `<div id="altContenuto_${elementId?'menu_':''}${chiaveStato}" style="display:none;"></div>`;
-  el.innerHTML = corpoHtml;
+  applicaCorpo(corpoHtml);
 
   if(ricetta){
     el.querySelector('[data-star]').addEventListener('click', async (e)=>{
@@ -5172,33 +5215,70 @@ function htmlFotoPastoRs(ricetta,percorso,classe,decorativa){
   const usaPlaceholder=!percorso;
   return '<img class="'+classe+(usaPlaceholder?' photo-placeholder':'')+'" src="'+escPastoRs(percorso||PLACEHOLDER_FOTO_PASTO_RS)+'" alt="'+(decorativa?'':escPastoRs(usaPlaceholder?'Immagine ricetta non disponibile':ricetta.nome||''))+'" loading="lazy" data-rs-photo data-rs-placeholder="'+String(usaPlaceholder)+'">';
 }
-function iconaIngredientePastoRs(nome,variante){
-  if(variante&&(variante.icona||variante.emoji))return variante.icona||variante.emoji;
-  const n=String(nome||'').toLowerCase();
-  if(/pesce|tonno|salmone|merluzzo|branzino|orata/.test(n))return '🐟';
-  if(/pollo|tacchino|carne|manzo|vitello/.test(n))return '🍗';
-  if(/uov/.test(n))return '🥚';
-  if(/latte|yogurt|ricotta|formagg/.test(n))return '🥛';
-  if(/pasta|riso|farro|orzo|avena|pane|cereal/.test(n))return '🌾';
-  if(/pomodor/.test(n))return '🍅';
-  if(/carot/.test(n))return '🥕';
-  if(/zucchin|cetriol/.test(n))return '🥒';
-  if(/ceci|fagiol|lenticch|legum/.test(n))return '🫘';
-  if(/verd|insalat|radicchio|spinac/.test(n))return '🥬';
-  if(/frutt|mela|pera|banana|fragol|mirtill/.test(n))return '🍓';
-  return '•';
+function iconaIngredientePastoRs(nome,variante,ingredienteBase){
+  if(variante&&(variante.icona||variante.emoji))return String(variante.icona||variante.emoji);
+  const n=String(nome||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+  const iconeSpecifiche=[
+    [/pizza/,'🍕'],[/raviol|lasagn/,'🍝'],[/spaghett|linguin|tagliolin|noodles|pasta/,'🍝'],
+    [/gallette.*riso/,'🍘'],[/\briso\b/,'🍚'],[/pane|panino|piadina|frisell|fette biscottate/,'🍞'],
+    [/cracker|tarall/,'🥨'],[/biscott/,'🍪'],[/gnocch|patat|patatin/,'🥔'],[/polenta/,'🌽'],
+    [/cous cous|farro|orzo|avena|cereal/,'🌾'],[/marmellat/,'🍓'],[/miele/,'🍯'],
+    [/cioccolat|nocciole.*cacao/,'🍫'],[/granita/,'🍧'],
+    [/pomodor/,'🍅'],[/carot|ravanell/,'🥕'],[/zucchin|cetriol/,'🥒'],[/melanzan/,'🍆'],
+    [/peperonc/,'🌶️'],[/peperon/,'🫑'],[/broccol|cavolfior|asparag|cime di rapa/,'🥦'],
+    [/cipolla|cipollott/,'🧅'],[/aglio/,'🧄'],[/fung/,'🍄'],[/pisell|fagiol|ceci|lenticch|legum|tofu/,'🫘'],
+    [/mais/,'🌽'],[/zucca/,'🎃'],[/carciof|lattug|insalat|spinac|radicch|rucola|songino|valeriana|verza|craut|fagiolin/,'🥬'],
+    [/finocch|sedano/,'🌿'],[/pollo|tacchino/,'🍗'],[/salsic/,'🌭'],[/bresaol|speck|pancetta|prosciutt|affettat/,'🥓'],
+    [/manzo|vitello|maiale|suino|arista|costin|nodino|carne/,'🥩'],[/gamber|crostace/,'🦐'],
+    [/cozz|vongol|ostric/,'🦪'],[/seppi|totan|polpo|mollusc/,'🦑'],[/salmone/,'🐟'],
+    [/tonno|sgombro|sardin|alic|merluzz|nasell|branzin|orat|sogliol|platess|pesce spada|pesce/,'🐟'],
+    [/tagliolini all.uovo/,'🍝'],[/\buov/,'🥚'],[/latte|yogurt|panna/,'🥛'],
+    [/mozzarell|parmigian|grana|brie|crescenza|emmental|feta|gorgonzola|pecorino|provola|ricotta|stracchino|taleggio|tomin|formagg/,'🧀'],
+    [/avocado/,'🥑'],[/olio|oliv/,'🫒'],[/burro/,'🧈'],[/noci|mandorl|frutta secca/,'🥜'],[/maiones/,'🫙'],
+    [/aceto|salsa di soia/,'🫙'],[/rosmarino|prezzemolo|basilico/,'🌿'],[/zenzero/,'🫚'],[/sesamo/,'🌱'],[/dado|sale/,'🧂'],
+    [/\bmela\b/,'🍎'],[/\bpera\b/,'🍐'],[/banana/,'🍌'],[/arancia/,'🍊'],[/limone/,'🍋'],[/melone/,'🍈'],
+    [/uva/,'🍇'],[/fragol|mirtill|frutti di bosco/,'🍓'],[/caffe/,'☕'],[/\bte\b|tisana/,'🍵'],[/acqua/,'💧'],[/bevanda|succo/,'🧃']
+  ];
+  for(const [re,icona] of iconeSpecifiche)if(re.test(n))return icona;
+  const gruppi=(ingredienteBase&&ingredienteBase.gruppo!==undefined
+    ?(Array.isArray(ingredienteBase.gruppo)?ingredienteBase.gruppo:[ingredienteBase.gruppo])
+    :[]).map(x=>String(x).toLowerCase());
+  const sottotipo=String(ingredienteBase&&ingredienteBase.sottotipo||'').toLowerCase();
+  if(/carne_bianca/.test(sottotipo))return '🍗';
+  if(/carne_rossa/.test(sottotipo))return '🥩';
+  if(/affettati/.test(sottotipo))return '🥓';
+  if(/pesce|molluschi|crostacei/.test(sottotipo))return '🐟';
+  if(/formaggio/.test(sottotipo))return '🧀';
+  if(/uova/.test(sottotipo))return '🥚';
+  if(/legumi/.test(sottotipo))return '🫘';
+  if(gruppi.includes('carboidrati'))return '🌾';
+  if(gruppi.includes('verdura'))return '🥬';
+  if(gruppi.includes('frutta'))return '🍎';
+  if(gruppi.includes('proteine'))return '🍽️';
+  if(gruppi.includes('grassi'))return '🥜';
+  if(gruppi.includes('condimento'))return '🌿';
+  if(gruppi.includes('colazione'))return '🥣';
+  if(gruppi.includes('speciale'))return '🍽️';
+  return '🍽️';
 }
-function htmlIngredientiPastoRs(ricetta,mappaVarianti){
+function htmlIconaIngredientePastoRs(nome,variante,ingredienteBase){
+  const icona=iconaIngredientePastoRs(nome,variante,ingredienteBase);
+  return /^assets\/ingredient-icons\/[a-z0-9._/-]+$/i.test(icona)
+    ?'<img src="'+escPastoRs(icona)+'" alt="" aria-hidden="true">'
+    :'<span aria-hidden="true">'+escPastoRs(icona)+'</span>';
+}
+function htmlIngredientiPastoRs(ricetta,mappaVarianti,mappaIngredienti){
   const lista=(ricetta&&Array.isArray(ricetta.ingredienti)?ricetta.ingredienti:[]).slice(0,3);
-  if(!lista.length)return '<div class="ingredient"><span class="food-icon">•</span><span class="ingredient-name">Ingredienti nel dettaglio</span></div>';
+  if(!lista.length)return '<div class="ingredient"><span class="food-icon"><span aria-hidden="true">🍽️</span></span><span class="ingredient-name">Ingredienti nel dettaglio</span></div>';
   return lista.map(ing=>{
     const variante=ing.variantId?mappaVarianti.get(String(ing.variantId)):null;
+    const ingredienteBase=variante&&mappaIngredienti?mappaIngredienti.get(String(variante.ingredienteId||'')):null;
     const nome=ing.nomeLibero||ing.nome||(variante&&variante.nome)||'Ingrediente';
     const quantita=Number(ing.quantita)>0?formattaQuantita(variante,Number(ing.quantita)):'';
-    return '<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(nome,variante)+'</span><span class="ingredient-name">'+escPastoRs(nome)+(quantita?'<small>'+escPastoRs(quantita)+'</small>':'')+'</span></div>';
+    return '<div class="ingredient"><span class="food-icon">'+htmlIconaIngredientePastoRs(nome,variante,ingredienteBase)+'</span><span class="ingredient-name">'+escPastoRs(nome)+(quantita?'<small>'+escPastoRs(quantita)+'</small>':'')+'</span></div>';
   }).join('');
 }
-function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarianti,kcal,modificabile,preferite,opzioni){
+function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarianti,mappaIngredienti,kcal,modificabile,preferite,opzioni){
   opzioni=opzioni||{};
   const ricette=(materializzate||[]).filter(Boolean);
   if(!ricette.length)return '';
@@ -5230,7 +5310,7 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
       +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" '+(haPrecedente?'':'hidden')+'>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(haSuccessiva?'':'hidden')+'>›</button></div></div>'
       +'<div class="dots">'+dots+'</div>'
       +'<div class="meal-copy"><div class="dish-row"><div class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</div><h3 class="dish-title">'+escPastoRs(ricetta.nome)+'</h3></div>'
-      +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti)+'</div>'
+      +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti,mappaIngredienti)+'</div>'
       +'<div class="meal-summary-row"><div class="meal-kcal-info">'+Math.round(kcal)+' kcal questo pasto</div><button class="action primary" type="button" data-rs-details="'+escPastoRs(ricetta.id)+'" aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
       +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div>'+proposta+'</div></div></div></div></section>';
   };
@@ -5243,7 +5323,7 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="'+escPastoRs(pasto)+'" data-carousel-count="'+ricette.length+'" data-carousel-loop="'+String(usaLoop)+'"><div class="track">'+slides+'</div></div></div>'
     +(meta.length?'<div class="meal-meta">'+meta.join(' · ')+'</div>':'');
 }
-function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
+function htmlCaroselloColazioneRs(voce,varianti,mappaIngredienti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
   opzioni=opzioni||{};
   const cassettoAperto=!!opzioni.cassettoAperto;
   const fintaRicetta=ricettaSpeciale||{id:'colazione-standard',nome:descrizione||'Colazione'};
@@ -5253,20 +5333,23 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
   if(ricettaSpeciale){
     for(const ing of (ricettaSpeciale.ingredienti||[]).slice(0,3)){
       const v=ing.variantId?perId.get(String(ing.variantId)):null;
-      ingredienti.push({nome:ing.nomeLibero||ing.nome||(v&&v.nome)||'Ingrediente',quantita:Number(ing.quantita)>0?formattaQuantita(v,Number(ing.quantita)):''});
+      ingredienti.push({nome:ing.nomeLibero||ing.nome||(v&&v.nome)||'Ingrediente',quantita:Number(ing.quantita)>0?formattaQuantita(v,Number(ing.quantita)):'',variante:v});
     }
   }else{
     for(const gruppo of COLAZIONE_GRUPPI){
       const id=voce&&voce.componenti&&voce.componenti[gruppo.chiave];
       if(!id)continue;
-      if(gruppo.chiave==='bibita')ingredienti.push({nome:id==='te'?'Tè':id,quantita:''});
+      if(gruppo.chiave==='bibita')ingredienti.push({nome:id==='te'?'Tè':id,quantita:'',variante:null});
       else{
         const v=perId.get(String(id));
-        if(v)ingredienti.push({nome:v.nome,quantita:formattaQuantita(v,Number(v.porzioneColazione)||0)});
+        if(v)ingredienti.push({nome:v.nome,quantita:formattaQuantita(v,Number(v.porzioneColazione)||0),variante:v});
       }
     }
   }
-  const ingredientiHtml=(ingredienti.slice(0,3).map(x=>'<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(x.nome)+'</span><span class="ingredient-name">'+escPastoRs(x.nome)+(x.quantita?'<small>'+escPastoRs(x.quantita)+'</small>':'')+'</span></div>').join(''))||'<div class="ingredient"><span class="food-icon">•</span><span class="ingredient-name">Componi la colazione</span></div>';
+  const ingredientiHtml=(ingredienti.slice(0,3).map(x=>{
+    const ingredienteBase=x.variante&&mappaIngredienti?mappaIngredienti.get(String(x.variante.ingredienteId||'')):null;
+    return '<div class="ingredient"><span class="food-icon">'+htmlIconaIngredientePastoRs(x.nome,x.variante,ingredienteBase)+'</span><span class="ingredient-name">'+escPastoRs(x.nome)+(x.quantita?'<small>'+escPastoRs(x.quantita)+'</small>':'')+'</span></div>';
+  }).join(''))||'<div class="ingredient"><span class="food-icon"><span aria-hidden="true">🍽️</span></span><span class="ingredient-name">Componi la colazione</span></div>';
   let comandi='';
   if(modificabile!==false){
     comandi+='<button class="action" type="button" data-rs-col-special-toggle>'+(opzioni.specialeAperto?'Chiudi Colazione speciale':'Colazione speciale')+'</button>';
@@ -5594,11 +5677,12 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   }
 
   const modificabile=!voce.consumato&&!fasciaPastoSuperata(giorno,pasto);
-  const [visuale,variantiPasto,ricetteSalvatePasto,ricetteAmmessePasto]=await Promise.all([
-    mappaVisualePasto(),getAll('varianti'),getAll('ricette'),
+  const [visuale,variantiPasto,ingredientiPasto,ricetteSalvatePasto,ricetteAmmessePasto]=await Promise.all([
+    mappaVisualePasto(),getAll('varianti'),getAll('ingredienti'),getAll('ricette'),
     typeof ricetteAmmesse==='function'?ricetteAmmesse(false):getAll('ricette')
   ]);
   const mappaVariantiPasto=new Map((variantiPasto||[]).map(v=>[String(v.id),v]));
+  const mappaIngredientiPasto=new Map((ingredientiPasto||[]).map(x=>[String(x.id),x]));
   const preferitePasto=new Set((ricetteSalvatePasto||[]).filter(r=>r.preferita).map(r=>String(r.id)));
   const idsAmmessiPasto=new Set((ricetteAmmessePasto||[]).map(r=>String(r.id)));
   let specialeConfermato=null;
@@ -5612,7 +5696,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
     .sort((a,b)=>String(a.id)===String(specialeConfermato&&specialeConfermato.id)?-1:String(b.id)===String(specialeConfermato&&specialeConfermato.id)?1:a.nome.localeCompare(b.nome,'it'));
   const modalitaSpeciale=modificabile&&!!pannelloSpecialeAperto[id]&&specialiPasto.length>0;
   const materializzateMostrate=modalitaSpeciale?specialiPasto:materializzate;
-  html+=htmlCaroselloPastoRs(materializzateMostrate,voceVisuale,pasto,visuale,mappaVariantiPasto,kcal,modificabile,preferitePasto,{
+  html+=htmlCaroselloPastoRs(materializzateMostrate,voceVisuale,pasto,visuale,mappaVariantiPasto,mappaIngredientiPasto,kcal,modificabile,preferitePasto,{
     speciale:modalitaSpeciale,
     specialeConfermatoId:specialeConfermato&&specialeConfermato.id,
     propostaAttiva:!!bozzaAttiva,
