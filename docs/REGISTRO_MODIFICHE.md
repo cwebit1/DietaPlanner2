@@ -4045,3 +4045,20 @@ dichiarato riuscito perché il browser remoto blocca il server locale.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+### Collaudo live successivo alla pubblicazione
+
+Sull'URL pubblico separato di `index-restyling.html` è stato generato un menù
+nel profilo locale di prova e aperto il cassetto di un pasto futuro: il solo tap
+su `Dettagli` ha lasciato la card senza `.special-mode`. Dopo avere marcato una
+ricetta come Speciale tramite il modal reale, il comando `Pasto speciale` ha
+attivato la modalità mantenendo il cassetto aperto. Sullo stile calcolato della
+card sono stati rilevati `special-frame-lights`, durata `2.4s`, il
+`conic-gradient` rotante e `mask-composite: exclude`; l'uscita ha ripristinato
+lo stato normale. L'unico Speciale disponibile coincideva con il pasto già
+impostato e mostrava correttamente il comando disabilitato `Pasto speciale
+impostato`: in tale stato `.choose-special` non viene prodotto, quindi il suo
+bagliore resta verificato per contratto CSS ma non viene dichiarato osservato
+dal vivo.
+
+---
