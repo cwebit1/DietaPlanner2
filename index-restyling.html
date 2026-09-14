@@ -731,7 +731,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .vertical-rail{position:absolute;z-index:2;top:0;left:0;width:100%;pointer-events:none;will-change:transform;}
 #view-piano .vertical-rail>.track{width:100%;overflow:hidden;scroll-behavior:auto;background:var(--panel);}
 #view-piano .slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;}
-#view-piano .photo-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr);overflow:hidden;}
+#view-piano .photo-row{position:relative;display:grid;grid-template-columns:minmax(0,1fr);margin:0 17px;overflow:hidden;}
 #view-piano .photo-row>div{min-width:0;}
 #view-piano .photo-row>div:first-child{aspect-ratio:18/5;}
 #view-piano .photo-main,#view-piano .photo-placeholder{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
@@ -763,7 +763,8 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-top:7px;border-top:1px solid var(--border);}
 #view-piano .actions.readonly{grid-template-columns:1fr;}
 #view-piano .actions.special-actions{grid-template-columns:1fr 1fr;}
-#view-piano .actions.drawer-toggle{grid-template-columns:1fr;}
+#view-piano .meal-summary-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:7px;padding-top:7px;border-top:1px solid var(--border);}
+#view-piano .meal-kcal-info{height:34px;padding:0 7px;border:1px solid var(--border);border-radius:9px;background:var(--panel-2);color:var(--text-dim);display:flex;align-items:center;justify-content:center;text-align:center;font-size:.7rem;font-weight:750;}
 #view-piano .action{height:34px;padding:0 7px;border:1px solid var(--border);border-radius:9px;background:var(--panel-2);color:var(--text);font-size:.7rem;font-weight:750;}
 #view-piano .action.primary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-color:var(--accent-dim);background:var(--accent-dim);color:var(--accent);}
 #view-piano .action.primary .icon{justify-self:end;margin-right:5px;font-size:1rem;}
@@ -833,6 +834,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   #view-piano .meal-symbol{font-size:1.1875rem;}
   #view-piano .meal-name{font-size:.875rem;letter-spacing:.0125rem;}
   #view-piano .meal-time{font-size:.5625rem;}
+  #view-piano .photo-row{margin-left:8px;margin-right:8px;}
   #view-piano .photo-main,#view-piano .photo-placeholder{border-radius:8px;}
   #view-piano .carousel-prev,#view-piano .carousel-next{width:31px;height:31px;font-size:1.375rem;}
   #view-piano .carousel-prev{left:12px;}
@@ -5202,9 +5204,12 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
   if(!ricette.length)return '';
   const cassettoAperto=!!opzioni.cassettoAperto;
   const pianoId=String(opzioni.pianoId||voce&&voce.id||'');
+  const usaLoop=!!opzioni.speciale&&ricette.length>1;
   const slidePer=(ricetta,indice)=>{
     const foto=immaginePastoRs(ricetta,mappaVisuale);
     const dots=ricette.map((_,i)=>'<i class="dot'+(i===indice?' active':'')+'" aria-hidden="true"></i>').join('');
+    const haPrecedente=ricette.length>1&&(usaLoop||indice>0);
+    const haSuccessiva=ricette.length>1&&(usaLoop||indice<ricette.length-1);
     let comandi='';
     if(modificabile){
       comandi+='<button class="action" type="button" data-rs-special-toggle>'+(opzioni.speciale?'Esci da Pasto speciale':'Pasto speciale')+'</button>';
@@ -5222,19 +5227,21 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
       ?'<div data-nm-proposta="'+escPastoRs(pianoId)+'"></div>'
       :'';
     return '<section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(ricetta.id)+'" data-dish-kind="'+escPastoRs(ricetta.tipoPortata||'piatto')+'" data-logical-index="'+indice+'" data-bind="dish.imagePath,dish.title,dish.ingredients">'
-      +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" '+(ricette.length<2?'hidden':'')+'>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div></div>'
+      +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" '+(haPrecedente?'':'hidden')+'>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(haSuccessiva?'':'hidden')+'>›</button></div></div>'
       +'<div class="dots">'+dots+'</div>'
       +'<div class="meal-copy"><div class="dish-row"><div class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</div><h3 class="dish-title">'+escPastoRs(ricetta.nome)+'</h3></div>'
       +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti)+'</div>'
-      +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-details="'+escPastoRs(ricetta.id)+'" aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
+      +'<div class="meal-summary-row"><div class="meal-kcal-info">'+Math.round(kcal)+' kcal questo pasto</div><button class="action primary" type="button" data-rs-details="'+escPastoRs(ricetta.id)+'" aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
       +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div>'+proposta+'</div></div></div></div></section>';
   };
   const originali=ricette.map(slidePer);
-  const usaLoop=!!opzioni.speciale&&ricette.length>1;
   const slides=usaLoop?[originali[originali.length-1],...originali,originali[0]].join(''):originali.join('');
+  const meta=[];
+  if(opzioni.speciale)meta.push('Piatti speciali · scorri per scegliere');
+  if(voce&&voce.consumato)meta.push('✓ consumato');
   return htmlTestataPastoRs(pasto)
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="'+escPastoRs(pasto)+'" data-carousel-count="'+ricette.length+'" data-carousel-loop="'+String(usaLoop)+'"><div class="track">'+slides+'</div></div></div>'
-    +'<div class="meal-meta">'+(opzioni.speciale?'Piatti speciali · scorri per scegliere':Math.round(kcal)+' kcal · per il pasto completo')+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
+    +(meta.length?'<div class="meal-meta">'+meta.join(' · ')+'</div>':'');
 }
 function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
   opzioni=opzioni||{};
@@ -5272,9 +5279,9 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
     +'<div class="photo-row"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div><div class="carousel-controls"><button class="carousel-prev" type="button" data-action="previous-dish" aria-label="Piatto precedente" hidden>‹</button><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" hidden>›</button></div></div><div class="dots"><i class="dot active"></i></div>'
     +'<div class="meal-copy"><div class="dish-row"><div class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</div><h3 class="dish-title">'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
     +'<div class="ingredients">'+ingredientiHtml+'</div>'
-    +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-col-details aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
+    +'<div class="meal-summary-row"><div class="meal-kcal-info">'+Math.round(nutri&&nutri.kcal||0)+' kcal questo pasto</div><button class="action primary" type="button" data-rs-col-details aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
     +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div><div data-rs-col-config-slot></div></div></div></div></div></section></div></div></div>'
-    +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona'+(voce&&voce.consumato?' · ✓ consumata':'')+'</div>';
+    +(voce&&voce.consumato?'<div class="meal-meta">✓ consumata</div>':'');
 }
 const statiCaroselloPranzoRs=new WeakMap();
 const statiCaroselloCenaRs=new WeakMap();
@@ -5327,9 +5334,6 @@ function attivaCaroselloPastoRs(el,pasto,registroStato){
     nextButtons.forEach(btn=>{btn.hidden=true;});
     return;
   }
-  prevButtons.forEach(btn=>{btn.hidden=false;});
-  nextButtons.forEach(btn=>{btn.hidden=false;});
-
   vaiSubito(usaLoop?1:0);
   if(usaLoop)requestAnimationFrame(()=>vaiSubito(1));
 
@@ -5355,7 +5359,9 @@ function attivaCaroselloPastoRs(el,pasto,registroStato){
       stato.timer=timer;
       return;
     }
-    track.scrollTo({left:((indice+delta+totale)%totale)*width,behavior:'smooth'});
+    const destinazione=indice+delta;
+    if(destinazione<0||destinazione>=totale)return;
+    track.scrollTo({left:destinazione*width,behavior:'smooth'});
   };
   prevButtons.forEach(btn=>btn.addEventListener('click',()=>scorriDi(-1)));
   nextButtons.forEach(btn=>btn.addEventListener('click',()=>scorriDi(1)));
