@@ -725,27 +725,26 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-name{font-size:1.6875rem;font-weight:800;letter-spacing:.03125rem;}
 #view-piano .meal-time{color:var(--text-dim);font:1.125rem Georgia,serif;white-space:nowrap;}
 #view-piano .meal-frame{position:relative;overflow:hidden;}
-#view-piano .carousel{overflow:hidden;touch-action:pan-y;}
-#view-piano .track{display:flex;transform:translateX(-100%);will-change:transform;}
+#view-piano .carousel{position:relative;overflow:hidden;}
+#view-piano .track{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;}
+#view-piano .track::-webkit-scrollbar{display:none;}
 #view-piano .vertical-rail{position:absolute;z-index:2;top:0;left:0;width:100%;pointer-events:none;will-change:transform;}
-#view-piano .vertical-rail>.track{width:100%;background:var(--panel);}
-#view-piano .slide{flex:0 0 100%;min-width:0;}
-#view-piano .photo-row{height:126px;display:grid;grid-template-columns:minmax(0,1fr) 15%;gap:8px;padding-left:9px;overflow:hidden;}
+#view-piano .vertical-rail>.track{width:100%;overflow:hidden;scroll-behavior:auto;background:var(--panel);}
+#view-piano .slide{flex:0 0 100%;min-width:0;scroll-snap-align:start;}
+#view-piano .photo-row{height:151px;display:grid;grid-template-columns:minmax(0,1fr) 15%;gap:13px;padding-left:17px;overflow:hidden;}
 #view-piano .photo-row>div{min-width:0;height:100%;}
-#view-piano .photo-main,#view-piano .photo-peek,#view-piano .photo-fallback{width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
-#view-piano .photo-main,#view-piano .photo-fallback{border-radius:9px;}
-#view-piano .photo-peek{border-radius:9px 0 0 9px;}
-#view-piano .photo-fallback{display:grid;place-items:center;text-align:center;padding:12px;color:var(--text-dim);background:linear-gradient(145deg,var(--accent-dim),var(--panel-2));}
-#view-piano .photo-fallback b{display:block;font:700 .9rem/1.15 Georgia,serif;color:var(--text);}
-#view-piano .photo-fallback span{display:block;margin-top:4px;font-size:.62rem;}
-#view-piano .carousel-next{position:absolute;z-index:3;right:15px;top:46px;width:36px;height:36px;padding:0;border:1px solid var(--border);border-radius:50%;background:rgba(32,38,26,.94);color:var(--text);font-size:1.55rem;line-height:1;box-shadow:0 2px 7px rgba(0,0,0,.3);}
+#view-piano .photo-main,#view-piano .photo-peek,#view-piano .photo-placeholder{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
+#view-piano .photo-main,#view-piano .photo-placeholder{border-radius:14px;}
+#view-piano .photo-peek{border-radius:14px 0 0 14px;}
+#view-piano .photo-placeholder{object-fit:cover;}
+#view-piano .carousel-next{position:absolute;z-index:3;right:20px;top:50px;width:51px;height:51px;padding:0;border:1px solid var(--border);border-radius:50%;background:rgba(32,38,26,.94);color:var(--text);font-size:2.25rem;line-height:1;box-shadow:0 2px 7px rgba(0,0,0,.3);}
 #view-piano .carousel-next[hidden]{display:none;}
-#view-piano .dots{height:16px;display:flex;align-items:center;justify-content:center;gap:7px;}
-#view-piano .dot{width:6px;height:6px;border-radius:50%;background:var(--border);}
+#view-piano .dots{height:18px;display:flex;align-items:center;justify-content:center;gap:10px;}
+#view-piano .dot{width:10px;height:10px;border-radius:50%;background:var(--border);}
 #view-piano .dot.active{background:var(--accent);}
-#view-piano .meal-copy{padding:0 10px 8px;}
+#view-piano .meal-copy{padding:0 17px 10px;}
 #view-piano .dish-row{display:block;}
-#view-piano .dish-title{margin:0;font:700 1rem/1.08 Georgia,serif;overflow-wrap:anywhere;}
+#view-piano .dish-title{margin:0;font:700 1.5rem/1.15 Georgia,serif;overflow-wrap:anywhere;}
 #view-piano .dish-kind{display:inline-block;margin-right:4px;color:var(--accent);font:800 .55rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
 #view-piano .special-toggle{color:#f1c40f;}
@@ -753,11 +752,11 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .special-toggle.active{box-shadow:inset 0 0 0 2px rgba(241,196,15,.35);}
 #view-piano .favorite-toggle{color:#f1c40f;font-size:1.35rem;line-height:1;}
 #view-piano .favorite-toggle.active{background:#4a421d;border-color:#8f7920;}
-#view-piano .ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin:5px 0 7px;}
-#view-piano .ingredient{display:grid;grid-template-columns:27px minmax(0,1fr);align-items:center;min-width:0;}
-#view-piano .food-icon{font-size:1.3rem;text-align:center;}
-#view-piano .ingredient-name{min-width:0;font-size:.68rem;line-height:1.12;overflow-wrap:anywhere;}
-#view-piano .ingredient-name small{display:block;margin-top:2px;color:var(--text-dim);font-size:.62rem;}
+#view-piano .ingredients{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:3px 0 9px;}
+#view-piano .ingredient{display:grid;grid-template-columns:42px minmax(0,1fr);align-items:center;min-width:0;}
+#view-piano .food-icon{font-size:2.125rem;text-align:center;}
+#view-piano .ingredient-name{min-width:0;font-size:.9375rem;line-height:1.2;overflow-wrap:anywhere;}
+#view-piano .ingredient-name small{display:block;margin-top:2px;color:var(--text-dim);font-size:.875rem;}
 #view-piano .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-top:7px;border-top:1px solid var(--border);}
 #view-piano .actions.readonly{grid-template-columns:1fr;}
 #view-piano .actions.special-actions{grid-template-columns:1fr 1fr;}
@@ -805,10 +804,10 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-proposal .pasto-griglia-compatta{margin-top:7px;}
 #view-piano .meal-proposal .row{display:grid!important;grid-template-columns:1.35fr .8fr .8fr;}
 #view-piano .meal-proposal .row button{width:100%;min-width:0;padding-left:6px;padding-right:6px;}
-@media(min-width:500px){
-  #view-piano .photo-row{height:165px;}
-  #view-piano .carousel-next{top:64px;}
-  #view-piano .dish-title{font-size:1.2rem;}
+@media(max-width:580px){
+  #view-piano .dish-title{font-size:1.3125rem;}
+  #view-piano .ingredient-name{font-size:.8125rem;}
+  #view-piano .ingredient-name small{font-size:.75rem;}
 }
 
 @media(max-width:580px){
@@ -829,6 +828,19 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   #view-piano .meal-symbol{font-size:1.1875rem;}
   #view-piano .meal-name{font-size:.875rem;letter-spacing:.0125rem;}
   #view-piano .meal-time{font-size:.5625rem;}
+  #view-piano .photo-row{height:82px;gap:7px;padding-left:8px;}
+  #view-piano .photo-main,#view-piano .photo-placeholder{border-radius:8px;}
+  #view-piano .photo-peek{border-radius:8px 0 0 8px;}
+  #view-piano .carousel-next{right:12px;top:26px;width:31px;height:31px;font-size:1.375rem;}
+  #view-piano .dots{height:11px;gap:6px;}
+  #view-piano .dot{width:6px;height:6px;}
+  #view-piano .meal-copy{padding:0 8px 6px;}
+  #view-piano .dish-title{font-size:.8125rem;line-height:1.05;}
+  #view-piano .ingredients{gap:4px;margin:1px 0 5px;}
+  #view-piano .ingredient{grid-template-columns:23px minmax(0,1fr);}
+  #view-piano .food-icon{font-size:1.1875rem;}
+  #view-piano .ingredient-name{font-size:.5rem;}
+  #view-piano .ingredient-name small{margin-top:0;font-size:.46875rem;}
   #view-piano .meal-proposal{margin:7px;padding:8px;}
   #view-piano .meal-proposal .row{gap:4px!important;}
   #view-piano .meal-proposal .row button{font-size:.62rem;}
@@ -4458,7 +4470,7 @@ async function renderColazione(giorno, elementId){
         voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
       ]);
       el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false,{cassettoAperto:!!cassettiAzioniPasto[pianoId]});
-      attivaCaroselloPastoRs(el);
+      attivaCaroselloColazioneRs(el);
       el.querySelector('[data-rs-col-details]')?.addEventListener('click',()=>{
         cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
         impostaCassettoPastoRs(el,cassettiAzioniPasto[pianoId]);
@@ -4558,7 +4570,7 @@ async function renderColazione(giorno, elementId){
     const slot=el.querySelector('[data-rs-col-config-slot]');
     if(configurazione&&slot)slot.append(configurazione);
   }
-  if(!elementId)attivaCaroselloPastoRs(el);
+  if(!elementId)attivaCaroselloColazioneRs(el);
   el.classList.toggle('pasto-card-aperta',!!draft.aperta);
 
   el.querySelector('[data-info-colazione-attuale]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
@@ -5147,9 +5159,10 @@ function immaginePastoRs(ricetta,mappaVisuale){
   const record=mappaVisuale.get(String(ricetta&&ricetta.id||''));
   return record&&record.percorsoImmagine?String(record.percorsoImmagine):'';
 }
+const PLACEHOLDER_FOTO_PASTO_RS='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#262d1e"/><circle cx="600" cy="400" r="238" fill="#20261a" stroke="#374025" stroke-width="24"/><circle cx="600" cy="400" r="154" fill="none" stroke="#4a5a2a" stroke-width="18"/><path d="M286 205v390M250 205v145c0 57 72 57 72 0V205M914 205c-52 58-64 137-64 221h64v169" fill="none" stroke="#9cc23a" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></svg>');
 function htmlFotoPastoRs(ricetta,percorso,classe,decorativa){
-  if(percorso)return '<img class="'+classe+'" src="'+escPastoRs(percorso)+'" alt="'+(decorativa?'':escPastoRs(ricetta.nome||''))+'" loading="lazy" data-rs-photo><div class="photo-fallback" hidden><div><b>'+escPastoRs(ricetta.nome||'Ricetta')+'</b><span>Foto in preparazione</span></div></div>';
-  return '<div class="photo-fallback '+classe+'"><div><b>'+escPastoRs(ricetta.nome||'Ricetta')+'</b><span>Foto in preparazione</span></div></div>';
+  const usaPlaceholder=!percorso;
+  return '<img class="'+classe+(usaPlaceholder?' photo-placeholder':'')+'" src="'+escPastoRs(percorso||PLACEHOLDER_FOTO_PASTO_RS)+'" alt="'+(decorativa?'':escPastoRs(usaPlaceholder?'Immagine ricetta non disponibile':ricetta.nome||''))+'" loading="lazy" data-rs-photo data-rs-placeholder="'+String(usaPlaceholder)+'">';
 }
 function iconaIngredientePastoRs(nome,variante){
   if(variante&&(variante.icona||variante.emoji))return variante.icona||variante.emoji;
@@ -5213,9 +5226,10 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
       +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div>'+proposta+'</div></div></div></div></section>';
   };
   const originali=ricette.map(slidePer);
-  const slides=ricette.length>1?[originali[originali.length-1],...originali,originali[0]].join(''):originali[0];
+  const usaLoop=!!opzioni.speciale&&ricette.length>1;
+  const slides=usaLoop?[originali[originali.length-1],...originali,originali[0]].join(''):originali.join('');
   return htmlTestataPastoRs(pasto)
-    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="'+ricette.length+'"><div class="track">'+slides+'</div></div><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div>'
+    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="'+escPastoRs(pasto)+'" data-carousel-count="'+ricette.length+'" data-carousel-loop="'+String(usaLoop)+'"><div class="track">'+slides+'</div></div><button class="carousel-next" type="button" data-action="next-dish" aria-label="Piatto successivo" '+(ricette.length<2?'hidden':'')+'>›</button></div>'
     +'<div class="meal-meta">'+(opzioni.speciale?'Piatti speciali · scorri per scegliere':Math.round(kcal)+' kcal · per il pasto completo')+(voce&&voce.consumato?' · ✓ consumato':'')+'</div>';
 }
 function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
@@ -5250,7 +5264,7 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
   comandi+='<button class="action recipe" type="button" data-rs-col-recipe><span class="icon">☷</span><span>Ricetta</span></button>';
   comandi+='<button class="action" type="button" data-rs-col-info>Info</button>';
   return htmlTestataPastoRs('colazione')
-    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="1"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
+    +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-pasto="colazione" data-carousel-count="1" data-carousel-loop="false"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
     +'<div class="photo-row" style="grid-template-columns:minmax(0,1fr);padding-right:9px"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div></div><div class="dots"><i class="dot active"></i></div>'
     +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
     +'<div class="ingredients">'+ingredientiHtml+'</div>'
@@ -5258,45 +5272,91 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
     +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div><div data-rs-col-config-slot></div></div></div></div></div></section></div></div></div>'
     +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona'+(voce&&voce.consumato?' · ✓ consumata':'')+'</div>';
 }
-function attivaCaroselloPastoRs(el){
+const statiCaroselloPranzoRs=new WeakMap();
+const statiCaroselloCenaRs=new WeakMap();
+const statiCaroselloColazioneRs=new WeakMap();
+
+function attivaCaroselloPastoRs(el,pasto,registroStato){
   el.querySelectorAll('[data-rs-photo]').forEach(img=>img.addEventListener('error',()=>{
-    img.hidden=true;
-    if(img.nextElementSibling)img.nextElementSibling.hidden=false;
+    if(img.dataset.rsPlaceholder==='true')return;
+    img.dataset.rsPlaceholder='true';
+    img.classList.add('photo-placeholder');
+    img.src=PLACEHOLDER_FOTO_PASTO_RS;
+    img.alt=img.alt?'Immagine ricetta non disponibile':'';
   },{once:true}));
-  const carousel=el.querySelector('.carousel[data-carousel-count]');
-  const track=carousel&&carousel.querySelector('.track');
+  const carousel=el.querySelector('.carousel[data-carousel-pasto="'+pasto+'"][data-carousel-count]');
+  const track=carousel&&carousel.querySelector(':scope>.track');
   const next=el.querySelector('.carousel-next');
   const totale=Number(carousel&&carousel.dataset.carouselCount||0);
   if(!track||!totale)return;
-  if(totale===1){track.style.transform='translateX(0)';return;}
-  let posizione=1,inMovimento=false,touchX=0,touchY=0;
-  const posiziona=(animata)=>{
-    track.style.transition=animata?'transform .28s linear':'none';
-    track.style.transform='translateX(-'+(posizione*100)+'%)';
+
+  const precedente=registroStato.get(el);
+  if(precedente&&precedente.timer)clearTimeout(precedente.timer);
+
+  const usaLoop=carousel.dataset.carouselLoop==='true';
+  let timer=0;
+  const larghezza=()=>track.clientWidth||carousel.clientWidth||0;
+  const vaiSubito=indice=>{
+    const width=larghezza();
+    if(!width)return;
+    const comportamento=track.style.scrollBehavior;
+    track.style.scrollBehavior='auto';
+    track.scrollLeft=indice*width;
+    track.getBoundingClientRect();
+    track.style.scrollBehavior=comportamento;
   };
-  const muovi=delta=>{
-    if(inMovimento)return;
-    inMovimento=true;
-    posizione+=delta;
-    posiziona(true);
-    track.addEventListener('transitionend',()=>{
-      if(posizione===0)posizione=totale;
-      else if(posizione===totale+1)posizione=1;
-      posiziona(false);
-      inMovimento=false;
-    },{once:true});
+  const normalizzaLoop=()=>{
+    if(!usaLoop)return;
+    const width=larghezza();
+    if(!width)return;
+    const indice=Math.round(track.scrollLeft/width);
+    if(indice===0)vaiSubito(totale);
+    else if(indice===totale+1)vaiSubito(1);
   };
-  posiziona(false);
-  next?.addEventListener('click',()=>muovi(1));
-  carousel.addEventListener('touchstart',e=>{
-    if(e.touches.length!==1)return;
-    touchX=e.touches[0].clientX;touchY=e.touches[0].clientY;
+  const stato={pasto,carousel,track,timer:0,usaLoop,totale};
+  registroStato.set(el,stato);
+
+  if(totale===1){
+    vaiSubito(0);
+    if(next)next.hidden=true;
+    return;
+  }
+
+  vaiSubito(usaLoop?1:0);
+  if(usaLoop)requestAnimationFrame(()=>vaiSubito(1));
+
+  track.addEventListener('scroll',()=>{
+    if(!usaLoop)return;
+    clearTimeout(timer);
+    timer=setTimeout(normalizzaLoop,90);
+    stato.timer=timer;
   },{passive:true});
-  carousel.addEventListener('touchend',e=>{
-    if(e.changedTouches.length!==1)return;
-    const dx=e.changedTouches[0].clientX-touchX,dy=e.changedTouches[0].clientY-touchY;
-    if(Math.abs(dx)>35&&Math.abs(dx)>Math.abs(dy))muovi(dx<0?1:-1);
-  },{passive:true});
+
+  next?.addEventListener('click',()=>{
+    const width=larghezza();
+    if(!width)return;
+    const indice=Math.round(track.scrollLeft/width);
+    if(usaLoop){
+      const normalizzato=indice>=totale+1?1:indice;
+      if(normalizzato!==indice)vaiSubito(1);
+      track.scrollTo({left:(normalizzato+1)*width,behavior:'smooth'});
+      clearTimeout(timer);
+      timer=setTimeout(normalizzaLoop,430);
+      stato.timer=timer;
+      return;
+    }
+    track.scrollTo({left:((indice+1)%totale)*width,behavior:'smooth'});
+  });
+}
+
+function attivaCaroselloPranzoRs(el){
+  return attivaCaroselloPastoRs(el,'pranzo',statiCaroselloPranzoRs);
+}
+function attivaCaroselloCenaRs(el){
+  return attivaCaroselloPastoRs(el,'cena',statiCaroselloCenaRs);
+}
+function attivaCaroselloColazioneRs(el){
+  return attivaCaroselloPastoRs(el,'colazione',statiCaroselloColazioneRs);
 }
 
 /* Bozza di proposta ("Alternativa"/"Salvafrigo") per la pagina Pasto, tenuta
@@ -5333,9 +5393,8 @@ async function switchSetPastoRs(el,direction,aggiorna){
   const scrollUscente=trackUscente?trackUscente.scrollLeft:0;
   const outgoing=trackUscente?trackUscente.cloneNode(true):null;
   if(outgoing){
-    outgoing.scrollLeft=scrollUscente;
-    outgoing.style.transition='none';
-    if(trackUscente.style.transform)outgoing.style.transform=trackUscente.style.transform;
+    outgoing.style.scrollBehavior='auto';
+    outgoing.style.overflow='hidden';
   }
   try{
     const cambiato=await aggiorna();
@@ -5343,10 +5402,10 @@ async function switchSetPastoRs(el,direction,aggiorna){
     const frameEntrante=el.querySelector('.meal-frame');
     trackEntrante=frameEntrante&&frameEntrante.querySelector('.carousel>.track');
     if(!outgoing||!frameEntrante||!trackEntrante)return true;
+    const scrollEntrante=trackEntrante.scrollLeft;
     const incoming=trackEntrante.cloneNode(true);
-    incoming.scrollLeft=trackEntrante.scrollLeft;
-    incoming.style.transition='none';
-    if(trackEntrante.style.transform)incoming.style.transform=trackEntrante.style.transform;
+    incoming.style.scrollBehavior='auto';
+    incoming.style.overflow='hidden';
     rail=document.createElement('div');
     rail.className='vertical-rail';
     rail.setAttribute('aria-hidden','true');
@@ -5354,6 +5413,8 @@ async function switchSetPastoRs(el,direction,aggiorna){
     else rail.append(incoming,outgoing);
     const nextButton=frameEntrante.querySelector('.carousel-next');
     frameEntrante.insertBefore(rail,nextButton||null);
+    outgoing.scrollLeft=scrollUscente;
+    incoming.scrollLeft=scrollEntrante;
     trackEntrante.style.visibility='hidden';
     const frames=direction==='up'
       ?[{transform:'translateY(0)'},{transform:'translateY(-50%)'}]
@@ -5556,7 +5617,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   el.innerHTML=html;
   el.classList.add('meal');
   el.classList.toggle('special-mode',modalitaSpeciale);
-  attivaCaroselloPastoRs(el);
+  (pasto==='cena'?attivaCaroselloCenaRs:attivaCaroselloPranzoRs)(el);
   el.querySelectorAll('[data-rs-details]').forEach(btn=>btn.addEventListener('click',()=>{
     cassettiAzioniPasto[id]=!cassettiAzioniPasto[id];
     impostaCassettoPastoRs(el,cassettiAzioniPasto[id]);
