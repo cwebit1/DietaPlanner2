@@ -4213,3 +4213,33 @@ finali introdotta.
 `assets/recipe-placeholder.png`, `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Rapporto fisso 18:5 del placeholder e del frame fotografico — 14 settembre 2026
+
+**Correzione richiesta:** il placeholder panoramico e il riquadro fotografico
+principale non condividevano una proporzione unica tra mobile e desktop; il
+solo `object-fit` non poteva garantire contemporaneamente assenza di taglio,
+bande o deformazione.
+
+**Correzione applicata:** `assets/recipe-placeholder.png` e' stato sostituito
+con il PNG approvato, ritagliato fisicamente a `2160x600px`, rapporto esatto
+`18:5` (`3,6:1`). Il primo riquadro della `.photo-row` usa ora
+`aspect-ratio:18/5` a ogni larghezza. Sono state rimosse le altezze fisse
+desktop `151px` e mobile `82px`: mobile e desktop mantengono quindi la
+stessa proporzione del frame, mentre la dimensione assoluta resta responsive.
+
+**Invarianti:** fotografia successiva, scroll-snap, freccia, separazione
+Pranzo/Cena, loop Speciali, rail verticale, cassetti e logica funzionale non
+sono stati modificati.
+
+**Verifiche eseguite:** PNG verificato a `2160x600px`; rapporto matematico
+`3,6`; asset collegato sul percorso esistente; una sola regola
+`aspect-ratio:18/5`; altezze fisse precedenti assenti; compilazione degli 8
+script inline riuscita.
+
+**Commit del codice e dell'asset:** `45e1ceb0063bcc6f895f845ab0b1c092e5286cad`.
+
+**File modificati:** `index-restyling.html`,
+`assets/recipe-placeholder.png`, `docs/REGISTRO_MODIFICHE.md`.
+
+---
