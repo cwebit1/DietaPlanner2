@@ -4118,3 +4118,53 @@ verificati sul DOM live.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Separazione dei caroselli Pranzo/Cena e allineamento al modello grafico — 14 settembre 2026
+
+**Difetto corretto:** Pranzo e Cena venivano inizializzati dallo stesso ingresso
+generico senza un'identita' esplicita del carosello, mentre la resa orizzontale
+usava un track chiuso mosso con `translateX()`, diverso dal modello nativo
+`overflow-x:auto` + `scroll-snap` di `restyling-preview.html`. Il fallback
+fotografico inseriva inoltre dentro l'area immagine il nome della ricetta e la
+scritta “Foto in preparazione”, alterando la struttura visiva della slide.
+
+**Correzione applicata:** ogni carosello dichiara ora esplicitamente il proprio
+pasto tramite `data-carousel-pasto`. Pranzo e Cena hanno registri
+`WeakMap`, funzioni di attivazione, timer di normalizzazione e listener
+separati; condividono soltanto l'algoritmo comune, senza condividere stato.
+La Colazione conserva un terzo registro distinto. Il track delle ricette usa
+ora lo stesso modello del riferimento: scorrimento orizzontale nativo,
+`scroll-snap-type:x mandatory`, `scroll-behavior:smooth`, pannelli larghi
+il 100% e freccia che opera mediante `scrollTo()`. I set normali contengono
+le sole slide reali; il catalogo Speciali conserva il loop fisico
+ultimo/reali/primo e la relativa normalizzazione.
+
+**Resa grafica:** fotografia principale, anteprima laterale, indicatori,
+titolo e ingredienti sono stati riallineati alle misure desktop e mobile del
+modello grafico. In assenza di percorso fotografico, o se il caricamento
+fallisce, il renderer mantiene un vero elemento `img` e usa un placeholder
+SVG grafico scuro senza testo, costruito esclusivamente con i colori gia'
+presenti nel tema. Non vengono piu' prodotti `.photo-fallback` o “Foto in
+preparazione”.
+
+**Rail verticale e funzioni preservate:** il rail continua a clonare track
+uscente ed entrante e conserva ora esplicitamente il rispettivo
+`scrollLeft` dopo l'inserimento dei cloni. Cassetto, Dettagli, Ricetta,
+Alternativa, Salvafrigo, proposta in memoria, Speciali, Ripristina, conferma,
+Rigenera e Annulla non cambiano semantica. Motore, dati, IndexedDB e regole
+nutrizionali non sono stati modificati. `Copia giorno` resta assente.
+
+**Verifiche eseguite:** compilazione degli 8 script inline riuscita; contratti
+statici verificati per identita' separata Pranzo/Cena/Colazione, tre registri
+di stato indipendenti, scroll-snap nativo, set normali senza cloni, loop
+Speciali con cloni, ripristino dello scroll nel rail, placeholder realmente
+reso come immagine e assenza completa del vecchio testo di fallback. Assenza
+di `copy-day`/`Copia giorno` confermata. La verifica visiva live verra'
+eseguita dopo la pubblicazione e non viene dichiarata in questa voce.
+
+**Commit del codice:** `c7f2eab06eb4e67ab5fe009c8178bb86fd90dd2b`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
