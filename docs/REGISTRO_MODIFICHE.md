@@ -4005,3 +4005,43 @@ bloccato l'URL del server locale con `ERR_BLOCKED_BY_CLIENT`.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Completamento delle animazioni della modalità Pasto speciale — 14 settembre 2026
+
+**Difetto corretto:** dopo lo spostamento dei comandi nel cassetto, la modalità
+Speciale non disponeva ancora della cornice arcobaleno rotante né del richiamo
+rosso pulsante su `Imposta come pasto`. Restava inoltre la regola
+`pasto-star-spin` collegata alla vecchia `.special-toggle.active svg`, benché il
+pulsante tondo e la relativa icona non fossero più prodotti dal renderer della
+card.
+
+**Correzione applicata:** `index-restyling.html` dichiara ora la custom property
+`--special-frame-angle` e applica esclusivamente a `.meal.special-mode` una
+cornice mascherata di `3px`, costruita con lo stesso `conic-gradient` del
+riferimento e animata da `special-frame-lights` per `2.4s` lineari in ciclo. Il
+pulsante `.action.choose-special` conserva i colori scuri già presenti e, solo
+all'interno di `.meal.special-mode`, riceve uno pseudo-elemento posteriore con
+bagliore rosso `special-alert`, durata `1s`, easing `ease-in-out` e ciclo
+infinito. La rotazione orfana della vecchia stella è stata rimossa, senza
+inventare o aggiungere nuove icone nel cassetto.
+
+**Separazione degli stati:** il tap su `Dettagli` continua a modificare soltanto
+lo stato del cassetto e non tocca `pannelloSpecialeAperto`, `.special-mode` o il
+rail. Le animazioni partono e si arrestano quindi esclusivamente quando il
+comando testuale `Pasto speciale` cambia realmente `modalitaSpeciale`; logica,
+tetto settimanale, salvataggio e caroselli restano invariati.
+
+**Verifiche eseguite:** compilazione degli 8 script inline riuscita; contratto
+statico di `@property`, gradient, maschera, durate, easing e selettori vincolati
+a `.special-mode` riuscito; assenza di `pasto-star-spin` e della vecchia regola
+animata sulla stella confermata; indipendenza fra gestore `Dettagli` e gestore
+Speciale verificata; `engine-core.test.js` e `lotto-pasto-fascia-oraria.test.js`
+riusciti; `git diff --check` pulito. Il collaudo visivo locale non è stato
+dichiarato riuscito perché il browser remoto blocca il server locale.
+
+**Commit del codice:** `2fe7bf63303f0c54e61ce6334b8fca34f93f8f61`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
