@@ -4291,3 +4291,40 @@ voce prima della pubblicazione live.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Frecce contestuali, margini foto e riepilogo kcal — 14 settembre 2026
+
+**Correzione applicata:** i caroselli normali di Pranzo e Cena non eseguono
+piu' il ritorno circolare agli estremi. Ogni slide mostra soltanto la freccia
+che conduce a una ricetta realmente disponibile: la prima mostra solo
+“successivo”, l'ultima solo “precedente”, le intermedie entrambe e una ricetta
+unica nessuna. Il catalogo dei Piatti speciali conserva invece il proprio loop
+con entrambe le frecce quando contiene piu' di una ricetta.
+
+**Allineamento grafico:** la fotografia usa ora gli stessi margini orizzontali
+del contenuto della card (`17px`, ridotti a `8px` sotto `430px`) su Colazione,
+Pranzo e Cena. La riga inferiore e' divisa in due colonne uguali: a sinistra
+una cella informativa non interattiva nel formato “x kcal questo pasto”, a
+destra il pulsante “Dettagli”. La precedente riga calorica sotto il carosello
+e' stata rimossa; restano visibili separatamente soltanto eventuali stati non
+calorici, come “consumato” e l'indicazione del catalogo Speciale.
+
+**Invarianti:** rapporto fotografico `18:5`, placeholder PNG, caroselli
+indipendenti di Colazione/Pranzo/Cena, loop Speciali, rail verticale,
+cassetti, modal Ricetta, azioni reali, motore, bozze e IndexedDB non sono stati
+modificati. `Copia giorno` resta assente.
+
+**Verifiche eseguite:** compilazione dei 4 script inline non vuoti (8 tag
+complessivi) riuscita; contratti statici riusciti per margini desktop/mobile,
+ordine kcal/Dettagli, colonne `1fr 1fr`, formato kcal unico, frecce
+direzionali senza modulo nei caroselli normali, loop Speciali e rail
+preservati; test `lotto-pasto-fascia-oraria` e
+`lotto-pasto-anteprima-non-salvata` riusciti; `git diff --check` pulito. Il
+collaudo visivo live viene eseguito dopo la pubblicazione.
+
+**Commit del codice:** `2899e4dd7663ca154dffcb7c744fcaf20a54b0c6`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
