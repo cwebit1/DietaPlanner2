@@ -4168,3 +4168,15 @@ eseguita dopo la pubblicazione e non viene dichiarata in questa voce.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+### Completamento della parita' grafica Speciali — stesso intervento
+
+Il confronto finale col riferimento ha rilevato tre dettagli ancora necessari
+alla resa identica della ricetta: etichetta portata a `11px` con peso `700`
+(`7px` mobile), indicatori nascosti nel catalogo Speciali e margine inferiore
+di `10px` sulla riga fotografica Speciale. Sono stati aggiunti senza cambiare
+markup, stato o comportamento del carosello.
+
+**Commit integrativo del codice:** `ec998091189714f7331eefe197dabae60ec91001`.
+
+---
