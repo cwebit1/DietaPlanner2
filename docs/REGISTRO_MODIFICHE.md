@@ -3973,3 +3973,35 @@ browser disponibile non ha potuto raggiungere il server locale.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Allineamento responsive delle testate Pasto al riferimento — 14 settembre 2026
+
+**Difetto corretto:** le testate di colazione, pranzo e cena in
+`index-restyling.html` conservavano misure sensibilmente più piccole rispetto a
+`restyling-preview.html`: altezza `40px`, icona `1.25rem`, titolo `.92rem` con
+spaziatura `.035em` e orario `700 .7rem Georgia`. Mancavano inoltre gli
+adattamenti specifici del riferimento sotto `580px` e `430px`.
+
+**Correzione applicata:** senza cambiare struttura, simboli, colori o font dei
+dati, la testata usa ora l'equivalente in `rem` delle misure reali del
+riferimento: altezza `3.375rem`, icona `2rem`, titolo `1.6875rem` con peso `800`
+invariato e spaziatura `.03125rem`, orario `1.125rem Georgia`. Sotto `580px` il
+titolo passa a `1.4375rem` e l'orario a `.9375rem`; sotto `430px` la testata
+passa a `1.9375rem`, l'icona a `1.1875rem`, il titolo a `.875rem` con spaziatura
+`.0125rem` e l'orario a `.5625rem`. Il maiuscolo già prodotto dal renderer, i
+simboli sole/luna, l'oro esistente, la fonte dell'orario, il rail verticale e i
+cassetti delle azioni sono rimasti invariati.
+
+**Verifiche eseguite:** rimisurazione testuale di entrambi i file; contratto
+statico delle regole base e dei breakpoint `580px`/`430px` riuscito;
+compilazione degli 8 script inline riuscita; test
+`lotto-pasto-fascia-oraria` riuscito; `git diff --check` pulito. Il confronto
+visivo nel browser non è stato dichiarato riuscito: il browser remoto ha
+bloccato l'URL del server locale con `ERR_BLOCKED_BY_CLIENT`.
+
+**Commit del codice:** `94280e0a4ee723467d857b74505d3de8d258bca0`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
