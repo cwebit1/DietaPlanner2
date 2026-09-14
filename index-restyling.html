@@ -736,7 +736,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .photo-main,#view-piano .photo-peek,#view-piano .photo-placeholder{display:block;width:100%;height:100%;object-fit:cover;background:var(--panel-2);}
 #view-piano .photo-main,#view-piano .photo-placeholder{border-radius:14px;}
 #view-piano .photo-peek{border-radius:14px 0 0 14px;}
-#view-piano .photo-placeholder{object-fit:cover;}
+#view-piano .photo-placeholder{object-fit:contain;}
 #view-piano .carousel-next{position:absolute;z-index:3;right:20px;top:50px;width:51px;height:51px;padding:0;border:1px solid var(--border);border-radius:50%;background:rgba(32,38,26,.94);color:var(--text);font-size:2.25rem;line-height:1;box-shadow:0 2px 7px rgba(0,0,0,.3);}
 #view-piano .carousel-next[hidden]{display:none;}
 #view-piano .dots{height:18px;display:flex;align-items:center;justify-content:center;gap:10px;}
@@ -5162,7 +5162,7 @@ function immaginePastoRs(ricetta,mappaVisuale){
   const record=mappaVisuale.get(String(ricetta&&ricetta.id||''));
   return record&&record.percorsoImmagine?String(record.percorsoImmagine):'';
 }
-const PLACEHOLDER_FOTO_PASTO_RS='data:image/svg+xml;charset=UTF-8,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect width="1200" height="800" fill="#262d1e"/><circle cx="600" cy="400" r="238" fill="#20261a" stroke="#374025" stroke-width="24"/><circle cx="600" cy="400" r="154" fill="none" stroke="#4a5a2a" stroke-width="18"/><path d="M286 205v390M250 205v145c0 57 72 57 72 0V205M914 205c-52 58-64 137-64 221h64v169" fill="none" stroke="#9cc23a" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/></svg>');
+const PLACEHOLDER_FOTO_PASTO_RS='assets/recipe-placeholder.png';
 function htmlFotoPastoRs(ricetta,percorso,classe,decorativa){
   const usaPlaceholder=!percorso;
   return '<img class="'+classe+(usaPlaceholder?' photo-placeholder':'')+'" src="'+escPastoRs(percorso||PLACEHOLDER_FOTO_PASTO_RS)+'" alt="'+(decorativa?'':escPastoRs(usaPlaceholder?'Immagine ricetta non disponibile':ricetta.nome||''))+'" loading="lazy" data-rs-photo data-rs-placeholder="'+String(usaPlaceholder)+'">';
