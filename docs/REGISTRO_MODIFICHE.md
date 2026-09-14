@@ -4243,3 +4243,51 @@ script inline riuscita.
 `assets/recipe-placeholder.png`, `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+## Immagine centrata, doppia navigazione e titolo separato — 14 settembre 2026
+
+**Difetto corretto:** i caroselli Pasto disponevano la fotografia in una
+griglia composta dall'immagine principale e da un'anteprima laterale del 15%,
+con padding asimmetrico. Il piatto risultava quindi decentrato e mostrava una
+porzione della ricetta successiva. Era disponibile soltanto la freccia destra;
+inoltre tipo della portata e nome della ricetta erano concatenati nello stesso
+titolo e sulla stessa linea.
+
+**Correzione applicata:** le slide di Colazione, Pranzo e Cena mostrano ora una
+sola fotografia centrata e larga il 100% del frame, senza `.photo-peek` e senza
+padding laterali. Il rapporto responsive `18:5` e il placeholder PNG corrente
+restano invariati. Ogni slide contiene una coppia di controlli sovrapposti alla
+fotografia, `Piatto precedente` e `Piatto successivo`, nascosti quando la
+ricetta e' unica. La funzione condivisa del carosello gestisce entrambe le
+direzioni, inclusi ritorno circolare e normalizzazione dei cloni Speciali. I
+controlli vivono dentro la slide, quindi viaggiano anche nei track clonati dal
+rail verticale. I registri `WeakMap` di Colazione, Pranzo e Cena restano
+separati.
+
+**Gerarchia del testo:** il tipo della portata (`Piatto`, `Primo`, `Secondo`,
+`Colazione composta` o `Colazione speciale`) e' ora un elemento autonomo a
+blocco; il nome effettivo della ricetta o della composizione compare nella riga
+sottostante. La separazione e' applicata dai renderer reali
+`htmlCaroselloPastoRs()` e `htmlCaroselloColazioneRs()` anche nei relativi stati
+Speciali e proposta.
+
+**Invarianti:** swipe e scroll-snap orizzontali, indicatori, rapporto del
+placeholder, rail verticale con durata/easing esistenti, cassetti, modal
+Ricetta, Alternativa, Salvafrigo, Ripristina, Rigenera, Annulla, conferma,
+limiti Speciali, motore, dati e IndexedDB non sono stati modificati. `Copia
+giorno` resta assente.
+
+**Verifiche eseguite:** compilazione degli 8 script inline riuscita; contratti
+statici riusciti per singola colonna fotografica, assenza di `.photo-peek`,
+rapporto `18:5`, doppio comando accessibile, navigazione nelle due direzioni,
+titolo/nome separati, tre registri indipendenti e rail invariato; test
+`lotto-pasto-fascia-oraria` e `lotto-pasto-anteprima-non-salvata` riusciti;
+`git diff --check` pulito. Il collaudo visivo non viene dichiarato in questa
+voce prima della pubblicazione live.
+
+**Commit del codice:** `549e17cb3d363a8969198a1636ab8e5b7b6591f1`.
+
+**File modificati:** `index-restyling.html`,
+`docs/REGISTRO_MODIFICHE.md`.
+
+---
