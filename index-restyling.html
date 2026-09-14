@@ -681,6 +681,8 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-frame{position:relative;overflow:hidden;}
 #view-piano .carousel{overflow:hidden;touch-action:pan-y;}
 #view-piano .track{display:flex;transform:translateX(-100%);will-change:transform;}
+#view-piano .vertical-rail{position:absolute;z-index:2;top:0;left:0;width:100%;pointer-events:none;will-change:transform;}
+#view-piano .vertical-rail>.track{width:100%;background:var(--panel);}
 #view-piano .slide{flex:0 0 100%;min-width:0;}
 #view-piano .photo-row{height:126px;display:grid;grid-template-columns:minmax(0,1fr) 15%;gap:8px;padding-left:9px;overflow:hidden;}
 #view-piano .photo-row>div{min-width:0;height:100%;}
@@ -696,7 +698,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .dot{width:6px;height:6px;border-radius:50%;background:var(--border);}
 #view-piano .dot.active{background:var(--accent);}
 #view-piano .meal-copy{padding:0 10px 8px;}
-#view-piano .dish-row{display:grid;grid-template-columns:minmax(0,1fr) 38px 38px;gap:5px;align-items:center;}
+#view-piano .dish-row{display:block;}
 #view-piano .dish-title{margin:0;font:700 1rem/1.08 Georgia,serif;overflow-wrap:anywhere;}
 #view-piano .dish-kind{display:inline-block;margin-right:4px;color:var(--accent);font:800 .55rem/1 sans-serif;letter-spacing:.08em;text-transform:uppercase;}
 #view-piano .round-action{width:38px;height:38px;padding:0;border:1px solid var(--border);border-radius:50%;background:var(--panel-2);display:grid;place-items:center;}
@@ -715,6 +717,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;padding-top:7px;border-top:1px solid var(--border);}
 #view-piano .actions.readonly{grid-template-columns:1fr;}
 #view-piano .actions.special-actions{grid-template-columns:1fr 1fr;}
+#view-piano .actions.drawer-toggle{grid-template-columns:1fr;}
 #view-piano .action{height:34px;padding:0 7px;border:1px solid var(--border);border-radius:9px;background:var(--panel-2);color:var(--text);font-size:.7rem;font-weight:750;}
 #view-piano .action.primary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;border-color:var(--accent-dim);background:var(--accent-dim);color:var(--accent);}
 #view-piano .action.primary .icon{justify-self:end;margin-right:5px;font-size:1rem;}
@@ -722,6 +725,17 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .action.restore{background:transparent;color:var(--accent);border-color:var(--accent-dim);}
 #view-piano .action.choose-special{border-color:#b8473f;background:#702923;color:#fff;}
 #view-piano .action.special-confirmed{border-color:var(--accent-dim);background:var(--accent-dim);color:var(--accent);}
+#view-piano .action-drawer-shell{display:grid;grid-template-rows:0fr;opacity:0;transform:translateY(-6px);transition:grid-template-rows .24s cubic-bezier(.4,0,.2,1),opacity .2s ease,transform .24s cubic-bezier(.4,0,.2,1);}
+#view-piano .action-drawer-shell.open{grid-template-rows:1fr;opacity:1;transform:translateY(0);}
+#view-piano .action-drawer-inner{min-height:0;overflow:hidden;}
+#view-piano .action-drawer{margin-top:7px;padding:8px;border-top:1px solid var(--border);border-radius:0 0 9px 9px;background:var(--panel-2);}
+#view-piano .action-drawer-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;}
+#view-piano .action-drawer-controls .action{background:var(--panel);}
+#view-piano .action-drawer-controls .action.restore{background:transparent;}
+#view-piano .action-drawer-controls .action.choose-special{background:#702923;}
+#view-piano .action-drawer-controls .action.special-confirmed{background:var(--accent-dim);}
+#view-piano .action-drawer-controls .action.recipe{display:flex;align-items:center;justify-content:center;gap:5px;}
+#view-piano .action-drawer-controls .action.recipe .icon{font-size:1rem;}
 #view-piano .meal-meta{padding:0 10px 8px;color:var(--text-dim);font-size:.7rem;}
 #view-piano .meal-empty{padding:18px 12px;color:var(--text-dim);font-size:.78rem;text-align:center;}
 #view-piano .meal-empty .primary{width:100%;margin-top:11px;}
@@ -730,11 +744,6 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-proposal .pasto-griglia-compatta{margin-top:7px;}
 #view-piano .meal-proposal .row{display:grid!important;grid-template-columns:1.35fr .8fr .8fr;}
 #view-piano .meal-proposal .row button{width:100%;min-width:0;padding-left:6px;padding-right:6px;}
-#view-piano .vertical-out{animation:pasto-out-down .28s linear both;}
-#view-piano .vertical-in{animation:pasto-in-down .28s linear both;}
-@keyframes pasto-out-down{to{transform:translateY(100%)}}
-@keyframes pasto-in-down{from{transform:translateY(-100%)}to{transform:translateY(0)}}
-
 @media(min-width:500px){
   #view-piano .photo-row{height:165px;}
   #view-piano .carousel-next{top:64px;}
@@ -3855,6 +3864,7 @@ async function renderPiano(){
   /* Cambio di giorno o rientro nella pagina Pasto: qualunque proposta
      Alternativa/Salvafrigo non confermata va scartata senza salvarla. */
   for(const chiave in bozzePropostaPasto)delete bozzePropostaPasto[chiave];
+  for(const chiave in cassettiAzioniPasto)delete cassettiAzioniPasto[chiave];
   resetStatoPannelli();
 
   // controllo reattivo: fa passare a "consumato" (scalando l'inventario allora, non
@@ -4377,9 +4387,14 @@ async function renderColazione(giorno, elementId){
         mappaVisualePasto(),
         voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
       ]);
-      el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false);
+      el.innerHTML=htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,false,{cassettoAperto:!!cassettiAzioniPasto[pianoId]});
       attivaCaroselloPastoRs(el);
+      el.querySelector('[data-rs-col-details]')?.addEventListener('click',()=>{
+        cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
+        impostaCassettoPastoRs(el,cassettiAzioniPasto[pianoId]);
+      });
       el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
+      el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId));
       return;
     }
     const riepilogoScaduto = (voce.componenti || voce.colazioneSpecialeId)
@@ -4410,7 +4425,11 @@ async function renderColazione(giorno, elementId){
       mappaVisualePasto(),
       voce.colazioneSpecialeId?getOne('ricette',voce.colazioneSpecialeId):Promise.resolve(null)
     ]);
-    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true,{specialeAperto:!!pannelloSpecialeAperto[pianoId]});
+    html = htmlCaroselloColazioneRs(voce,varianti,descrizioneAttuale,nutri,visualeColazione,ricettaSpecialeAttuale,true,{
+      specialeAperto:!!pannelloSpecialeAperto[pianoId],
+      configurazioneAperta:!!draft.aperta,
+      cassettoAperto:!!cassettiAzioniPasto[pianoId]
+    });
   }
 
   const tutteRicetteCS = await getAll('ricette');
@@ -4460,25 +4479,34 @@ async function renderColazione(giorno, elementId){
         Sostituisci colazione
       </button>
     </div>
-  </div><button class="pasto-expander" data-colazione-expander aria-expanded="${draft.aperta?'true':'false'}" title="${draft.aperta?'Nascondi modifiche':'Mostra modifiche'}">${draft.aperta?'⌃':'⌄'}</button>`;
+  </div>${elementId?`<button class="pasto-expander" data-colazione-expander aria-expanded="${draft.aperta?'true':'false'}" title="${draft.aperta?'Nascondi modifiche':'Mostra modifiche'}">${draft.aperta?'⌃':'⌄'}</button>`:''}`;
 
   el.innerHTML=html;
   if(!elementId)el.classList.add('meal');
+  if(!elementId){
+    const configurazione=el.querySelector('[data-config-colazione]');
+    const slot=el.querySelector('[data-rs-col-config-slot]');
+    if(configurazione&&slot)slot.append(configurazione);
+  }
   if(!elementId)attivaCaroselloPastoRs(el);
   el.classList.toggle('pasto-card-aperta',!!draft.aperta);
 
   el.querySelector('[data-info-colazione-attuale]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
+  el.querySelector('[data-rs-col-details]')?.addEventListener('click',()=>{
+    cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
+    impostaCassettoPastoRs(el,cassettiAzioniPasto[pianoId]);
+  });
   el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
   el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId));
   el.querySelector('[data-rs-col-edit]')?.addEventListener('click',()=>{
     draft.aperta=!draft.aperta;
     el.classList.toggle('pasto-card-aperta',draft.aperta);
-    const expander=el.querySelector('[data-colazione-expander]');
-    if(expander){expander.textContent=draft.aperta?'⌃':'⌄';expander.setAttribute('aria-expanded',String(draft.aperta));expander.title=draft.aperta?'Nascondi modifiche':'Mostra modifiche';}
+    el.querySelectorAll('[data-rs-col-edit]').forEach(btn=>btn.textContent=draft.aperta?'Nascondi configurazione':'Cambia piatto');
   });
   el.querySelector('[data-rs-col-special-toggle]')?.addEventListener('click',async()=>{
     if(!colazioniSpeciali.length){await avviso('Non ci sono ancora colazioni speciali disponibili nel ricettario.');return;}
     pannelloSpecialeAperto[pianoId]=!pannelloSpecialeAperto[pianoId];
+    cassettiAzioniPasto[pianoId]=true;
     if(pannelloSpecialeAperto[pianoId])draft.aperta=true;
     renderColazione(giorno,elementId);
   });
@@ -5083,24 +5111,36 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
   opzioni=opzioni||{};
   const ricette=(materializzate||[]).filter(Boolean);
   if(!ricette.length)return '';
-  const stella='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2-4.5-4.4 6.3-.9Z"/></svg>';
+  const cassettoAperto=!!opzioni.cassettoAperto;
+  const pianoId=String(opzioni.pianoId||voce&&voce.id||'');
   const slidePer=(ricetta,indice)=>{
     const prossima=ricette[(indice+1)%ricette.length];
     const foto=immaginePastoRs(ricetta,mappaVisuale);
     const fotoProssima=immaginePastoRs(prossima,mappaVisuale);
     const dots=ricette.map((_,i)=>'<i class="dot'+(i===indice?' active':'')+'" aria-hidden="true"></i>').join('');
+    let comandi='';
+    if(modificabile){
+      comandi+='<button class="action" type="button" data-rs-special-toggle>'+(opzioni.speciale?'Esci da Pasto speciale':'Pasto speciale')+'</button>';
+      if(opzioni.speciale){
+        comandi+='<button class="action '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'special-confirmed':'choose-special')+'" type="button" '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'disabled':'data-rs-special-set="'+escPastoRs(ricetta.id)+'"')+'>'+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'Pasto speciale impostato':'Imposta come pasto')+'</button>';
+      }else{
+        comandi+=(opzioni.propostaAttiva
+          ?'<button class="action restore" type="button" data-nm-ripristina>Ripristina</button>'
+          :'<button class="action" type="button" data-nm-salvafrigo>♻️ Salvafrigo</button>');
+        comandi+='<button class="action" type="button" data-nm-alternativa><b>⟳</b> '+(opzioni.propostaAttiva?'Cambia':'Cambia piatto')+'</button>';
+      }
+    }
+    comandi+='<button class="action recipe" type="button" data-rs-recipe="'+escPastoRs(ricetta.id)+'"><span class="icon">☷</span><span>Ricetta</span></button>';
+    const proposta=modificabile&&opzioni.propostaAttiva&&!opzioni.speciale
+      ?'<div data-nm-proposta="'+escPastoRs(pianoId)+'"></div>'
+      :'';
     return '<section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(ricetta.id)+'" data-dish-kind="'+escPastoRs(ricetta.tipoPortata||'piatto')+'" data-logical-index="'+indice+'" data-bind="dish.imagePath,dish.title,dish.ingredients">'
       +'<div class="photo-row"><div>'+htmlFotoPastoRs(ricetta,foto,'photo-main',false)+'</div><div>'+htmlFotoPastoRs(prossima,fotoProssima,'photo-peek',true)+'</div></div>'
       +'<div class="dots">'+dots+'</div>'
-      +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</span>'+escPastoRs(ricetta.nome)+'</h3>'
-      +(modificabile?'<button class="round-action special-toggle'+(opzioni.speciale?' active':'')+'" type="button" data-rs-special-toggle title="'+(opzioni.speciale?'Chiudi i piatti speciali':'Apri i piatti speciali')+'" aria-label="'+(opzioni.speciale?'Chiudi i piatti speciali':'Apri i piatti speciali')+'">'+stella+'</button>':'')
-      +'<button class="round-action favorite-toggle'+(preferite&&preferite.has(String(ricetta.id))?' active':'')+'" type="button" data-rs-favorite="'+escPastoRs(ricetta.id)+'" title="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'" aria-label="'+(preferite&&preferite.has(String(ricetta.id))?'Togli dai preferiti':'Aggiungi ai preferiti')+'">♥</button></div>'
+      +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+escPastoRs(etichettaPortataPastoRs(ricetta))+'</span>'+escPastoRs(ricetta.nome)+'</h3></div>'
       +'<div class="ingredients">'+htmlIngredientiPastoRs(ricetta,mappaVarianti)+'</div>'
-      +'<div class="actions'+(modificabile?'':' readonly')+(opzioni.speciale?' special-actions':'')+'">'
-      +(modificabile?(opzioni.speciale
-        ?'<button class="action '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'special-confirmed':'choose-special')+'" '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'disabled':'data-rs-special-set="'+escPastoRs(ricetta.id)+'"')+'><b>★</b> '+(String(opzioni.specialeConfermatoId||'')===String(ricetta.id)?'Pasto speciale impostato':'Imposta come pasto')+'</button>'
-        :'<button class="action" data-nm-alternativa><b>⟳</b> '+(opzioni.propostaAttiva?'Cambia':'Cambia piatto')+'</button>'+(opzioni.propostaAttiva?'<button class="action restore" data-nm-ripristina>Ripristina</button>':'<button class="action" data-nm-salvafrigo>♻️ Salvafrigo</button>')):'')
-      +'<button class="action primary" data-rs-details="'+escPastoRs(ricetta.id)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div></div></section>';
+      +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-details="'+escPastoRs(ricetta.id)+'" aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
+      +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div>'+proposta+'</div></div></div></div></section>';
   };
   const originali=ricette.map(slidePer);
   const slides=ricette.length>1?[originali[originali.length-1],...originali,originali[0]].join(''):originali[0];
@@ -5110,6 +5150,7 @@ function htmlCaroselloPastoRs(materializzate,voce,pasto,mappaVisuale,mappaVarian
 }
 function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,ricettaSpeciale,modificabile,opzioni){
   opzioni=opzioni||{};
+  const cassettoAperto=!!opzioni.cassettoAperto;
   const fintaRicetta=ricettaSpeciale||{id:'colazione-standard',nome:descrizione||'Colazione'};
   const foto=ricettaSpeciale?immaginePastoRs(ricettaSpeciale,mappaVisuale):'';
   const perId=new Map((varianti||[]).map(v=>[String(v.id),v]));
@@ -5131,15 +5172,20 @@ function htmlCaroselloColazioneRs(voce,varianti,descrizione,nutri,mappaVisuale,r
     }
   }
   const ingredientiHtml=(ingredienti.slice(0,3).map(x=>'<div class="ingredient"><span class="food-icon">'+iconaIngredientePastoRs(x.nome)+'</span><span class="ingredient-name">'+escPastoRs(x.nome)+(x.quantita?'<small>'+escPastoRs(x.quantita)+'</small>':'')+'</span></div>').join(''))||'<div class="ingredient"><span class="food-icon">•</span><span class="ingredient-name">Componi la colazione</span></div>';
-  const azioni=modificabile===false
-    ? '<div class="actions readonly"><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>'
-    : '<div class="actions"><button class="action" data-rs-col-edit><b>⟳</b> Cambia piatto</button><button class="action" data-rs-col-recipe>Ricetta</button><button class="action primary" data-rs-col-info><span class="icon">☷</span><span>Dettagli</span><span class="chev">›</span></button></div>';
+  let comandi='';
+  if(modificabile!==false){
+    comandi+='<button class="action" type="button" data-rs-col-special-toggle>'+(opzioni.specialeAperto?'Chiudi Colazione speciale':'Colazione speciale')+'</button>';
+    comandi+='<button class="action" type="button" data-rs-col-edit>'+(opzioni.configurazioneAperta?'Nascondi configurazione':'Cambia piatto')+'</button>';
+  }
+  comandi+='<button class="action recipe" type="button" data-rs-col-recipe><span class="icon">☷</span><span>Ricetta</span></button>';
+  comandi+='<button class="action" type="button" data-rs-col-info>Info</button>';
   return htmlTestataPastoRs('colazione')
     +'<div class="meal-frame"><div class="carousel" data-ui-role="meal-visual" data-bind="meal.current" data-carousel-count="1"><div class="track"><section class="slide" data-ui-role="dish-slide" data-recipe-id="'+escPastoRs(fintaRicetta.id)+'" data-dish-kind="colazione" data-logical-index="0" data-bind="dish.imagePath,dish.title,dish.ingredients">'
     +'<div class="photo-row" style="grid-template-columns:minmax(0,1fr);padding-right:9px"><div>'+htmlFotoPastoRs(fintaRicetta,foto,'photo-main',false)+'</div></div><div class="dots"><i class="dot active"></i></div>'
-    +'<div class="meal-copy"><div class="dish-row" style="grid-template-columns:minmax(0,1fr)'+(modificabile===false?'':' 38px')+'"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3>'
-    +(modificabile===false?'':'<button class="round-action special-toggle'+(opzioni.specialeAperto||ricettaSpeciale?' active':'')+'" type="button" data-rs-col-special-toggle title="Colazioni speciali" aria-label="Apri le colazioni speciali"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2.8 2.8 5.7 6.3.9-4.5 4.4 1 6.2-5.6-3-5.6 3 1-6.2-4.5-4.4 6.3-.9Z"/></svg></button>')+'</div>'
-    +'<div class="ingredients">'+ingredientiHtml+'</div>'+azioni+'</div></section></div></div></div>'
+    +'<div class="meal-copy"><div class="dish-row"><h3 class="dish-title"><span class="dish-kind">'+(ricettaSpeciale?'Colazione speciale':'Colazione composta')+'</span>'+escPastoRs(descrizione||fintaRicetta.nome)+'</h3></div>'
+    +'<div class="ingredients">'+ingredientiHtml+'</div>'
+    +'<div class="actions drawer-toggle"><button class="action primary" type="button" data-rs-col-details aria-expanded="'+String(cassettoAperto)+'"><span class="icon">☷</span><span>Dettagli</span><span class="chev">'+(cassettoAperto?'⌃':'⌄')+'</span></button></div>'
+    +'<div class="action-drawer-shell'+(cassettoAperto?' open':'')+'" data-rs-action-drawer aria-hidden="'+String(!cassettoAperto)+'"><div class="action-drawer-inner"><div class="action-drawer"><div class="action-drawer-controls">'+comandi+'</div><div data-rs-col-config-slot></div></div></div></div></div></section></div></div></div>'
     +'<div class="meal-meta">'+Math.round(nutri&&nutri.kcal||0)+' kcal · per 1 persona'+(voce&&voce.consumato?' · ✓ consumata':'')+'</div>';
 }
 function attivaCaroselloPastoRs(el){
@@ -5189,6 +5235,67 @@ function attivaCaroselloPastoRs(el){
    pranzo e cena restano sempre indipendenti. Azzerata a ogni ingresso in
    Piano (cambio giorno o pagina), vedi renderPiano(). */
 const bozzePropostaPasto = {};
+const cassettiAzioniPasto = {};
+const cambiSetPastoRsInCorso = new WeakSet();
+
+function impostaCassettoPastoRs(el,aperto){
+  if(!el)return;
+  el.querySelectorAll('[data-rs-action-drawer]').forEach(drawer=>{
+    drawer.classList.toggle('open',!!aperto);
+    drawer.setAttribute('aria-hidden',String(!aperto));
+  });
+  el.querySelectorAll('[data-rs-details],[data-rs-col-details]').forEach(btn=>{
+    btn.setAttribute('aria-expanded',String(!!aperto));
+    const chev=btn.querySelector('.chev');
+    if(chev)chev.textContent=aperto?'⌃':'⌄';
+  });
+}
+
+/* Cambio verticale di set: stessa sequenza del prototipo di riferimento.
+   Il callback aggiorna esclusivamente lo stato/render reale; i due track
+   clonati servono soltanto alla transizione e non ricevono listener. */
+async function switchSetPastoRs(el,direction,aggiorna){
+  if(!el||cambiSetPastoRsInCorso.has(el))return false;
+  cambiSetPastoRsInCorso.add(el);
+  let rail=null,trackEntrante=null;
+  const frameUscente=el.querySelector('.meal-frame');
+  const trackUscente=frameUscente&&frameUscente.querySelector('.carousel>.track');
+  const scrollUscente=trackUscente?trackUscente.scrollLeft:0;
+  const outgoing=trackUscente?trackUscente.cloneNode(true):null;
+  if(outgoing){
+    outgoing.scrollLeft=scrollUscente;
+    outgoing.style.transition='none';
+    if(trackUscente.style.transform)outgoing.style.transform=trackUscente.style.transform;
+  }
+  try{
+    const cambiato=await aggiorna();
+    if(cambiato===false)return false;
+    const frameEntrante=el.querySelector('.meal-frame');
+    trackEntrante=frameEntrante&&frameEntrante.querySelector('.carousel>.track');
+    if(!outgoing||!frameEntrante||!trackEntrante)return true;
+    const incoming=trackEntrante.cloneNode(true);
+    incoming.scrollLeft=trackEntrante.scrollLeft;
+    incoming.style.transition='none';
+    if(trackEntrante.style.transform)incoming.style.transform=trackEntrante.style.transform;
+    rail=document.createElement('div');
+    rail.className='vertical-rail';
+    rail.setAttribute('aria-hidden','true');
+    if(direction==='up')rail.append(outgoing,incoming);
+    else rail.append(incoming,outgoing);
+    const nextButton=frameEntrante.querySelector('.carousel-next');
+    frameEntrante.insertBefore(rail,nextButton||null);
+    trackEntrante.style.visibility='hidden';
+    const frames=direction==='up'
+      ?[{transform:'translateY(0)'},{transform:'translateY(-50%)'}]
+      :[{transform:'translateY(-50%)'},{transform:'translateY(0)'}];
+    await rail.animate(frames,{duration:380,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'}).finished;
+    return true;
+  }finally{
+    if(rail)rail.remove();
+    if(trackEntrante)trackEntrante.style.visibility='';
+    cambiSetPastoRsInCorso.delete(el);
+  }
+}
 
 function voceSpecialePastoRs(giorno,pasto,voce,ricetta){
   const baseRealizzazione={
@@ -5360,7 +5467,9 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   html+=htmlCaroselloPastoRs(materializzateMostrate,voceVisuale,pasto,visuale,mappaVariantiPasto,kcal,modificabile,preferitePasto,{
     speciale:modalitaSpeciale,
     specialeConfermatoId:specialeConfermato&&specialeConfermato.id,
-    propostaAttiva:!!bozzaAttiva
+    propostaAttiva:!!bozzaAttiva,
+    pianoId:id,
+    cassettoAperto:!!cassettiAzioniPasto[id]
   });
   const ruoliPresenti=new Set(righeVsgUniche(materializzate).flatMap(r=>r.tipi));
   const ruoliMancanti=[['C','carboidrato'],['P','proteina'],['V','verdura']].filter(([tipo])=>!ruoliPresenti.has(tipo)).map(([,nome])=>nome);
@@ -5374,33 +5483,28 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
     if(originali.length)html+='<div class="meta" style="margin-top:6px;">Programmato: '+esc([...new Set(originali)].join(' · '))+'</div>';
   }
 
-  /* Modificabilita' basata sulla fascia oraria, non sulla sola data: un
-     pasto resta modificabile finche' la sua fascia non e' chiusa, mai
-     "finche' il giorno e' oggi o futuro" - quel criterio da solo
-     lascerebbe modificabile un pasto anomalo non ancora archiviato
-     anche a fascia gia' scaduta. */
-  if(modificabile){
-    html+='<div id="propostaPasto_'+esc(id)+'" style="display:'+(bozzePropostaPasto[id]?'block':'none')+';"></div>';
-  }
-
   el.innerHTML=html;
   el.classList.add('meal');
   el.classList.toggle('special-mode',modalitaSpeciale);
   attivaCaroselloPastoRs(el);
   el.querySelectorAll('[data-rs-details]').forEach(btn=>btn.addEventListener('click',()=>{
-    const ricetta=materializzateMostrate.find(r=>String(r.id)===String(btn.dataset.rsDetails));
-    if(ricetta)apriModalDettaglioRicetta(ricetta,voceVisuale);
+    cassettiAzioniPasto[id]=!cassettiAzioniPasto[id];
+    impostaCassettoPastoRs(el,cassettiAzioniPasto[id]);
   }));
-  el.querySelectorAll('[data-rs-favorite]').forEach(btn=>btn.addEventListener('click',async()=>{
-    await toggleFavorito(btn.dataset.rsFavorite);
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+  el.querySelectorAll('[data-rs-recipe]').forEach(btn=>btn.addEventListener('click',()=>{
+    const ricetta=materializzateMostrate.find(r=>String(r.id)===String(btn.dataset.rsRecipe));
+    if(ricetta)apriModalDettaglioRicetta(ricetta,voceVisuale);
   }));
   if(!modificabile)return;
 
   el.querySelectorAll('[data-rs-special-toggle]').forEach(btn=>btn.addEventListener('click',async()=>{
     if(!specialiPasto.length){await avviso('Non ci sono ancora piatti speciali disponibili nel ricettario.');return;}
-    pannelloSpecialeAperto[id]=!modalitaSpeciale;
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+    await switchSetPastoRs(el,modalitaSpeciale?'up':'down',async()=>{
+      pannelloSpecialeAperto[id]=!modalitaSpeciale;
+      cassettiAzioniPasto[id]=true;
+      await renderBloccoNuovoMotore(pasto,giorno,elementId);
+      return true;
+    });
   }));
 
   el.querySelectorAll('[data-rs-special-set]').forEach(btn=>btn.addEventListener('click',async()=>{
@@ -5416,6 +5520,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
       await segnaRicettaUsata(ricetta.id);
       delete bozzePropostaPasto[id];
       pannelloSpecialeAperto[id]=true;
+      cassettiAzioniPasto[id]=true;
       await renderBloccoNuovoMotore(pasto,giorno,elementId);
       if(giorno===giornoSelezionato)renderNutrizioneGiorno();
       aggiornaListaSpesaAutomatica(0);aggiornaListaSpesaAutomatica(1);
@@ -5428,8 +5533,12 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   }));
 
   el.querySelectorAll('[data-nm-ripristina]').forEach(btn=>btn.addEventListener('click',async()=>{
-    delete bozzePropostaPasto[id];
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+    await switchSetPastoRs(el,'up',async()=>{
+      delete bozzePropostaPasto[id];
+      cassettiAzioniPasto[id]=true;
+      await renderBloccoNuovoMotore(pasto,giorno,elementId);
+      return true;
+    });
   }));
 
   const impostaCaricamento=(btn,inCorso,etichetta)=>{
@@ -5440,45 +5549,46 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   };
 
   const avviaProposta=async(modalita,btn)=>{
-    /* Impedisce doppi click sul singolo pulsante, senza bloccare il resto
-       della pagina: nessun overlay a tutto schermo, solo lo stato del
-       pulsante toccato. */
-    impostaCaricamento(btn,true,modalita==='salvafrigo'?'Ricerca in corso…':'Generazione…');
-    const target=voce.categoriaTarget||await targetNuovoMotorePerPasto(giorno,pasto);
-    const opzioni=modalita==='salvafrigo'?{soloAnteprima:true,usaInventario:true}:{soloAnteprima:true};
-    let risultato=null;
-    try{
-      risultato=await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
-    }catch(err){
-      console.error('[pasto proposta]',err);
-    }
-    impostaCaricamento(btn,false);
-    if(!risultato){
-      await avviso(modalita==='salvafrigo'?'Nessuna alternativa Salvafrigo compatibile con il piano odierno.':'Nessuna proposta alternativa valida trovata per questo pasto.');
-      return; // il pasto originale resta invariato, nessun pannello aperto
-    }
-    bozzePropostaPasto[id]={modalita,voce:risultato};
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
+    await switchSetPastoRs(el,'down',async()=>{
+      impostaCaricamento(btn,true,modalita==='salvafrigo'?'Ricerca in corso…':'Generazione…');
+      let risultato=null;
+      try{
+        const target=voce.categoriaTarget||await targetNuovoMotorePerPasto(giorno,pasto);
+        const opzioni=modalita==='salvafrigo'?{soloAnteprima:true,usaInventario:true}:{soloAnteprima:true};
+        risultato=await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
+      }catch(err){
+        console.error('[pasto proposta]',err);
+      }finally{
+        impostaCaricamento(btn,false);
+      }
+      if(!risultato){
+        await avviso(modalita==='salvafrigo'?'Nessuna alternativa Salvafrigo compatibile con il piano odierno.':'Nessuna proposta alternativa valida trovata per questo pasto.');
+        return false;
+      }
+      bozzePropostaPasto[id]={modalita,voce:risultato};
+      cassettiAzioniPasto[id]=true;
+      await renderBloccoNuovoMotore(pasto,giorno,elementId);
+      return true;
+    });
   };
 
   el.querySelectorAll('[data-nm-alternativa]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('alternativa',e.currentTarget)));
   el.querySelectorAll('[data-nm-salvafrigo]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('salvafrigo',e.currentTarget)));
 
   if(bozzePropostaPasto[id]){
-    await renderPannelloPropostaPasto(id,giorno,pasto,elementId);
+    await renderPannelloPropostaPasto(id,giorno,pasto,elementId,el);
   }
 }
 
 /* Pannello della proposta in corso (Alternativa/Salvafrigo), indipendente
    per pranzo e cena (chiave giorno_pasto) e mai sovrapposto al pasto reale
    finche' non si preme "Imposta come pasto". */
-async function renderPannelloPropostaPasto(id,giorno,pasto,elementId){
-  const cont=document.getElementById('propostaPasto_'+id);
-  if(!cont)return;
-  cont.classList.add('meal-proposal');
+async function renderPannelloPropostaPasto(id,giorno,pasto,elementId,cardEl){
+  const card=cardEl||document.getElementById(elementId||(pasto==='pranzo'?'blocPranzo':'blocCena'));
+  const conts=card?[...card.querySelectorAll('[data-nm-proposta]')].filter(x=>x.dataset.nmProposta===id):[];
+  if(!conts.length)return;
   const bozza=bozzePropostaPasto[id];
-  if(!bozza){cont.style.display='none';cont.innerHTML='';return;}
-  cont.style.display='block';
+  if(!bozza){for(const cont of conts){cont.style.display='none';cont.innerHTML='';}return;}
   const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const voceProposta=bozza.voce;
   let kcal=0;
@@ -5502,7 +5612,6 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId){
   });
   html+='</div><div class="meta" style="margin-top:6px;">'+Math.round(kcal)+' kcal</div>';
   html+='<div class="row" style="margin-top:10px;gap:7px;"><button class="primary" data-nm-imposta>Imposta come pasto</button><button class="secondary" data-nm-rigenera-proposta>Rigenera</button><button class="secondary" data-nm-annulla-proposta>Annulla</button></div>';
-  cont.innerHTML=html;
 
   const impostaCaricamento=(btn,inCorso,etichetta)=>{
     if(!btn)return;
@@ -5511,52 +5620,63 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId){
     else if(btn.dataset.etichettaOriginale){btn.textContent=btn.dataset.etichettaOriginale;delete btn.dataset.etichettaOriginale;}
   };
 
-  cont.querySelector('[data-nm-rigenera-proposta]')?.addEventListener('click',async(e)=>{
-    /* Rigenera resta nella stessa modalità con cui il pannello è stato
-       aperto (Alternativa resta Alternativa, Salvafrigo resta Salvafrigo)
-       e sostituisce soltanto la bozza: nessun put(). */
-    const btn=e.currentTarget;
-    impostaCaricamento(btn,true,'Generazione…');
-    const target=voceProposta.categoriaTarget||await targetNuovoMotorePerPasto(giorno,pasto);
-    const opzioni=bozza.modalita==='salvafrigo'?{soloAnteprima:true,usaInventario:true}:{soloAnteprima:true};
-    let risultato=null;
-    try{
-      risultato=await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
-    }catch(err){
-      console.error('[pasto proposta] rigenera',err);
-    }
-    impostaCaricamento(btn,false);
-    if(!risultato){
-      await avviso(bozza.modalita==='salvafrigo'?'Nessuna alternativa Salvafrigo compatibile con il piano odierno.':'Nessuna proposta alternativa valida trovata per questo pasto.');
-      return; // la bozza precedente resta quella visibile, non viene sostituita da un esito vuoto
-    }
-    bozzePropostaPasto[id]={modalita:bozza.modalita,voce:risultato};
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
-  });
+  for(const cont of conts){
+    cont.classList.add('meal-proposal');
+    cont.style.display='block';
+    cont.innerHTML=html;
+    cont.querySelector('[data-nm-rigenera-proposta]')?.addEventListener('click',async(e)=>{
+      const btn=e.currentTarget;
+      await switchSetPastoRs(card,'down',async()=>{
+        impostaCaricamento(btn,true,'Generazione…');
+        let risultato=null;
+        try{
+          const target=voceProposta.categoriaTarget||await targetNuovoMotorePerPasto(giorno,pasto);
+          const opzioni=bozza.modalita==='salvafrigo'?{soloAnteprima:true,usaInventario:true}:{soloAnteprima:true};
+          risultato=await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
+        }catch(err){
+          console.error('[pasto proposta] rigenera',err);
+        }finally{
+          impostaCaricamento(btn,false);
+        }
+        if(!risultato){
+          await avviso(bozza.modalita==='salvafrigo'?'Nessuna alternativa Salvafrigo compatibile con il piano odierno.':'Nessuna proposta alternativa valida trovata per questo pasto.');
+          return false;
+        }
+        bozzePropostaPasto[id]={modalita:bozza.modalita,voce:risultato};
+        cassettiAzioniPasto[id]=true;
+        await renderBloccoNuovoMotore(pasto,giorno,elementId);
+        return true;
+      });
+    });
 
-  cont.querySelector('[data-nm-annulla-proposta]')?.addEventListener('click',async()=>{
-    delete bozzePropostaPasto[id];
-    await renderBloccoNuovoMotore(pasto,giorno,elementId);
-  });
+    cont.querySelector('[data-nm-annulla-proposta]')?.addEventListener('click',async()=>{
+      await switchSetPastoRs(card,'up',async()=>{
+        delete bozzePropostaPasto[id];
+        cassettiAzioniPasto[id]=true;
+        await renderBloccoNuovoMotore(pasto,giorno,elementId);
+        return true;
+      });
+    });
 
-  cont.querySelector('[data-nm-imposta]')?.addEventListener('click',async(e)=>{
-    /* Unico punto di salvataggio dell'intera pagina Pasto: solo qui viene
-       eseguito un put('piano', ...), tramite lo stesso committer generico
-       già usato altrove nel motore (salvaRoll: put('piano',voce) e basta,
-       nessuna logica specifica del Roll). */
-    const btn=e.currentTarget;
-    impostaCaricamento(btn,true,'Salvataggio…');
-    try{
-      await DietaPlannerMotorV12.salvaRoll(bozza.voce);
-      delete bozzePropostaPasto[id];
-      await renderBloccoNuovoMotore(pasto,giorno,elementId);
-    }catch(err){
-      console.error('[pasto proposta] salvataggio',err);
-      impostaCaricamento(btn,false);
-      await avviso('Salvataggio non riuscito: '+(err.message||err)+'. La proposta resta aperta, il pasto originale non è stato modificato.');
-      // il pannello resta aperto con la stessa bozza, il pasto reale resta quello di prima
-    }
-  });
+    cont.querySelector('[data-nm-imposta]')?.addEventListener('click',async(e)=>{
+      const btn=e.currentTarget;
+      await switchSetPastoRs(card,'up',async()=>{
+        impostaCaricamento(btn,true,'Salvataggio…');
+        try{
+          await DietaPlannerMotorV12.salvaRoll(bozza.voce);
+          delete bozzePropostaPasto[id];
+          cassettiAzioniPasto[id]=true;
+          await renderBloccoNuovoMotore(pasto,giorno,elementId);
+          return true;
+        }catch(err){
+          console.error('[pasto proposta] salvataggio',err);
+          impostaCaricamento(btn,false);
+          await avviso('Salvataggio non riuscito: '+(err.message||err)+'. La proposta resta aperta, il pasto originale non è stato modificato.');
+          return false;
+        }
+      });
+    });
+  }
 }
 
 async function renderBloccoCompleto(pasto, giorno, elementId){
