@@ -47,44 +47,55 @@ basata sul nuovo formato. In caso di conflitto nutrizionale prevale
 ## 3. Carboidrati
 
 - Pranzo e cena automatici richiedono sempre una fonte di carboidrati,
-  salvo pasto speciale o override esplicito. **Corretto 04/09/2026**:
-  l'eccezione decisa il 03/09/2026 ("se nessun carboidrato risulta
-  compatibile il pasto procede senza") è stata rimossa — un pasto
-  ordinario senza C non è più un esito accettabile in nessun caso: se
-  nessuna combinazione produce un carboidrato valido, lo slot fallisce
-  e la settimana non viene salvata (errore esplicito con giorno/pasto
-  coinvolti), invece di accettare un pasto incompleto con
-  `carbKeyUsato:null`.
-- Sequenza obbligatoria per ogni slot, mai una regola generica "cerca C
-  compatibile con PX": (1) filtra i candidati PX validi; (2) fra quei
-  PX, cerca prima quelli che realizzano già PX+C.user (un carboidrato
-  FIXED ancora da collocare incorporato nella stessa ricetta) — hanno
-  priorità assoluta su qualunque altra strada, mai per il solo fatto di
-  contenere genericamente un carboidrato; (3) se non esistono, posiziona
-  un PX libero; (4) soltanto dopo cerca un C o C+V valido, provando
-  sempre prima ogni C.user ancora da collocare e solo poi gli AUTO
-  ammessi — mai mescolati nello stesso livello di priorità. Sughi e
-  guarnizioni non intervengono mai in questa scelta: entrano solo dopo,
-  per calcolare il residuo V (`V residua = V richiesta − S − G − V già
-  completa`).
-- Il piano settimanale ordinario contiene 14 slot.
-- Stati persistenti:
-  - `AUTO`: riempimento casuale con sole voci prive di tetto PDF;
-  - `EXCLUDED`: zero esplicito, mai proposto automaticamente;
-  - `FIXED`: numero settimanale esatto scelto dall'utente.
-- Gnocchi, pasta ripiena, gallette, crackers, friselle,
-  taralli/grissini/crostini, piadina e sfoglia/brisée hanno tetto PDF 0–2.
+  salvo pasto speciale o override esplicito. Un pasto ordinario senza C
+  non è un esito accettabile: se nessuna combinazione produce un
+  carboidrato valido, lo slot fallisce e la settimana non viene salvata.
+- **Regola definitiva 21/09/2026:** i carboidrati senza tetto PDF
+  (`PDF_BASELINE.carbohydrateUncapped`) sono **sempre AUTO**. L'utente non
+  può più fissarne un conteggio, escluderli, impostarli a zero o
+  distribuirli nei 14 slot. Qualunque vecchio stato persistito
+  FIXED/EXCLUDED/count relativo a queste chiavi è funzionalmente inerte e
+  viene normalizzato ad AUTO dal resolver/migrazione canonica.
+- Restano configurabili esclusivamente i carboidrati definiti in
+  `PDF_BASELINE.carbohydrateWeeklyCaps`: gnocchi, pasta ripiena, gallette,
+  crackers, friselle, taralli/grissini/crostini, piadina e
+  sfoglia/brisée. Per queste voci `0` significa non utilizzare la voce;
+  un conteggio positivo è un FIXED settimanale esatto entro il tetto
+  individuale e dentro `limitedCarbTotalMax`.
 - Un tetto non è un obiettivo: una voce limitata entra soltanto se scelta
-  esplicitamente.
-- Nessun fallback può riattivare una voce esclusa o superare un numero fisso.
+  esplicitamente. Gli slot non occupati dai limitati FIXED vengono
+  completati esclusivamente con carboidrati normali AUTO.
+- Sequenza obbligatoria per ogni slot: (1) determinare la classe proteica
+  richiesta e le sue realizzazioni valide; (2) se esiste un carboidrato
+  limitato FIXED ancora da collocare, provare prima le realizzazioni
+  PX+C.user e quindi il C.user separato; (3) altrimenti usare un
+  carboidrato normale AUTO; (4) soltanto dopo completare il residuo V.
+  Sughi e guarnizioni non intervengono nella scelta P/C.
+- Non tutte le classi proteiche richiedono una proteina standalone:
+  `PF` può essere realizzato correttamente da ricette `C+PF`, `C+PF+V`
+  o altre forme esplicitamente previste dal catalogo. Non vanno creati
+  formaggi standalone artificiali per adattare il catalogo al motore.
+- Il piano settimanale ordinario contiene 14 slot. Nessun fallback può
+  riattivare un carboidrato limitato a zero, superare un FIXED o
+  trasformare un limite in preferenza soft.
 - Prima di scrivere la settimana, ogni pasto ordinario è validato
-  atomicamente (copertura P/C/V, carboidrato non nullo, nessun EXCLUDED,
-  copertura verdura completa): se anche un solo pasto non supera il
-  controllo, nessuna scrittura avviene, nemmeno parziale.
+  atomicamente (copertura P/C/V, carboidrato non nullo, rispetto dei
+  FIXED limitati, copertura verdura completa): se anche un solo pasto
+  non supera il controllo, nessuna scrittura avviene, nemmeno parziale.
 
 ## 4. Proteine
 
 - Frequenze e limiti derivano dal resolver.
+- **Rotazione AUTO definitiva 21/09/2026:** una categoria proteica usata
+  nel giorno D è NON USABILE nelle celle AUTO del giorno D+1. È un
+  vincolo binario, non uno score, una penalizzazione o una preferenza.
+  Le celle manuali dell'utente restano vincolanti e possono ripetere una
+  categoria del giorno precedente se compatibili con gli altri vincoli
+  hard. La generazione verifica matematicamente la fattibilità residua
+  prima di accettare una macro AUTO, così una scelta localmente valida
+  non può creare un dead-end negli ultimi slot. Non esiste fallback che
+  riabiliti una categoria AUTO usata il giorno precedente perché manca
+  una ricetta.
 - Carne rossa, affettati/salumi/insaccati, pesce di grande taglia e pesce
   conservato hanno contatori settimanali di famiglia.
 - Speck, pancetta, prosciutti, bresaola e tutte le salsicce contribuiscono al
