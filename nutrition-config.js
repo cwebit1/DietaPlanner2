@@ -322,23 +322,34 @@
     return counts;
   }
 
+  /* Stato canonico carboidrati:
+     - le voci senza tetto PDF (carbohydrateUncapped) sono SEMPRE AUTO;
+       qualunque vecchio FIXED/EXCLUDED/count/zero esplicito viene
+       neutralizzato qui, prima di qualunque uso da parte di Set o motore;
+     - le voci con tetto settimanale sono le sole configurabili: assenza,
+       AUTO o zero significano 0 utilizzi (EXCLUDED); un conteggio positivo
+       significa FIXED esatto, poi validato contro il tetto PDF/applicativo.
+     Questa funzione e' l'unico punto canonico di normalizzazione: nessun
+     chiamante deve reimplementare la distinzione. */
   function normalizeCarbohydrateSelection(input){
     input=input||{};
     const counts=input.counts||input.configCarboidrati||{};
-    const explicitZeroKeys=new Set(input.explicitZeroKeys||input.configCarboidratiExplicitZeroKeys||[]);
     const states=input.states||{};
-    const keys=[...PDF_BASELINE.carbohydrateUncapped,...Object.keys(PDF_BASELINE.carbohydrateWeeklyCaps)];
+    const uncapped=new Set(PDF_BASELINE.carbohydrateUncapped);
+    const limited=Object.keys(PDF_BASELINE.carbohydrateWeeklyCaps);
+    const keys=[...uncapped,...limited];
     const out={};
 
     for(const key of keys){
-      const st=states[key];
-      if(st&&typeof st==='object'&&['auto','excluded','fixed'].includes(st.mode)){
-        const count=st.mode==='fixed'?Math.max(0,integer(st.count)||0):0;
-        out[key]={mode:st.mode,count};
+      if(uncapped.has(key)){
+        out[key]={mode:'auto',count:0};
         continue;
       }
-      if(st==='auto'||st==='excluded'){
-        out[key]={mode:st,count:0};
+
+      const st=states[key];
+      if(st&&typeof st==='object'&&st.mode==='fixed'){
+        const count=Math.max(0,integer(st.count)||0);
+        out[key]=count>0?{mode:'fixed',count}:{mode:'excluded',count:0};
         continue;
       }
       if(typeof st==='number'&&st>0){
@@ -347,14 +358,10 @@
       }
 
       const n=own(counts,key)?integer(counts[key]):null;
-      if(explicitZeroKeys.has(key)){
-        out[key]={mode:'excluded',count:0};
-      }else if(n!==null&&n>0){
+      if(n!==null&&n>0){
         out[key]={mode:'fixed',count:n};
       }else{
-        // Legacy: 0 senza marcatore esplicito resta AUTO, per distinguere
-        // "mai configurato" da "utente ha scelto zero".
-        out[key]={mode:'auto',count:0};
+        out[key]={mode:'excluded',count:0};
       }
     }
     return out;
