@@ -179,10 +179,13 @@ function buildProteinGrid(days,userTable,config,history,rng){
       return true;
     }
     const slot=liberi[idx],altro=slot.pasto==='pranzo'?stato[slot.day].cena:stato[slot.day].pranzo;
+    const dayIndex=days.indexOf(slot.day),giornoPrecedente=dayIndex>0?days[dayIndex-1]:null;
+    const usateIeri=new Set(giornoPrecedente?[stato[giornoPrecedente].pranzo,stato[giornoPrecedente].cena].filter(Boolean):[]);
     let candidati=categorie.filter(m=>{
       const max=cfg.proteinFrequencies[m].max;
       if(max!=null&&counts[m]>=max)return false;
-      if(altro!=null&&m===altro)return false; // sempre diversa dall'altro pasto dello stesso giorno
+      if(altro!=null&&m===altro)return false; // hard: sempre diversa dall'altro pasto dello stesso giorno
+      if(usateIeri.has(m))return false; // hard AUTO: una macro usata nel giorno D vale NON_USABILE nel giorno D+1
       return true;
     });
     candidati=ordinaCandidati(candidati);
