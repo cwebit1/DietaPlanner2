@@ -4347,3 +4347,18 @@ collaudo visivo live viene eseguito dopo la pubblicazione.
 **File modificati dal commit di codice:** `motor-v12.js`; `tests/lotto-carboidrati-fixed-senza-auto.test.js`.
 
 **Commit del codice:** `475e47650a9d3d2f9a87bd27626d7131fee06fda`.
+
+
+---
+
+## Allineamento commento sorgente fix 14 FIXED / 0 AUTO — 21 settembre 2026
+
+**Motivo:** nel controllo finale del diff del fix precedente è rimasto un commento storico nel livello AUTO di `costruisciPastoSequenziale()` che affermava ancora che `fissiRimasti` venisse passato per intero a `cercaCarboSeparato()`. Dopo il fix questa descrizione era falsa: i C.user vengono già esauriti nel livello dedicato precedente e nel livello AUTO viene passato correttamente `[]`.
+
+**Correzione:** modificato esclusivamente il commento per descrivere il flusso reale; nessun comportamento, dato, test o regola funzionale è stato cambiato.
+
+**Controllo:** parsing sintattico del `motor-v12.js` risultante riuscito.
+
+**File modificato:** `motor-v12.js`.
+
+**Commit:** `1c3a63a213aeae9bffb8eb69b7a2e34518ddec0c`.
