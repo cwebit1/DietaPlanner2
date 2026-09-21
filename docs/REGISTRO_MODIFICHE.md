@@ -4328,3 +4328,22 @@ collaudo visivo live viene eseguito dopo la pubblicazione.
 `docs/REGISTRO_MODIFICHE.md`.
 
 ---
+
+
+---
+
+## Fix Genera menù: 14 FIXED / 0 AUTO — 21 settembre 2026
+
+**Problema segnalato:** su una settimana nuova completa (14 slot pranzo/cena), una configurazione del Set composta esclusivamente da carboidrati normali FIXED poteva bloccare completamente `Genera menù`. Scenario riprodotto con `riso`, `orzo`, `farro`, `pasta`, `pasta_fresca`, `cous_cous` e `pane` impostati a 2 ciascuno: `fixedTotal=14`, `remainingSlots=0`, tabella proteine valida. Prima della correzione `generaPianoSettimana()` restituiva `Nessuna composizione valida...` e non scriveva alcun pasto.
+
+**Causa confermata:** in `motor-v12.js:costruisciPastoSequenziale()`, dopo il tentativo prioritario di una ricetta già combinata `PX+C.user`, il percorso `PX libero + C.user separato` era raggiungibile soltanto dentro il ciclo dei livelli AUTO. Con 14 FIXED e 0 AUTO, `autoRapido` e `autoAltri` erano entrambi vuoti e `cercaCarboSeparato()` non veniva mai chiamata per i FIXED.
+
+**Correzione applicata:** aggiunto un livello esplicito e separato dopo `PX+C.user` combinato: per ogni PX libero valido viene chiamata `cercaCarboSeparato(proteina, fissiRimasti, [], ...)`. Solo dopo l'esaurimento di questo livello vengono valutati gli AUTO; nel livello AUTO la stessa funzione riceve un array FIXED vuoto, evitando di duplicare la ricerca. Sequenza risultante: `PX+C.user combinato -> PX + C.user separato -> PX+C.AUTO -> V`. Nessuna modifica a proteine, verdure, Set, resolver, database, inventario, poco tempo, preferenze o logica `today+1`.
+
+**Test mirato aggiunto:** `tests/lotto-carboidrati-fixed-senza-auto.test.js`. Verifica una settimana nuova con 14 FIXED normali e 0 slot AUTO, tabella proteine valida, 14 pasti generati, `carboidratoPianificato` presente in ogni pasto, conteggi FIXED finali esatti, nessun AUTO usato e almeno un pasto realmente composto tramite `PX + C.user` separato. Lo scenario falliva sul codice precedente e passa con la correzione; nella verifica eseguita il percorso separato è stato esercitato 3 volte. Verificata anche la priorità preesistente `PX+C.user`: 100/100 generazioni valide continuano a scegliere il combinato quando disponibile.
+
+**Controlli:** parsing sintattico del `motor-v12.js` patchato e del nuovo test riuscito; controllo delle sole righe aggiunte per errori di whitespace pulito. L'ambiente corrente non espone un checkout shell della repo, quindi i comandi letterali `node --check` e `git diff --check` non sono stati eseguiti; il test funzionale è stato eseguito direttamente sui contenuti esatti recuperati da GitHub.
+
+**File modificati dal commit di codice:** `motor-v12.js`; `tests/lotto-carboidrati-fixed-senza-auto.test.js`.
+
+**Commit del codice:** `475e47650a9d3d2f9a87bd27626d7131fee06fda`.
