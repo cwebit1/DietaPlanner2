@@ -70,11 +70,15 @@ function verificaRotazioneAuto(byDay){
   }});
   let esito=await genera(81001);
   assert.deepEqual(esito.errori,[]);
-  const byManual=await perGiorno();
-  assert.deepEqual(byManual['2026-08-31'],['carne','formaggi']);
-  assert.equal(byManual['2026-09-01'][0],'carne','la cella manuale del martedì deve restare Carne');
-  assert.notEqual(byManual['2026-09-01'][1],'carne','la seconda cella dello stesso giorno deve essere diversa');
-  assert.notEqual(byManual['2026-09-01'][1],'formaggi','la cella AUTO non può riusare Formaggi del giorno precedente');
+  const lunPranzo=await getOne('piano','2026-08-31_pranzo');
+  const lunCena=await getOne('piano','2026-08-31_cena');
+  const marPranzo=await getOne('piano','2026-09-01_pranzo');
+  const marCena=await getOne('piano','2026-09-01_cena');
+  assert.equal(lunPranzo.categoriaTarget,'carne');
+  assert.equal(lunCena.categoriaTarget,'formaggi');
+  assert.equal(marPranzo.categoriaTarget,'carne','la cella manuale del martedì deve restare Carne');
+  assert.notEqual(marCena.categoriaTarget,'carne','la seconda cella dello stesso giorno deve essere diversa');
+  assert.notEqual(marCena.categoriaTarget,'formaggi','la cella AUTO non può riusare Formaggi del giorno precedente');
 
   // Primo giorno generato: usa lo storico reale del giorno precedente esterno.
   reset();
