@@ -51,14 +51,15 @@ function estraiFunzioneMotor(nome){
 (async()=>{
   await M.inizializza({basePath:''});
 
-  // --- Punti 1,3,4,5: PX+C.user (combo Panino+Prosciutto crudo, id 32,
-  //     carboidrato 'pane') deve avere priorita' assoluta quando serve
-  //     una proteina di categoria 'carne' (token PC) e 'pane' e' FIXED
+  // --- Punti 1,3,4,5: PX+C.user resta valido esclusivamente per i
+  //     carboidrati LIMITATI ancora configurabili. Con 'crackers' FIXED
+  //     e categoria 'formaggi' (token PF), una realizzazione C+PF del
+  //     catalogo deve avere priorita' rispetto agli AUTO normali
   //     con residuo ancora disponibile. Nessuna delle 100 generazioni
   //     deve fallire la priorita': non e' un comportamento probabile,
   //     e' una regola che vale sempre quando l'opportunita' esiste. ---
-  await global.put('impostazioni',{chiave:'tabellaGiornoCategoria',valore:{giorno_0:['carne',null]}});
-  await global.put('impostazioni',{chiave:'configCarboidratiStati',valore:{pane:{mode:'fixed',count:1}}});
+  await global.put('impostazioni',{chiave:'tabellaGiornoCategoria',valore:{giorno_0:['formaggi',null]}});
+  await global.put('impostazioni',{chiave:'configCarboidratiStati',valore:{crackers:{mode:'fixed',count:1}}});
   let successiPxCUser=0,generazioniValide=0;
   for(let i=0;i<100;i++){
     stores.piano.clear();
@@ -66,10 +67,10 @@ function estraiFunzioneMotor(nome){
     if(esito.errori.length)continue;
     generazioniValide++;
     const voce=await global.getOne('piano','2026-08-31_pranzo');
-    if(voce&&voce.carboidratoPianificato==='pane')successiPxCUser++;
+    if(voce&&voce.carboidratoPianificato==='crackers')successiPxCUser++;
   }
   assert(generazioniValide>=80,'servono abbastanza generazioni valide per una verifica affidabile ('+generazioniValide+'/100)');
-  assert.equal(successiPxCUser,generazioniValide,'PX+C.user (pane) deve essere scelto SEMPRE quando esiste un candidato PC che lo realizza e pane e\' ancora FIXED da collocare - non solo talvolta');
+  assert.equal(successiPxCUser,generazioniValide,'PX+C.user limitato (crackers) deve essere scelto SEMPRE quando esiste un candidato PC che lo realizza e crackers e\' ancora FIXED da collocare - non solo talvolta');
   await global.delKey('impostazioni','tabellaGiornoCategoria');
   await global.delKey('impostazioni','configCarboidratiStati');
 
@@ -85,7 +86,7 @@ function estraiFunzioneMotor(nome){
     assert(!corpo.includes('completaResiduoVerduraRicette('),'la scelta di P/C non deve calcolare direttamente il residuo V - solo chiudiPastoConVerdura lo fa, dopo');
     assert(!corpo.includes('assegnaCondimentiRotazioneGlobale('),'la scelta di P/C non deve toccare direttamente sughi/condimenti - solo chiudiPastoConVerdura lo fa, dopo');
   }
-  assert(corpoCostruisci.includes('fissiRimasti'),'costruisciPastoSequenziale deve distinguere esplicitamente i C.user (fissiRimasti) dagli AUTO');
+  assert(corpoCostruisci.includes('fissiRimasti'),'costruisciPastoSequenziale deve distinguere esplicitamente i C.user limitati (fissiRimasti) dagli AUTO normali');
 
   // --- Punto 2: FIXED e AUTO non mescolati nello stesso livello di
   //     priorita' - carboidratiCandidatiSlot() non deve piu' mescolare
