@@ -2235,21 +2235,26 @@ async function costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx){
     }
   }
 
-  /* Nessun PX+C.user disponibile (o nessuno ha chiuso il pasto): si
-     posiziona un PX valido e SOLTANTO DOPO si cerca un C o C+V valido -
-     mai la regola generica "cerca C compatibile con PX". Una ricetta PX
-     gia' combinata con un carboidrato AUTO-ammesso resta un candidato
-     come un altro, valutato solo qui - non acquisisce priorita' per il
-     solo fatto di contenere gia' un carboidrato (problema 3).
-     Preferenze soft applicate solo qui (mai su P+C.user sopra), in
-     ordine di priorita' gerarchico e mai mescolate: prima la partizione
-     per cereali non graditi (dominante), poi - dentro ciascun gruppo
-     cosi' ottenuto - la partizione per verdure preferite (rifinisce).
-     Nessun punteggio, nessun confronto per nome, nessuna ricetta viene
-     mai eliminata: solo l'ordine di tentativo cambia. Le ricette senza
-     C restano nello stesso gruppo "cereali ok" (il predicato e' sempre
-     falso per loro) e mantengono comunque la stessa priorita' d'esame
-     relativa di prima. */
+  /* Nessun PX+C.user gia' combinato disponibile (o nessuno ha chiuso il
+     pasto): si mantiene un PX libero valido e si cerca SEMPRE un C.user
+     separato prima di qualunque AUTO. Questo passaggio non dipende
+     dall'esistenza di chiavi AUTO: con 14 FIXED / 0 AUTO deve restare
+     pienamente raggiungibile. cercaCarboSeparato() riceve qui soltanto i
+     fissi ancora da collocare; gli AUTO vengono valutati esclusivamente
+     nel livello successivo. */
+  if(fissiRimasti.length){
+    for(const proteina of proteine){
+      if(copertura(proteina).C)continue;
+      const esito=await cercaCarboSeparato(proteina,fissiRimasti,[],token,giorno,pool,ctx,extra);
+      if(esito)return esito;
+    }
+  }
+
+  /* Solo dopo aver esaurito PX+C.user combinato e PX + C.user separato
+     si considerano i carboidrati AUTO. Una ricetta PX gia' combinata con
+     un carboidrato AUTO-ammesso resta un candidato come un altro, valutato
+     soltanto qui. Preferenze soft applicate solo al livello AUTO, mai al
+     livello C.user sopra. */
   const prefUtentePC=ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences;
   const cerealiNonGraditiPC=prefUtentePC&&prefUtentePC.cerealiNonGraditiIds;
   const verdurePreferitePC=prefUtentePC&&prefUtentePC.verdurePreferiteVariantIds;
@@ -2278,7 +2283,7 @@ async function costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx){
         if(esito)return Object.assign(esito,{carbKeyUsato:chiave,avviso:null});
         continue; // una PX gia' combinata non cerca anche un secondo C separato
       }
-      const esito=await cercaCarboSeparato(proteina,fissiRimasti,chiaviLivelloAuto,token,giorno,pool,ctx,extra);
+      const esito=await cercaCarboSeparato(proteina,[],chiaviLivelloAuto,token,giorno,pool,ctx,extra);
       if(esito)return esito;
     }
   }
