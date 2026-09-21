@@ -2406,10 +2406,71 @@ function contaTargetTabellaFuturi(tab,slots,daIndice){
   }
   return out;
 }
-function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,usateGiorno,usateGiornoPrecedente,rng,proteinaMenoGradita){
+function targetProteicoVincolanteSlot(tab,slot){
+  return slot&&slot.targetBloccato||targetTabellaPerSlot(tab,slot);
+}
+
+/* Verifica PURA di fattibilita' residua delle sole macro proteiche.
+   Non costruisce ricette e non genera un piano alternativo: restituisce
+   soltanto true/false per sapere se accettare ora una macro AUTO lascerebbe
+   ancora assegnabili gli slot successivi rispettando:
+   - celle manuali/bloccate;
+   - max/min settimanali;
+   - categorie diverse nello stesso giorno;
+   - esclusione binaria D -> D+1 nelle sole celle AUTO.
+   Serve a evitare scelte localmente valide che creano un dead-end negli
+   ultimi slot. */
+function sceltaProteicaLasciaFuturoFattibile(resolved,tab,slots,indice,counts,proteineGiorno,candidato,slotTotaliSettimanaCompleta){
+  const freq=resolved.proteinFrequencies||{},forbidden=new Set(resolved.profile&&resolved.profile.forbiddenProteinMacros||[]);
+  const allowed=Object.keys(freq).filter(k=>!forbidden.has(k)&&freq[k].max!==0);
+  const conteggi={};for(const k of Object.keys(freq))conteggi[k]=Number(counts&&counts[k])||0;
+  const perGiorno=new Map();
+  for(const [giorno,set] of (proteineGiorno||new Map()).entries())perGiorno.set(giorno,new Set(set||[]));
+  const corrente=slots[indice];
+  if(!perGiorno.has(corrente.day))perGiorno.set(corrente.day,new Set());
+  perGiorno.get(corrente.day).add(candidato);
+  conteggi[candidato]=(conteggi[candidato]||0)+1;
+  const maxCorr=freq[candidato]&&freq[candidato].max;
+  if(maxCorr!==null&&maxCorr!==undefined&&conteggi[candidato]>Number(maxCorr))return false;
+
+  const slotPersi=Math.max(0,Number(slotTotaliSettimanaCompleta||slots.length)-slots.length);
+  const memo=new Map();
+  const dfs=idx=>{
+    if(idx>=slots.length){
+      let deficit=0;
+      for(const k of allowed)deficit+=Math.max(0,(Number(freq[k].min)||0)-(Number(conteggi[k])||0));
+      return deficit<=slotPersi;
+    }
+    const slot=slots[idx],fissata=targetProteicoVincolanteSlot(tab,slot);
+    if(!perGiorno.has(slot.day))perGiorno.set(slot.day,new Set());
+    const oggi=perGiorno.get(slot.day),ieri=perGiorno.get(addGiorni(slot.day,-1))||new Set();
+    const key=idx+'|'+allowed.map(k=>conteggi[k]||0).join(',')+'|'+[...oggi].sort().join(',')+'|'+[...ieri].sort().join(',')+'|'+(fissata||'AUTO');
+    if(memo.has(key))return memo.get(key);
+
+    const candidati=fissata?[fissata]:allowed.filter(k=>!ieri.has(k));
+    for(const k of candidati){
+      if(!allowed.includes(k)||oggi.has(k))continue;
+      const max=freq[k]&&freq[k].max;
+      if(max!==null&&max!==undefined&&(Number(conteggi[k])||0)>=Number(max))continue;
+
+      oggi.add(k);conteggi[k]=(conteggi[k]||0)+1;
+      let deficit=0,slotResidui=slots.length-(idx+1);
+      for(const m of allowed)deficit+=Math.max(0,(Number(freq[m].min)||0)-(Number(conteggi[m])||0));
+      const possibile=deficit<=slotResidui+slotPersi&&dfs(idx+1);
+      conteggi[k]--;oggi.delete(k);
+      if(possibile){memo.set(key,true);return true;}
+    }
+    memo.set(key,false);return false;
+  };
+  return dfs(indice+1);
+}
+
+function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,proteineGiorno,rng,proteinaMenoGradita,slotTotaliSettimanaCompleta){
   const slot=slots[indice],freq=resolved.proteinFrequencies||{};
   const forbidden=new Set(resolved.profile&&resolved.profile.forbiddenProteinMacros||[]);
   const allowed=Object.keys(freq).filter(k=>!forbidden.has(k)&&freq[k].max!==0);
+  const usateGiorno=proteineGiorno.get(slot.day)||new Set();
+  const usateGiornoPrecedente=proteineGiorno.get(addGiorni(slot.day,-1))||new Set();
   /* Regola definitiva di Cwe: pranzo e cena dello stesso giorno hanno
      SEMPRE due categorie proteiche diverse - "maxProteinSourcesPerDay"
      eliminato (era una semantica errata: "1" nel vecchio motore
@@ -2429,12 +2490,12 @@ function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,usateGiorno,usa
     return {errors:[],targets:[fissata]};
   }
   const prenotate=contaTargetTabellaFuturi(tab,slots,indice+1);
-  usateGiornoPrecedente=usateGiornoPrecedente||new Set();
   let pool=allowed.filter(k=>{
     if(usateGiorno.has(k))return false;
     if(usateGiornoPrecedente.has(k))return false;
     const max=freq[k].max;
-    return max===null||max===undefined||(Number(counts[k])||0)+1+(Number(prenotate[k])||0)<=Number(max);
+    if(!(max===null||max===undefined||(Number(counts[k])||0)+1+(Number(prenotate[k])||0)<=Number(max)))return false;
+    return sceltaProteicaLasciaFuturoFattibile(resolved,tab,slots,indice,counts,proteineGiorno,k,slotTotaliSettimanaCompleta);
   });
   /* Nessuna riapertura del pool: per le celle AUTO le categorie usate nel
      giorno precedente sono NON_USABILI in modo binario, oltre alla categoria
@@ -2540,7 +2601,7 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
       if(!slot.targetBloccato)return {ok:false,errori:['Realizzazione proteica bloccata senza categoria riconoscibile per '+slot.day+' '+slot.pasto+'.'],completati:i};
       proteine={errors:[],targets:[slot.targetBloccato]};
     }else{
-      proteine=opzioniProteinaPerSlot(ctx.resolved,ctx.tabella,slotRefs,i,ctx.weeklyProteinCounts,proteineGiorno.get(slot.day),proteineGiorno.get(addGiorni(slot.day,-1))||new Set(),ctx.rng,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.proteinaMenoGradita);
+      proteine=opzioniProteinaPerSlot(ctx.resolved,ctx.tabella,slotRefs,i,ctx.weeklyProteinCounts,proteineGiorno,ctx.rng,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.proteinaMenoGradita,ctx.slotTotaliSettimanaCompleta);
     }
     if(proteine.errors.length)return {ok:false,errori:proteine.errors,completati:i};
 
