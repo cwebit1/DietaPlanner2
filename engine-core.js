@@ -116,7 +116,8 @@ function buildProteinGrid(days,userTable,config,history,rng){
   const categorie=Object.keys(cfg.proteinFrequencies).filter(m=>{
     const f=cfg.proteinFrequencies[m];return f&&f.max!==0;
   });
-  const counts={};for(const m of Object.keys(cfg.proteinFrequencies))counts[m]=0;
+  const counts={};for(const m of Object.keys(cfg.proteinFrequencies))counts[m]=Number(history&&history.proteinCounts&&history.proteinCounts[m])||0;
+  const allowedMinimumDeficit=Math.max(0,Math.trunc(Number(history&&history.allowedMinimumDeficit)||0));
   const errors=[];
   if(categorie.length<2){
     errors.push('Categorie proteiche disponibili insufficienti ('+categorie.length+'): servono almeno due categorie ammesse per completare pranzo e cena con categorie sempre diverse.');
@@ -148,8 +149,8 @@ function buildProteinGrid(days,userTable,config,history,rng){
   // minimi supera gli slot liberi disponibili, e' gia' impossibile,
   // nessun bisogno di avviare la ricerca.
   const deficitTotale=categorie.reduce((tot,m)=>tot+Math.max(0,Number(cfg.proteinFrequencies[m].min||0)-counts[m]),0);
-  if(deficitTotale>liberi.length){
-    errors.push('Impossibile rispettare i minimi settimanali con gli slot liberi rimasti: servirebbero almeno '+deficitTotale+' pasti liberi, ne restano '+liberi.length+'.');
+  if(deficitTotale>liberi.length+allowedMinimumDeficit){
+    errors.push('Impossibile rispettare i minimi settimanali con gli slot liberi rimasti: deficit '+deficitTotale+', slot liberi '+liberi.length+', tolleranza per slot settimanali gia\' persi '+allowedMinimumDeficit+'.');
     return {cells:{},counts,errors};
   }
 
@@ -172,15 +173,14 @@ function buildProteinGrid(days,userTable,config,history,rng){
   const budget={n:20000};
   const assegna=(idx)=>{
     if(idx>=liberi.length){
-      for(const m of categorie){
-        const min=Number(cfg.proteinFrequencies[m].min||0);
-        if(counts[m]<min)return false;
-      }
-      return true;
+      const deficitFinale=categorie.reduce((tot,m)=>tot+Math.max(0,Number(cfg.proteinFrequencies[m].min||0)-counts[m]),0);
+      return deficitFinale<=allowedMinimumDeficit;
     }
     const slot=liberi[idx],altro=slot.pasto==='pranzo'?stato[slot.day].cena:stato[slot.day].pranzo;
     const dayIndex=days.indexOf(slot.day),giornoPrecedente=dayIndex>0?days[dayIndex-1]:null;
-    const usateIeri=new Set(giornoPrecedente?[stato[giornoPrecedente].pranzo,stato[giornoPrecedente].cena].filter(Boolean):[]);
+    const usateIeri=new Set(giornoPrecedente
+      ?[stato[giornoPrecedente].pranzo,stato[giornoPrecedente].cena].filter(Boolean)
+      :(history&&Array.isArray(history.previousDayMacros)?history.previousDayMacros:[]));
     let candidati=categorie.filter(m=>{
       const max=cfg.proteinFrequencies[m].max;
       if(max!=null&&counts[m]>=max)return false;
