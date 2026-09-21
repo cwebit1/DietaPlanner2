@@ -352,10 +352,6 @@ ol.plain{margin:6px 0;padding-left:18px;font-size:0.85rem;}
 .set-carb-celle{display:flex;gap:3px;flex-wrap:nowrap;}
 .set-carb-celle button{width:24px!important;height:24px!important;min-width:24px!important;max-width:24px!important;min-height:24px!important;max-height:24px!important;padding:0!important;border-color:#4b5540!important;}
 .set-carb-head{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px;}
-.set-carb-mode{flex:0 0 auto;padding:3px 7px!important;min-height:24px!important;border-radius:12px!important;font-size:.62rem!important;font-weight:800!important;}
-.set-carb-mode.auto{border-color:var(--accent)!important;color:var(--accent)!important;}
-.set-carb-mode.excluded{border-color:#e74c3c!important;color:#e74c3c!important;background:rgba(231,76,60,.15)!important;}
-.set-carb-mode.fixed{border-color:#f1c40f!important;color:#f1c40f!important;background:rgba(241,196,15,.10)!important;}
 .set-cap-group{border-top:1px solid var(--border);padding-top:7px;margin-top:7px;}
 .set-cap-group summary{cursor:pointer;font-size:.8rem;font-weight:700;color:var(--text);}
 .set-cap-row{display:grid;grid-template-columns:minmax(0,1fr) 78px;gap:7px;align-items:center;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.05);}
@@ -806,7 +802,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
     Qui configuri il piano dieta settimanale: carboidrati, proteine, verdure e colazione.
     Tutto viene salvato con un unico pulsante in fondo alla pagina.
   </div>
-  <div id="setCarboidrati"><div class="card"><h3 style="margin-bottom:10px;">🍝 Impostazioni Carboidrati</h3><div class="meta" style="margin-bottom:12px;">Puoi lasciare una voce in <b>AUTO</b>, fissarne un numero esatto oppure impostarla a <b>0</b>. I posti non fissati vengono completati automaticamente fino a 14 usando solo carboidrati senza tetto settimanale; quelli con tetto PDF entrano solo se li scegli tu.</div><div id="cfgCarboidratiContenuto"></div><div id="cfgCarboidratiTotale" style="font-weight:700;font-size:0.9rem;margin-top:12px;">Fissi: 0 / 14</div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciCarboidrati">Tutto AUTO</button><button class="secondary" id="btnCompletaCarboidrati" title="Fissa (FIXED) anche i posti ancora liberi, fino a 14 - nessuna voce resta AUTO al termine">Completa e fissa</button><button class="secondary" id="btnCasualeCarboidrati" title="Propone e fissa (FIXED) tutti e 14 i posti in un colpo solo - non è una semplice anteprima AUTO, dopo il click nessuna voce resta AUTO">Casuale 14</button><button class="primary" id="btnSalvaCarboidrati">Salva</button></div><div class="meta" style="margin-top:6px;font-size:.72rem;">"Completa e fissa" e "Casuale 14" impostano davvero le voci come FISSE (FIXED): dopo averle usate nessun posto resta AUTO, a meno di rimetterlo tu manualmente in AUTO o su "Tutto AUTO".</div></div></div>
+  <div id="setCarboidrati"><div class="card"><h3 style="margin-bottom:10px;">🍝 Carboidrati con limitazione</h3><div class="meta" style="margin-bottom:12px;">I carboidrati normali sono sempre gestiti automaticamente dal motore. Qui scegli soltanto quante volte usare i carboidrati soggetti a limite settimanale: <b>0</b>, <b>1</b> o <b>2</b> secondo il tetto effettivo del piano.</div><div id="cfgCarboidratiContenuto"></div><div id="cfgCarboidratiTotale" style="font-weight:700;font-size:0.9rem;margin-top:12px;"></div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciCarboidrati">Azzera limitati</button><button class="primary" id="btnSalvaCarboidrati">Salva</button></div></div></div>
   <div id="setProteine"><div class="card"><h3 style="margin-bottom:10px;">🍗 Impostazioni Proteine</h3><div class="meta" style="margin-bottom:12px;">Tocca le caselle per fissare la categoria proteica di ciascun giorno. Max 2 categorie diverse per giorno. I tetti settimanali del percorso sono rispettati automaticamente.</div><div id="setTabellaGiorno" style="overflow-x:auto;"></div><div class="row" style="margin-top:8px;gap:6px;flex-wrap:wrap;"><button class="secondary" id="btnPulisciProteine">Pulisci</button><button class="secondary" id="btnCompletaProteine">Completa</button><button class="secondary" id="btnCasualeProteine">Casuale</button><button class="primary" id="btnSalvaProteine">Salva</button></div><div id="setPreferenzeMenu" style="margin-top:16px;"><h3 style="margin-bottom:10px;">⚙️ Preferenze generazione menù</h3><div class="meta" style="margin-bottom:8px;">Categorie che gradisci meno: il motore le penalizza senza eliminarle se servono per rispettare il piano.</div><div class="tabgroup" id="setProteineLimitate"></div><div class="meta" style="margin:14px 0 8px;">Tempo disponibile. Se selezioni poco tempo, quel pasto prova prima una composizione completa con pane o friselle, quando compatibile con il piano.</div><div class="tabgroup" id="setTempoMenu"></div></div></div></div>
   <div class="card"><h3>🌾 Cereali non graditi</h3><div class="meta">Il motore li evita quando esistono alternative; non puoi escludere tutte le fonti.</div><div id="setCerealiGradimento" class="setting-swipe" style="margin-top:8px;"></div></div>
   <div class="card"><h3>🎚 Limiti personali ingredienti</h3><div class="meta">Puoi solo rendere più restrittivo il piano del nutrizionista. Lascia vuoto per non aggiungere un limite personale; 0 significa non proporre automaticamente quell'ingrediente. Un minimo clinico non può essere annullato.</div><div id="setLimitiPersonaliIngredienti" style="margin-top:10px;"></div><div id="setLimitiPersonaliStato" class="meta" style="margin-top:8px;"></div></div>
@@ -2153,29 +2149,30 @@ async function getConfigTettiAlimenti(){
    Totale obbligatorio: 14 (7 giorni × 2 pasti).
    Alimenti a tetto: max 3 caselle totali tra tutti i limitati.
    ========================================================= */
-const CONFIG_CARB_TIPI_BASE = [
-  {chiave:'pasta',label:'Pasta (secca)'},{chiave:'pasta_fresca',label:'Pasta fresca'},
-  {chiave:'riso',label:'Riso'},{chiave:'farro',label:'Farro'},{chiave:'orzo',label:'Orzo'},
-  {chiave:'cous_cous',label:'Cous cous'},{chiave:'pane',label:'Pane'},{chiave:'patate',label:'Patate'},
-  {chiave:'polenta',label:'Polenta'},{chiave:'friselle',label:'Friselle'},{chiave:'gnocchi',label:'Gnocchi'},
-  {chiave:'pasta_ripiena',label:'Pasta ripiena'},{chiave:'gallette',label:'Gallette'},{chiave:'crackers',label:'Crackers'},
-  {chiave:'taralli',label:'Taralli / Grissini / Crostini'},{chiave:'piadina',label:'Piadina'},{chiave:'pasta_sfoglia',label:'Pasta sfoglia / brisée'}
-];
 const NUTRITION_CONFIG_SET=globalThis.DietaPlannerNutritionConfig;
-const CONFIG_CARB_MAX_CASELLE=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.carbCellMax||6;
 const CONFIG_CARB_TOTALE_OBBLIGATORIO=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.carbSlots||14;
 let CONFIG_CARB_TETTO_LIMITATI=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.limitedCarbTotalMax||3;
-const CONFIG_CARB_TIPI=CONFIG_CARB_TIPI_BASE.map(t=>{
-  const cap=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.PDF_BASELINE.carbohydrateWeeklyCaps[t.chiave];
-  return Object.assign({},t,{limitato:cap!==undefined,maxIndividuale:cap!==undefined?Number(cap):CONFIG_CARB_MAX_CASELLE});
-});
+const CONFIG_CARB_LABELS={
+  gnocchi:'Gnocchi',
+  pasta_ripiena:'Pasta ripiena',
+  gallette:'Gallette',
+  crackers:'Crackers',
+  friselle:'Friselle',
+  taralli:'Taralli / Grissini / Crostini',
+  piadina:'Piadina',
+  pasta_sfoglia:'Pasta sfoglia / brisée'
+};
+/* L'elenco funzionale NON e' duplicato in UI: le sole righe configurabili
+   derivano dalle chiavi canoniche con tetto del resolver. Le etichette qui
+   sopra sono esclusivamente presentazione. */
+const CONFIG_CARB_TIPI=Object.entries(
+  NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.PDF_BASELINE.carbohydrateWeeklyCaps||{}
+).map(([chiave,cap])=>({chiave,label:CONFIG_CARB_LABELS[chiave]||chiave,maxIndividuale:Number(cap),limitato:true}));
+
 /* Decisione esplicita di Cwe: il tetto cumulativo settimanale dei
    carboidrati limitati è una regola APP-CWE configurabile ad personam
    dal nutrizionista (limitedCarbTotalMax, risolto da
-   resolveNutritionConfig() - unica fonte). CONFIG_CARB_TETTO_LIMITATI
-   è quindi una cache di sessione (stesso pattern già in uso per
-   CAP_SPUNTINO_* / frequenzeProteineSetCorrenti), mai una costante fissa:
-   ricaricata qui, non ricalcolata altrove. */
+   resolveNutritionConfig() - unica fonte). */
 async function aggiornaTettoCarbLimitatiSet(){
   const N=globalThis.DietaPlannerNutritionConfig;if(!N)return;
   const rec=await getOne('impostazioni','configAvanzata');
@@ -2183,43 +2180,41 @@ async function aggiornaTettoCarbLimitatiSet(){
   CONFIG_CARB_TETTO_LIMITATI=resolved.limitedCarbTotalMax;
 }
 
-/* Stato canonico Set carboidrati: AUTO / EXCLUDED / FIXED.
-   configCarboidrati e configCarboidratiOrigini restano scritti per compatibilità legacy. */
-let statoCaselleCarb={};
-let origineCaselleCarb={};
+/* Nel Set esistono stati utente solo per i carboidrati limitati:
+   EXCLUDED = 0 utilizzi, FIXED = conteggio esatto. I carboidrati normali
+   non entrano in questo stato UI e vengono sempre serializzati AUTO. */
 let statiCaselleCarb={};
-let zeroEsplicitiCaselleCarb=new Set();
 
 function inizializzaStatoCaselleCarb(){
-  statoCaselleCarb={};origineCaselleCarb={};statiCaselleCarb={};zeroEsplicitiCaselleCarb=new Set();
-  for(const tipo of CONFIG_CARB_TIPI){statoCaselleCarb[tipo.chiave]=0;origineCaselleCarb[tipo.chiave]=[];statiCaselleCarb[tipo.chiave]={mode:'auto',count:0};}
+  statiCaselleCarb={};
+  for(const tipo of CONFIG_CARB_TIPI)statiCaselleCarb[tipo.chiave]={mode:'excluded',count:0};
 }
 function modalitaCarb(chiave){
   const st=statiCaselleCarb[chiave];
-  if(st&&['auto','excluded','fixed'].includes(st.mode))return st;
-  const n=Math.max(0,Math.trunc(Number(statoCaselleCarb[chiave])||0));
-  return n>0?{mode:'fixed',count:n}:{mode:zeroEsplicitiCaselleCarb.has(chiave)?'excluded':'auto',count:0};
+  if(st&&st.mode==='fixed'&&Number(st.count)>0)return {mode:'fixed',count:Math.trunc(Number(st.count))};
+  return {mode:'excluded',count:0};
 }
-function impostaModalitaCarb(chiave,mode,count,origine){
+function impostaModalitaCarb(chiave,mode,count){
   const tipo=CONFIG_CARB_TIPI.find(t=>t.chiave===chiave);if(!tipo)return;
   if(mode==='fixed'){
-    const max=tipo.maxIndividuale??CONFIG_CARB_MAX_CASELLE,n=Math.max(1,Math.min(max,Math.trunc(Number(count)||1)));
-    statoCaselleCarb[chiave]=n;statiCaselleCarb[chiave]={mode:'fixed',count:n};zeroEsplicitiCaselleCarb.delete(chiave);
-    origineCaselleCarb[chiave]=Array(n).fill(origine||'utente');
+    const n=Math.max(1,Math.min(tipo.maxIndividuale,Math.trunc(Number(count)||1)));
+    statiCaselleCarb[chiave]={mode:'fixed',count:n};
   }else{
-    statoCaselleCarb[chiave]=0;origineCaselleCarb[chiave]=[];statiCaselleCarb[chiave]={mode:mode==='excluded'?'excluded':'auto',count:0};
-    if(mode==='excluded')zeroEsplicitiCaselleCarb.add(chiave);else zeroEsplicitiCaselleCarb.delete(chiave);
+    statiCaselleCarb[chiave]={mode:'excluded',count:0};
   }
 }
 function contaTotaleCaselleCarb(){
   return CONFIG_CARB_TIPI.reduce((tot,t)=>{const st=modalitaCarb(t.chiave);return tot+(st.mode==='fixed'?st.count:0);},0);
 }
-function contaCaselleLimitateCarb(){
-  return CONFIG_CARB_TIPI.filter(t=>t.limitato).reduce((tot,t)=>{const st=modalitaCarb(t.chiave);return tot+(st.mode==='fixed'?st.count:0);},0);
-}
+function contaCaselleLimitateCarb(){return contaTotaleCaselleCarb();}
 function inputCarboidratiCanonicoSet(){
-  const states={};for(const t of CONFIG_CARB_TIPI){const st=modalitaCarb(t.chiave);states[t.chiave]={mode:st.mode,count:st.mode==='fixed'?st.count:0};}
-  return {counts:cloneConfigurazione(statoCaselleCarb),states,explicitZeroKeys:[...zeroEsplicitiCaselleCarb]};
+  const N=globalThis.DietaPlannerNutritionConfig,states={};
+  for(const key of N.PDF_BASELINE.carbohydrateUncapped)states[key]={mode:'auto',count:0};
+  for(const t of CONFIG_CARB_TIPI){
+    const st=modalitaCarb(t.chiave);
+    states[t.chiave]={mode:st.mode,count:st.mode==='fixed'?st.count:0};
+  }
+  return {states};
 }
 async function validaClassiCarboidratiSet(){
   const rec=await getOne('impostazioni','vincoliClassiCarboidrati'),lim=rec&&rec.valore&&rec.valore.complessi||{},totalePasti=CONFIG_CARB_TOTALE_OBBLIGATORIO;
@@ -2229,73 +2224,42 @@ async function validaClassiCarboidratiSet(){
 }
 async function salvaConfigCarboidratiSet(mostraMessaggio){
   const N=globalThis.DietaPlannerNutritionConfig,input=inputCarboidratiCanonicoSet();
-  /* La validazione pre-salvataggio deve usare il tetto cumulativo
-     effettivamente risolto per l'utente (limitedCarbTotalMax), non il
-     default APP-CWE: la configurazione nutrizionista va sempre passata
-     al resolver, mai omessa. */
   const recCfg=await getOne('impostazioni','configAvanzata'),resolved=N.resolveNutritionConfig({nutritionist:{config:recCfg&&recCfg.valore||{}},user:{carbohydrates:input}});
   if(!resolved.valid){if(mostraMessaggio!==false)await avviso('Configurazione carboidrati non valida: '+resolved.errors.join(' '));return {ok:false,errori:resolved.errors};}
   const erroreClasse=await validaClassiCarboidratiSet();if(erroreClasse){if(mostraMessaggio!==false)await avviso(erroreClasse);return {ok:false,errori:[erroreClasse]};}
-  /* Unica verità funzionale scritta: configCarboidratiStati. I vecchi
-     configCarboidrati/configCarboidratiOrigini/configCarboidratiExplicitZeroKeys
-     non vengono più aggiornati dal Set - restano, se presenti da prima
-     della migrazione, soltanto come archivio storico inerte, mai riletto
-     per decidere AUTO/FIXED/EXCLUDED. */
   await put('impostazioni',{chiave:'configCarboidratiStati',valore:cloneConfigurazione(input.states)});
-  if(mostraMessaggio!==false)await avviso('Tabella carboidrati salvata: '+resolved.carbohydrates.fixedTotal+' fissi, '+resolved.carbohydrates.remainingSlots+' AUTO.');
+  if(mostraMessaggio!==false)await avviso('Carboidrati limitati selezionati: '+resolved.carbohydrates.limitedFixedTotal+' / tetto '+resolved.limitedCarbTotalMax+'.');
   return {ok:true,resolved};
 }
 
 function renderCaselleCarboidrati(){
   const contenitore=document.getElementById('cfgCarboidratiContenuto');if(!contenitore)return;
-  const totaleAttuale=contaTotaleCaselleCarb(),limiteRaggiunto=totaleAttuale>=CONFIG_CARB_TOTALE_OBBLIGATORIO,limitateUsate=contaCaselleLimitateCarb(),tettoLimitatiRaggiunto=limitateUsate>=CONFIG_CARB_TETTO_LIMITATI;
-  const renderGruppo=(tipi,titolo,eLimitati)=>{
-    const colore=eLimitati?'#f39c12':'#2ecc71',contatore=eLimitati?' <span style="font-weight:800;margin-left:7px;">'+limitateUsate+'/'+CONFIG_CARB_TETTO_LIMITATI+'</span>':'';
-    let html='<div style="margin:12px 0 9px;"><span style="display:inline-block;border:1px solid '+colore+';color:'+colore+';border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;line-height:1.2;">'+titolo+contatore+'</span></div><div class="set-carb-grid">';
-    for(const tipo of tipi){
-      const st=modalitaCarb(tipo.chiave),cliccate=st.mode==='fixed'?st.count:0,maxIndividuale=tipo.maxIndividuale??CONFIG_CARB_MAX_CASELLE;
-      const puoAggiungere=!limiteRaggiunto&&cliccate<maxIndividuale&&(!tipo.limitato||!tettoLimitatiRaggiunto);
-      const badge=tipo.limitato?'<span style="font-size:.62rem;color:var(--warn);margin-left:3px;">⚠ max '+maxIndividuale+'</span>':'';
-      const modeLabel=st.mode==='excluded'?'0 · ESCLUSO':(st.mode==='fixed'?'FISSO '+st.count:'AUTO'),modeClass=st.mode==='excluded'?'excluded':(st.mode==='fixed'?'fixed':'auto');
-      html+='<div class="set-carb-item"><div class="set-carb-head"><div style="font-weight:600;font-size:.78rem;white-space:normal;">'+tipo.label+badge+'</div><button type="button" class="set-carb-mode '+modeClass+'" data-carb-mode="'+tipo.chiave+'">'+modeLabel+'</button></div><div class="set-carb-celle">';
-      for(let i=0;i<CONFIG_CARB_MAX_CASELLE;i++){
-        const oltreMax=i>=maxIndividuale,attiva=i<cliccate,cliccabile=!oltreMax&&(attiva||puoAggiungere),origine=origineCaselleCarb[tipo.chiave]&&origineCaselleCarb[tipo.chiave][i]||'utente';
-        html+='<button data-casella-carb="'+tipo.chiave+'" data-casella-idx="'+i+'" class="'+(attiva?'active':'')+'" style="cursor:'+(cliccabile?'pointer':'not-allowed')+';opacity:'+(attiva&&origine==='sistema'?'.58':(cliccabile?'1':'0.35'))+';transition:background .15s,border-color .15s;" '+(cliccabile?'':'disabled')+'></button>';
-      }
-      html+='</div></div>';
+  const usate=contaCaselleLimitateCarb();
+  let html='<div style="margin:12px 0 9px;"><span style="display:inline-block;border:1px solid #f39c12;color:#f39c12;border-radius:20px;padding:3px 10px;font-size:.72rem;font-weight:700;line-height:1.2;">Carboidrati con tetto settimanale</span></div><div class="set-carb-grid">';
+  for(const tipo of CONFIG_CARB_TIPI){
+    const st=modalitaCarb(tipo.chiave),corrente=st.mode==='fixed'?st.count:0;
+    html+='<div class="set-carb-item"><div class="set-carb-head"><div style="font-weight:600;font-size:.78rem;white-space:normal;">'+tipo.label+' <span style="font-size:.62rem;color:var(--warn);">max '+tipo.maxIndividuale+'</span></div></div><div class="set-carb-celle">';
+    for(let n=0;n<=tipo.maxIndividuale;n++){
+      const oltreTetto=(usate-corrente+n)>CONFIG_CARB_TETTO_LIMITATI,attiva=n===corrente;
+      html+='<button type="button" data-carb-count="'+tipo.chiave+'|'+n+'" class="'+(attiva?'active':'')+'" '+(oltreTetto&&!attiva?'disabled':'')+' title="'+n+' utilizzi">'+n+'</button>';
     }
-    return html+'</div>';
-  };
-  contenitore.innerHTML=renderGruppo(CONFIG_CARB_TIPI.filter(t=>!t.limitato),'Carboidrati complessi AUTO',false)+renderGruppo(CONFIG_CARB_TIPI.filter(t=>t.limitato),'Carboidrati con tetto PDF · solo se scelti',true);
-  contenitore.querySelectorAll('[data-carb-mode]').forEach(btn=>btn.addEventListener('click',()=>{const key=btn.dataset.carbMode,st=modalitaCarb(key);if(st.mode==='fixed')impostaModalitaCarb(key,'auto');else if(st.mode==='auto')impostaModalitaCarb(key,'excluded');else impostaModalitaCarb(key,'auto');renderCaselleCarboidrati();aggiornaStatoConfigCarb();}));
-  contenitore.querySelectorAll('[data-casella-carb]').forEach(btn=>btn.addEventListener('click',()=>{
-    const key=btn.dataset.casellaCarb,idx=parseInt(btn.dataset.casellaIdx),tipo=CONFIG_CARB_TIPI.find(t=>t.chiave===key);if(!tipo)return;
-    const st=modalitaCarb(key),corrente=st.mode==='fixed'?st.count:0,desiderato=idx<corrente?idx:idx+1,max=tipo.maxIndividuale??CONFIG_CARB_MAX_CASELLE;
-    if(desiderato<=0){impostaModalitaCarb(key,'excluded');renderCaselleCarboidrati();aggiornaStatoConfigCarb();return;}
-    if(desiderato>max)return;
-    const nuovoTotale=contaTotaleCaselleCarb()-corrente+desiderato;if(nuovoTotale>CONFIG_CARB_TOTALE_OBBLIGATORIO)return;
-    const nuoviLimitati=contaCaselleLimitateCarb()-(tipo.limitato?corrente:0)+(tipo.limitato?desiderato:0);if(tipo.limitato&&nuoviLimitati>CONFIG_CARB_TETTO_LIMITATI)return;
-    impostaModalitaCarb(key,'fixed',desiderato,'utente');renderCaselleCarboidrati();aggiornaStatoConfigCarb();
+    html+='</div></div>';
+  }
+  contenitore.innerHTML=html+'</div>';
+  contenitore.querySelectorAll('[data-carb-count]').forEach(btn=>btn.addEventListener('click',()=>{
+    const [key,raw]=btn.dataset.carbCount.split('|'),n=parseInt(raw,10),tipo=CONFIG_CARB_TIPI.find(t=>t.chiave===key);if(!tipo)return;
+    const corrente=modalitaCarb(key).count||0;
+    if(contaCaselleLimitateCarb()-corrente+n>CONFIG_CARB_TETTO_LIMITATI)return;
+    if(n>0)impostaModalitaCarb(key,'fixed',n);else impostaModalitaCarb(key,'excluded',0);
+    renderCaselleCarboidrati();aggiornaStatoConfigCarb();
   }));
 }
 function aggiornaStatoConfigCarb(){
-  const fissi=contaTotaleCaselleCarb(),auto=Math.max(0,CONFIG_CARB_TOTALE_OBBLIGATORIO-fissi),esclusi=CONFIG_CARB_TIPI.filter(t=>modalitaCarb(t.chiave).mode==='excluded').length,el=document.getElementById('cfgCarboidratiTotale');
-  if(el){el.textContent='Fissi: '+fissi+' / '+CONFIG_CARB_TOTALE_OBBLIGATORIO+' · AUTO completerà '+auto+(esclusi?' · esclusi '+esclusi:'');el.style.color=fissi<=CONFIG_CARB_TOTALE_OBBLIGATORIO?'var(--accent)':'var(--warn)';}
-}
-document.getElementById('btnResetConfigCarboidrati')?.addEventListener('click',async()=>{inizializzaStatoCaselleCarb();for(const k of ['configCarboidrati','configCarboidratiOrigini','configCarboidratiStati','configCarboidratiExplicitZeroKeys'])await delKey('impostazioni',k);renderCaselleCarboidrati();aggiornaStatoConfigCarb();});
-function completaCaselleCarboidrati(daZero){
-  if(daZero)inizializzaStatoCaselleCarb();let guardia=500;
-  while(contaTotaleCaselleCarb()<CONFIG_CARB_TOTALE_OBBLIGATORIO&&guardia-->0){
-    const pool=CONFIG_CARB_TIPI.filter(t=>!t.limitato&&modalitaCarb(t.chiave).mode!=='excluded'&&(modalitaCarb(t.chiave).mode!=='fixed'||modalitaCarb(t.chiave).count<t.maxIndividuale));
-    if(!pool.length)break;
-    const min=Math.min(...pool.map(t=>modalitaCarb(t.chiave).mode==='fixed'?modalitaCarb(t.chiave).count:0)),pari=pool.filter(t=>(modalitaCarb(t.chiave).mode==='fixed'?modalitaCarb(t.chiave).count:0)===min),t=pari[Math.floor(Math.random()*pari.length)],st=modalitaCarb(t.chiave),n=(st.mode==='fixed'?st.count:0)+1;
-    impostaModalitaCarb(t.chiave,'fixed',n,'sistema');
-  }
-  renderCaselleCarboidrati();aggiornaStatoConfigCarb();
+  const usate=contaCaselleLimitateCarb(),el=document.getElementById('cfgCarboidratiTotale');
+  if(el){el.textContent='Carboidrati limitati selezionati: '+usate+' / tetto '+CONFIG_CARB_TETTO_LIMITATI;el.style.color=usate<=CONFIG_CARB_TETTO_LIMITATI?'var(--accent)':'var(--warn)';}
 }
 document.getElementById('btnPulisciCarboidrati')?.addEventListener('click',()=>{inizializzaStatoCaselleCarb();renderCaselleCarboidrati();aggiornaStatoConfigCarb();});
-document.getElementById('btnCompletaCarboidrati')?.addEventListener('click',()=>completaCaselleCarboidrati(false));
-document.getElementById('btnCasualeCarboidrati')?.addEventListener('click',()=>completaCaselleCarboidrati(true));
+
 /* I tre pulsanti Salva della pagina Set (Carboidrati, Proteine, quello
    unico in fondo) chiamano tutti questa stessa funzione: stessa validazione,
    stesso commit dell'intera bozza, stesso messaggio. Sono dislocati solo per
@@ -2624,11 +2588,11 @@ async function caricaConfigCarboidrati(){
   const statiRec=await getOne('impostazioni','configCarboidratiStati');
   await aggiornaTettoCarbLimitatiSet();
   inizializzaStatoCaselleCarb();
-  const normalized=statiRec&&statiRec.valore||{};
+  const N=globalThis.DietaPlannerNutritionConfig;
+  const normalized=N.normalizeCarbohydrateSelection({states:statiRec&&statiRec.valore||{}});
   for(const tipo of CONFIG_CARB_TIPI){
-    const key=tipo.chiave,st=normalized[key]||{mode:'auto',count:0};statiCaselleCarb[key]={mode:st.mode,count:st.mode==='fixed'?st.count:0};
-    if(st.mode==='fixed'){statoCaselleCarb[key]=st.count;origineCaselleCarb[key]=Array(st.count).fill('utente');}
-    else{statoCaselleCarb[key]=0;origineCaselleCarb[key]=[];if(st.mode==='excluded')zeroEsplicitiCaselleCarb.add(key);}
+    const st=normalized[tipo.chiave]||{mode:'excluded',count:0};
+    statiCaselleCarb[tipo.chiave]=st.mode==='fixed'?{mode:'fixed',count:st.count}:{mode:'excluded',count:0};
   }
   renderCaselleCarboidrati();aggiornaStatoConfigCarb();
 }
