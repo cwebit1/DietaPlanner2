@@ -4362,3 +4362,26 @@ collaudo visivo live viene eseguito dopo la pubblicazione.
 **File modificato:** `motor-v12.js`.
 
 **Commit:** `1c3a63a213aeae9bffb8eb69b7a2e34518ddec0c`.
+
+---
+
+## Semplificazione carboidrati + rotazione proteica AUTO binaria — 21 settembre 2026
+
+**Richiesta di Cwe:** eliminare completamente la configurazione utente dei carboidrati normali, lasciando configurabili esclusivamente quelli soggetti a limite settimanale; rendere inoltre matematica e binaria la rotazione proteica nelle celle AUTO, con una categoria usata nel giorno D non utilizzabile automaticamente nel giorno D+1. Nessun adattamento del motore alle lacune del ricettario, nessun PF standalone artificiale, nessun fallback che rilassi un vincolo hard.
+
+**Correzione carboidrati:** `nutrition-config.js` neutralizza ora a `AUTO` qualunque vecchio FIXED/EXCLUDED/count sulle chiavi di `PDF_BASELINE.carbohydrateUncapped`. Solo le chiavi di `PDF_BASELINE.carbohydrateWeeklyCaps` conservano una scelta utente: 0 = escluso, conteggio positivo = FIXED esatto entro tetto individuale e `limitedCarbTotalMax`. `motor-v12.js` normalizza persistentemente lo stato canonico già esistente/legacy a questa nuova semantica. La UI Set in `index.html` mostra soltanto i carboidrati limitati, deriva le chiavi dalla baseline canonica, espone 0..tetto individuale e rimuove `Completa e fissa`, `Casuale 14`, conteggi FIXED dei carbo normali e il riepilogo `Fissi X/14 · AUTO completerà Y`.
+
+**Rotazione proteica AUTO:** `engine-core.js` e `motor-v12.js` applicano il vincolo hard D→D+1 esclusivamente alle celle AUTO. Le scelte manuali restano vincolanti. Il runtime reale carica anche le categorie del giorno precedente quando esso è esterno alla settimana da generare ma presente in piano/storico. Per evitare dead-end creati da scelte localmente valide, il motore esegue una verifica pura di fattibilità residua sulle sole macro proteiche prima di accettare una categoria AUTO: minimi, massimi, celle future manuali/bloccate, differenza pranzo/cena e divieto D→D+1 devono restare simultaneamente soddisfacibili. La verifica non costruisce ricette e non introduce un prodotto cartesiano globale.
+
+**Struttura culinaria preservata:** nessun database ricette è stato modificato. PF/Formaggi continua a poter essere realizzato tramite ricette `C+PF`, `C+PF+V` e altre forme già dichiarate nel catalogo; non è stato introdotto alcun formaggio standalone per adattare i dati al motore.
+
+**Test e verifiche mirate:** parsing sintattico riuscito per `nutrition-config.js`, `engine-core.js`, `motor-v12.js`, tutti gli script inline di `index.html` e i test modificati/aggiunti. Stress deterministico sul catalogo reale: **100/100 settimane complete**, **0 errori**, **0 ripetizioni proteiche nello stesso giorno**, **0 ripetizioni AUTO D→D+1**. Verificati inoltre: scelta manuale che prevale sul solo cooldown AUTO; giorno precedente esterno alla settimana; limitati tutti a 0; gnocchi FIXED 1 e 2 con conteggio esatto; combinazione gnocchi+crackers+pasta ripiena 1+1+1 con conteggi esatti; tetto cumulativo; priorità `PX+C.user` limitata con crackers+PF (**30/30** generazioni valide); atomicità con configurazione proteica impossibile (**0 record piano persistiti**). Nessun test visuale/screenshot eseguito.
+
+**Test repository aggiornati/aggiunti:** `tests/nutrition-config.test.js`, `tests/lotto-migrazione-set-storico.test.js`, `tests/lotto-carboidrati-fixed-senza-auto.test.js`, `tests/lotto-carboidrati-priorita-pxcuser.test.js`; aggiunti `tests/lotto-rotazione-proteine-auto-binaria.test.js` e `tests/lotto-carboidrati-limitati-esatti.test.js`.
+
+**Documentazione aggiornata:** `docs/SPECIFICA_FUNZIONALE_CORRENTE.md` e `docs/ARCHITETTURA_MOTOR_V12.md`.
+
+**File funzionali modificati:** `nutrition-config.js`, `engine-core.js`, `motor-v12.js`, `index.html`. Nessuna modifica a `db-ricette.json`, `ingredienti-new.json` o `db-visuale.json`.
+
+**HEAD funzionale prima dell'append del registro:** `b928a12f29ccc7429285b00033ca75394d0991c8`.
+
