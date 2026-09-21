@@ -51,12 +51,15 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
 
   /* ============ 1. Migrazione legacy → canonico completo ============ */
   {
-    // 1a. database senza alcun dato precedente: canonico completo, tutto AUTO
+    // 1a. database senza alcun dato precedente: normali AUTO, limitati a zero/EXCLUDED
     resetStores();putSpy=null;
     await M.inizializza({basePath:''});
     let rec=await getOne('impostazioni','configCarboidratiStati');
     assert(rec&&rec.valore,'la migrazione deve scrivere lo stato canonico anche su database vuoto');
-    for(const chiave of CHIAVI_CANONICHE)assert.deepEqual(rec.valore[chiave],{mode:'auto',count:0},'db vuoto: '+chiave+' deve essere AUTO');
+    for(const chiave of CHIAVI_CANONICHE){
+      const atteso=N.PDF_BASELINE.carbohydrateUncapped.includes(chiave)?{mode:'auto',count:0}:{mode:'excluded',count:0};
+      assert.deepEqual(rec.valore[chiave],atteso,'db vuoto: stato canonico errato per '+chiave);
+    }
 
     // 1b. origini complete e affidabili: isola le sole caselle utente (2, non le 4 totali)
     resetStores();putSpy=null;
