@@ -4385,3 +4385,19 @@ collaudo visivo live viene eseguito dopo la pubblicazione.
 
 **HEAD funzionale prima dell'append del registro:** `b928a12f29ccc7429285b00033ca75394d0991c8`.
 
+---
+
+## Promozione restyling a root PWA — 21 settembre 2026
+
+**Richiesta di Cwe:** rendere la versione grafica nuova la pagina installata/aperta da Android, rinominando l'attuale root `index.html` in backup e promuovendo `index-restyling.html` a nuovo `index.html`.
+
+**Verifica preliminare:** il manifest PWA usa `start_url: "."`, quindi Android apre correttamente la root del repository. Il problema non era il manifest: la root puntava ancora alla vecchia interfaccia. È stato inoltre verificato che `index-restyling.html` conteneva ancora la vecchia UI carboidrati (normali configurabili, `Completa e fissa`, `Casuale 14`), quindi una promozione cieca avrebbe reintrodotto una regressione appena corretta.
+
+**Intervento:** l'attuale `index.html` è stato salvato integralmente come `index-old.html`; nella versione restyling sono state innestate la UI e la logica carboidrati correnti (normali sempre AUTO, solo limitati configurabili, loader canonico aggiornato); il risultato è stato promosso a nuovo `index.html`; il vecchio `index-restyling.html` è stato rimosso.
+
+**Verifiche:** `index-old.html` conserva esattamente il blob della precedente root; il nuovo `index.html` non contiene più riferimenti a `Completa e fissa`, `Casuale 14`, `CONFIG_CARB_TIPI_BASE` o alle strutture legacy della vecchia UI carboidrati; presenti `Carboidrati con limitazione`, serializzazione AUTO delle chiavi `carbohydrateUncapped` e derivazione dei limitati da `carbohydrateWeeklyCaps`. Parsing dei 4 script inline riuscito. Il manifest resta relativo (`./manifest.json?v=2`) e il service worker resta relativo (`./sw.js?v=2`), quindi `start_url: "."` apre ora direttamente la nuova root restyling. `index-restyling.html` non esiste più.
+
+**File modificati:** `index.html`, nuovo backup `index-old.html`, rimosso `index-restyling.html`, `docs/REGISTRO_MODIFICHE.md`.
+
+**Commit funzionali:** `c7eaacdd80ef29b14ef6eb79ef18d43d2f3b0ddf`, `a9d47476b8c61cec687c85375b2f0f6a3f9909d8`, `7e4efcf310de632885c07beb704c28dd4474b60a`.
+
