@@ -9,8 +9,8 @@
 
    Copre esattamente, come richiesto:
    1. migrazione legacy → canonico completo
-   2. canonico completo valido → zero scritture
-   3. canonico parziale ma valido → chiavi mancanti completate AUTO con una sola scrittura
+   2. canonico completo già allineato → zero scritture
+   3. canonico parziale/storico → normalizzazione unica: normali AUTO, limitati preservati
    4. modalità sconosciuta → errore esplicito e nessuna scrittura
    5. FIXED non numerico → errore e nessuna scrittura
    6. FIXED zero, negativo o decimale → errore e nessuna scrittura
@@ -60,44 +60,45 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
 
     // 1b. origini complete e affidabili: isola le sole caselle utente (2, non le 4 totali)
     resetStores();putSpy=null;
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4}});
-    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{riso:['utente','utente','sistema','sistema']}});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:4}});
+    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{gnocchi:['utente','utente','sistema','sistema']}});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
-    assert.deepEqual(rec.valore.riso,{mode:'fixed',count:2},'origini miste: solo le 2 caselle utente sono un FIXED reale');
+    assert.deepEqual(rec.valore.gnocchi,{mode:'fixed',count:2},'origini miste: solo le 2 caselle utente sono un FIXED reale');
+    assert.deepEqual(rec.valore.riso,{mode:'auto',count:0},'i carboidrati normali devono essere sempre AUTO');
 
     // 1c. origini assenti o incoerenti: il conteggio storico positivo non va perso
     resetStores();putSpy=null;
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4}});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:4}});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
-    assert.deepEqual(rec.valore.riso,{mode:'fixed',count:4},'origini assenti: il conteggio storico positivo resta FIXED per intero');
+    assert.deepEqual(rec.valore.gnocchi,{mode:'fixed',count:4},'origini assenti: il conteggio storico positivo resta FIXED per intero');
 
     resetStores();putSpy=null;
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4}});
-    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{riso:['utente']}});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:4}});
+    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{gnocchi:['utente']}});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
-    assert.deepEqual(rec.valore.riso,{mode:'fixed',count:4},'origini incoerenti: il conteggio storico positivo resta FIXED per intero');
+    assert.deepEqual(rec.valore.gnocchi,{mode:'fixed',count:4},'origini incoerenti: il conteggio storico positivo resta FIXED per intero');
 
     // 1d. zero con marcatore esplicito → EXCLUDED; zero senza marcatore → AUTO
     resetStores();putSpy=null;
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{pane:0}});
-    await put('impostazioni',{chiave:'configCarboidratiExplicitZeroKeys',valore:['pane']});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:0}});
+    await put('impostazioni',{chiave:'configCarboidratiExplicitZeroKeys',valore:['gnocchi']});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
-    assert.deepEqual(rec.valore.pane,{mode:'excluded',count:0},'zero con marcatore esplicito deve diventare EXCLUDED');
+    assert.deepEqual(rec.valore.gnocchi,{mode:'excluded',count:0},'limitato a zero deve restare EXCLUDED');
 
     resetStores();putSpy=null;
     await put('impostazioni',{chiave:'configCarboidrati',valore:{pane:0}});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
-    assert.deepEqual(rec.valore.pane,{mode:'auto',count:0},'zero senza marcatore esplicito deve restare AUTO');
+    assert.deepEqual(rec.valore.gnocchi,{mode:'excluded',count:0},'limitato a zero non deve entrare automaticamente');
 
     // copertura completa dell'elenco canonico anche con legacy parziale
     resetStores();putSpy=null;
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4,orzo:2}});
-    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{riso:['utente','utente','sistema','sistema'],orzo:['utente','utente']}});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:2,riso:4}});
+    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{gnocchi:['utente','utente'],riso:['utente','utente','sistema','sistema']}});
     await M.inizializza({basePath:''});
     rec=await getOne('impostazioni','configCarboidratiStati');
     for(const chiave of CHIAVI_CANONICHE)assert(rec.valore[chiave],'lo stato migrato copre sempre l\'intero elenco canonico ('+chiave+' mancante)');
@@ -106,7 +107,7 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   /* ============ 2. Canonico completo valido → zero scritture ============ */
   {
     resetStores();
-    const canonico=statoCompletoAuto();canonico.riso={mode:'fixed',count:3};canonico.gnocchi={mode:'excluded',count:0};
+    const canonico=statoCompletoAuto();for(const k of Object.keys(N.PDF_BASELINE.carbohydrateWeeklyCaps))canonico[k]={mode:'excluded',count:0};canonico.gnocchi={mode:'fixed',count:2};
     await put('impostazioni',{chiave:'configCarboidratiStati',valore:canonico});
     let scritture=0;
     putSpy=async(name,value)=>{if(name==='impostazioni'&&value.chiave==='configCarboidratiStati')scritture++;return realPut(name,value);};
@@ -120,7 +121,7 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   /* ============ 3. Canonico parziale ma valido → chiavi mancanti completate AUTO, una sola scrittura ============ */
   {
     resetStores();
-    const parziale={riso:{mode:'fixed',count:3}}; // solo una chiave delle tante canoniche, ma valida
+    const parziale={riso:{mode:'fixed',count:3},gnocchi:{mode:'fixed',count:2}}; // riso storico deve diventare AUTO; gnocchi limitato resta FIXED
     await put('impostazioni',{chiave:'configCarboidratiStati',valore:parziale});
     // legacy CONTRADDITTORIO presente: se venisse riletto produrrebbe un risultato diverso da riso:3
     await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:1}});
@@ -131,10 +132,12 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
     assert.equal(scritture,1,'canonico parziale ma valido: esattamente una scrittura di completamento');
 
     const dopo=(await getOne('impostazioni','configCarboidratiStati')).valore;
-    assert.deepEqual(dopo.riso,{mode:'fixed',count:3},'la chiave già presente e valida non viene toccata dal legacy');
+    assert.deepEqual(dopo.riso,{mode:'auto',count:0},'un FIXED storico su carbo normale deve essere neutralizzato ad AUTO');
+    assert.deepEqual(dopo.gnocchi,{mode:'fixed',count:2},'il FIXED limitato valido deve essere preservato');
     for(const chiave of CHIAVI_CANONICHE){
-      if(chiave==='riso')continue;
-      assert.deepEqual(dopo[chiave],{mode:'auto',count:0},'chiave mancante completata come AUTO: '+chiave);
+      if(chiave==='riso'||chiave==='gnocchi')continue;
+      const atteso=N.PDF_BASELINE.carbohydrateUncapped.includes(chiave)?{mode:'auto',count:0}:{mode:'excluded',count:0};
+      assert.deepEqual(dopo[chiave],atteso,'chiave mancante completata secondo la nuova semantica: '+chiave);
     }
     const legacyDopo=await getOne('impostazioni','configCarboidrati');
     assert.deepEqual(legacyDopo.valore,{riso:1},'il legacy non viene letto né toccato quando il canonico esiste già, anche solo parziale');
@@ -144,11 +147,11 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   /* ============ 4. Modalità sconosciuta → errore esplicito, nessuna scrittura ============ */
   {
     resetStores();
-    const invalido=statoCompletoAuto();invalido.riso={mode:'boh',count:0};
+    const invalido=statoCompletoAuto();invalido.gnocchi={mode:'boh',count:0};
     await put('impostazioni',{chiave:'configCarboidratiStati',valore:invalido});
     let scritture=0;
     putSpy=async(name,value)=>{if(name==='impostazioni'&&value.chiave==='configCarboidratiStati')scritture++;return realPut(name,value);};
-    await assert.rejects(()=>M.inizializza({basePath:''}),/riso/,'modalità sconosciuta: errore esplicito che indica la chiave');
+    await assert.rejects(()=>M.inizializza({basePath:''}),/gnocchi/,'modalità sconosciuta: errore esplicito che indica la chiave limitata');
     assert.equal(scritture,0,'modalità sconosciuta: nessuna scrittura');
     const dopo=await getOne('impostazioni','configCarboidratiStati');
     assert.deepEqual(dopo.valore,invalido,'il record non valido non viene toccato/corretto silenziosamente');
@@ -158,11 +161,11 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   /* ============ 5. FIXED non numerico → errore, nessuna scrittura ============ */
   {
     resetStores();
-    const invalido=statoCompletoAuto();invalido.riso={mode:'fixed',count:'due'};
+    const invalido=statoCompletoAuto();invalido.gnocchi={mode:'fixed',count:'due'};
     await put('impostazioni',{chiave:'configCarboidratiStati',valore:invalido});
     let scritture=0;
     putSpy=async(name,value)=>{if(name==='impostazioni'&&value.chiave==='configCarboidratiStati')scritture++;return realPut(name,value);};
-    await assert.rejects(()=>M.inizializza({basePath:''}),/riso/,'FIXED non numerico: errore esplicito che indica la chiave');
+    await assert.rejects(()=>M.inizializza({basePath:''}),/gnocchi/,'FIXED non numerico: errore esplicito che indica la chiave limitata');
     assert.equal(scritture,0,'FIXED non numerico: nessuna scrittura');
     putSpy=null;
   }
@@ -171,11 +174,11 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   {
     for(const count of [0,-1,1.5]){
       resetStores();
-      const invalido=statoCompletoAuto();invalido.riso={mode:'fixed',count};
+      const invalido=statoCompletoAuto();invalido.gnocchi={mode:'fixed',count};
       await put('impostazioni',{chiave:'configCarboidratiStati',valore:invalido});
       let scritture=0;
       putSpy=async(name,value)=>{if(name==='impostazioni'&&value.chiave==='configCarboidratiStati')scritture++;return realPut(name,value);};
-      await assert.rejects(()=>M.inizializza({basePath:''}),/riso/,'FIXED count='+count+': errore esplicito che indica la chiave');
+      await assert.rejects(()=>M.inizializza({basePath:''}),/gnocchi/,'FIXED count='+count+': errore esplicito che indica la chiave limitata');
       assert.equal(scritture,0,'FIXED count='+count+': nessuna scrittura');
       putSpy=null;
     }
@@ -197,8 +200,8 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   /* ============ 8. Seconda inizializzazione → zero scritture ============ */
   {
     resetStores();
-    await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4}});
-    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{riso:['utente','utente','sistema','sistema']}});
+    await put('impostazioni',{chiave:'configCarboidrati',valore:{gnocchi:4}});
+    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{gnocchi:['utente','utente','sistema','sistema']}});
     let scritture=0;
     putSpy=async(name,value)=>{if(name==='impostazioni'&&value.chiave==='configCarboidratiStati')scritture++;return realPut(name,value);};
 
@@ -215,7 +218,7 @@ function statoCompletoAuto(){const s={};for(const k of CHIAVI_CANONICHE)s[k]={mo
   {
     resetStores();putSpy=null;
     await put('impostazioni',{chiave:'configCarboidrati',valore:{riso:4,pane:0}});
-    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{riso:['utente','utente','sistema','sistema']}});
+    await put('impostazioni',{chiave:'configCarboidratiOrigini',valore:{gnocchi:['utente','utente','sistema','sistema']}});
     await put('impostazioni',{chiave:'configCarboidratiExplicitZeroKeys',valore:['pane']});
     await M.inizializza({basePath:''});
 
