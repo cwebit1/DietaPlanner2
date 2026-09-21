@@ -2142,12 +2142,12 @@ async function getConfigTettiAlimenti(){
 }
 
 /* =========================================================
-   CONFIGURAZIONE CARBOIDRATI — CASELLE
+   CONFIGURAZIONE CARBOIDRATI LIMITATI
    -------------------------------------------------------
-   Ogni carboidrato ha 6 caselle. L'utente clicca per indicare
-   quanti pasti a settimana dedicare a quel carboidrato.
-   Totale obbligatorio: 14 (7 giorni × 2 pasti).
-   Alimenti a tetto: max 3 caselle totali tra tutti i limitati.
+   I carboidrati normali non sono configurabili e restano sempre AUTO.
+   Qui il Set mostra esclusivamente le voci definite da
+   PDF_BASELINE.carbohydrateWeeklyCaps e permette 0..tetto individuale,
+   entro limitedCarbTotalMax. Nessuna distribuzione utente dei 14 slot.
    ========================================================= */
 const NUTRITION_CONFIG_SET=globalThis.DietaPlannerNutritionConfig;
 const CONFIG_CARB_TOTALE_OBBLIGATORIO=NUTRITION_CONFIG_SET&&NUTRITION_CONFIG_SET.APP_DEFAULTS.carbSlots||14;
