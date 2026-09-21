@@ -2266,12 +2266,9 @@ async function costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx){
      AUTO/combinato: per ciascun livello (rapido, poi altri) si prova
      prima ogni PX gia' combinata il cui carboidrato incorporato
      appartiene a quel livello, poi - per le proteine libere - un
-     carboidrato separato ristretto alle sole chiavi di quel livello
-     (cercaCarboSeparato riceve un autoCandidati gia' ristretto: la sua
-     stessa logica interna, invariata, resta l'unica fonte di verita' per
-     l'ordinamento fra ricette a parita' di chiave). fissiRimasti resta
-     passato per intero, come sempre: un tentativo P+C.user che questa
-     specifica proteina non aveva gia' soddisfatto sopra. */
+     carboidrato separato ristretto alle sole chiavi AUTO di quel livello.
+     I C.user non vengono riprovati qui: sono gia' stati esauriti nel
+     livello dedicato precedente. */
   for(const chiaviLivelloAuto of [livelli.autoRapido,livelli.autoAltri]){
     if(!chiaviLivelloAuto.length)continue;
     const chiaviLivelloSet=new Set(chiaviLivelloAuto);
