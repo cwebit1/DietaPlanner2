@@ -73,7 +73,7 @@ assert.deepEqual(
     user:{carbohydrates:{counts:{piadina:0}}}
   });
   assert.equal(r.valid,true);
-  assert.equal(r.carbohydrates.selection.piadina.mode,'auto','0 legacy senza marcatore esplicito deve restare AUTO');
+  assert.equal(r.carbohydrates.selection.piadina.mode,'excluded','una voce limitata a 0 non deve entrare automaticamente');
 }
 
 {
@@ -98,9 +98,10 @@ assert.deepEqual(
 {
   const states={};
   for(const k of fixture.carbohydrates.notLimitedByPdf) states[k]='excluded';
+  states.riso={mode:'fixed',count:4};
   const r=N.resolveNutritionConfig({user:{carbohydrates:{states}}});
-  assert.equal(r.valid,false);
-  assert(r.errors.some(x=>x.includes('nessuna voce AUTO')));
+  assert.equal(r.valid,true);
+  for(const k of fixture.carbohydrates.notLimitedByPdf) assert.deepEqual(r.carbohydrates.selection[k],{mode:'auto',count:0},k+' deve essere sempre AUTO anche se il dato storico dice FIXED/EXCLUDED');
 }
 
 {
