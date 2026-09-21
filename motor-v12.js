@@ -1126,20 +1126,15 @@ function chiaviCanonicheCarboidrati(){
   return [...N.PDF_BASELINE.carbohydrateUncapped,...Object.keys(N.PDF_BASELINE.carbohydrateWeeklyCaps)];
 }
 
-/* Validazione strutturale dell'unico stato canonico dei carboidrati. Per
-   ogni chiave canonica presente nel record ammette soltanto le tre forme
-   {mode:'auto',count:0} / {mode:'excluded',count:0} / {mode:'fixed',count:N}
-   con N intero positivo - non verifica qui i tetti PDF/applicativi (li
-   applica gia' il resolver quando la configurazione viene risolta per
-   l'uso reale): controlla solo che la FORMA del dato sia interpretabile
-   senza ambiguita'. Proprieta' esterne alle chiavi canoniche non vengono
-   nemmeno esaminate (ignorate per definizione, mai motivo di errore).
-   Ritorna {ok:true, mancanti:[...]} se strutturalmente valido (anche se
-   incompleto), oppure {ok:false, chiave, causa} alla prima voce non
-   valida trovata. */
+/* Validazione strutturale dello stato persistito dei carboidrati.
+   Dopo la nuova semantica le voci senza tetto sono sempre AUTO e quindi
+   qualunque loro vecchio FIXED/EXCLUDED e' dato storico inerte: non puo'
+   bloccare l'avvio e viene normalizzato ad AUTO. Si validano invece le sole
+   voci con tetto, le uniche ancora configurabili dall'utente. */
 function validaStatoCarboidratiCanonico(valore){
+  const limitate=Object.keys(N.PDF_BASELINE.carbohydrateWeeklyCaps);
   const mancanti=[];
-  for(const chiave of chiaviCanonicheCarboidrati()){
+  for(const chiave of limitate){
     if(!Object.prototype.hasOwnProperty.call(valore,chiave)){mancanti.push(chiave);continue;}
     const voce=valore[chiave];
     if(!voce||typeof voce!=='object')return {ok:false,chiave,causa:'il valore non e\' un oggetto {mode,count}'};
@@ -1158,6 +1153,23 @@ function validaStatoCarboidratiCanonico(valore){
   }
   return {ok:true,mancanti};
 }
+function normalizzaStatoCarboidratiCanonicoPersistito(valore){
+  const selection=N.normalizeCarbohydrateSelection({states:valore||{}});
+  const canonico={};
+  for(const chiave of chiaviCanonicheCarboidrati()){
+    const st=selection[chiave]||{mode:'auto',count:0};
+    canonico[chiave]={mode:st.mode,count:st.mode==='fixed'?st.count:0};
+  }
+  return canonico;
+}
+function statoCarboidratiCanonicoGiaAllineato(valore,canonico){
+  for(const chiave of chiaviCanonicheCarboidrati()){
+    if(!Object.prototype.hasOwnProperty.call(valore,chiave))return false;
+    const a=valore[chiave],b=canonico[chiave];
+    if(!a||a.mode!==b.mode||Number(a.count)!==Number(b.count))return false;
+  }
+  return true;
+}
 
 async function migraStatoCarboidratiCanonicoSeNecessario(){
   if(typeof getOne!=='function'||typeof put!=='function') return;
@@ -1168,21 +1180,15 @@ async function migraStatoCarboidratiCanonicoSeNecessario(){
     }
     const validazione=validaStatoCarboidratiCanonico(record.valore);
     if(!validazione.ok){
-      /* Nessuna correzione silenziosa, nessuna rilettura del legacy come
-         fallback, nessuna sovrascrittura: l'inizializzazione si interrompe
-         con un errore esplicito che indica chiave e causa. */
       throw new Error('configCarboidratiStati non valido alla chiave "'+validazione.chiave+'": '+validazione.causa+'.');
     }
-    if(!validazione.mancanti.length) return; // completo e valido: nessuna scrittura
-    /* Presente, valide tutte le voci esistenti, ma mancano alcune chiavi
-       canoniche: non si legge il legacy, si completano solo le chiavi
-       mancanti come AUTO, si scarta qualunque proprieta' estranea al set
-       canonico, un'unica scrittura. */
-    const completato={};
-    for(const chiave of chiaviCanonicheCarboidrati()){
-      completato[chiave]=Object.prototype.hasOwnProperty.call(record.valore,chiave)?record.valore[chiave]:{mode:'auto',count:0};
-    }
-    await put('impostazioni',{chiave:'configCarboidratiStati',valore:completato});
+    const canonico=normalizzaStatoCarboidratiCanonicoPersistito(record.valore);
+    if(statoCarboidratiCanonicoGiaAllineato(record.valore,canonico))return;
+    /* Un'unica scrittura normalizza definitivamente il formato corrente:
+       uncapped sempre AUTO; limitati AUTO/assenti -> EXCLUDED; FIXED
+       limitati preservati. Nessuna rilettura dei legacy quando il canonico
+       esiste gia'. */
+    await put('impostazioni',{chiave:'configCarboidratiStati',valore:canonico});
     return;
   }
   const [cc,co,cz]=await Promise.all([
@@ -1194,8 +1200,8 @@ async function migraStatoCarboidratiCanonicoSeNecessario(){
   const explicitZeroKeys=cz&&cz.valore||[];
   const normalizzato=N.normalizeCarbohydrateSelection({counts,explicitZeroKeys,states:{}});
   const canonico={};
-  for(const chiave of Object.keys(normalizzato)){
-    const st=normalizzato[chiave];
+  for(const chiave of chiaviCanonicheCarboidrati()){
+    const st=normalizzato[chiave]||{mode:'auto',count:0};
     canonico[chiave]={mode:st.mode,count:st.mode==='fixed'?st.count:0};
   }
   await put('impostazioni',{chiave:'configCarboidratiStati',valore:canonico});
@@ -2400,7 +2406,7 @@ function contaTargetTabellaFuturi(tab,slots,daIndice){
   }
   return out;
 }
-function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,usateGiorno,rng,proteinaMenoGradita){
+function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,usateGiorno,usateGiornoPrecedente,rng,proteinaMenoGradita){
   const slot=slots[indice],freq=resolved.proteinFrequencies||{};
   const forbidden=new Set(resolved.profile&&resolved.profile.forbiddenProteinMacros||[]);
   const allowed=Object.keys(freq).filter(k=>!forbidden.has(k)&&freq[k].max!==0);
@@ -2423,13 +2429,17 @@ function opzioniProteinaPerSlot(resolved,tab,slots,indice,counts,usateGiorno,rng
     return {errors:[],targets:[fissata]};
   }
   const prenotate=contaTargetTabellaFuturi(tab,slots,indice+1);
+  usateGiornoPrecedente=usateGiornoPrecedente||new Set();
   let pool=allowed.filter(k=>{
     if(usateGiorno.has(k))return false;
+    if(usateGiornoPrecedente.has(k))return false;
     const max=freq[k].max;
     return max===null||max===undefined||(Number(counts[k])||0)+1+(Number(prenotate[k])||0)<=Number(max);
   });
-  /* Nessuna riapertura del pool: se dopo l'esclusione della/e categoria/e
-     gia' usate oggi non resta nulla di ammesso, e' un errore esplicito -
+  /* Nessuna riapertura del pool: per le celle AUTO le categorie usate nel
+     giorno precedente sono NON_USABILI in modo binario, oltre alla categoria
+     gia' usata oggi. Se dopo queste esclusioni non resta nulla e' un errore
+     esplicito -
      mai un fallback che duplichi silenziosamente la categoria gia' scelta
      (regola di Cwe: una categoria scelta per un pasto e' sempre esclusa
      dal pool del secondo pasto dello stesso giorno, senza eccezioni legate
@@ -2530,7 +2540,7 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
       if(!slot.targetBloccato)return {ok:false,errori:['Realizzazione proteica bloccata senza categoria riconoscibile per '+slot.day+' '+slot.pasto+'.'],completati:i};
       proteine={errors:[],targets:[slot.targetBloccato]};
     }else{
-      proteine=opzioniProteinaPerSlot(ctx.resolved,ctx.tabella,slotRefs,i,ctx.weeklyProteinCounts,proteineGiorno.get(slot.day),ctx.rng,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.proteinaMenoGradita);
+      proteine=opzioniProteinaPerSlot(ctx.resolved,ctx.tabella,slotRefs,i,ctx.weeklyProteinCounts,proteineGiorno.get(slot.day),proteineGiorno.get(addGiorni(slot.day,-1))||new Set(),ctx.rng,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.proteinaMenoGradita);
     }
     if(proteine.errors.length)return {ok:false,errori:proteine.errors,completati:i};
 
@@ -2636,6 +2646,30 @@ async function generaPianoSettimana(scarto,opzioni){
     const daySet=new Set(days),[log,piano]=await Promise.all([getAll('consumoGiorno'),getAll('piano')]);
     for(const row of log||[]){if(!daySet.has(row.giorno))continue;const key=row.giorno+'_'+(row.pasto||''),rr=ricetteDaIds(row.ricettaIds||[]);seenSlots.add(key);accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));const macro=row.categoriaTarget||macroProteicaRicette(rr),carb=row.carboidratoPianificato||row.primoCereale||carbPrincipaleRicette(rr);if(macro){weeklyProteinCounts[macro]=(weeklyProteinCounts[macro]||0)+1;registraProteinaGiorno(row.giorno,macro);}if(carb)weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;}
     for(const voce of piano||[]){if(generatedIds.has(voce.id)||seenSlots.has(voce.id))continue;const giorno=String(voce.id||'').slice(0,10);if(!daySet.has(giorno))continue;const rr=ricetteDaVocePiano(voce);seenSlots.add(voce.id);accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));const macro=voce.categoriaTarget||macroProteicaRicette(rr),carb=voce.carboidratoPianificato||voce.primoCereale||carbPrincipaleRicette(rr);if(macro){weeklyProteinCounts[macro]=(weeklyProteinCounts[macro]||0)+1;registraProteinaGiorno(giorno,macro);}if(carb)weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;}
+
+    /* Per il primo giorno realmente generato la rotazione AUTO D->D+1 deve
+       conoscere anche il giorno precedente quando cade fuori dalla settimana
+       target (es. domenica -> lunedi' della settimana successiva). Questi dati
+       alimentano SOLO lo stato binario proteineGiorno: non entrano nei
+       conteggi settimanali della nuova settimana. */
+    const primoGiorno=slotDaGenerare.length?slotDaGenerare[0].day:null;
+    const giornoPrecedente=primoGiorno?addGiorni(primoGiorno,-1):null;
+    if(giornoPrecedente&&!daySet.has(giornoPrecedente)){
+      const vistiPrecedente=new Set();
+      for(const row of log||[]){
+        if(row.giorno!==giornoPrecedente)continue;
+        const key=row.giorno+'_'+(row.pasto||'');
+        vistiPrecedente.add(key);
+        const rr=ricetteDaIds(row.ricettaIds||[]),macro=row.categoriaTarget||macroProteicaRicette(rr);
+        if(macro)registraProteinaGiorno(giornoPrecedente,macro);
+      }
+      for(const voce of piano||[]){
+        const giorno=String(voce.id||'').slice(0,10);
+        if(giorno!==giornoPrecedente||vistiPrecedente.has(voce.id))continue;
+        const rr=ricetteDaVocePiano(voce),macro=voce.categoriaTarget||macroProteicaRicette(rr);
+        if(macro)registraProteinaGiorno(giornoPrecedente,macro);
+      }
+    }
   }
   const [vrRec,vrPastiRec]=typeof getOne==='function'?await Promise.all([getOne('impostazioni','verduraRicorrente'),getOne('impostazioni','verduraRicorrentePasti')]):[null,null];
   const vrId=vrRec&&vrRec.valore||null,vrPasti=new Set(vrPastiRec&&Array.isArray(vrPastiRec.valore)?vrPastiRec.valore:[]);
