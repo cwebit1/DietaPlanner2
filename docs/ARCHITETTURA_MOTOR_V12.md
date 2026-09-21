@@ -22,7 +22,9 @@ immagine, ricetta testuale e flag gestionale `disponibile`.
 
 Combina baseline PDF, default APP, Setting, profilo e Set. Produce frequenze,
 cap, stati carboidrati, quantità contestuali, porzioni verdura, warning ed
-errori. Nessun altro modulo deve duplicarne la precedenza.
+errori. I carboidrati senza tetto PDF sono sempre AUTO; solo quelli presenti
+in `carbohydrateWeeklyCaps` conservano una scelta utente 0/FIXED. Nessun altro
+modulo deve duplicarne la precedenza.
 
 ### Engine core
 
@@ -59,11 +61,14 @@ moltiplica le combinazioni base.
 1. Risolve la configurazione nutrizionale.
 2. Conta consumi della settimana e pasti da preservare.
 3. Visita gli slot in ordine, un pasto alla volta.
-4. Usa la cella proteica utente quando definita; altrimenti estrae una classe
-   ancora ammessa, evitando la macro già realmente usata nello stesso giorno
-   quando esiste un'alternativa.
-5. Sceglie per lo slot un carboidrato fra FIXED residui e AUTO ammessi, senza
-   creare prima una sequenza settimanale né riabbinarla globalmente.
+4. Usa la cella proteica utente quando definita; nelle celle AUTO esclude in
+   modo binario sia la macro già usata nello stesso giorno sia tutte le macro
+   realmente usate nel giorno precedente. Prima di accettare una macro AUTO
+   verifica la fattibilità matematica residua di minimi/massimi e celle
+   vincolate, così non crea dead-end negli ultimi slot.
+5. Sceglie per lo slot prima eventuali FIXED residui dei soli carboidrati
+   limitati, poi i carboidrati normali AUTO. I carboidrati normali non hanno
+   più FIXED/EXCLUDED utente e non vengono pre-distribuiti in una griglia da 14.
 6. Costruisce P/G, poi C/S, poi il solo residuo V e valida lo snapshot finale.
 7. Soltanto dopo l'accettazione aggiorna contatori, budget e rotazione in
    memoria; i tentativi scartati non risultano usati.
@@ -101,10 +106,12 @@ Una quantità applicata soltanto in UI o soltanto nell'inventario è invalida.
 
 ## 7. Compatibilità e migrazione
 
-Le vecchie chiavi IndexedDB restano leggibili tramite adattatori mirati. Per i
-carboidrati, conteggi legacy utente diventano FIXED e conteggi creati dal
-sistema diventano AUTO. Le nuove chiavi sono canoniche; la compatibilità non
-autorizza letture runtime del vecchio database ricette.
+Le vecchie chiavi IndexedDB restano leggibili soltanto nel punto di migrazione.
+Per i carboidrati, qualunque vecchio FIXED/EXCLUDED/count sulle voci senza tetto
+viene neutralizzato definitivamente ad AUTO; sulle sole voci limitate un
+conteggio positivo resta FIXED esatto e zero resta escluso. Le nuove chiavi
+sono canoniche; la compatibilità non autorizza letture runtime del vecchio
+database ricette.
 
 Una ricetta con `disponibile:false` resta nella mappa per ID e nello store
 `ricette`, così gli snapshot esistenti restano leggibili, ma viene respinta da
