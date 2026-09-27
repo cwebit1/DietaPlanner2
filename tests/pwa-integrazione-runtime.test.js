@@ -1,0 +1,40 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const root=path.join(__dirname,'..');
+const stores={};
+for(const name of ['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario','diagnosticaCopertura'])stores[name]=new Map();
+global.getAll=async name=>[...stores[name].values()].map(v=>structuredClone(v));
+global.getOne=async(name,key)=>structuredClone(stores[name].get(key));
+global.put=async(name,v)=>{stores[name].set(v.id??v.chiave,structuredClone(v));return v;};
+global.delKey=async(name,key)=>stores[name].delete(key);
+global.commitPianoContratti=async(records,deleted,result)=>{
+  for(const v of records)await put('piano',v);
+  for(const id of deleted)await delKey('piano',id);
+  await put('impostazioni',{chiave:'stackBinario',valore:result.stack});
+  for(const row of result.diagnostics)await put('diagnosticaCopertura',row);
+};
+global.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,String(url).split('?')[0]),'utf8'))});
+global.todayISO=()=> '2026-09-27';
+global.giorniSettimana=()=>['2026-09-28','2026-09-29','2026-09-30','2026-10-01','2026-10-02','2026-10-03','2026-10-04'];
+let seed=714;Math.random=()=>((seed=(seed*1664525+1013904223)>>>0)/4294967296);
+require('../motor-v12.js');
+const M=global.DietaPlannerMotorV12,K=require('../pwa-contracts.js');
+(async()=>{
+  await M.inizializza({basePath:''});
+  const recipes=M.getRicette();assert(recipes.length);
+  assert(recipes.every(r=>r.dishKey&&Array.isArray(r.allergeniPresenti)));
+  const result=await M.generaPianoSettimana(0,{forza:true});
+  if(result.errori.length&&process.env.DP_DIAGNOSTICA)console.error(JSON.stringify(result.diagnostica,null,2));
+  assert.deepEqual(result.errori,[]);
+  const records=await getAll('piano');assert.equal(records.length,14);
+  const history=K.events(records,id=>M.getRicetta(id));
+  assert.equal(new Set(history.map(e=>e.dishKey)).size,history.length,'unicità di tutti i piatti');
+  for(const e of history)assert(!history.some(other=>other!==e&&Math.abs(K.dayNumber(e.date)-K.dayNumber(other.date))===1&&e.sourceKeys.some(k=>other.sourceKeys.includes(k))),'consecutività P');
+  const original=structuredClone(records[0]),before=JSON.stringify(await getAll('piano'));
+  const proposal=await M.rigeneraPasto(original.id.slice(0,10),'pranzo',original.categoriaTarget,{soloAnteprima:true});
+  assert.equal(JSON.stringify(await getAll('piano')),before,'anteprima senza scritture piano');
+  if(proposal){await M.salvaRoll(proposal);assert.deepEqual((await getOne('piano',original.id)).realizzazioni,proposal.realizzazioni);}
+  const duplicate=structuredClone(records[1]);duplicate.realizzazioni=structuredClone((proposal||original).realizzazioni);
+  await assert.rejects(()=>M.salvaRoll(duplicate),/piatto_gia_usato|proteina_consecutiva/);
+  console.log('PASS: catalogo, settimana 14 pasti, unicità, sourceKey, anteprima e commit validato. Persistenza simulata in memoria; transazioni browser non certificate.');
+})().catch(e=>{console.error(e);process.exitCode=1;});

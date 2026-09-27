@@ -7,6 +7,7 @@
 'use strict';
 
 const N=global.DietaPlannerNutritionConfig||(typeof module!=='undefined'&&module.exports?require('./nutrition-config.js'):null);
+const K=global.DietaPlannerContracts||(typeof module!=='undefined'&&module.exports?require('./pwa-contracts.js'):null);
 if(!N) throw new Error('nutrition-config.js deve essere caricato prima di motor-v12.js');
 
 const TOKEN_P = new Set(['PC','PP','PF','PU','PL']);
@@ -340,9 +341,19 @@ function carbRicettaAmmesso(r,budget){
 function consumaBudgetCarboidrati(ricette,budget){if(!budget)return;for(const k of uniq((ricette||[]).flatMap(carbKeysRicetta))){const s=budget.selection[k]||{};if(s.mode==='fixed'&&Number(budget.remaining[k])>0)budget.remaining[k]--;}}
 
 async function loadJson(url){
-  const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store'});
-  if(!r.ok) throw new Error('HTTP '+r.status+' su '+url);
-  return await r.json();
+  const key='catalogoSorgente:'+url;
+  try{
+    const r=await fetch(url+(url.includes('?')?'&':'?')+'v='+Date.now(),{cache:'no-store'});
+    if(!r.ok)throw new Error('HTTP '+r.status+' su '+url);
+    const value=await r.json();
+    if(!value||typeof value!=='object'||(!value.ricette&&!value.ingredienti))throw new Error('Catalogo vuoto o non valido: '+url);
+    if(typeof put==='function')await put('impostazioni',{chiave:key,valore:value});
+    return value;
+  }catch(error){
+    const saved=typeof getOne==='function'?await getOne('impostazioni',key):null;
+    if(saved&&saved.valore)return saved.valore;
+    throw error;
+  }
 }
 
 function groupOptions(g){
@@ -591,19 +602,24 @@ function quantitaDefault(meta){ return Number(meta&&meta.porzione)||0; }
    generico (ingredientConstraints[id].quantity), che resta un fallback
    soltanto se il resolver non produce un valore contestuale; se nessuno
    dei due esiste, fallback finale sulla porzione di catalogo. */
-async function quantitaConfigurata(nome,meta){
-  try{
-    const cfg=await configRuntime();
-    const resolved=cfg&&cfg.resolved;
-    const base=state.baseByName.get(String(nome).toLowerCase());
-    const rule=base&&resolved&&resolved.ingredientConstraints&&resolved.ingredientConstraints[base.id];
-    if(rule){
-      const ctx=rule.contexts&&rule.contexts.pastoPrincipale;
-      if(ctx&&ctx.quantity!==null&&ctx.quantity!==undefined) return Number(ctx.quantity)||0;
-      if(rule.quantity!==null&&rule.quantity!==undefined) return Number(rule.quantity)||0;
-    }
-  }catch(e){}
-  return quantitaDefault(meta);
+async function quantitaConfigurata(nome,meta,options){
+  const cfg=await configRuntime();
+  const base=state.baseByName.get(String(nome).toLowerCase());
+  const macro=Object.keys(PROTEIN_MACRO_TO_TOKEN).find(k=>PROTEIN_MACRO_TO_TOKEN[k]===SUBTYPE_TO_TOKEN[meta.sottotipo]);
+  const fallback=meta.gruppo==='frutta'?(cfg.resolved.fruit.portionMin+cfg.resolved.fruit.portionMax)/2:quantitaDefault(meta);
+  return N.ingredientQuantity(cfg.resolved,base?.id,'pastoPrincipale',fallback,{...options,macro});
+}
+
+async function doseContestoVariante(variante,context,fallbackGrams){
+  const cfg=await configRuntime(),meta=metaIngrediente(variante.nome)||{};
+  const native=N.ingredientQuantity(cfg.resolved,variante.ingredienteId,context,null);
+  if(native!=null)return grammiDaQuantita(meta,native);
+  if(meta.gruppo==='frutta')return (cfg.resolved.fruit.portionMin+cfg.resolved.fruit.portionMax)/2;
+  if(context==='colazione'){
+    const breakfast=metaColazioneCanonica(meta);
+    if(breakfast?.quantitaCatalogo!=null)return grammiDaQuantita(meta,breakfast.quantitaCatalogo);
+  }
+  return fallbackGrams;
 }
 
 async function preparaIngredientiDettagliati(ricetta,combinazione){
@@ -622,10 +638,12 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
     for(const componente of componenti){
       const nome=componente.nome, meta=metaIngrediente(nome)||{};
       const categoria=componente.categoria||s.categoria,macroComponente=macroCategoria(categoria);
-      let q=componente.dose!==undefined&&componente.dose!==null&&componente.dose!==''
-        ? Number(componente.dose)||0
-        : await quantitaConfigurata(nome,meta);
-      if((macroCounts[macro]||0)>1 && !(componente.dose!==undefined&&componente.dose!==null&&componente.dose!=='')) q=q/macroCounts[macro];
+      const exact=(await configRuntime()).resolved.recipeDoses?.[ricetta.id]?.[nome];
+      let q=await quantitaConfigurata(nome,meta,{recipeId:ricetta.id,name:nome,recipeDose:componente.dose});
+      const roles=ruoliVerduraDaClasse(ricetta.classe);
+      const doseMancante=exact==null&&componente.dose==null&&((categoria==='V'&&(roles.S||roles.G)&&!roles.V)||(categoria==='Condimenti'&&meta.gruppo!=='grassi'));
+      if(doseMancante)q=0;
+      if(exact==null&&(macroCounts[macro]||0)>1 && !(componente.dose!==undefined&&componente.dose!==null&&componente.dose!=='')) q=q/macroCounts[macro];
       const base=state.baseByName.get(nome.toLowerCase());
       const variante=state.variantByName.get(nome.toLowerCase());
       out.push({
@@ -636,6 +654,7 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
         variantId:variante?variante.id:null,
         ingredienteId:base?base.id:null,
         quantita:q,
+        doseMancante,
         grammi:grammiDaQuantita(meta,q),
         unita:meta.unitaPorzione==='pezzi'?'pz':'g',
         allergeni:Array.isArray(meta.allergeni)?meta.allergeni.slice():[],
@@ -659,11 +678,14 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
       const nome=x.nome, meta=metaIngrediente(nome)||{};
       const base=state.baseByName.get(nome.toLowerCase());
       const variante=state.variantByName.get(nome.toLowerCase());
-      let q=x.dose!==undefined&&x.dose!==null&&x.dose!==''?Number(x.dose)||0:await quantitaConfigurata(nome,meta);
+      const exact=(await configRuntime()).resolved.recipeDoses?.[ricetta.id]?.[nome];
+      let q=await quantitaConfigurata(nome,meta,{recipeId:ricetta.id,name:nome,recipeDose:x.dose});
+      const doseMancante=exact==null&&x.dose==null&&meta.gruppo!=='grassi';
+      if(doseMancante)q=0;
       out.push({
         nome,categoria:'Condimenti',macro:null,slotIndex:null,
         variantId:variante?variante.id:null,ingredienteId:base?base.id:null,
-        quantita:q,grammi:grammiDaQuantita(meta,q),
+        quantita:q,doseMancante,grammi:grammiDaQuantita(meta,q),
         unita:meta.unitaPorzione==='pezzi'?'pz':'g',
         allergeni:Array.isArray(meta.allergeni)?meta.allergeni.slice():[],
         sottotipo:meta.sottotipo||null,gruppo:meta.gruppo||null,
@@ -695,26 +717,12 @@ function gruppoProteicoDaIngredienti(ingredienti,classe){
   const token=(Array.isArray(classe)?classe:[classe]).find(x=>TOKEN_P.has(x));
   return token||null;
 }
-function chiaviStack(combinazione,modelId,stackScope){
-  const keys=[];
-  for(const s of combinazione.slot){
-    if(s.categoria!=='C'&&s.categoria!=='V'){
-      const componenti=s.ingrediente&&Array.isArray(s.ingrediente.componenti)&&s.ingrediente.componenti.length?s.ingrediente.componenti:(s.ingrediente?[s.ingrediente]:[]);
-      for(const i of componenti)if(i&&i.nome&&Number(i.stack===undefined?s.ingrediente.stack:i.stack)!==0)keys.push('i:'+(i.categoria||s.categoria)+':'+i.nome);
-      if(s.cottura&&s.cottura.nome&&Number(s.cottura.stack)!==0) keys.push('c:'+s.categoria+':'+s.cottura.nome);
-    }
-  }
-  for(const g of combinazione.condimenti) for(const i of (g.ingredienti||[])) if(i.nome&&Number(i.stack)!==0) keys.push('cond:'+i.nome);
-  if(!keys.length){
-    for(const s of combinazione.slot){
-      if(s.categoria==='V')continue;
-      const componenti=s.ingrediente&&Array.isArray(s.ingrediente.componenti)&&s.ingrediente.componenti.length?s.ingrediente.componenti:(s.ingrediente?[s.ingrediente]:[]);
-      for(const i of componenti)if(i&&i.nome&&Number(i.stack===undefined?s.ingrediente.stack:i.stack)!==0)keys.push('i:'+(i.categoria||s.categoria)+':'+i.nome);
-      if(s.cottura&&s.cottura.nome&&Number(s.cottura.stack)!==0) keys.push('c:'+s.categoria+':'+s.cottura.nome);
-    }
-  }
-  const prefisso=stackScope?'s:'+String(stackScope):'m'+modelId;
-  return uniq(keys.map(k=>prefisso+':'+k));
+function chiaviStack(combinazione){
+  const ingredienti=(combinazione.slot||[]).flatMap(s=>{
+    const parts=s.ingrediente&&s.ingrediente.componenti||[s.ingrediente];
+    return parts.filter(Boolean).map(i=>({nome:i.nome,categoria:i.categoria||s.categoria}));
+  });
+  return K.identity({ingredienti,slot:combinazione.slot}).rotationKeys;
 }
 
 async function compilaRicetta(ricetta,combinazione,index){
@@ -724,9 +732,10 @@ async function compilaRicetta(ricetta,combinazione,index){
   const nut=calcolaNutrienti(ingredienti);
   const classe=tokenClasse(ricetta);
   const id='nr_'+ricetta.id+'_'+index;
-  return {
+  return K.decorate({
     id,
     recipeModelId:ricetta.id,
+    ingredientiDaDefinire:clone(ricetta.ingredientiDaDefinire||[]),
     comboIndex:index,
     nome:n.display,
     partiRicetta:n.parti,
@@ -749,7 +758,7 @@ async function compilaRicetta(ricetta,combinazione,index){
     templateOrigine:clone(ricetta),
     condimentoVarianteIndex:0,
     numeroVariantiCondimento:selezionata.numeroVariantiCondimento
-  };
+  });
 }
 
 async function sincronizzaIngredientiIndexedDB(){
@@ -893,8 +902,8 @@ function giorniUltimo(key,data){
   if(!u) return Infinity;
   return giorniTra(new Date((typeof data==='string'?data:isoDate(data))+'T12:00:00'),new Date(u));
 }
-function cooldownOk(r,data){
-  if(!(r.chiaviStack||[]).every(k=>giorniUltimo(k,data)>=COOLDOWN_GIORNI)) return false;
+function cooldownOk(r,data,days=COOLDOWN_GIORNI){
+  if(!(r.chiaviStack||[]).every(k=>giorniUltimo(k,data)>=days)) return false;
   for(const i of (r.ingredienti||[])){
     const giorni=Number(i.cooldownGiorni)||0;
     if(giorni>0 && giorniUltimo('@ingrediente:'+i.nome,data)<giorni) return false;
@@ -1210,21 +1219,23 @@ async function migraStatoCarboidratiCanonicoSeNecessario(){
 async function caricaConfigurazioneNutrizionaleRisolta(){
   if(typeof getOne!=='function') return N.resolveNutritionConfig({});
   try{
-    const [a,v,c,b,u,cs]=await Promise.all([
+    const [a,v,c,b,u,cs,classes]=await Promise.all([
       getOne('impostazioni','allergeniAttivi'),
       getOne('impostazioni','vincoliIngredientiNutrizionista'),
       getOne('impostazioni','configAvanzata'),
       getOne('impostazioni','ingredientiBloccati'),
       getOne('impostazioni','tettiIngredienteSettimanali'),
-      getOne('impostazioni','configCarboidratiStati')
+      getOne('impostazioni','configCarboidratiStati'),
+      getOne('impostazioni','vincoliClassiCarboidrati')
     ]);
     /* Dopo la migrazione (migraStatoCarboidratiCanonicoSeNecessario, eseguita
        una sola volta in inizializza) lo stato canonico e' l'unica sorgente:
        nessuna rilettura o reinterpretazione dei record legacy
        (configCarboidrati/configCarboidratiOrigini/ExplicitZeroKeys) qui. */
     return N.resolveNutritionConfig({
+      ingredientCatalog:typeof getAll==='function'?await getAll('ingredienti'):[],
       nutritionist:{
-        config:c&&c.valore||{},
+        config:{...c?.valore,carbohydrateClasses:c?.valore?.carbohydrateClasses??classes?.valore},
         ingredientConstraints:v&&v.valore||{},
         allergens:a&&a.valore||[],
         blockedIngredientIds:b&&b.valore||[]
@@ -1234,17 +1245,18 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
         carbohydrates:{states:cs&&cs.valore||{},explicitZeroKeys:[]}
       }
     });
-  }catch(e){ return N.resolveNutritionConfig({}); }
+  }catch(e){ throw new Error('Configurazione nutrizionale non leggibile: '+e.message); }
 }
 
 async function ricettaAmmessa(r,data,opts){
   opts=opts||{};
-  if(!r||r.disponibile===false) return false;
+  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante)) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
   const verdureDisattivate=cfg.userPreferences&&cfg.userPreferences.verdureDisattivateVariantIds;
   for(const i of r.ingredienti||[]){
-    if(i.allergeni&&i.allergeni.some(a=>cfg.allergie.includes(a))) return false;
+    const allergeni=new Set([...(i.allergeni||[]),...(metaIngrediente(i.nome)?.allergeni||[])]);
+    if([...allergeni].some(a=>cfg.allergie.includes(a))) return false;
     /* Esclusione hard (Set utente, "Disponibilità verdure"): un variantId
        dichiarato non disponibile non può mai comparire in una ricetta
        proposta automaticamente, nessuna eccezione o fallback che riapra
@@ -1271,7 +1283,7 @@ async function ricettaAmmessa(r,data,opts){
     const macro=Object.keys(PROTEIN_MACRO_TO_TOKEN).find(k=>PROTEIN_MACRO_TO_TOKEN[k]===SUBTYPE_TO_TOKEN[i.sottotipo]);
     if(macro&&forbidden.has(macro)) return false;
   }
-  if(!opts.ignoraCooldown && !cooldownOk(r,data)) return false;
+  if(!opts.ignoraCooldown && !cooldownOk(r,data,cfg.resolved.rotationDays.stack)) return false;
   return true;
 }
 
@@ -1427,6 +1439,7 @@ function scoreCopertura(r,targetToken){
   return s;
 }
 async function poolAmmesso(data,opts){
+  opts=Object.assign({},opts,{ignoraCooldown:true});
   const out=[];
   for(const r of state.ricetteConcrete){
     /* Rete di sicurezza ridondante: le voci sintetiche a ingrediente singolo
@@ -1435,7 +1448,12 @@ async function poolAmmesso(data,opts){
        sono state rimosse), quindi questo filtro oggi non esclude mai nulla.
        Lasciato per sicurezza nel caso quel tipo di voce tornasse in futuro. */
     if(r.stackScope==='contorni_catalogo'||r.stackScope==='proteine_catalogo')continue;
-    if(carbRicettaAmmesso(r,opts&&opts.carbBudget)&&await ricettaAmmessa(r,data,opts)) out.push(r);
+    if(r.disponibile===false||!carbRicettaAmmesso(r,opts&&opts.carbBudget))continue;
+    // La cache persistente descrive le combinazioni; le dosi della nuova
+    // proposta devono usare il Setting corrente prima di calcolare V/cap.
+    // Materializzare non scrive né modifica catalogo o snapshot già salvati.
+    const corrente=await materializzaRicetta(r,Number(r.condimentoVarianteIndex)||0);
+    if(await ricettaAmmessa(corrente,data,opts))out.push(corrente);
   }
   return out;
 }
@@ -1474,6 +1492,8 @@ function snapshotRealizzazione(realizzazione,ricetta){
   real.schemaQuantita=1;
   real.nomeEffettivo=ricetta.nome||null;
   real.ingredientiEffettivi=clone(ricetta.ingredienti||[]);
+  Object.assign(real,K.identity(ricetta));
+  real.slot=clone(ricetta.slot||[]);
   real.nutrientiEffettivi=clone(ricetta.nutrienti||calcolaNutrienti(real.ingredientiEffettivi));
   real.gruppoProteico=ricetta.gruppoProteico||null;
   real.ruoloVerdura=ruoliVerduraDaClasse(ricetta.classe);
@@ -1549,7 +1569,6 @@ async function assegnaCondimentiRotazioneGlobale(risultato,data,bloccatiIds){
   bloccatiIds=bloccatiIds||new Set();
 
   const realizzazioni=[];
-  let cambiato=false;
   for(const real of risultato.realizzazioni){
     const copia=clone(real);
     if(bloccatiIds.has(copia&&copia.ricettaId)){
@@ -1567,13 +1586,7 @@ async function assegnaCondimentiRotazioneGlobale(risultato,data,bloccatiIds){
       if(tutte.length>1){
         const idx=await scegliCondimentoGlobale(base,data);
         copia.condimentoVarianteIndex=idx;
-        const nomi=nomiVarianteCondimento(raw,idx);
-        if(nomi.length){
-          const rot=state.tracking.condimentoRotazione;
-          rot.contatore=(Number(rot.contatore)||0)+1;
-          for(const nome of nomi) rot.ultimo[nome]=rot.contatore;
-          cambiato=true;
-        }
+        // La scelta non modifica la LRU; il commit registra il condimento effettivo.
       }else{
         copia.condimentoVarianteIndex=0;
       }
@@ -1586,7 +1599,7 @@ async function assegnaCondimentiRotazioneGlobale(risultato,data,bloccatiIds){
     realizzazioni.push(copia);
   }
   risultato.realizzazioni=realizzazioni;
-  if(cambiato) await salvaTracking();
+  // La LRU persistente avanza soltanto nel commit, mai nell'anteprima.
   return risultato;
 }
 
@@ -1838,7 +1851,7 @@ function macroProteicheRicette(ricette){
 function carbPrincipaleRicette(ricette){for(const r of ricette||[]){const keys=carbKeysRicetta(r);if(keys.length)return keys[0];}return null;}
 function pastoRispettaConteggi(ricette,cfg,ingredientCounts,subtypeCounts){
   const nextIngredients=Object.assign({},ingredientCounts),nextSubtypes=Object.assign({},subtypeCounts);accumulaConteggiPasto(ricette,nextIngredients,nextSubtypes);
-  for(const [id,n] of Object.entries(nextIngredients)){const rule=cfg.vincoli[id];if(rule&&rule.max!==null&&rule.max!==undefined&&n>Number(rule.max))return false;}
+  for(const [id,n] of Object.entries(nextIngredients)){const rule=cfg.vincoli[id];if(rule&&rule.max!==null&&rule.max!==undefined&&n>Number(rule.max))return false;const cap=rule?.contexts?.pastoPrincipale?.max;if(cap!=null&&n>cap)return false;}
   for(const [st,n] of Object.entries(nextSubtypes)){const cap=cfg.weeklyLimits[st];if(cap!==null&&cap!==undefined&&n>Number(cap))return false;}
   return true;
 }
@@ -1939,32 +1952,174 @@ async function generaCandidatiPasto(target,data,opts){
   }
   return risultati;
 }
-async function contestoConteggiSettimana(giorno){
-  const runtimeConfig=await configRuntime();
-  const weeklyIngredientCounts={},weeklySubtypeCounts={},weeklyStackKeys=new Set(),weeklyCarbCounts={},carboidratoGiorno=new Map();
-  const registraCarboGiorno=(g,chiave)=>{if(!chiave||!g)return;if(!carboidratoGiorno.has(g))carboidratoGiorno.set(g,new Set());carboidratoGiorno.get(g).add(chiave);};
-  if(typeof getAll==='function'){
-    const settimana=startOfWeekISO(new Date((giorno||isoDate(new Date()))+'T12:00:00'));
-    const [log,piano]=await Promise.all([getAll('consumoGiorno'),getAll('piano')]);
-    for(const row of log||[]){
-      if(startOfWeekISO(new Date((row.giorno||'')+'T12:00:00'))!==settimana)continue;
-      const rr=ricetteDaIds(row.ricettaIds||[]);
-      accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);
-      rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));
-      const carb=row.carboidratoPianificato||carbPrincipaleRicette(rr);
-      if(carb){weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;registraCarboGiorno(row.giorno,carb);}
+async function configConteggiSettimana(cfg,giorno){
+  const [plan,logs,recipes]=await Promise.all([getAll('piano'),getAll('consumoGiorno'),getAll('ricette')]);
+  const week=typeof giorno==='number'?giorno:K.week(giorno),records=new Map(plan.map(v=>[v.id,v])),otherCounts={};
+  for(const log of logs)records.set(log.giorno+'_'+log.pasto,{...log,id:log.giorno+'_'+log.pasto});
+  const variants=new Map([...state.variantByName.values()].map(v=>[v.id,v]));
+  for(const row of records.values()){
+    if(!/_(colazione|spuntino[123])$/.test(row.id)||K.week(row.id.slice(0,10))!==week)continue;
+    let ingredients=row.ingredientiEffettivi;
+    if(!Array.isArray(ingredients)){
+      if(row.componenti)ingredients=Object.values(row.componenti).filter(Boolean).map(variantId=>({variantId}));
+      else ingredients=recipes.find(r=>r.id===(row.ricettaId||row.colazioneSpecialeId))?.ingredienti||[];
     }
-    for(const voce of piano||[]){
-      const giornoVoce=String(voce.id||'').slice(0,10);
-      if(!giornoVoce||startOfWeekISO(new Date(giornoVoce+'T12:00:00'))!==settimana)continue;
-      const rr=ricetteDaVocePiano(voce);
-      accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);
-      rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));
-      const carb=voce.carboidratoPianificato||carbPrincipaleRicette(rr);
-      if(carb){weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;registraCarboGiorno(giornoVoce,carb);}
+    const ids=new Set(ingredients.map(i=>i.ingredienteId||variants.get(i.variantId)?.ingredienteId).filter(Boolean));
+    for(const id of ids)otherCounts[id]=(otherCounts[id]||0)+1;
+  }
+  return {...cfg,vincoli:N.mainMealConstraints(cfg.resolved,otherCounts)};
+}
+function minimiIngredientiFattibili(recipes,cfg,counts,remaining){
+  const next={...counts};accumulaConteggiPasto(recipes,next,{});
+  return Object.entries(cfg.vincoli).every(([id,rule])=>rule.min==null||(next[id]||0)+remaining>=rule.min);
+}
+/* @qa-metadata
+{
+  "id": "P1-conteggi-preservati",
+  "paths": ["contestoConteggiSettimana", "generaPianoSettimana", "validaRecordsContratti"],
+  "rules": ["consumo prevale sul piano per slot", "snapshot prima del catalogo", "speciali fuori bilancio ordinario", "minimi completi su 14 pasti ordinari"],
+  "focusedTest": "tests/pwa-conteggi-preservati.test.js",
+  "pending": ["IndexedDB reale", "rigenerazione parziale con pasti bloccati e speciali", "passaggio domenica-lunedi", "commit con record legacy misti a snapshot"],
+  "scope": "conteggi ordinari; non certifica rotazione o intera configurazione nutrizionista"
+}
+*/
+function unisciPianoEConsumi(piano,log){
+  const rows=new Map((piano||[]).map(v=>[v.id,v]));
+  for(const voce of log||[]){
+    const id=voce.giorno+'_'+voce.pasto;
+    rows.set(id,{...voce,id});
+  }
+  return rows.values();
+}
+async function ricetteOrdinariePerConteggi(voce){
+  if(voce.origine==='utente-speciale')return [];
+  const recipes=[];
+  if(voce.realizzazioni?.length){
+    for(const real of voce.realizzazioni){
+      const recipe=await materializzaRealizzazione(real);
+      if(!recipe)throw new Error('Realizzazione non leggibile: '+real.ricettaId);
+      recipes.push(recipe);
+    }
+  }else{
+    for(const id of uniq(voce.ricettaIds||[voce.ricettaId,voce.primoId,voce.secondoId,voce.contornoId].filter(Boolean))){
+      const recipe=state.ricetteById.get(id)||await getOne('ricette',id);
+      if(!recipe)throw new Error('Ricetta salvata non leggibile: '+id);
+      recipes.push(recipe);
     }
   }
-  return {runtimeConfig,weeklyIngredientCounts,weeklySubtypeCounts,weeklyStackKeys,weeklyCarbCounts,carboidratoGiorno,variantiPrioritarie:await variantiPrioritarieDeperimento()};
+  // Gli speciali non diventano un pasto ordinario perché hanno ingredienti.
+  if(recipes.some(r=>r.piattoSpeciale))return [];
+  if(recipes.some(r=>!r.ingredienti?.length))throw new Error('Pasto salvato senza ingredienti leggibili: '+voce.id);
+  return recipes;
+}
+async function contestoConteggiSettimana(giorno,excludeId){
+  const runtimeConfig=await configConteggiSettimana(await configRuntime(),giorno);
+  const weeklyIngredientCounts={},weeklySubtypeCounts={},weeklyStackKeys=new Set(),weeklyCarbCounts={},carboidratoGiorno=new Map();
+  const seen=new Set();
+  if(typeof getAll==='function'){
+    const settimana=K.week(giorno||isoDate(new Date()));
+    const [log,piano]=await Promise.all([getAll('consumoGiorno'),getAll('piano')]);
+    for(const voce of unisciPianoEConsumi(piano,log)){
+      if(voce.id===excludeId||!/_(pranzo|cena)$/.test(voce.id)||K.week(voce.id.slice(0,10))!==settimana)continue;
+      const rr=await ricetteOrdinariePerConteggi(voce);
+      if(!rr.length)continue;
+      seen.add(voce.id);
+      accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);
+      rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));
+      const carb=voce.carboidratoPianificato||voce.primoCereale||carbPrincipaleRicette(rr),day=voce.id.slice(0,10);
+      if(carb){
+        weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;
+        if(!carboidratoGiorno.has(day))carboidratoGiorno.set(day,new Set());
+        carboidratoGiorno.get(day).add(carb);
+      }
+    }
+  }
+  return {slotResiduiMinimi:seen.size===13?0:undefined,runtimeConfig,weeklyIngredientCounts,weeklySubtypeCounts,weeklyStackKeys,weeklyCarbCounts,carboidratoGiorno,variantiPrioritarie:await variantiPrioritarieDeperimento()};
+}
+async function cronologiaContratti(excludeIds){
+  const [log,piano]=await Promise.all([getAll('consumoGiorno'),getAll('piano')]);
+  return K.events([...(log||[]),...(piano||[])].filter(v=>!excludeIds.has(v.giorno&&v.pasto?v.giorno+'_'+v.pasto:v.id)),id=>state.ricetteById.get(id));
+}
+async function validaRecordsContratti(records,deletedIds){
+  const ids=new Set([...(deletedIds||[]),...records.map(v=>v.id)]);
+  const history=await cronologiaContratti(ids),cfg=await configRuntime();
+  const diagnostics=[],baseline={};
+  for(const record of records.slice().sort((a,b)=>a.id.localeCompare(b.id))){
+    const date=record.id.slice(0,10);
+    const old=await (typeof getOneRaw==='function'?getOneRaw('piano',record.id):getOne('piano',record.id));
+    baseline[record.id]=old||null;
+    if(old&&old.consumato&&JSON.stringify(old)!==JSON.stringify(record))throw new Error('Pasto già consumato: '+record.id);
+    for(const real of record.realizzazioni||[]){
+      const r=await materializzaRealizzazione(real);
+      if(!r)throw new Error('Realizzazione non leggibile: '+real.ricettaId);
+      if(!await ricettaAmmessa(r,date,{runtimeConfig:cfg,ignoraCooldown:true,weeklyIngredientCounts:{},weeklySubtypeCounts:{}}))throw new Error('Ricetta esclusa: '+r.nome);
+      const reason=K.hardReason(r,date,history);
+      if(reason)throw new Error(record.id+': '+reason+' — '+r.nome);
+      Object.assign(real,K.identity(r));
+      real.stack=real.rotationKeys.length?0:1;
+      history.push({...K.identity(r),date,slot:record.id});
+    }
+    diagnostics.push(...(record.diagnosticaCopertura||[]));
+  }
+  for(const id of deletedIds||[]){
+    const old=await (typeof getOneRaw==='function'?getOneRaw('piano',id):getOne('piano',id));
+    if(old&&old.consumato)throw new Error('Un consumo non può essere eliminato dal Menu');
+    baseline[id]=old||null;
+  }
+  const weeks=new Set(records.map(v=>K.week(v.id.slice(0,10))));
+  const [saved,logs]=await Promise.all([getAll('piano'),getAll('consumoGiorno')]);
+  const combined=new Map((saved||[]).filter(v=>!ids.has(v.id)).map(v=>[v.id,v]));
+  for(const log of logs||[]){const id=log.giorno+'_'+log.pasto;if(!ids.has(id))combined.set(id,{...log,id});}
+  for(const record of records)combined.set(record.id,record);
+  for(const week of weeks){
+    const weekConfig=await configConteggiSettimana(cfg,week);
+    const ingredientCounts={},subtypeCounts={},proteinCounts={},carbCounts={},dayMacros=new Map();let meals=0;
+    for(const record of combined.values()){
+      if(K.week(record.id.slice(0,10))!==week||!/_(pranzo|cena)$/.test(record.id))continue;
+      const recipes=await ricetteOrdinariePerConteggi(record);
+      if(!recipes.length)continue;
+      const macro=record.categoriaTarget||macroProteicaRicette(recipes),date=record.id.slice(0,10),carb=record.carboidratoPianificato||record.primoCereale||carbPrincipaleRicette(recipes);
+      const errore=erroreValidazionePastoFinale({ricette:recipes,carbKeyUsato:carb,bilancioVerdura:coperturaVerduraRicette(recipes,cfg.resolved.vegetables)},macro,{resolved:cfg.resolved,vegetablePortions:cfg.resolved.vegetables});
+      if(errore)throw new Error(record.id+': '+errore);
+      if(!pastoRispettaConteggi(recipes,weekConfig,ingredientCounts,subtypeCounts))throw new Error('Cap settimanale superato: '+record.id);
+      accumulaConteggiPasto(recipes,ingredientCounts,subtypeCounts);
+      if(!carb||(cfg.resolved.carbohydrates.excludedKeys||[]).includes(carb))throw new Error('Carboidrato mancante/escluso: '+record.id);
+      carbCounts[carb]=(carbCounts[carb]||0)+1;
+      if(macro){
+        if(dayMacros.get(date)===macro)throw new Error('Stessa macro a pranzo e cena: '+date);
+        dayMacros.set(date,macro);proteinCounts[macro]=(proteinCounts[macro]||0)+1;
+      }
+      meals++;
+    }
+    const classRule=cfg.resolved.carbohydrateClasses.complessi;
+    if(classRule.max!=null&&meals>classRule.max)throw new Error('Massimo carboidrati complessi superato.');
+    if(meals===14&&classRule.min!=null&&meals<classRule.min)throw new Error('Minimo carboidrati complessi non raggiunto.');
+    for(const [macro,count] of Object.entries(proteinCounts)){const rule=cfg.resolved.proteinFrequencies[macro];if(rule&&rule.max!==null&&count>rule.max)throw new Error('Massimo proteico superato: '+macro);}
+    for(const [key,n] of Object.entries(cfg.resolved.carbohydrates.fixedCounts||{})){
+      if((carbCounts[key]||0)>n||(meals===14&&(carbCounts[key]||0)!==n))throw new Error('Conteggio FIXED errato: '+key);
+    }
+    if(meals===14&&!minimiIngredientiFattibili([],weekConfig,ingredientCounts,0))throw new Error('Minimo settimanale ingrediente non raggiunto.');
+    if(meals===14){const errors=validaMinimiProteici(cfg.resolved,proteinCounts,0);if(errors.length)throw new Error(errors.join(' '));}
+  }
+  const stack={};
+  for(const event of history)for(const key of event.rotationKeys){
+    const current=stack[key];
+    if(!current||event.date>current.ultimoUso)stack[key]={stack:0,ultimoUso:event.date};
+  }
+  const tracking=clone(state.tracking);
+  const rot=tracking.condimentoRotazione||(tracking.condimentoRotazione={contatore:0,ultimo:{}});
+  for(const record of records)for(const real of record.realizzazioni||[]){
+    const r=await materializzaRealizzazione(real);
+    const names=(r.ingredienti||[]).filter(i=>i.condimento).map(i=>i.nome);
+    if(names.length){rot.contatore++;for(const name of names)rot.ultimo[name]=rot.contatore;}
+  }
+  return {stack,diagnostics,tracking,baseline};
+}
+async function salvaRecordsContratti(records,deletedIds){
+  const result=await validaRecordsContratti(records,deletedIds);
+  if(typeof commitPianoContratti==='function')await commitPianoContratti(records,deletedIds||[],result);
+  else throw new Error('Persistenza atomica del piano non disponibile');
+  return records;
 }
 /* Risolve UN singolo slot pasto su richiesta (fuori dal flusso di generazione
    settimanale in blocco), con la stessa costruzione sequenziale P->C->V
@@ -1976,7 +2131,7 @@ async function risolviSlotSingolo(giorno,pasto,target,opzioni){
   opzioni=opzioni||{};
   const resolved=await caricaConfigurazioneNutrizionaleRisolta();
   if(!resolved.valid)return null;
-  const ctx=await contestoConteggiSettimana(giorno);
+  const ctx=await contestoConteggiSettimana(giorno,giorno+'_'+pasto);
   ctx.vegetablePortions=resolved.vegetables;
   ctx.resolved=resolved;
   ctx.pasto=pasto;
@@ -2074,12 +2229,28 @@ async function chiudiPastoConVerdura(base,token,giorno,pool,ctx){
      proteina/carboidrato candidato nello stesso ciclo, senza alcun
      nuovo meccanismo di ripetizione. */
   let risultato=await assegnaCondimentiRotazioneGlobale(risultatoPasto(token,ricette,0,null,ctx.vegetablePortions),giorno,bloccateIds);
-  risultato.realizzazioni=await normalizzaRealizzazioniVerdura(risultato.realizzazioni,giorno,ctx.vegetablePortions,bloccateIds,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.verdurePreferiteVariantIds,ctx.requiredVegetableVariantId);
-  risultato.realizzazioni=normalizzaRealizzazioniOlio(risultato.realizzazioni,ctx.resolved&&ctx.resolved.oilGramsPerMainMeal);
+  risultato.realizzazioni=await normalizzaRealizzazioniVerdura(risultato.realizzazioni,giorno,ctx.vegetablePortions,bloccateIds,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.verdurePreferiteVariantIds,ctx.requiredVegetableVariantId,pool);
+  risultato.realizzazioni=normalizzaRealizzazioniOlio(risultato.realizzazioni,ctx.resolved&&(ctx.resolved.oilGramsByMeal?.[ctx.pasto]??ctx.resolved.oilGramsPerMainMeal));
   risultato.bilancioVerdura=await bilancioVerduraDaRealizzazioni(risultato.realizzazioni,ctx.vegetablePortions);
   if(!risultato.bilancioVerdura.coperturaCompleta)return null;
+  risultato.ricette=[];
+  for(const real of risultato.realizzazioni){
+    const r=await materializzaRealizzazione(real);
+    if(!r||!await ricettaAmmessa(r,giorno,{runtimeConfig:ctx.runtimeConfig,ignoraCooldown:true}))return null;
+    if(ctx.contractHistory){
+      if(K.hardReason(r,giorno,ctx.contractHistory))return null;
+      if(!bloccateIds.has(r.id)&&K.availability(r,giorno,ctx.contractHistory,ctx.contractResetRoles||[],ctx.resolved.rotationDays.stack).stack===0)return null;
+    }
+    risultato.ricette.push(r);
+  }
+  if(new Set(risultato.ricette.map(r=>K.identity(r).dishKey)).size!==risultato.ricette.length)return null;
+  if(ctx.slotResiduiMinimi!==undefined&&!minimiIngredientiFattibili(risultato.ricette,ctx.runtimeConfig,ctx.weeklyIngredientCounts,ctx.slotResiduiMinimi))return null;
+  if(ctx.candidatiScartati?.has(firmaCandidato(risultato)))return null;
+  if(ctx.maxContorniSeparati!==undefined&&contorniSeparati(risultato)>ctx.maxContorniSeparati)return null;
   return risultato;
 }
+function firmaCandidato(candidato){return candidato.realizzazioni.map(r=>r.ricettaId+'|'+(r.condimentoVarianteIndex||0)).sort().join(';');}
+function contorniSeparati(candidato){return candidato.ricette.filter(r=>{const c=copertura(r);return c.V&&!c.P&&!c.C;}).length;}
 /* Una ricetta P+C gia' combinata e' un candidato P come tutti gli altri:
    entra in gioco solo se il suo carboidrato incorporato e' ammissibile di
    per se' - non e' mai preferita per il solo fatto di essere gia'
@@ -2170,6 +2341,25 @@ async function cercaCarboSeparato(proteina,fissiRimasti,autoCandidati,token,gior
   return null;
 }
 async function costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx){
+  if(!ctx.contractPass){
+    const history=ctx.contractHistory||await cronologiaContratti(new Set([giorno+'_'+ctx.pasto]));
+    const hardPool=K.filter(pool,giorno,history,true);
+    // Esaurire C non deve riaprire P: prima si mantiene la fonte proteica
+    // disponibile e si riapre soltanto il carboidrato necessario.
+    const tried=new Set();
+    for(const resetRoles of [[],['C'],['P'],['P','C']]){
+      const filtered=K.filter(hardPool,giorno,history,resetRoles,ctx.resolved.rotationDays.stack);
+      const signature=filtered.map(r=>r.id).join('|');if(tried.has(signature))continue;tried.add(signature);
+      const result=await costruisciPastoSequenziale(token,giorno,carbCandidati,filtered,Object.assign({},ctx,{contractPass:true,contractHistory:history,contractResetRoles:resetRoles}));
+      if(result){
+        result.diagnosticaCopertura=resetRoles.length?K.diagnostics(result.ricette,giorno,giorno+'_'+ctx.pasto,history,ctx.resolved.rotationDays.stack):[];
+        for(const row of result.diagnosticaCopertura)Object.assign(row,{candidatiPrima:pool.length,candidatiCompatibili:hardPool.length,candidatiDisponibili:K.filter(hardPool,giorno,history,false,ctx.resolved.rotationDays.stack).length});
+        return result;
+      }
+      if(filtered.length===hardPool.length)break;
+    }
+    return null;
+  }
   /* setPocoTempo: riordina le chiavi carboidrato PRIMA di qualunque
      costruzione dello slot (mai una lettura IndexedDB qui dentro: il
      valore arriva già risolto da ctx.runtimeConfig.userPreferences,
@@ -2323,6 +2513,23 @@ function marcaRealizzazioniBloccate(esito,bloccateIds){
 async function completaPastoConBloccate(token,giorno,carbCandidati,pool,ctx,bloccate){
   bloccate=bloccate||[];
   if(!bloccate.length)return costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx);
+  if(!ctx.contractPass){
+    const history=ctx.contractHistory||await cronologiaContratti(new Set([giorno+'_'+ctx.pasto]));
+    const hardPool=K.filter(pool,giorno,history,true);
+    const tried=new Set();
+    for(const resetRoles of [[],['C'],['P'],['P','C']]){
+      const filtered=K.filter(hardPool,giorno,history,resetRoles,ctx.resolved.rotationDays.stack);
+      const signature=filtered.map(r=>r.id).join('|');if(tried.has(signature))continue;tried.add(signature);
+      const result=await completaPastoConBloccate(token,giorno,carbCandidati,filtered,{...ctx,contractPass:true,contractHistory:history,contractResetRoles:resetRoles},bloccate);
+      if(result){
+        result.diagnosticaCopertura=resetRoles.length?K.diagnostics(result.ricette.filter(r=>!bloccate.some(b=>b.id===r.id)),giorno,giorno+'_'+ctx.pasto,history,ctx.resolved.rotationDays.stack):[];
+        for(const row of result.diagnosticaCopertura)Object.assign(row,{candidatiPrima:pool.length,candidatiCompatibili:hardPool.length,candidatiDisponibili:K.filter(hardPool,giorno,history,false,ctx.resolved.rotationDays.stack).length});
+        return result;
+      }
+      if(filtered.length===hardPool.length)break;
+    }
+    return null;
+  }
   const bloccateIds=new Set(bloccate.map(r=>r.id));
   const ctxConBlocco=Object.assign({},ctx,{realizzazioniBloccateIds:bloccateIds});
   const proteinaBloccata=bloccate.find(r=>copertura(r).P);
@@ -2580,7 +2787,31 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
      traccia, per ciascun giorno gia' passato, quali chiavi carboidrato sono
      state usate: serve al cooldown di un giorno sulle voci AUTO. */
   const carboidratoGiorno=new Map();
+  const snapshots=[],rejected=[],limitiContorni=[];let backtracks=0,carenzaContorni=false;
+  const objects=['weeklyProteinCounts','weeklyCarbCounts','weeklyIngredientCounts','weeklySubtypeCounts'];
+  const save=()=>({values:Object.fromEntries(objects.map(k=>[k,{...ctx[k]}])),residui:{...residui},history:[...(ctx.contractHistory||[])],stack:new Set(ctx.weeklyStackKeys),protein:new Map([...proteineGiorno].map(([k,v])=>[k,new Set(v)])),carb:new Map([...carboidratoGiorno].map(([k,v])=>[k,new Set(v)]))});
+  const restore=s=>{
+    for(const k of objects){for(const key of Object.keys(ctx[k]))delete ctx[k][key];Object.assign(ctx[k],s.values[k]);}
+    for(const key of Object.keys(residui))delete residui[key];Object.assign(residui,s.residui);
+    ctx.contractHistory.splice(0,ctx.contractHistory.length,...s.history);
+    ctx.weeklyStackKeys.clear();s.stack.forEach(k=>ctx.weeklyStackKeys.add(k));
+    proteineGiorno.clear();s.protein.forEach((v,k)=>proteineGiorno.set(k,new Set(v)));
+    carboidratoGiorno.clear();s.carb.forEach((v,k)=>carboidratoGiorno.set(k,new Set(v)));
+  };
+  const rewind=i=>{
+    if(i<=0||backtracks>=48)return false;
+    backtracks++;
+    const previous=i-1;
+    (rejected[previous]||(rejected[previous]=new Set())).add(firmaCandidato(scelte[previous]));
+    // Se mancano contorni distinti, cambiare soltanto carne o cereale non
+    // libera copertura. Risali fino a una scelta che ne risparmi uno.
+    if(carenzaContorni)limitiContorni[previous]=contorniSeparati(scelte[previous])-1;
+    limitiContorni.length=i;
+    rejected.length=i;restore(snapshots[previous]);scelte.length=previous;slotDefs.length=previous;
+    return true;
+  };
   for(let i=0;i<slotRefs.length;i++){
+    snapshots[i]=save();
     const slot=slotRefs[i];
     if(!proteineGiorno.has(slot.day))proteineGiorno.set(slot.day,new Set());
     ctx.todayStackKeys=new Set();
@@ -2603,7 +2834,7 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
     }else{
       proteine=opzioniProteinaPerSlot(ctx.resolved,ctx.tabella,slotRefs,i,ctx.weeklyProteinCounts,proteineGiorno,ctx.rng,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.proteinaMenoGradita,ctx.slotTotaliSettimanaCompleta);
     }
-    if(proteine.errors.length)return {ok:false,errori:proteine.errors,completati:i};
+    if(proteine.errors.length){if(rewind(i)){i-=2;continue;}return {ok:false,errori:proteine.errors,completati:i};}
 
     const cooldownEsclusi=new Set([
       ...(carboidratoGiorno.get(slot.day)||[]),
@@ -2619,14 +2850,27 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
       const vietate=new Set([...proteineGiorno.get(slot.day)].filter(k=>k!==p));
       for(const k of futureFissiGiorno)if(k!==p)vietate.add(k);
       const token=PROTEIN_MACRO_TO_TOKEN[p]||SUBTYPE_TO_TOKEN[p]||p;
-      const ctxPasto=Object.assign({},ctx,{forbiddenProteinMacros:vietate,requiredVegetableVariantId:ctx.requiredVegetable(slot),residuiCarboidrati:residui,cooldownCarboidrati:cooldownEsclusi,pasto:slot.pasto});
+      const ctxPasto=Object.assign({},ctx,{slotResiduiMinimi:ctx.verificaMinimiIngredienti?slotRefs.length-i-1:undefined,maxContorniSeparati:limitiContorni[i],candidatiScartati:rejected[i],forbiddenProteinMacros:vietate,requiredVegetableVariantId:ctx.requiredVegetable(slot),residuiCarboidrati:residui,cooldownCarboidrati:cooldownEsclusi,pasto:slot.pasto});
       candidato=await completaPastoConBloccate(token,slot.day,carbCandidati,pool,ctxPasto,bloccate);
       if(candidato){target=p;break;}
     }
-    if(!candidato)return {ok:false,errori:['Nessuna composizione valida per '+slot.day+' '+slot.pasto+' rispettando tabella, carboidrati configurati e i blocchi impostati.'],completati:i};
+    if(!candidato){
+      const residue=K.filter(pool,slot.day,ctx.contractHistory||[],true).filter(r=>{const c=copertura(r);return c.V&&!c.P&&!c.C;});
+      if(!residue.length)carenzaContorni=true;
+      if(rewind(i)){i-=2;continue;}
+      const history=ctx.contractHistory||[];
+      const compatibili=K.filter(pool,slot.day,history,true);
+      return {ok:false,errori:['Nessuna composizione valida per '+slot.day+' '+slot.pasto+' rispettando tabella, carboidrati configurati e i blocchi impostati.'],completati:i,diagnostica:{slot:slot.day+'_'+slot.pasto,candidati:pool.length,macro:proteine.targets,backtracks,
+        candidatiCompatibili:compatibili.length,
+        esclusioni:pool.reduce((out,r)=>{const reason=K.hardReason(r,slot.day,history);if(reason)out[reason]=(out[reason]||0)+1;return out;},{}),
+        verdureResidue:compatibili.filter(r=>copertura(r).V&&!copertura(r).P&&!copertura(r).C).map(r=>({id:r.id,nome:r.nome})),
+        percorso:scelte.map((x,j)=>({slot:slotDefs[j].day+'_'+slotDefs[j].pasto,macro:slotDefs[j].target,ricette:x.ricette.map(r=>({id:r.id,nome:r.nome}))}))}};
+    }
 
+    carenzaContorni=false;
     const definizione=Object.assign({},slot,{target,carbKey:candidato.carbKeyUsato,requiredVegetableVariantId:ctx.requiredVegetable(slot)});
     scelte.push(candidato);slotDefs.push(definizione);
+    if(ctx.contractHistory)ctx.contractHistory.push(...candidato.ricette.map(r=>({...K.identity(r),date:slot.day,slot:slot.day+'_'+slot.pasto})));
     ctx.weeklyProteinCounts[target]=(ctx.weeklyProteinCounts[target]||0)+1;
     if(candidato.carbKeyUsato){
       if(residui[candidato.carbKeyUsato]>0)residui[candidato.carbKeyUsato]--;
@@ -2700,13 +2944,23 @@ async function generaPianoSettimana(scarto,opzioni){
   }
   let tab={};
   try{const r=await getOne('impostazioni','tabellaGiornoCategoria');tab=r&&r.valore||{};}catch(e){}
-  const runtimeConfig=await configRuntime(),weeklyIngredientCounts={},weeklySubtypeCounts={},weeklyStackKeys=new Set(),generatedIds=new Set(slotDaGenerare.map(x=>x.day+'_'+x.pasto)),seenSlots=new Set(),proteineGiorno=new Map();
+  const runtimeConfig=await configConteggiSettimana(await configRuntime(),days[0]),weeklyIngredientCounts={},weeklySubtypeCounts={},weeklyStackKeys=new Set(),generatedIds=new Set(slotDaGenerare.map(x=>x.day+'_'+x.pasto)),seenSlots=new Set(),proteineGiorno=new Map();
   const weeklyProteinCounts={},weeklyCarbCounts={};
   const registraProteinaGiorno=(giorno,macro)=>{if(!macro)return;if(!proteineGiorno.has(giorno))proteineGiorno.set(giorno,new Set());proteineGiorno.get(giorno).add(macro);};
   if(typeof getAll==='function'){
     const daySet=new Set(days),[log,piano]=await Promise.all([getAll('consumoGiorno'),getAll('piano')]);
-    for(const row of log||[]){if(!daySet.has(row.giorno))continue;const key=row.giorno+'_'+(row.pasto||''),rr=ricetteDaIds(row.ricettaIds||[]);seenSlots.add(key);accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));const macro=row.categoriaTarget||macroProteicaRicette(rr),carb=row.carboidratoPianificato||row.primoCereale||carbPrincipaleRicette(rr);if(macro){weeklyProteinCounts[macro]=(weeklyProteinCounts[macro]||0)+1;registraProteinaGiorno(row.giorno,macro);}if(carb)weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;}
-    for(const voce of piano||[]){if(generatedIds.has(voce.id)||seenSlots.has(voce.id))continue;const giorno=String(voce.id||'').slice(0,10);if(!daySet.has(giorno))continue;const rr=ricetteDaVocePiano(voce);seenSlots.add(voce.id);accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));const macro=voce.categoriaTarget||macroProteicaRicette(rr),carb=voce.carboidratoPianificato||voce.primoCereale||carbPrincipaleRicette(rr);if(macro){weeklyProteinCounts[macro]=(weeklyProteinCounts[macro]||0)+1;registraProteinaGiorno(giorno,macro);}if(carb)weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;}
+    for(const voce of unisciPianoEConsumi(piano,log)){
+      const giorno=String(voce.id||'').slice(0,10);
+      if(!/_(pranzo|cena)$/.test(voce.id)||generatedIds.has(voce.id)||!daySet.has(giorno))continue;
+      const rr=await ricetteOrdinariePerConteggi(voce);
+      if(!rr.length)continue;
+      seenSlots.add(voce.id);
+      accumulaConteggiPasto(rr,weeklyIngredientCounts,weeklySubtypeCounts);
+      rr.flatMap(r=>r.chiaviStack||[]).forEach(k=>weeklyStackKeys.add(k));
+      const macro=voce.categoriaTarget||macroProteicaRicette(rr),carb=voce.carboidratoPianificato||voce.primoCereale||carbPrincipaleRicette(rr);
+      if(macro){weeklyProteinCounts[macro]=(weeklyProteinCounts[macro]||0)+1;registraProteinaGiorno(giorno,macro);}
+      if(carb)weeklyCarbCounts[carb]=(weeklyCarbCounts[carb]||0)+1;
+    }
 
     /* Per il primo giorno realmente generato la rotazione AUTO D->D+1 deve
        conoscere anche il giorno precedente quando cade fuori dalla settimana
@@ -2716,18 +2970,12 @@ async function generaPianoSettimana(scarto,opzioni){
     const primoGiorno=slotDaGenerare.length?slotDaGenerare[0].day:null;
     const giornoPrecedente=primoGiorno?addGiorni(primoGiorno,-1):null;
     if(giornoPrecedente&&!daySet.has(giornoPrecedente)){
-      const vistiPrecedente=new Set();
-      for(const row of log||[]){
-        if(row.giorno!==giornoPrecedente)continue;
-        const key=row.giorno+'_'+(row.pasto||'');
-        vistiPrecedente.add(key);
-        const rr=ricetteDaIds(row.ricettaIds||[]),macro=row.categoriaTarget||macroProteicaRicette(rr);
-        if(macro)registraProteinaGiorno(giornoPrecedente,macro);
-      }
-      for(const voce of piano||[]){
+      for(const voce of unisciPianoEConsumi(piano,log)){
         const giorno=String(voce.id||'').slice(0,10);
-        if(giorno!==giornoPrecedente||vistiPrecedente.has(voce.id))continue;
-        const rr=ricetteDaVocePiano(voce),macro=voce.categoriaTarget||macroProteicaRicette(rr);
+        if(giorno!==giornoPrecedente||!/_(pranzo|cena)$/.test(voce.id))continue;
+        const rr=await ricetteOrdinariePerConteggi(voce);
+        if(!rr.length)continue;
+        const macro=voce.categoriaTarget||macroProteicaRicette(rr);
         if(macro)registraProteinaGiorno(giornoPrecedente,macro);
       }
     }
@@ -2746,6 +2994,8 @@ async function generaPianoSettimana(scarto,opzioni){
   }
   const variantiPrioritarie=await variantiPrioritarieDeperimento();
   const soluzione=await risolviSettimanaSequenziale(slotDaGenerare,{
+    verificaMinimiIngredienti:slotDaGenerare.length+seenSlots.size===days.length*2,
+    contractHistory:await cronologiaContratti(generatedIds),
     resolved,runtimeConfig,tabella:tab,weeklyIngredientCounts,weeklySubtypeCounts,weeklyStackKeys,
     weeklyProteinCounts,weeklyCarbCounts,proteineGiorno,vegetablePortions:resolved.vegetables,
     variantiPrioritarie,onProgress:opzioni.onProgress,slotTotaliSettimanaCompleta:days.length*2,
@@ -2759,7 +3009,11 @@ async function generaPianoSettimana(scarto,opzioni){
        l'attesa (fino a 20x su IndexedDB reale) senza risolvere nulla:
        se non c'è una combinazione valida, va segnalato subito e con
        precisione, non nascosto dietro un loop lungo. */
-    return {generati:[],errori:soluzione.errori||['Nessuna composizione settimanale valida.']};
+    const diagnostica={id:'generazione:'+days[0]+':'+Date.now(),data:days[0],timestamp:new Date().toISOString(),requisito:'Copertura settimana',
+      causa:'Ricerca limitata senza soluzione; non costituisce prova di impossibilità',errori:soluzione.errori,completati:soluzione.completati,...soluzione.diagnostica,
+      ricetteIncomplete:state.ricetteConcrete.filter(r=>r.ingredientiDaDefinire?.length||r.problemiQuantita?.length).map(r=>({id:r.id,nome:r.nome,elementi:[...(r.ingredientiDaDefinire||[]),...(r.problemiQuantita||[])]}))};
+    await put('diagnosticaCopertura',diagnostica);
+    return {generati:[],errori:soluzione.errori||['Nessuna composizione settimanale valida.'],diagnostica};
   }
   const slotDefs=soluzione.slotDefs;
   const generated=[],records=[];
@@ -2776,13 +3030,13 @@ async function generaPianoSettimana(scarto,opzioni){
       records.push({
         id,modo:'multi',motoreNuovo:true,realizzazioni:x.realizzazioni,bilancioVerdura:x.bilancioVerdura||null,
         porzioni:1,origine:'motore-nuovo',programmatoIl:new Date().toISOString(),
-        categoriaTarget:target,carboidratoPianificato:slotDefs[si].carbKey,
+        categoriaTarget:target,carboidratoPianificato:slotDefs[si].carbKey,diagnosticaCopertura:x.diagnosticaCopertura||[],
         carboidratoRichiesto:slotDefs[si].carbKey,avvisoProgrammazione:null,
         avvisoCarboidrato:soluzione.scelte[si].avviso||null
       });
       generated.push(id);
   }
-  for(const record of records)await put('piano',record);
+  await salvaRecordsContratti(records);
   return {generati:generated,errori:[],diagnostica:{pastiCompletati:soluzione.completati}};
 }
 
@@ -2822,7 +3076,7 @@ async function rigeneraPasto(giorno,pasto,target,opzioni){
   const resolved=await caricaConfigurazioneNutrizionaleRisolta();
   if(!resolved.valid)return null;
   const requiredVegetableVariantId=await verduraRicorrenteRichiesta(giorno,pasto);
-  const ctx=await contestoConteggiSettimana(giorno);
+  const ctx=await contestoConteggiSettimana(giorno,giorno+'_'+pasto);
   ctx.vegetablePortions=resolved.vegetables;
   ctx.requiredVegetableVariantId=requiredVegetableVariantId;
   ctx.todayStackKeys=new Set();
@@ -2857,6 +3111,7 @@ async function rigeneraPasto(giorno,pasto,target,opzioni){
     modo:'multi',
     motoreNuovo:true,
     realizzazioni:x.realizzazioni,
+    diagnosticaCopertura:x.diagnosticaCopertura||[],
     bilancioVerdura:x.bilancioVerdura||null,
     porzioni:old&&old.porzioni||1,
     origine:'motore-nuovo',
@@ -2881,7 +3136,7 @@ async function rigeneraPasto(giorno,pasto,target,opzioni){
      "Imposta come pasto" (che poi commit la stessa voce restituita qui,
      tramite salvaRoll). Comportamento invariato per ogni altro chiamante
      (Genera pasto su slot vuoto, Roll) che non passa questo flag. */
-  if(!opzioni.soloAnteprima&&typeof put==='function') await put('piano',voce);
+  if(!opzioni.soloAnteprima) await salvaRecordsContratti([voce]);
   return voce;
 }
 
@@ -2897,7 +3152,7 @@ async function materializzaRicetta(base,condimentoVarianteIndex){
   const n=costruisciNomeRicetta(ricetta,selezionata);
   const ingredienti=await preparaIngredientiDettagliati(ricetta,selezionata);
   const nut=calcolaNutrienti(ingredienti);
-  return Object.assign({},clone(base),{
+  return K.decorate(Object.assign({},clone(base),{
     nome:n.display,
     partiRicetta:n.parti,
     ingredienti,
@@ -2908,12 +3163,12 @@ async function materializzaRicetta(base,condimentoVarianteIndex){
     numeroVariantiCondimento:selezionata.numeroVariantiCondimento,
     stackScope:ricetta.stackScope||null,
     chiaviStack:chiaviStack(selezionata,ricetta.id,ricetta.stackScope)
-  });
+  }));
 }
 
 async function materializzaRealizzazione(realizzazione){
   if(!realizzazione||!realizzazione.ricettaId) return null;
-  const base=state.ricetteById.get(realizzazione.ricettaId);
+  const base=state.ricetteById.get(realizzazione.ricettaId)||await getOne('ricette',realizzazione.ricettaId);
   const ricetta=await materializzaRicetta(base,Number(realizzazione.condimentoVarianteIndex)||0);
   if(!ricetta)return null;
   if(Array.isArray(realizzazione.ingredientiEffettivi)){
@@ -2921,20 +3176,20 @@ async function materializzaRealizzazione(realizzazione){
     const nutrienti=realizzazione.nutrientiEffettivi
       ?clone(realizzazione.nutrientiEffettivi)
       :calcolaNutrienti(ingredienti);
-    return Object.assign({},ricetta,{
+    return K.decorate(Object.assign({},ricetta,{
       nome:realizzazione.nomeEffettivo||ricetta.nome,
       ingredienti,
       nutrienti,
       nutrizioneManualeTotale:{kcal:nutrienti.kcal,prot:nutrienti.proteine,carb:nutrienti.carboidrati,grassi:nutrienti.grassi}
-    });
+    }));
   }
   return ricetta;
 }
 
-async function normalizzaRealizzazioniVerdura(realizzazioni,giorno,portionConfig,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId){
+async function normalizzaRealizzazioniVerdura(realizzazioni,giorno,portionConfig,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId,poolConsentito){
   const materializzate=[];
   for(const real of realizzazioni||[]){const r=await materializzaRealizzazione(real);if(r)materializzate.push(r);}
-  const pool=await poolAmmesso(giorno,{}),complete=completaResiduoVerduraRicette(materializzate,pool,giorno,portionConfig,undefined,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId);
+  const pool=poolConsentito||await poolAmmesso(giorno,{}),complete=completaResiduoVerduraRicette(materializzate,pool,giorno,portionConfig,undefined,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId);
   const usati=new Set();
   return complete.map(r=>{
     const indice=(realizzazioni||[]).findIndex((real,i)=>!usati.has(i)&&real.ricettaId===r.id);
@@ -2966,8 +3221,8 @@ async function normalizzaRealizzazioniVerdura(realizzazioni,giorno,portionConfig
    nutrienti/inventario/spesa/storico/Roll/rigenerazione/Salvafrigo leggono
    tutti lo stesso snapshot, mai un calcolo duplicato. */
 function normalizzaRealizzazioniOlio(realizzazioni,oilGramsPerMainMeal){
-  const quota=Number(oilGramsPerMainMeal)||0;
-  if(quota<=0)return realizzazioni;
+  const quota=Number(oilGramsPerMainMeal);
+  if(oilGramsPerMainMeal==null||!Number.isFinite(quota)||quota<0)return realizzazioni;
   const occorrenze=[];
   for(const real of realizzazioni||[]){
     const ings=real&&real.ingredientiEffettivi;
@@ -3010,7 +3265,7 @@ function firmaPerRollC(r){
 function firmaPerRollP(r){
   return (r.slot||[]).map((s,i)=>{
     const cat=s.categoria||'';
-    const ing=s.ingrediente&&s.ingrediente.nome||'';
+    const ing=TOKEN_P.has(cat)?'*':(s.ingrediente&&s.ingrediente.nome||'');
     const cot=TOKEN_P.has(cat)?'*':(s.cottura&&s.cottura.nome||'');
     return i+':'+cat+':'+ing+':'+cot;
   }).join('|');
@@ -3024,7 +3279,7 @@ async function alternativeRollC(base,giorno,condimentoIndex){
   const out=[];
   for(const r of pool){
     const x=await materializzaRicetta(r,condimentoIndex);
-    if(await ricettaAmmessa(x,giorno,{})) out.push(r);
+    if(await ricettaAmmessa(x,giorno,{ignoraCooldown:true})) out.push(r);
   }
   return out.sort((a,b)=>a.comboIndex-b.comboIndex);
 }
@@ -3037,7 +3292,7 @@ async function alternativeRollP(base,giorno,condimentoIndex){
   const out=[];
   for(const r of pool){
     const x=await materializzaRicetta(r,condimentoIndex);
-    if(await ricettaAmmessa(x,giorno,{})) out.push(r);
+    if(await ricettaAmmessa(x,giorno,{ignoraCooldown:true})) out.push(r);
   }
   return out.sort((a,b)=>a.comboIndex-b.comboIndex);
 }
@@ -3058,7 +3313,7 @@ async function alternativeRollV(base,giorno){
   const nVarianti=Number(base.numeroVariantiCondimento)||1;
   for(let idx=0;idx<nVarianti;idx++){
     const x=await materializzaRicetta(base,idx);
-    if(x&&await ricettaAmmessa(x,giorno,{})) out.push({ricetta:base,condimentoVarianteIndex:idx,x});
+    if(x&&await ricettaAmmessa(x,giorno,{ignoraCooldown:true})) out.push({ricetta:base,condimentoVarianteIndex:idx,x});
   }
   /* Verdura diversa (template diverso), condimento di base - vera query
      su alternativa verdura, non solo sul condimento. Coerente con
@@ -3069,7 +3324,7 @@ async function alternativeRollV(base,giorno){
   });
   for(const r of pool){
     const x=await materializzaRicetta(r,0);
-    if(x&&await ricettaAmmessa(x,giorno,{})) out.push({ricetta:r,condimentoVarianteIndex:0,x});
+    if(x&&await ricettaAmmessa(x,giorno,{ignoraCooldown:true})) out.push({ricetta:r,condimentoVarianteIndex:0,x});
   }
   /* Priorita' al materiale in deperimento/avanzo: la verdura e' la
      categoria piu' a rischio spreco, quindi il Roll V (non solo il
@@ -3109,13 +3364,14 @@ async function statoRollPasto(giorno,pasto,vocePendente){
   const voce=vocePendente||(typeof getOne==='function'?await getOne('piano',giorno+'_'+pasto):null);
   if(!voce||!Array.isArray(voce.realizzazioni)) return {C:false,P:false,V:false};
   return {
-    C:!!(await proprietarioRoll(voce,'C',giorno)),
-    P:!!(await proprietarioRoll(voce,'P',giorno)),
-    V:!!(await proprietarioRoll(voce,'V',giorno))
+    C:!!(await ruotaPasto(giorno,pasto,'C',voce,{soloVerifica:true})),
+    P:!!(await ruotaPasto(giorno,pasto,'P',voce,{soloVerifica:true})),
+    V:!!(await ruotaPasto(giorno,pasto,'V',voce,{soloVerifica:true}))
   };
 }
 
-async function ruotaPasto(giorno,pasto,tipo,vocePendente){
+async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
+  opzioni=opzioni||{};
   tipo=String(tipo||'').toUpperCase();
   if(!['C','P','V'].includes(tipo)) return null;
   const id=giorno+'_'+pasto;
@@ -3124,6 +3380,26 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente){
 
   const owner=await proprietarioRoll(voce,tipo,giorno);
   if(!owner) return null;
+
+  const history=await cronologiaContratti(new Set([id]));
+  const cycleKey='rollBinario|'+id+'|'+tipo;
+  const stored=await getOne('impostazioni',cycleKey);
+  const cycle=stored&&stored.valore||{};
+  const date=typeof todayISO==='function'?todayISO():isoDate(new Date());
+  const key=x=>{const r=x.ricetta||x;return r.id+'|'+(x.condimentoVarianteIndex||0);};
+  const current=voce.realizzazioni[owner.indice];
+  const currentKey=current.ricettaId+'|'+(current.condimentoVarianteIndex||0);
+  const compatible=[];
+  for(const option of owner.alternative){
+    const r=await materializzaRicetta(option.ricetta||option,option.condimentoVarianteIndex||0);
+    if(key(option)!==currentKey&&!K.hardReason(r,giorno,history)&&await ricettaAmmessa(r,giorno,{ignoraCooldown:true}))compatible.push(option);
+  }
+  if(!compatible.length)return null;
+  const rollConfig=await caricaConfigurazioneNutrizionaleRisolta();
+  const fresh=compatible.filter(x=>!cycle[key(x)]||cycle[key(x)].roll===1||K.dayNumber(date)-K.dayNumber(cycle[key(x)].data)>=rollConfig.rotationDays.roll);
+  for(const chosen of [...fresh,...compatible.filter(x=>!fresh.includes(x))]){
+  const reset=!fresh.includes(chosen);
+  owner.alternative=[chosen];
 
   const real=clone(voce.realizzazioni[owner.indice]);
   const condIndex=Number(real.condimentoVarianteIndex)||0;
@@ -3153,8 +3429,9 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente){
   let realizzazioni=voce.realizzazioni.map((x,i)=>i===owner.indice?real:x);
   const resolved=await caricaConfigurazioneNutrizionaleRisolta();
   const prefUtente=(await configRuntime()).userPreferences;
-  realizzazioni=await normalizzaRealizzazioniVerdura(realizzazioni,giorno,resolved.vegetables,undefined,prefUtente&&prefUtente.verdurePreferiteVariantIds);
-  realizzazioni=normalizzaRealizzazioniOlio(realizzazioni,resolved.oilGramsPerMainMeal);
+  const poolVerdure=K.filter(await poolAmmesso(giorno),giorno,history,true);
+  realizzazioni=await normalizzaRealizzazioniVerdura(realizzazioni,giorno,resolved.vegetables,undefined,prefUtente&&prefUtente.verdurePreferiteVariantIds,undefined,poolVerdure);
+  realizzazioni=normalizzaRealizzazioniOlio(realizzazioni,resolved.oilGramsByMeal?.[pasto]??resolved.oilGramsPerMainMeal);
   const requiredVegetableVariantId=await verduraRicorrenteRichiesta(giorno,pasto);
   if(requiredVegetableVariantId){
     let mantieneVincolo=false;
@@ -3162,7 +3439,7 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente){
       const ricetta=await materializzaRealizzazione(realizzazione);
       if(ricetta&&(ricetta.ingredienti||[]).some(i=>i.variantId===requiredVegetableVariantId)){mantieneVincolo=true;break;}
     }
-    if(!mantieneVincolo)return null;
+    if(!mantieneVincolo)continue;
   }
   const aggiornata=Object.assign({},voce,{
     realizzazioni,
@@ -3170,15 +3447,24 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente){
     origine:'motore-nuovo',
     programmatoIl:new Date().toISOString()
   });
+  try{await validaRecordsContratti([aggiornata]);}catch(e){continue;}
+  if(opzioni.soloVerifica)return aggiornata;
+  if(reset)for(const option of compatible)cycle[key(option)]={roll:1,data:date};
+  cycle[key(chosen)]={roll:0,data:date};
+  await put('impostazioni',{chiave:cycleKey,valore:cycle});
+  if(reset)await put('diagnosticaCopertura',{id:cycleKey+'|'+date,slot:id,data:date,requisito:'roll '+tipo,candidatiCompatibili:compatible.length,causa:'Alternative esaurite',elementoRiammesso:key(chosen)});
+  aggiornata.realizzazioni[owner.indice].roll=0;
   return aggiornata;
+  }
+  return null;
 }
 /* Passo esplicito di salvataggio, separato da ruotaPasto: il risultato di
    un Roll resta provvisorio (solo in memoria lato UI) finche' non si
    chiama questa funzione - coerente con "la ricetta passa sul piano
    alimentare solo quando si clicca Salva". */
 async function salvaRoll(voce){
-  if(!voce||typeof put!=='function') return voce;
-  await put('piano',voce);
+  if(!voce) return voce;
+  await salvaRecordsContratti([voce]);
   return voce;
 }
 
@@ -3206,7 +3492,7 @@ async function inizializza(opts){
   /* Il JSON e' soltanto la sorgente di compilazione. Il catalogo operativo e'
      sempre lo store IndexedDB "ricette": a versione invariata lo si legge
      direttamente; a versione cambiata lo si sostituisce e poi lo si rilegge. */
-  const versioneCache=String(rdb.versione||0)+'_'+String(idb.versione||0)+'_indexeddb-only-v1';
+  const versioneCache=String(rdb.versione||0)+'_'+String(idb.versione||0)+'_contracts-v2';
   let cacheValida=false;
   if(typeof getOne==='function'&&typeof getAll==='function'){
     try{
@@ -3232,6 +3518,10 @@ async function inizializza(opts){
   let concrete=(await getAll('ricette')||[])
     .filter(r=>r&&r.fonte==='nuovo-db-compilato'&&r.stackScope!=='contorni_catalogo'&&r.stackScope!=='proteine_catalogo');
   concrete=await applicaDisponibilitaCatalogoVisuale(concrete,vdb);
+  for(const r of concrete){
+    const missing=[...(r.problemiQuantita||[]),...(r.ingredientiDaDefinire||[])];
+    if(missing.length)await put('diagnosticaCopertura',{id:'catalogo:'+r.id,requisito:'dose/ingrediente',ricettaId:r.id,elementi:missing,causa:'Dose o ingrediente da definire nel catalogo',azione:'Completare i dati della ricetta prima della selezione'});
+  }
   if(!concrete.length) throw new Error('Catalogo ricette IndexedDB vuoto dopo la sincronizzazione.');
   state.compatibilitaCP=creaMappaCompatibilitaCP(concrete);
   state.ricetteConcrete=concrete;
@@ -3260,14 +3550,16 @@ function getContenutoVisualeRicetta(idRicetta){
 }
 
 global.DietaPlannerMotorV12={
+  validaRecordsContratti,salvaRecordsContratti,
+  adottaTrackingDopoCommit:tracking=>{state.tracking=clone(tracking);},
   inizializza,stato,getRicette,getRicetteDisponibili,getRicetta,
   generaCombinazioni,estraiPartiRicetta,compilaPartiRicetta,costruisciNomeRicetta,compilaRicetta,
   getScadenzeImminenti,getAvanziScomodi,getCongelatiDaTempo,getInventarioDisponibile,
   suggerisciCongelati,tempoScongelamento,salvafrigo,
   generaPasto,generaPianoSettimana,rigeneraPasto,risolviSlotSingolo,statoRollPasto,ruotaPasto,salvaRoll,materializzaRealizzazione,
-  snapshotRealizzazione,
+  snapshotRealizzazione,doseContestoVariante,configConteggiSettimana,minimiIngredientiFattibili,
   applicaOverrideQuantitaRealizzazione,
-  normalizzaRealizzazioniVerdura,
+  normalizzaRealizzazioniVerdura,normalizzaRealizzazioniOlio,
   bilancioVerduraDaRealizzazioni,
   assegnaCarboidratiCompatibili,
   componiBasiProteinaCarboidrato,
@@ -3276,7 +3568,7 @@ global.DietaPlannerMotorV12={
   chiaviStack,
   scegliCandidatoConMargine,
   ingredienteVerduraQuantificabile,coperturaVerduraRicette,ridimensionaVerdureRicetta,completaResiduoVerduraRicette,punteggioVerduraProgrammazione,ordinaVerdureProgrammazione,
-  prioritaVerdureProgrammazionePasti,ricettaAmmessa,
+  prioritaVerdureProgrammazionePasti,ricettaAmmessa,poolAmmesso,
   registraUtilizzo,categoriaPrincipale,copertura,scoreCopertura,pastoCompletoPerToken,ruoliVerduraDaClasse,calcolaBilancioVSG,caricaConfigurazioneNutrizionaleRisolta,migraStatoCarboidratiCanonicoSeNecessario,carbKeyNome,carbKeysRicetta,preparaBudgetCarboidrati,creaSequenzaCarboidrati,creaSequenzaProteine,carbRicettaAmmesso,consumaBudgetCarboidrati,accumulaConteggiPasto,pastoRispettaConteggi,stablePartition,ordinaPerVerdurePreferite,ordinaCarboidratiPerPocoTempo,caricaPreferenzeUtenteSet,
   applicaDisponibilitaCatalogoVisuale,invalidaConfigRuntime,getContenutoVisualeRicetta
 };

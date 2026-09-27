@@ -1088,7 +1088,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   <button class="secondary" id="btnTornaImpostazioni" style="margin-bottom:12px;">← Torna a Impostazioni</button>
   <div class="card"><h3>Allergeni e intolleranze</h3><div class="meta">La selezione esclude in modo rigido tutti gli ingredienti e le ricette collegati.</div><div class="tabgroup" id="configAllergeniAttivi" style="margin-top:10px;"></div></div>
   <div class="card"><h3>Piano alimentare</h3><div class="meta">Le esclusioni del piano sono automatiche, visibili e non modificabili finché il piano resta selezionato.</div><select id="configProfiloAlimentare" style="margin-top:10px;"><option value="onnivoro">Onnivoro</option><option value="vegetariano">Vegetariano</option><option value="vegano">Vegano</option></select><button id="btnRicostruisciDopoProfilo" class="secondary" style="margin-top:10px;font-size:0.78rem;opacity:0.7;" title="Da premere dopo aver salvato un cambio di profilo alimentare">Applica cambio profilo e ricostruisci</button></div>
-  <div class="card"><h3>Parametri nutrizionali globali</h3><div class="meta">I limiti nutrizionali derivano dal PDF; le regole tecniche dell'app sono indicate separatamente come APP-CWE.</div><div id="configAvanzataCampi" class="nutri-config-grid" style="margin-top:10px;"></div></div>
+  <div class="card"><h3>Parametri nutrizionali globali</h3><div class="meta">I valori iniziali derivano dal piano; le impostazioni del nutrizionista prevalgono. Le regole applicative sono indicate separatamente.</div><div id="configAvanzataCampi" class="nutri-config-grid" style="margin-top:10px;"></div></div>
   <div class="card"><h3>Carboidrati complessi e semplici</h3><div id="configClassiCarboidrati" class="nutri-config-grid" style="margin-top:10px;"></div></div>
   <div class="card"><h3>Impostazioni ingredienti</h3><div class="meta">L'elenco proviene da Ingredienti. Tocca un ingrediente: giallo = limitato, rosso = escluso, terzo tocco = senza restrizioni. Per un ingrediente limitato puoi impostare anche massimo e quantità specifici per colazione, pasto principale e spuntino.</div><div id="configMacroIngredienti" style="min-width:0;margin-top:12px;"></div><div id="configVincoliIngredienti" class="nutri-config-grid" style="margin-top:12px;"></div></div>
   <button class="primary" id="btnSalvaConfigAvanzata">Salva configurazione</button>
@@ -1305,14 +1305,16 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 <script type="module" src="firebase-auth.js?v=2"></script>
 <script src="nutrition-config.js?v=2"></script>
 <script src="engine-core.js?v=2"></script>
-<script src="motor-v12.js?v=2"></script>
+<script src="pwa-contracts.js?v=3"></script>
+<script src="barcode-spesa.js?v=3"></script>
+<script src="motor-v12.js?v=3"></script>
 
 <script>
 /* =========================================================
    DB — IndexedDB minimale
    ========================================================= */
 const DB_NAME = 'dieta-app-nuovo-ricettario';
-const DB_VERSION = 3;
+const DB_VERSION = 4;
 let db;
 let modalitaLocaleSessione=false;
 
@@ -1345,7 +1347,16 @@ function renderAccount(user){
     const nome=String(user.displayName||'').trim().split(/\s+/)[0]||'Utente';
     greeting.innerHTML=`<span>Ciao ${escAuth(nome)},</span><span>Buon Appetito!</span>`;
     greeting.classList.remove('hidden');
-    content.innerHTML=`<div class="account-status">${avatar}<div class="account-identity"><strong>${escAuth(user.displayName||'Utente')}</strong><span class="meta">${escAuth(user.email)}</span></div></div><button class="secondary" id="btnLogoutGoogle" style="margin-top:12px;">Esci dall’account</button><div class="meta" style="margin-top:8px;">Account collegato. La sincronizzazione completa verrà attivata dopo la verifica dello schema storico.</div>`;
+    content.innerHTML=`<div class="account-status">${avatar}<div class="account-identity"><strong>${escAuth(user.displayName||'Utente')}</strong><span class="meta">${escAuth(user.email)}</span></div></div><button class="secondary" id="btnLogoutGoogle" style="margin-top:12px;">Esci dall’account</button><div class="meta">Accesso: ${escAuth(user.role||'limited')}. I dati locali precedenti restano separati da questo account.</div><button class="secondary" id="btnSyncAccount" ${['admin','user'].includes(user.role)?'':'disabled'}>Sincronizza account</button>`;
+    document.getElementById('btnSyncAccount')?.addEventListener('click',async event=>{
+      const button=event.currentTarget;button.disabled=true;
+      try{
+        if(menuDraft?.modificata||setDraft?.modificata)throw new Error('Salva o annulla le bozze prima di sincronizzare');
+        const result=await DietaPlannerCloud.sync({all:getAllRaw,read:getOneRaw,put:rawPut,del:rawDelKey});
+        DietaPlannerMotorV12.invalidaConfigRuntime();
+        await avviso('Sincronizzazione completata: '+result.completed+' record.');
+      }catch(e){await avviso(e.message);}finally{button.disabled=false;}
+    });
     document.getElementById('btnLogoutGoogle')?.addEventListener('click',async()=>{
       try{await window.DietaPlannerCloud.logout();}catch(err){await avviso('Uscita non riuscita: '+err.message);}
     });
@@ -1369,7 +1380,11 @@ async function loginGoogle(){
     await avviso('Accesso Google non riuscito: '+(err.message||err));
   }
 }
-window.addEventListener('dietaplanner-auth-changed',e=>renderAccount(e.detail.user));
+function nomeDatabaseAccount(){const uid=window.DietaPlannerCloud?DietaPlannerCloud.getUser()?.uid:localStorage.getItem('dietaplanner:lastLocalOwner');return uid?DB_NAME+'-uid-'+uid:DB_NAME;}
+window.addEventListener('dietaplanner-auth-changed',e=>{
+  if(db&&db.name!==nomeDatabaseAccount()){db.close();location.reload();return;}
+  renderAccount(e.detail.user);
+});
 document.getElementById('btnLoginGoogleIniziale')?.addEventListener('click',loginGoogle);
 document.getElementById('btnContinuaLocale')?.addEventListener('click',()=>{
   modalitaLocaleSessione=true;
@@ -1382,7 +1397,7 @@ document.getElementById('btnAccountHeader')?.addEventListener('click',()=>{
 
 function openDB(){
   return new Promise((resolve, reject)=>{
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    const req = indexedDB.open(nomeDatabaseAccount(), DB_VERSION);
     req.onupgradeneeded = (e)=>{
       const d = e.target.result;
       if(!d.objectStoreNames.contains('ingredienti')) d.createObjectStore('ingredienti', {keyPath:'id'});
@@ -1393,6 +1408,8 @@ function openDB(){
       if(!d.objectStoreNames.contains('impostazioni')) d.createObjectStore('impostazioni', {keyPath:'chiave'});
       if(!d.objectStoreNames.contains('consumoGiorno')) d.createObjectStore('consumoGiorno', {keyPath:'id'});
       if(!d.objectStoreNames.contains('spesa')) d.createObjectStore('spesa', {keyPath:'id'});
+      if(!d.objectStoreNames.contains('diagnosticaCopertura')) d.createObjectStore('diagnosticaCopertura', {keyPath:'id'});
+      if(!d.objectStoreNames.contains('prodotti')) d.createObjectStore('prodotti', {keyPath:'id'});
     };
     req.onsuccess = (e)=>{ db = e.target.result; resolve(db); };
     req.onerror = (e)=> reject(e);
@@ -1459,10 +1476,41 @@ function getAllRaw(store){
   cacheGetAll[store] = promessa;
   return promessa;
 }
-function put(store, obj){
+async function put(store, obj){
   if(['ricette','ingredienti','varianti'].includes(store)&&obj&&obj.nome) obj.nome=nomeConInizialeMaiuscola(obj.nome);
+  if(store==='piano'&&/_(colazione|spuntino[123])$/.test(obj.id||'')){
+    const prior=await getOne('piano',obj.id);
+    const signature=v=>JSON.stringify([v?.componenti||null,v?.colazioneSpecialeId||null,v?.ricettaId||null,v?.porzioni||1]);
+    if(prior&&signature(prior)!==signature(obj)){
+      obj={...obj};delete obj.ingredientiEffettivi;delete obj.nutrizioneTotale;
+    }
+  }
+  if(store==='piano'&&obj.componenti&&!obj.colazioneSpecialeId){
+    const old=await getOne('piano',obj.id);
+    if(!Array.isArray(obj.ingredientiEffettivi)||JSON.stringify(old?.componenti)!==JSON.stringify(obj.componenti)){
+      obj={...obj};delete obj.ingredientiEffettivi;delete obj.nutrizioneTotale;
+      obj.ingredientiEffettivi=await ingredientiEffettiviVoce(obj);
+      obj.nutrizioneTotale=await calcolaNutrizioneVoceConsumata(obj);
+    }
+  }
+  if(store==='piano'&&/_spuntino[123]$/.test(obj.id||'')&&obj.ricettaId){
+    const old=await getOne('piano',obj.id);
+    if(!Array.isArray(obj.ingredientiEffettivi)||old?.ricettaId!==obj.ricettaId||old?.porzioni!==obj.porzioni){
+      const recipe=await getOne('ricette',obj.ricettaId);
+      if(recipe){
+        const current=await materializzaSpuntinoCorrente(recipe);
+        const scale=(obj.porzioni||1)/(current.porzioni||1);
+        obj={...obj,ingredientiEffettivi:current.ingredienti.map(i=>({...i,quantita:i.quantita*scale,grammi:(i.grammi??i.quantita)*scale}))};
+        delete obj.nutrizioneTotale;obj.nutrizioneTotale=await calcolaNutrizioneVoceConsumata(obj);
+      }
+    }
+  }
+  if(store==='piano'&&!obj.consumato)await validaIngredientiVoce(obj);
   if(menuDraftIntercetta(store,obj.id)){menuDraft.voci.set(obj.id,structuredClone(obj));menuDraft.modificata=true;return Promise.resolve(obj);}
   if(setDraftIntercetta(store,obj.chiave)){setDraft.voci.set(obj.chiave,structuredClone(obj));setDraft.modificata=true;return Promise.resolve(obj);}
+  if(store==='piano'&&!obj.consumato&&obj.realizzazioni?.length&&window.DietaPlannerMotorV12?.stato().pronto){
+    return DietaPlannerMotorV12.salvaRecordsContratti([obj]).then(()=>obj);
+  }
   return rawPut(store,obj);
 }
 function getOneRaw(store,key){
@@ -1478,15 +1526,53 @@ function delKey(store, key){
   if(setDraftIntercetta(store,key)){setDraft.voci.set(key,null);setDraft.modificata=true;return Promise.resolve();}
   return rawDelKey(store,key);
 }
-function commitMenuDraftAtomico(){
+async function commitMenuDraftAtomico(){
   if(!menuDraft||!menuDraft.voci.size)return Promise.resolve();
-  const modifiche=[...menuDraft.voci.entries()];cacheGetAll.piano=null;
-  return new Promise((resolve,reject)=>{const trans=db.transaction('piano','readwrite'),store=trans.objectStore('piano');for(const [id,v] of modifiche){if(v===null)store.delete(id);else store.put(v);}trans.oncomplete=()=>resolve();trans.onerror=()=>reject(trans.error);trans.onabort=()=>reject(trans.error||new Error('Commit menù annullato'));});
+  const records=[...menuDraft.voci.values()].filter(Boolean),deleted=[...menuDraft.voci].filter(([,v])=>v===null).map(([id])=>id);
+  for(const record of records)if(!record.consumato)await validaIngredientiVoce(record);
+  const result=await DietaPlannerMotorV12.validaRecordsContratti(records,deleted);
+  return commitPianoContratti(records,deleted,result,true);
+}
+function commitPianoContratti(records,deleted,result,forceRaw){
+  if(!forceRaw&&records.length&&records.every(v=>menuDraftIntercetta('piano',v.id))){
+    for(const v of records)menuDraft.voci.set(v.id,structuredClone(v));
+    for(const id of deleted)menuDraft.voci.set(id,null);
+    menuDraft.modificata=true;
+    return Promise.resolve();
+  }
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction(['piano','impostazioni','diagnosticaCopertura'],'readwrite');
+    const plan=transaction.objectStore('piano');
+    for(const [id,expected] of Object.entries(result.baseline||{})){
+      const check=plan.get(id);
+      check.onsuccess=()=>{if(JSON.stringify(check.result||null)!==JSON.stringify(expected))transaction.abort();};
+    }
+    for(const v of records)plan.put(v);
+    for(const id of deleted)plan.delete(id);
+    transaction.objectStore('impostazioni').put({chiave:'stackBinario',valore:result.stack});
+    if(result.tracking)transaction.objectStore('impostazioni').put({chiave:'motoreNuovoTracking',valore:result.tracking});
+    for(const row of result.diagnostics)transaction.objectStore('diagnosticaCopertura').put(row);
+    transaction.oncomplete=()=>{for(const name of ['piano','impostazioni','diagnosticaCopertura'])cacheGetAll[name]=null;if(result.tracking)DietaPlannerMotorV12.adottaTrackingDopoCommit(result.tracking);resolve();};
+    transaction.onerror=()=>reject(transaction.error);
+    transaction.onabort=()=>reject(transaction.error||new Error('Salvataggio annullato'));
+  });
 }
 function commitSetDraftAtomico(){
   if(!setDraft||!setDraft.voci.size)return Promise.resolve();
   const modifiche=[...setDraft.voci.entries()];cacheGetAll.impostazioni=null;
   return new Promise((resolve,reject)=>{const trans=db.transaction('impostazioni','readwrite'),store=trans.objectStore('impostazioni');for(const [chiave,v] of modifiche){if(v===null)store.delete(chiave);else store.put(v);}trans.oncomplete=()=>resolve();trans.onerror=()=>reject(trans.error);trans.onabort=()=>reject(trans.error||new Error('Commit Set annullato'));});
+}
+async function mostraDiagnosticaCopertura(){
+  const rows=await getAll('diagnosticaCopertura');
+  const dialog=document.createElement('dialog');
+  const title=document.createElement('h3');title.textContent='Copertura ricette';dialog.appendChild(title);
+  const text=document.createElement('textarea');text.readOnly=true;text.rows=16;text.style.width='100%';text.value=JSON.stringify(rows,null,2);dialog.appendChild(text);
+  const download=document.createElement('button');download.textContent='Esporta log';download.onclick=()=>{
+    const url=URL.createObjectURL(new Blob([text.value],{type:'application/json'})),a=document.createElement('a');
+    a.href=url;a.download='copertura-ricette.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  };dialog.appendChild(download);
+  const close=document.createElement('button');close.textContent='Chiudi';close.onclick=()=>dialog.close();dialog.appendChild(close);
+  dialog.onclose=()=>dialog.remove();document.body.appendChild(dialog);dialog.showModal();
 }
 /* Implementazioni raw usate dal commit atomico della bozza Menù. */
 /* legacy body kept below intentionally replaced */
@@ -1832,11 +1918,19 @@ function configAvanzataDaRisolta(resolved,sorgente){
   if(r.proteinFrequencies)out.proteinFrequencies=cloneConfigurazione(r.proteinFrequencies);
   if(r.subtypeCaps)out.subtypeCaps=cloneConfigurazione(r.subtypeCaps);
   if(r.fruit)out.fruit=cloneConfigurazione(r.fruit);
+  if(r.vegetables)out.vegetables=cloneConfigurazione(r.vegetables);
+  if(r.rotationDays)out.rotationDays=cloneConfigurazione(r.rotationDays);
+  if(r.carbohydrateClasses)out.carbohydrateClasses=cloneConfigurazione(r.carbohydrateClasses);
+  if(r.recipeDoses)out.recipeDoses=cloneConfigurazione(r.recipeDoses);
+  if(r.snackPortions)out.snackPortions=cloneConfigurazione(r.snackPortions);
+  if(r.breakfastRegularCount!==undefined)out.breakfastRegularCount=r.breakfastRegularCount;
   if(r.specialBreakfastMax!==undefined)out.specialBreakfastMax=r.specialBreakfastMax;
   if(r.specialMealsMax!==undefined)out.specialMealsMax=r.specialMealsMax;
   if(r.snackWeeklyCaps)out.snackWeeklyCaps=cloneConfigurazione(r.snackWeeklyCaps);
   if(r.snackDailyCaps)out.snackDailyCaps=cloneConfigurazione(r.snackDailyCaps);
   if(r.oilGramsPerDay!==undefined)out.oilGramsPerDay=r.oilGramsPerDay;
+  if(r.oilLunchPercent!==undefined)out.oilLunchPercent=r.oilLunchPercent;
+  if(r.carbohydrateWeeklyCaps)out.carbohydrateWeeklyCaps=cloneConfigurazione(r.carbohydrateWeeklyCaps);
   if(r.limitedCarbTotalMax!==undefined)out.limitedCarbTotalMax=r.limitedCarbTotalMax;
   if(r.cooldownDays)out.cooldownDays=cloneConfigurazione(r.cooldownDays);
   if(r.deadlines)out.deadlines=cloneConfigurazione(r.deadlines);
@@ -1856,7 +1950,7 @@ function configAvanzataEffettivaSalvata(raw){
   return r&&r.profile?configAvanzataDaRisolta(r,base):base;
 }
 let vincoliIngredientiNutrizionistaDraft={};
-function macroNutrizionistaIngrediente(b){if(b.gruppo==='carboidrati')return 'carboidrati';if(b.gruppo==='proteine')return 'proteine';if(b.gruppo==='verdura')return 'verdure';return null;}
+function macroNutrizionistaIngrediente(b){if(b.gruppo==='carboidrati')return 'carboidrati';if(b.gruppo==='proteine')return 'proteine';if(b.gruppo==='verdura')return 'verdure';return 'altri';}
 function unitaRiferimentoIngrediente(b){if(b&&b.unitaPorzione==='pezzi')return 'pz';if(b&&b.unitaPorzione==='ml')return 'ml';if(b&&b.unitaPorzione==='fette')return 'fette';return 'g';}
 function quantitaRiferimentoIngrediente(b){return Number(b&&b.porzione||b&&b.pesoPorzioneGrammi||b&&b.pesoPezzo||0)||'';}
 function quantitaRiferimentoContestoIngrediente(b,contesto){
@@ -1865,12 +1959,12 @@ function quantitaRiferimentoContestoIngrediente(b,contesto){
   return '';
 }
 function rigaContestiIngredienteNutrizionista(b,v){
-  const N=globalThis.DietaPlannerNutritionConfig,defaults=N&&typeof N.contextDefaultsForIngredient==='function'?N.contextDefaultsForIngredient(b):{},stored=v&&v.contesti||{},isLimited=!!(v&&v.stato==='limitato'),hasDefaults=Object.keys(defaults||{}).length>0,hasStored=Object.keys(stored||{}).length>0;
-  if(!isLimited&&!hasDefaults&&!hasStored)return '';
+  const N=globalThis.DietaPlannerNutritionConfig,defaults=N&&typeof N.contextDefaultsForIngredient==='function'?N.contextDefaultsForIngredient(b):{},stored=v&&v.contesti||{},isLimited=!!(v&&v.stato==='limitato'),hasDefaults=Object.keys(defaults||{}).length>0;
+  // Ogni ingrediente espone i tre contesti, anche senza default PDF.
   const labels=[['colazione','Colazione'],['pastoPrincipale','Pasto principale'],['spuntino','Spuntino']],rows=[];
   for(const [key,label] of labels){
-    const d=defaults&&defaults[key]||{},c=stored[key]||{},show=isLimited||Object.keys(d).length>0||Object.keys(c).length>0;if(!show)continue;
-    const q=c.quantita!==undefined&&c.quantita!==null?c.quantita:(d.quantityDefault!==undefined?d.quantityDefault:(isLimited?quantitaRiferimentoContestoIngrediente(b,key):'')),mx=c.max!==undefined&&c.max!==null?c.max:(d.maxPerWeek!==undefined?d.maxPerWeek:''),unit=d.unit||unitaRiferimentoIngrediente(b);
+    const d=defaults&&defaults[key]||{},c=stored[key]||{};
+    const q=c.quantita!==undefined&&c.quantita!==null?c.quantita:(d.quantityDefault!==undefined?d.quantityDefault:(isLimited?quantitaRiferimentoContestoIngrediente(b,key):'')),mx=Object.prototype.hasOwnProperty.call(c,'max')?c.max:(d.maxPerWeek!==undefined?d.maxPerWeek:''),unit=d.unit||unitaRiferimentoIngrediente(b);
     const range=d.quantityMin!==undefined?(d.quantityMin===d.quantityMax?String(d.quantityMin):d.quantityMin+'–'+d.quantityMax)+' '+unit:'';
     rows.push('<div class="nutri-context-row"><span>'+label+(range?' · '+range:'')+'</span><label class="nutri-context-field"><input type="number" min="0" data-vincolo-contesto="'+key+'" data-vincolo-contesto-campo="max" data-vincolo-id="'+b.id+'" value="'+(mx??'')+'" aria-label="'+b.nome+' '+label+' massimo"><span class="nutri-unit">max/sett.</span></label><label class="nutri-context-field"><input type="number" min="0" step="any" data-vincolo-contesto="'+key+'" data-vincolo-contesto-campo="quantita" data-vincolo-id="'+b.id+'" value="'+(q??'')+'" aria-label="'+b.nome+' '+label+' quantità"><span class="nutri-unit">'+unit+'</span></label></div>');
   }
@@ -1891,13 +1985,18 @@ async function renderConfigAvanzata(){
   const [rec,a,vincoliRec,classiRec,basi]=await Promise.all([getOne('impostazioni','configAvanzata'),getOne('impostazioni','allergeniAttivi'),getOne('impostazioni','vincoliIngredientiNutrizionista'),getOne('impostazioni','vincoliClassiCarboidrati'),getAll('ingredienti')]);
   const cfgDefault=configAvanzataDefaultCanonico(),cfg=configAvanzataEffettivaSalvata(rec&&rec.valore||{}),box=document.getElementById('configAvanzataCampi');if(!box)return;
   document.getElementById('configProfiloAlimentare').value=cfg.dietProfile||'onnivoro';
-  let html='<div class="nutri-source-label">PDF / piano nutrizionale</div><div class="nutri-row nutri-vincolo header"><span>Voce</span><span>Freq</span><span>Min</span><span>Max</span><span>Quantità</span></div>';
+  let html='<div class="nutri-source-label">Frequenze proteiche — valori iniziali dal PDF, modificabili dal nutrizionista</div><div class="meta">Massimo vuoto: nessun tetto. Zero: nessun utilizzo (impostare anche il minimo a zero).</div><div class="nutri-row nutri-vincolo header"><span>Voce</span><span>Freq</span><span>Min</span><span>Max</span><span>Quantità</span></div>';
   for(const m of ['carne','pesce','formaggi','uova','legumi']){const f=(cfg.proteinFrequencies||cfgDefault.proteinFrequencies)[m];html+=rigaFrequenzaProteica('proteinFrequencies.'+m,m,f,unitaQuantitaMacroDaIngredienti(basi,m));}
   html+='<div class="nutri-row header"><span>Altri parametri PDF</span><span>Unità</span><span>Min</span><span>Max</span></div>';
   for(const key of ['carne_rossa','affettati','pesce_grande','pesce_conservato'])html+='<div class="nutri-row single"><span class="nutri-name">'+key.replaceAll('_',' ')+'</span><span class="nutri-unit">max/sett.</span><input type="number" min="0" data-cfg-avanzata="subtypeCaps.'+key+'" value="'+((cfg.subtypeCaps||cfgDefault.subtypeCaps)[key]??'')+'"></div>';
   html+=rigaNumericaConfig('fruit','Frutta',cfg.fruit&&cfg.fruit.min,cfg.fruit&&cfg.fruit.max,'giorno');
   html+=rigaNumericaConfig('fruit.portion','Porzione frutta',cfg.fruit&&cfg.fruit.portionMin,cfg.fruit&&cfg.fruit.portionMax,'g');
-  for(const [path,label,val,unit] of [['specialBreakfastMax','Colazioni speciali',cfg.specialBreakfastMax,'sett.'],['oilGramsPerDay','Olio EVO al giorno',cfg.oilGramsPerDay,'g']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
+  html+='<div class="meta">Frutta: massimo giornaliero vuoto = nessun tetto; porzioni in grammi positive. Campi quantità vuoti = valore iniziale del piano.</div>';
+  for(const [key,label] of [['vegetablePortionGrams','Porzione ortaggi'],['saladPortionGrams','Porzione insalata']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">g/pasto</span><input type="number" min="0" step="any" data-cfg-avanzata="vegetables.'+key+'" value="'+cfg.vegetables[key]+'"></div>';
+
+  for(const [path,label,val,unit] of [['specialBreakfastMax','Colazioni speciali',cfg.specialBreakfastMax,'sett.'],['oilGramsPerDay','Olio EVO al giorno',cfg.oilGramsPerDay,'g'],['oilLunchPercent','Olio a pranzo (resto a cena)',cfg.oilLunchPercent,'%']])html+='<div class="nutri-row single"><span class="nutri-name">'+label+'</span><span class="nutri-unit">'+unit+'</span><input type="number" min="0" data-cfg-avanzata="'+path+'" value="'+(val??'')+'"></div>';
+  html+='<div class="nutri-source-label">Tetti dei carboidrati limitati — vuoto: nessun tetto individuale</div>';
+  for(const [key,val] of Object.entries(cfg.carbohydrateWeeklyCaps))html+='<div class="nutri-row single"><span class="nutri-name">'+key.replaceAll('_',' ')+'</span><span class="nutri-unit">max/sett.</span><input type="number" min="0" step="1" data-cfg-avanzata="carbohydrateWeeklyCaps.'+key+'" value="'+(val??'')+'"></div>';
   const snackPdf=['grana_spuntino','crackers_spuntino','pane_marmellata_spuntino','granita_spuntino','patatine_grisbi'];
   for(const k of snackPdf){const v=(cfg.snackWeeklyCaps||cfgDefault.snackWeeklyCaps)[k];html+='<div class="nutri-row single"><span class="nutri-name">Spuntino '+k.replaceAll('_',' ')+'</span><span class="nutri-unit">max/sett.</span><input type="number" min="0" data-cfg-avanzata="snackWeeklyCaps.'+k+'" value="'+(v??'')+'"></div>';}
   html+='<div class="nutri-row single"><span class="nutri-name">Frutta secca</span><span class="nutri-unit">max/giorno</span><input type="number" min="0" data-cfg-avanzata="snackDailyCaps.frutta_secca_giornaliero" value="'+((cfg.snackDailyCaps||cfgDefault.snackDailyCaps).frutta_secca_giornaliero??'')+'"></div>';
@@ -1909,32 +2008,52 @@ async function renderConfigAvanzata(){
      solo quando il dato non esiste in configAvanzataEffettivaSalvata
      (che è già risolta - mai un secondo default grafico indipendente). */
   html+='<div class="nutri-row single"><span class="nutri-name">Tetto cumulativo carboidrati limitati</span><span class="nutri-unit">Regola APP-CWE · totale settimanale</span><input type="number" min="0" max="14" step="1" data-cfg-avanzata="limitedCarbTotalMax" value="'+(cfg.limitedCarbTotalMax??3)+'"></div>';
-  for(const k of ['carboidrati','verdure'])html+='<div class="nutri-row single"><span class="nutri-name">Cooldown '+k+'</span><span class="nutri-unit">giorni</span><input type="number" min="0" data-cfg-avanzata="cooldownDays.'+k+'" value="'+((cfg.cooldownDays||cfgDefault.cooldownDays)[k]??'')+'"></div>';
+  for(const k of ['stack','roll'])html+='<div class="nutri-row single"><span class="nutri-name">Intervallo '+k+' (0: riapertura temporale immediata)</span><span class="nutri-unit">giorni</span><input type="number" min="0" step="1" data-cfg-avanzata="rotationDays.'+k+'" value="'+cfg.rotationDays[k]+'"></div>';
+  html+='<div class="nutri-row single"><span class="nutri-name">Colazioni morigerate prima del reset</span><span class="nutri-unit">numero</span><input type="number" min="1" step="1" data-cfg-avanzata="breakfastRegularCount" value="'+cfg.breakfastRegularCount+'"></div>';
+  for(const [key,value] of Object.entries(cfg.snackPortions))html+='<div class="nutri-row single"><span class="nutri-name">Dose spuntino '+key+'</span><span class="nutri-unit">g</span><input type="number" min="0" step="any" data-cfg-avanzata="snackPortions.'+key+'" value="'+value+'"></div>';
   for(const k of ['pranzo','cena'])html+='<div class="nutri-row single"><span class="nutri-name">Scadenza '+k+'</span><span class="nutri-unit">ora</span><input type="time" data-cfg-avanzata="deadlines.'+k+'" data-cfg-testo="1" value="'+((cfg.deadlines||cfgDefault.deadlines)[k]||'')+'"></div>';
   box.innerHTML=html;
   aggiornaCampiProfiloNutrizionista();
   const active=new Set(a&&a.valore||[]),el=document.getElementById('configAllergeniAttivi');el.innerHTML=ALLERGENI_UE.map(([k,i,l])=>'<button type="button" data-allergene="'+k+'" class="'+(active.has(k)?'active':'')+'" title="'+l+'">'+i+' '+l+'</button>').join('');el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('active')));
   const classi=classiRec&&classiRec.valore||{},classBox=document.getElementById('configClassiCarboidrati');classBox.innerHTML='<div class="nutri-row header"><span>Classe</span><span>Unità</span><span>Min</span><span>Max</span></div>'+rigaNumericaConfig('vincoliClassiCarboidrati.complessi','Complessi',classi.complessi&&classi.complessi.min,classi.complessi&&classi.complessi.max,'sett.')+rigaNumericaConfig('vincoliClassiCarboidrati.semplici','Semplici',classi.semplici&&classi.semplici.min,classi.semplici&&classi.semplici.max,'sett.');
+  const models=new Map();
+  for(const recipe of window.DietaPlannerMotorV12?.getRicette()||[]){
+    if(!recipe.recipeModelId)continue;
+    if(!models.has(recipe.recipeModelId))models.set(recipe.recipeModelId,{name:recipe.nome,ingredients:new Map()});
+    for(const ing of recipe.ingredienti||[])models.get(recipe.recipeModelId).ingredients.set(ing.nome,ing.unita||'g');
+    for(const group of recipe.condimentiDisponibili||[])for(const ing of group.ingredienti||[]){const base=basi.find(b=>b.nome===ing.nome);models.get(recipe.recipeModelId).ingredients.set(ing.nome,unitaRiferimentoIngrediente(base));}
+  }
+  box.insertAdjacentHTML('beforeend','<details><summary>Dosi specifiche per ricetta</summary><p>Campi vuoti: dose prevista dalla ricetta o dal contesto. Valori nelle unità indicate, per una porzione. Olio e contorno V seguono il totale del pasto configurato.</p>'+[...models].map(([id,m])=>'<details><summary>'+escPastoRs(id+' · '+m.name)+'</summary>'+[...m.ingredients].map(([name,unit])=>'<label class="nutri-row">'+escPastoRs(name)+'<input type="number" min="0" step="any" data-dose-recipe="'+escPastoRs(id)+'" data-dose-name="'+escPastoRs(name)+'" value="'+(cfg.recipeDoses?.[id]?.[name]??'')+'">'+escPastoRs(unit)+'</label>').join('')+'</details>').join('')+'</details>');
   vincoliIngredientiNutrizionistaDraft=cloneConfigurazione(vincoliRec&&vincoliRec.valore||{});
   await renderVincoliIngredientiNutrizionista();
 }
 async function renderVincoliIngredientiNutrizionista(){
   const basi=await getAll('ingredienti'),profilo=document.getElementById('configProfiloAlimentare').value||'onnivoro',macroBox=document.getElementById('configMacroIngredienti'),righe=document.getElementById('configVincoliIngredienti');if(!macroBox||!righe)return;
-  const gruppi=[['carboidrati','Carboidrati'],['proteine','Proteine'],['verdure','Verdure']];
+  const gruppi=[['carboidrati','Carboidrati'],['proteine','Proteine'],['verdure','Verdure'],['altri','Frutta, grassi e altri ingredienti']];
   macroBox.innerHTML=gruppi.map(([key,label])=>'<div class="nutri-fieldset"><div class="nutri-section-title">'+label+'</div><div class="nutri-swipe">'+basi.filter(b=>macroNutrizionistaIngrediente(b)===key).sort((a,b)=>a.nome.localeCompare(b.nome,'it')).map(b=>{const locked=esclusionePianoIngrediente(b,profilo),st=locked?'escluso':(vincoliIngredientiNutrizionistaDraft[b.id]&&vincoliIngredientiNutrizionistaDraft[b.id].stato||'');return '<button type="button" data-vincolo-ing="'+b.id+'" class="'+st+' '+(locked?'piano':'')+'" '+(locked?'disabled':'')+'>'+b.nome+(locked?' · piano':'')+'</button>';}).join('')+'</div></div>').join('');
   const attivi=basi.filter(b=>macroNutrizionistaIngrediente(b)).sort((a,b)=>a.nome.localeCompare(b.nome,'it'));
   for(const b of attivi){const v=vincoliIngredientiNutrizionistaDraft[b.id];if(v&&v.stato==='limitato'&&(v.quantita===undefined||v.quantita===null))v.quantita=quantitaRiferimentoIngrediente(b);}
-  let html='<div class="nutri-row nutri-vincolo header"><span>Ingrediente</span><span>Unità</span><span>Min</span><span>Max</span><span>Quantità</span></div>'+attivi.map(b=>{const locked=esclusionePianoIngrediente(b,profilo),v=vincoliIngredientiNutrizionistaDraft[b.id]||{},excluded=locked||v.stato==='escluso';if(excluded)return '<div class="nutri-row nutri-vincolo"><span class="nutri-name">'+b.nome+(locked?' · piano':'')+'</span><span class="nutri-excluded">Escluso</span></div>';const row='<div class="nutri-row nutri-vincolo"><span class="nutri-name">'+b.nome+'</span><span class="nutri-unit">sett.</span><input type="number" min="0" data-vincolo-campo="min" data-vincolo-id="'+b.id+'" value="'+(v.min??'')+'"><input type="number" min="0" data-vincolo-campo="max" data-vincolo-id="'+b.id+'" value="'+(v.max??'')+'"><label class="nutri-quantity"><input type="number" min="0" step="any" data-vincolo-campo="quantita" data-vincolo-id="'+b.id+'" value="'+(v.quantita??quantitaRiferimentoIngrediente(b))+'"><span class="nutri-unit">'+unitaRiferimentoIngrediente(b)+'</span></label></div>';return row+rigaContestiIngredienteNutrizionista(b,v);}).join('');
-  const N=globalThis.DietaPlannerNutritionConfig,extra=basi.filter(b=>!macroNutrizionistaIngrediente(b)&&N&&Object.keys(N.contextDefaultsForIngredient(b)||{}).length).sort((a,b)=>a.nome.localeCompare(b.nome,'it'));
-  if(extra.length)html+='<div class="nutri-source-label">Contesti PDF aggiuntivi</div>'+extra.map(b=>'<div class="nutri-context-title" style="margin-top:4px;font-weight:700">'+b.nome+'</div>'+rigaContestiIngredienteNutrizionista(b,vincoliIngredientiNutrizionistaDraft[b.id]||{})).join('');
+  let html='<div class="nutri-row nutri-vincolo header"><span>Ingrediente</span><span>Unità</span><span>Min</span><span>Max</span><span>Dose pasto principale</span></div>'+attivi.map(b=>{const locked=esclusionePianoIngrediente(b,profilo),v=vincoliIngredientiNutrizionistaDraft[b.id]||{},excluded=locked||v.stato==='escluso';if(excluded)return '<div class="nutri-row nutri-vincolo"><span class="nutri-name">'+b.nome+(locked?' · piano':'')+'</span><span class="nutri-excluded">Escluso</span></div>';const row='<div class="nutri-row nutri-vincolo"><span class="nutri-name">'+b.nome+'</span><span class="nutri-unit">sett.</span><input type="number" min="0" data-vincolo-campo="min" data-vincolo-id="'+b.id+'" value="'+(v.min??'')+'"><input type="number" min="0" data-vincolo-campo="max" data-vincolo-id="'+b.id+'" value="'+(v.max??'')+'"><label class="nutri-quantity"><input type="number" min="0" step="any" data-vincolo-campo="quantita" data-vincolo-id="'+b.id+'" value="'+(v.quantita??quantitaRiferimentoIngrediente(b))+'"><span class="nutri-unit">'+unitaRiferimentoIngrediente(b)+'</span></label></div>';return row+rigaContestiIngredienteNutrizionista(b,v);}).join('');
   righe.innerHTML=html;
   macroBox.querySelectorAll('[data-vincolo-ing]').forEach(btn=>btn.addEventListener('click',()=>{const id=btn.dataset.vincoloIng,old=vincoliIngredientiNutrizionistaDraft[id];if(!old||!old.stato||old.stato==='disponibile')vincoliIngredientiNutrizionistaDraft[id]=Object.assign({},old||{},{stato:'limitato'});else if(old.stato==='limitato')vincoliIngredientiNutrizionistaDraft[id]=Object.assign({},old,{stato:'escluso'});else if(old.stato==='escluso'){if(old.contesti&&Object.keys(old.contesti).length)vincoliIngredientiNutrizionistaDraft[id]=Object.assign({},old,{stato:'disponibile',min:null,max:null,quantita:null});else delete vincoliIngredientiNutrizionistaDraft[id];}renderVincoliIngredientiNutrizionista();}));
   righe.querySelectorAll('[data-vincolo-campo]').forEach(i=>i.addEventListener('input',()=>{const v=vincoliIngredientiNutrizionistaDraft[i.dataset.vincoloId]||(vincoliIngredientiNutrizionistaDraft[i.dataset.vincoloId]={stato:'limitato'});if(!v.stato||v.stato==='disponibile')v.stato='limitato';v[i.dataset.vincoloCampo]=i.value===''?null:Number(i.value);}));
   righe.querySelectorAll('[data-vincolo-contesto]').forEach(i=>i.addEventListener('input',()=>{const v=vincoliIngredientiNutrizionistaDraft[i.dataset.vincoloId]||(vincoliIngredientiNutrizionistaDraft[i.dataset.vincoloId]={stato:'disponibile'}),ctx=v.contesti||(v.contesti={}),c=ctx[i.dataset.vincoloContesto]||(ctx[i.dataset.vincoloContesto]={});c[i.dataset.vincoloContestoCampo]=i.value===''?null:Number(i.value);}));
 }
+function salvaImpostazioniNutrizionista(records){
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction('impostazioni','readwrite');
+    const store=transaction.objectStore('impostazioni');
+    transaction.oncomplete=()=>{cacheGetAll.impostazioni=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error);
+    transaction.onabort=()=>reject(transaction.error||new Error('Configurazione non salvata: nessuna modifica applicata.'));
+    try{for(const record of records)store.put(record);}catch(error){transaction.abort();reject(error);}
+  });
+}
+
 async function salvaConfigAvanzata(){
   const old=await getOne('impostazioni','configAvanzata'),cfg=configAvanzataEffettivaSalvata(old&&old.valore||{}),classi={complessi:{},semplici:{}};
   document.querySelectorAll('[data-cfg-avanzata]').forEach(i=>{let path=i.dataset.cfgAvanzata.split('.');if(path[0]==='vincoliClassiCarboidrati'){classi[path[1]][path[2]]=i.value===''?null:Number(i.value);return;}if(path[0]==='fruit'&&path[1]==='portion')path=['fruit',path[2]==='min'?'portionMin':'portionMax'];let target=cfg;for(let n=0;n<path.length-1;n++)target=target[path[n]]||(target[path[n]]={});target[path[path.length-1]]=i.value===''?null:(i.dataset.cfgTesto?i.value:Number(i.value));});
+  document.querySelectorAll('[data-dose-recipe]').forEach(i=>{const id=i.dataset.doseRecipe,name=i.dataset.doseName;cfg.recipeDoses=cfg.recipeDoses||{};const row=cfg.recipeDoses[id]||(cfg.recipeDoses[id]={});if(i.value==='')delete row[name];else row[name]=Number(i.value);});
   cfg.dietProfile=document.getElementById('configProfiloAlimentare').value||'onnivoro';
   for(const f of Object.values(cfg.proteinFrequencies||{})){if(f&&f.min!==null&&f.max!==null&&Number(f.min)>Number(f.max)){await avviso('Una frequenza proteica ha il minimo superiore al massimo.');return;}}
   if(cfg.fruit&&cfg.fruit.min!==null&&cfg.fruit.max!==null&&Number(cfg.fruit.min)>Number(cfg.fruit.max)){await avviso('Il minimo della frutta non può superare il massimo.');return;}
@@ -1948,15 +2067,18 @@ async function salvaConfigAvanzata(){
       if(c.quantita!==null&&c.quantita!==undefined&&!(Number(c.quantita)>0)){await avviso('La quantità contestuale deve essere positiva ('+ctx+').');return;}
     }
   }
+  cfg.carbohydrateClasses=classi;
   const allergens=[...document.querySelectorAll('#configAllergeniAttivi button.active')].map(b=>b.dataset.allergene),basi=await getAll('ingredienti'),ingredientiEsclusi=basi.filter(b=>esclusionePianoIngrediente(b,cfg.dietProfile)||vincoliIngredientiNutrizionistaDraft[b.id]&&vincoliIngredientiNutrizionistaDraft[b.id].stato==='escluso').map(b=>b.id);
   const resolved=risolviConfigNutrizionista(cfg,vincoliIngredientiNutrizionistaDraft,allergens,ingredientiEsclusi);
   if(!resolved.valid){await avviso('Configurazione non valida: '+resolved.errors.join(' '));return;}
   const cfgEffettiva=configAvanzataDaRisolta(resolved,cfg);
-  await put('impostazioni',{chiave:'configAvanzata',valore:cfgEffettiva});
-  await put('impostazioni',{chiave:'allergeniAttivi',valore:allergens});
-  await put('impostazioni',{chiave:'vincoliIngredientiNutrizionista',valore:cloneConfigurazione(vincoliIngredientiNutrizionistaDraft)});
-  await put('impostazioni',{chiave:'vincoliClassiCarboidrati',valore:classi});
-  await put('impostazioni',{chiave:'ingredientiBloccati',valore:ingredientiEsclusi});
+  await salvaImpostazioniNutrizionista([
+    {chiave:'configAvanzata',valore:cfgEffettiva},
+    {chiave:'allergeniAttivi',valore:allergens},
+    {chiave:'vincoliIngredientiNutrizionista',valore:cloneConfigurazione(vincoliIngredientiNutrizionistaDraft)},
+    {chiave:'vincoliClassiCarboidrati',valore:classi},
+    {chiave:'ingredientiBloccati',valore:ingredientiEsclusi}
+  ]);
   /* Allergeni, vincoli e blocchi ingrediente sono letti dal motore tramite
      una cache in memoria valida per tutta la sessione (vedi motor-v12.js,
      configRuntime) - va invalidata qui, all'unico punto reale dove queste
@@ -1964,7 +2086,7 @@ async function salvaConfigAvanzata(){
   if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();
   applicaConfigAvanzataRuntime(cfgEffettiva);
   await renderConfigAvanzata();
-  const note=resolved.warnings&&resolved.warnings.length?' · valori ricondotti ai limiti PDF: '+resolved.warnings.join(' '):'';
+  const note=resolved.warnings&&resolved.warnings.length?' · '+resolved.warnings.join(' '):'';
   document.getElementById('configAvanzataStato').textContent='✅ Configurazione salvata senza modificare il catalogo ricette'+note;
 }
 
@@ -2057,8 +2179,9 @@ function applicaConfigAvanzataRuntime(cfg){
   const eff=configAvanzataEffettivaSalvata(cfg||{}),def=configAvanzataDefaultCanonico();
   CAP_SPUNTINO_SETTIMANALE=Object.assign({},def.snackWeeklyCaps,eff.snackWeeklyCaps||{});
   CAP_SPUNTINO_GIORNALIERO=Object.assign({},def.snackDailyCaps,eff.snackDailyCaps||{});
-  CAP_COLAZIONE_SPECIALE=eff.specialBreakfastMax??def.specialBreakfastMax??1;
+  CAP_COLAZIONE_SPECIALE=eff.specialBreakfastMax;
   FRUTTA_GIORNALIERA=Object.assign({},def.fruit,eff.fruit||{});
+  SCADENZE_PASTO_RUNTIME=Object.assign({},eff.deadlines);
 }
 const COLAZIONE_GRUPPI = [
   {chiave:'proteine', label:'Proteine', obbligatorio:true, consentiNessuno:true},
@@ -2402,6 +2525,7 @@ async function aggiornaTettoCarbLimitatiSet(){
   const rec=await getOne('impostazioni','configAvanzata');
   const resolved=N.resolveNutritionConfig({nutritionist:{config:rec&&rec.valore||{}}});
   CONFIG_CARB_TETTO_LIMITATI=resolved.limitedCarbTotalMax;
+  for(const tipo of CONFIG_CARB_TIPI)tipo.maxIndividuale=Math.min(resolved.carbohydrateWeeklyCaps[tipo.chiave]??CONFIG_CARB_TOTALE_OBBLIGATORIO,CONFIG_CARB_TOTALE_OBBLIGATORIO);
 }
 
 /* Nel Set esistono stati utente solo per i carboidrati limitati:
@@ -3170,9 +3294,9 @@ async function renderSet(){
 
 let limitiPersonaliIngredientiDraft=null;
 async function risolviSetUtenteCorrente(userOverride){
-  const [cfgRec,vincoliRec,allRec,blockedRec,capsRec]=await Promise.all([getOne('impostazioni','configAvanzata'),getOne('impostazioni','vincoliIngredientiNutrizionista'),getOne('impostazioni','allergeniAttivi'),getOne('impostazioni','ingredientiBloccati'),getOne('impostazioni','tettiIngredienteSettimanali')]);
+  const [cfgRec,vincoliRec,allRec,blockedRec,capsRec,classRec]=await Promise.all([getOne('impostazioni','configAvanzata'),getOne('impostazioni','vincoliIngredientiNutrizionista'),getOne('impostazioni','allergeniAttivi'),getOne('impostazioni','ingredientiBloccati'),getOne('impostazioni','tettiIngredienteSettimanali'),getOne('impostazioni','vincoliClassiCarboidrati')]);
   const user=Object.assign({ingredientWeeklyCaps:capsRec&&capsRec.valore||{}},userOverride||{});
-  return globalThis.DietaPlannerNutritionConfig.resolveNutritionConfig({nutritionist:{config:cfgRec&&cfgRec.valore||{},ingredientConstraints:vincoliRec&&vincoliRec.valore||{},allergens:allRec&&allRec.valore||[],blockedIngredientIds:blockedRec&&blockedRec.valore||[]},user});
+  return globalThis.DietaPlannerNutritionConfig.resolveNutritionConfig({ingredientCatalog:await getAll('ingredienti'),nutritionist:{config:{...cfgRec?.valore,carbohydrateClasses:cfgRec?.valore?.carbohydrateClasses??classRec?.valore},ingredientConstraints:vincoliRec&&vincoliRec.valore||{},allergens:allRec&&allRec.valore||[],blockedIngredientIds:blockedRec&&blockedRec.valore||[]},user});
 }
 function ingredienteEsclusoClinicamenteNelSet(base,resolved){
   if(!base||!resolved)return false;
@@ -3593,6 +3717,16 @@ async function nutrizioneCarboidratoModulare(chiave){
 
 async function calcolaNutrizioneVoceConsumata(voce){
   const tot={kcal:0,prot:0,carb:0,grassi:0};
+  if(voce.nutrizioneTotale)return structuredClone(voce.nutrizioneTotale);
+  if(Array.isArray(voce.ingredientiEffettivi)){
+    const varianti=await getAll('varianti');
+    for(const i of voce.ingredientiEffettivi){
+      const v=varianti.find(x=>x.id===i.variantId);if(!v)continue;
+      const factor=Number(i.grammi??i.quantita)/100;
+      for(const key of ['kcal','prot','carb','grassi'])tot[key]+=(Number(v[key+'100'])||0)*factor;
+    }
+    return tot;
+  }
   if(voce.componenti||voce.colazioneSpecialeId){
     return aggiungiNutrizione(tot,await nutrizioneColazione(voce.componenti,null,voce.colazioneSpecialeId));
   }
@@ -4104,48 +4238,106 @@ async function renderAlertCongelamento(){
    spuntini": non è un conteggio a sé, va derivato da cosa è davvero pianificato
    nel giorno (colazione a gruppi, i tre spuntini, pranzo, cena) — niente più
    bottoni manuali scollegati, il valore si calcola da solo ogni volta. */
+function contestoAlimentare(pasto){return pasto==='colazione'?'colazione':pasto.startsWith('spuntino')?'spuntino':'pastoPrincipale';}
+async function conteggiIngredientiContesti(giorno,excludeId){
+  const week=DietaPlannerContracts.week(giorno),counts={totali:{},colazione:{},spuntino:{},pastoPrincipale:{},colazioniSemplici:0,colazioniTotali:0};
+  const [plan,logs]=await Promise.all([getAll('piano'),getAll('consumoGiorno')]);
+  const records=new Map(plan.map(v=>[v.id,v]));
+  for(const row of logs)records.set(row.giorno+'_'+row.pasto,{...row,id:row.giorno+'_'+row.pasto});
+  for(const row of records.values()){
+    if(row.id===excludeId||DietaPlannerContracts.week(row.id.slice(0,10))!==week)continue;
+    const context=contestoAlimentare(row.id.slice(11));
+    if(context==='colazione'&&(row.componenti||row.colazioneSpecialeId)){counts.colazioniTotali++;if(row.componenti?.carboidrati_semplici)counts.colazioniSemplici++;}
+    const ids=new Set((await ingredientiEffettiviVoce(row)).map(i=>i.ingredienteId).filter(Boolean));
+    for(const id of ids){counts.totali[id]=(counts.totali[id]||0)+1;counts[context][id]=(counts[context][id]||0)+1;}
+  }
+  return counts;
+}
+function ingredienteEntroLimiti(id,context,resolved,counts){
+  const rule=resolved.ingredientConstraints[id];if(!rule)return true;
+  const max=rule.max,contextMax=rule.contexts?.[context]?.max;
+  return !(max!=null&&(counts.totali[id]||0)>=max)&&!(contextMax!=null&&(counts[context][id]||0)>=contextMax);
+}
+async function validaIngredientiVoce(voce){
+  const resolved=await risolviSetUtenteCorrente();
+  if(!resolved.valid)throw new Error('Configurazione nutrizionale non valida');
+  const basi=await getAll('ingredienti'),varianti=await getAll('varianti');
+  const counts=await conteggiIngredientiContesti(voce.id.slice(0,10),voce.id),context=contestoAlimentare(voce.id.slice(11));
+  if(context==='colazione'&&voce.componenti?.carboidrati_semplici){
+    const max=resolved.carbohydrateClasses.semplici.max;
+    if(max!=null&&counts.colazioniSemplici>=max)throw new Error('Massimo settimanale carboidrati semplici a colazione raggiunto.');
+  }
+  if(context==='colazione'&&(voce.componenti||voce.colazioneSpecialeId)){
+    const min=resolved.carbohydrateClasses.semplici.min;
+    if(min!=null&&counts.colazioniTotali+1===7&&counts.colazioniSemplici+(voce.componenti?.carboidrati_semplici?1:0)<min)
+      throw new Error('Minimo settimanale carboidrati semplici a colazione non raggiunto.');
+  }
+  for(const i of await ingredientiEffettiviVoce(voce)){
+    const base=basi.find(b=>b.id===(i.ingredienteId||varianti.find(v=>v.id===i.variantId)?.ingredienteId));
+    if(!base||!Array.isArray(base.allergeni))throw new Error('Classificazione ingrediente mancante: '+(i.nome||i.variantId));
+    if(base.bloccoManuale||ingredienteEsclusoClinicamenteNelSet(base,resolved))throw new Error('Ingrediente escluso: '+base.nome);
+    if(!ingredienteEntroLimiti(base.id,context,resolved,counts))throw new Error('Limite nutrizionista raggiunto: '+base.nome+' ('+context+').');
+  }
+}
+async function ingredientiEffettiviVoce(voce){
+  if(Array.isArray(voce.ingredientiEffettivi))return structuredClone(voce.ingredientiEffettivi);
+  const out=[];
+  if(voce.realizzazioni?.length){
+    for(const real of voce.realizzazioni){
+      const recipe=await ricettaNuovoDaRealizzazione(real);
+      if(recipe&&!recipe.piattoSpeciale){
+        const scale=(voce.porzioni||1)/(recipe.porzioni||1);
+        out.push(...(recipe.ingredienti||[]).map(i=>({...i,quantita:Number(i.quantita)*scale,grammi:i.grammi==null?undefined:Number(i.grammi)*scale})));
+      }
+    }
+    return out;
+  }
+  const variants=await getAll('varianti'),bases=await getAll('ingredienti');
+  const enrich=(i)=>{
+    const v=variants.find(x=>x.id===i.variantId),b=bases.find(x=>x.id===v?.ingredienteId);
+    return {...i,ingredienteId:b?.id,nome:v?.nome,gruppo:b?.gruppo,
+      allergeni:b?.allergeni||[],nonRichiedeInventario:!!b?.nonRichiedeInventario};
+  };
+  if(voce.componenti){
+    for(const id of Object.values(voce.componenti)){
+      const v=variants.find(x=>x.id===id);if(!v)continue;
+      const grams=await DietaPlannerMotorV12.doseContestoVariante(v,'colazione',Number(v.porzioneColazione)||0);
+      out.push(enrich({variantId:id,quantita:grams,grammi:grams,unita:'g'}));
+    }
+  }else{
+    for(const id of new Set([voce.colazioneSpecialeId,voce.ricettaId,voce.primoId,voce.secondoId,voce.contornoId].filter(Boolean))){
+      const recipe=await getOne('ricette',id);if(!recipe||recipe.piattoSpeciale)continue;
+      const scale=(voce.porzioni||1)/(recipe.porzioni||1);
+      for(const i of recipe.ingredienti||[])out.push(enrich({...i,quantita:Number(i.quantita)*scale,grammi:i.grammi==null?undefined:Number(i.grammi)*scale}));
+    }
+  }
+  return out;
+}
 async function calcolaFruttaOggi(giorno){
-  giorno = giorno || giornoSelezionato;
-  const varianti = await getAll('varianti');
-  const ingredientiBase = await getAll('ingredienti');
-  let grammiFrutta = 0;
-
-  function grammiFruttaIn(ricetta){
-    if(!ricetta || !ricetta.ingredienti) return 0;
-    let g = 0;
-    for(const ing of ricetta.ingredienti){
-      if(!ing.variantId) continue;
-      const v = varianti.find(x=>x.id===ing.variantId);
-      if(!v) continue;
-      const base = ingredientiBase.find(x=>x.id===v.ingredienteId);
-      if(base && base.gruppo==='frutta') g += (ing.quantita||0);
-    }
-    return g;
-  }
-
-  // colazione: gruppo "carboidrati_semplici" può includere frutta? No — la frutta in
-  // colazione non è tra i 4 gruppi componibili di G, quindi qui non c'è nulla da
-  // sommare per la colazione (limite noto, coerente con la struttura attuale)
-
-  for(const pasto of ['spuntino1','spuntino2','spuntino3','pranzo','cena']){
-    const voce = await getOne('piano', giorno+'_'+pasto);
-    if(!voce) continue;
-    const idRicette = voce.modo==='multi'
-      ? [voce.primoId, voce.secondoId, voce.contornoId].filter(Boolean)
-      : [voce.ricettaId].filter(Boolean);
-    for(const rid of idRicette){
-      const ricetta = await getOne('ricette', rid);
-      grammiFrutta += grammiFruttaIn(ricetta);
+  giorno=giorno||giornoSelezionato;
+  const resolved=await risolviSetUtenteCorrente();
+  const dose=(resolved.fruit.portionMin+resolved.fruit.portionMax)/2;
+  const bases=await getAll('ingredienti'),variants=await getAll('varianti');
+  const logs=(await getAll('consumoGiorno')).filter(v=>v.giorno===giorno);
+  let grams=0;
+  for(const pasto of ['colazione','spuntino1','spuntino2','spuntino3','pranzo','cena']){
+    const voce=logs.find(v=>v.pasto===pasto)||await getOne('piano',giorno+'_'+pasto);
+    if(!voce)continue;
+    for(const i of await ingredientiEffettiviVoce(voce)){
+      const base=bases.find(b=>b.id===(i.ingredienteId||variants.find(v=>v.id===i.variantId)?.ingredienteId));
+      if((i.gruppo||base?.gruppo)==='frutta')grams+=Number(i.grammi??i.quantita)||0;
     }
   }
-  return Math.round(grammiFrutta/175); // ~175g = 1 porzione media (150-200g)
+  return Math.round(grams/dose*100)/100;
 }
 
 async function renderIndicatoreFrutta(){
   const n = await calcolaFruttaOggi(giornoSelezionato);
   const el = document.getElementById('indicatoreFrutta');
-  const ok = n>=FRUTTA_GIORNALIERA.min && n<=FRUTTA_GIORNALIERA.max;
-  el.innerHTML = `🍎 Frutta oggi: <span style="color:${ok?'var(--accent)':'var(--text-dim)'}">${n} / ${FRUTTA_GIORNALIERA.min}-${FRUTTA_GIORNALIERA.max} porzioni</span> — dedotta da spuntini e pasti, non un conteggio a parte`;
+  const max=FRUTTA_GIORNALIERA.max;
+  const ok = n>=FRUTTA_GIORNALIERA.min && (max===null||n<=max);
+  const intervallo=max===null?'almeno '+FRUTTA_GIORNALIERA.min:FRUTTA_GIORNALIERA.min+'–'+max;
+  el.innerHTML = `🍎 Frutta oggi: <span style="color:${ok?'var(--accent)':'var(--text-dim)'}">${n} / ${intervallo} porzioni</span> — dedotta da spuntini e pasti, non un conteggio a parte`;
 }
 
 const LABEL_PASTO = {colazione:'Colazione', pranzo:'Pranzo', cena:'Cena', spuntino1:'Spuntino mattina', spuntino2:'Spuntino pomeriggio', spuntino3:'Spuntino sera'};
@@ -4155,6 +4347,7 @@ const ICONA_PASTO = {colazione:'☀️', pranzo:'🍝', cena:'🌙', spuntino1:'
    dispensa finché non è passato l'orario in cui si mangia davvero — altrimenti,
    pianificando l'intera settimana lunedì, gli ingredienti di venerdì sparivano già
    lunedì. Fasce orarie definite da Enrico, coprono l'intera giornata senza buchi. */
+let SCADENZE_PASTO_RUNTIME={};
 const FASCE_ORARIE_PASTO = {
   colazione: [6,9], spuntino1: [9,12], pranzo: [12,14],
   spuntino2: [14,18], cena: [18,20], spuntino3: [20,24]
@@ -4173,14 +4366,19 @@ function pastiOggiFuoriFascia(){
   for(const pasto of ['pranzo','cena']) if(fasciaPastoSuperata(oggi,pasto)) out.add(pasto);
   return out;
 }
+function finePastoMinuti(pasto){
+  const text=SCADENZE_PASTO_RUNTIME[pasto];
+  if(text){const [h,m]=text.split(':').map(Number);return h*60+m;}
+  const h=FASCE_ORARIE_PASTO[pasto]?.[1];return h===undefined?null:h*60;
+}
 function fasciaPastoSuperata(giorno, pasto, ora){
   ora = ora || new Date();
   const oggiIso = todayISO();
   if(giorno < oggiIso) return true;
   if(giorno > oggiIso) return false;
-  const fine = FASCE_ORARIE_PASTO[pasto]?.[1];
-  if(fine===undefined) return false;
-  return ora.getHours() >= fine;
+  const fine=finePastoMinuti(pasto);
+  if(fine===null)return false;
+  return ora.getHours()*60+ora.getMinutes()>=fine;
 }
 
 /* Controllo REATTIVO (nessun timer in background, è una PWA senza server): ad ogni
@@ -4191,8 +4389,39 @@ function fasciaPastoSuperata(giorno, pasto, ora){
    retroattivamente su più giorni se l'app non viene aperta per un po'. Un pasto
    "Ordino fuori" (piatto speciale in modalità asporto) passa comunque a consumato,
    ma non scala mai nulla, coerente con quanto già succede oggi alla conferma. */
+async function consumaVoceAtomica(voce,giorno,pasto){
+  const ingredients=await ingredientiEffettiviVoce(voce);
+  const nutrition=await calcolaNutrizioneVoceConsumata(voce);
+  const nutritionConfig=await risolviSetUtenteCorrente();
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction(['piano','inventario','consumoGiorno','impostazioni'],'readwrite');
+    const plan=transaction.objectStore('piano'),inventory=transaction.objectStore('inventario'),settings=transaction.objectStore('impostazioni');
+    let current,stock,counter,ready=0;
+    const finish=()=>{
+      if(++ready!==3)return;
+      if(!current||current.consumato)return;
+      // Una sostituzione completata durante il calcolo deve essere ricalcolata.
+      if(JSON.stringify(current)!==JSON.stringify(voce)){transaction.abort();return;}
+      const delta=DietaPlannerContracts.consumeInventory(stock,ingredients,giorno);
+      for(const row of delta.changed)inventory.put(row);
+      const consumed={...current,ingredientiEffettivi:structuredClone(ingredients),nutrizioneTotale:structuredClone(nutrition),consumato:true,dataConsumato:giorno};plan.put(consumed);
+      transaction.objectStore('consumoGiorno').put({
+        ...structuredClone(consumed),id:voce.id+'_'+giorno,giorno,pasto,origine:'auto',
+        ricettaIds:voce.realizzazioni?.map(r=>r.ricettaId)||[voce.ricettaId,voce.primoId,voce.secondoId,voce.contornoId].filter(Boolean),
+        nutrizioneTotale:nutrition,scorteMancanti:delta.missing,registratoIl:new Date().toISOString()
+      });
+      if(pasto==='colazione')settings.put({chiave:'contatoreColazioniMorigerate',valore:DietaPlannerContracts.nextBreakfastCount(counter?.valore,current,nutritionConfig.breakfastRegularCount)});
+    };
+    const r1=plan.get(voce.id);r1.onsuccess=()=>{current=r1.result;finish();};
+    const r2=inventory.getAll();r2.onsuccess=()=>{stock=r2.result;finish();};
+    const r3=settings.get('contatoreColazioniMorigerate');r3.onsuccess=()=>{counter=r3.result;finish();};
+    transaction.oncomplete=()=>{for(const name of ['piano','inventario','consumoGiorno','impostazioni'])cacheGetAll[name]=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error);
+    transaction.onabort=()=>reject(transaction.error||new Error('Il pasto è cambiato durante il consumo: riprovare'));
+  });
+}
 async function elaboraConsumoAutomatico(){
-  const tuttoIlPiano = await getAll('piano');
+  const tuttoIlPiano = await getAllRaw('piano');
   const tutteLeRicette = await getAll('ricette');
   const ricettePerId = {}; for(const r of tutteLeRicette) ricettePerId[r.id] = r;
   const ora = new Date();
@@ -4212,9 +4441,9 @@ async function elaboraConsumoAutomatico(){
     }
     if(voce.consumato) continue;
 
-    const fineOra=FASCE_ORARIE_PASTO[pasto]?.[1];
-    const deadline=fineOra===undefined?null:new Date(giorno+'T00:00:00');
-    if(deadline) deadline.setHours(fineOra,0,0,0);
+    const fineMinuti=finePastoMinuti(pasto);
+    const deadline=fineMinuti===null?null:new Date(giorno+'T00:00:00');
+    if(deadline)deadline.setMinutes(fineMinuti,0,0);
     const programmatoMs=voce.programmatoIl?Date.parse(voce.programmatoIl):NaN;
 
     // Record automatici retroattivi privi di una programmazione valida: non sono pasti.
@@ -4226,41 +4455,7 @@ async function elaboraConsumoAutomatico(){
     if(deadline && Number.isFinite(programmatoMs) && programmatoMs>deadline.getTime()) continue;
     if(!fasciaPastoSuperata(giorno,pasto,ora)) continue;
 
-    if(pasto==='colazione'){
-      voce.consumato=true;
-      voce.dataConsumato=giorno;
-      await put('piano',voce);
-      await registraConsumoStorico(voce,'auto');
-      const recContatorePremio=await getOne('impostazioni','contatoreColazioniMorigerate');
-      let contatorePremio=recContatorePremio?recContatorePremio.valore:0;
-      if(voce.componenti&&!voce.colazioneSpecialeId)contatorePremio++;
-      else if(voce.colazioneSpecialeId)contatorePremio=0;
-      await put('impostazioni',{chiave:'contatoreColazioniMorigerate',valore:contatorePremio});
-      continue;
-    }
-
-    const idRicette=voce.modo==='multi'
-      ? [...new Set((voce.realizzazioni&&voce.realizzazioni.length?voce.realizzazioni.map(x=>x.ricettaId):[voce.primoId,voce.secondoId,voce.contornoId]).filter(Boolean))]
-      : [voce.ricettaId].filter(Boolean);
-    if(!idRicette.length){
-      if(passato) await delKey('piano',voce.id);
-      continue;
-    }
-    const speciale=idRicette.length===1?ricettePerId[idRicette[0]]:null;
-    if(!(speciale&&speciale.piattoSpeciale)){
-      if(voce.motoreNuovo&&voce.realizzazioni&&voce.realizzazioni.length&&window.DietaPlannerMotorV12){
-        for(const real of voce.realizzazioni){
-          const ricetta=await ricettaNuovoDaRealizzazione(real);
-          if(ricetta)await scalaInventarioPerRicetta(ricetta,voce.porzioni);
-        }
-      }else{
-        for(const rid of idRicette){const ricetta=ricettePerId[rid];if(ricetta)await scalaInventarioPerRicetta(ricetta,voce.porzioni);}
-      }
-    }
-    voce.consumato=true;
-    voce.dataConsumato=giorno;
-    await put('piano',voce);
-    await registraConsumoStorico(voce,'auto');
+    await consumaVoceAtomica(voce,giorno,pasto);
   }
 }
 /* =========================================================
@@ -4282,6 +4477,15 @@ async function contaColazioniSpecialiSettimana(){
   return conteggio;
 }
 
+async function variantiColazioneCorrenti(varianti,voce){
+  const snapshots=voce?.ingredientiEffettivi;
+  return Promise.all(varianti.map(async v=>{
+    const saved=snapshots?.find(i=>i.variantId===v.id);
+    const q=saved?(saved.grammi??saved.quantita):await DietaPlannerMotorV12.doseContestoVariante(v,'colazione',v.porzioneColazione);
+    return {...v,porzioneColazione:q};
+  }));
+}
+
 async function nutrizioneColazione(componenti, variantiPrecaricate, colazioneSpecialeId){
   if(colazioneSpecialeId){
     const cs = await getOne('ricette', colazioneSpecialeId);
@@ -4290,7 +4494,7 @@ async function nutrizioneColazione(componenti, variantiPrecaricate, colazioneSpe
       return {kcal:m.kcal||0, prot:m.prot||0, carb:m.carb||0, grassi:m.grassi||0};
     }
   }
-  const varianti = variantiPrecaricate || await getAll('varianti');
+  const varianti = variantiPrecaricate || await variantiColazioneCorrenti(await getAll('varianti'));
   let kcal=0, prot=0, carb=0, grassi=0;
   for(const chiave of Object.keys(componenti||{})){
     if(chiave==='bibita') continue; // scelta descrittiva: nessun apporto nutrizionale
@@ -4326,7 +4530,7 @@ async function descrizioneColazione(componenti, colazioneSpecialeId, variantiPre
     const cs=await getOne('ricette',colazioneSpecialeId);
     return cs ? cs.nome : 'Colazione speciale';
   }
-  const varianti=variantiPrecaricate||await getAll('varianti');
+  const varianti=variantiPrecaricate||await variantiColazioneCorrenti(await getAll('varianti'));
   const nomi=COLAZIONE_GRUPPI
     .map(g=>componenti ? nomeOpzioneColazione(g, componenti[g.chiave], varianti) : null)
     .filter(Boolean);
@@ -4386,7 +4590,11 @@ async function renderColazione(giorno, elementId){
   if(!elementId) el.classList.add('meal');
   const pianoId = giorno+'_colazione';
   let voce = await getOne('piano', pianoId);
-  const [varianti,ingredientiColazione]=await Promise.all([getAll('varianti'),getAll('ingredienti')]);
+  const [variantiBase,ingredientiColazione]=await Promise.all([getAll('varianti'),getAll('ingredienti')]);
+  const varianti=await variantiColazioneCorrenti(variantiBase,voce);
+  const resolvedColazione=await risolviSetUtenteCorrente(),countsColazione=await conteggiIngredientiContesti(giorno,pianoId);
+  const variantiNuove=await variantiColazioneCorrenti(variantiBase);
+  const variantiScelta=variantiNuove.filter(v=>ingredienteEntroLimiti(v.ingredienteId,'colazione',resolvedColazione,countsColazione));
   const mappaIngredientiColazione=new Map((ingredientiColazione||[]).map(x=>[String(x.id),x]));
   if(!voce) voce = {id:pianoId};
   const haContenutoColazione = !!(voce.componenti || voce.colazioneSpecialeId);
@@ -4410,7 +4618,8 @@ async function renderColazione(giorno, elementId){
 
   const recContatorePremioRender = await getOne('impostazioni', 'contatoreColazioniMorigerate');
   const contatorePremioRender = recContatorePremioRender ? recContatorePremioRender.valore : 0;
-  const mostraPremioCostanza = contatorePremioRender >= 5 && !voce.colazioneSpecialeId && !voce.consumato && !colazioneScaduta && giorno === todayISO();
+  const sogliaColazione=(await risolviSetUtenteCorrente()).breakfastRegularCount;
+  const mostraPremioCostanza = contatorePremioRender >= sogliaColazione && !voce.colazioneSpecialeId && !voce.consumato && !colazioneScaduta && giorno === todayISO();
   if(mostraPremioCostanza){
     const tutteRicettePremio = await getAll('ricette');
     const colazioniSpecialiPremio = tutteRicettePremio
@@ -4468,8 +4677,8 @@ async function renderColazione(giorno, elementId){
         cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
         impostaCassettoPastoRs(el,cassettiAzioniPasto[pianoId]);
       });
-      el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
-      el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId));
+      el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId,voce));
+      el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId,voce));
       return;
     }
     const riepilogoScaduto = (voce.componenti || voce.colazioneSpecialeId)
@@ -4477,7 +4686,7 @@ async function renderColazione(giorno, elementId){
       : '<div class="meta">Nessuna colazione</div>';
     el.innerHTML = html + `<div style="opacity:0.7;"><span class="consumato-spunta">✓</span> ${riepilogoScaduto}</div>`;
     el.querySelector('[data-editor-colazione]')?.addEventListener('click', async ()=>{ await apriModalEditorColazione(giorno); });
-    el.querySelector('[data-info-colazione]')?.addEventListener('click', ()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
+    el.querySelector('[data-info-colazione]')?.addEventListener('click', ()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId,voce));
     return;
   }
 
@@ -4489,7 +4698,8 @@ async function renderColazione(giorno, elementId){
     };
   }
   const draft=draftColazione[pianoId];
-  const draftNutri=await nutrizioneColazione(draft.componenti,varianti,draft.colazioneSpecialeId);
+  const variantiDraft=componentiColazioneUguali(draft.componenti,voce.componenti)?varianti:variantiNuove;
+  const draftNutri=await nutrizioneColazione(draft.componenti,variantiDraft,draft.colazioneSpecialeId);
   const draftDescrizione=await descrizioneColazione(draft.componenti,draft.colazioneSpecialeId,varianti);
   const modificata=(draft.colazioneSpecialeId||null)!==(voce.colazioneSpecialeId||null) || !componentiColazioneUguali(draft.componenti,voce.componenti);
 
@@ -4511,7 +4721,7 @@ async function renderColazione(giorno, elementId){
   const colazioniSpeciali = tutteRicetteCS.filter(r=>r.colazioneSpeciale && !r.esclusa).sort((a,b)=>a.nome.localeCompare(b.nome));
   const csDraft = draft.colazioneSpecialeId ? tutteRicetteCS.find(r=>r.id===draft.colazioneSpecialeId) : null;
   const conteggioCS = await contaColazioniSpecialiSettimana();
-  const tettoCS = conteggioCS >= CAP_COLAZIONE_SPECIALE && !voce.colazioneSpecialeId;
+  const tettoCS = CAP_COLAZIONE_SPECIALE!==null && conteggioCS >= CAP_COLAZIONE_SPECIALE && !voce.colazioneSpecialeId;
 
   const colazionePrefSalvata = await getOne('impostazioni', 'colazionePreferita');
 
@@ -4521,7 +4731,7 @@ async function renderColazione(giorno, elementId){
 
       <details class="pasto-sub-panel" style="margin-bottom:10px;" ${pannelloSpecialeAperto[pianoId]?'open':''}>
         <summary>🎂 Colazione speciale: ${csDraft ? csDraft.nome : 'nessuna'}</summary>
-        <div class="meta" style="margin:8px 0 6px;">Concesse 1-2 volte a settimana. ${tettoCS ? 'Tetto settimanale raggiunto.' : ''}</div>
+        <div class="meta" style="margin:8px 0 6px;">Massimo settimanale: ${CAP_COLAZIONE_SPECIALE===null?'nessun tetto':CAP_COLAZIONE_SPECIALE}. ${tettoCS ? 'Tetto settimanale raggiunto.' : ''}</div>
         <div class="tabgroup">
           <button data-cs-opt="" class="${!csDraft?'active':''}">— nessuna —</button>
           ${colazioniSpeciali.map(cs=>{
@@ -4534,7 +4744,7 @@ async function renderColazione(giorno, elementId){
 
       ${csDraft ? `<div style="font-weight:700;font-size:0.92rem;margin:8px 0;">🎂 ${csDraft.nome}</div>` :
         COLAZIONE_GRUPPI.map(g=>{
-          const opzioni=opzioniColazioneGruppo(g, varianti);
+          const opzioni=opzioniColazioneGruppo(g, variantiScelta);
           const selezionatoId=draft.componenti&&draft.componenti[g.chiave];
           return `<label style="margin-top:10px;">${g.label}${g.obbligatorio?'':' (facoltativo)'}</label>
             <div class="colazione-gruppo-slide" data-gruppo-slide="${g.chiave}">
@@ -4566,13 +4776,13 @@ async function renderColazione(giorno, elementId){
   if(!elementId)attivaCaroselloColazioneRs(el);
   el.classList.toggle('pasto-card-aperta',!!draft.aperta);
 
-  el.querySelector('[data-info-colazione-attuale]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
+  el.querySelector('[data-info-colazione-attuale]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId,voce));
   el.querySelector('[data-rs-col-details]')?.addEventListener('click',()=>{
     cassettiAzioniPasto[pianoId]=!cassettiAzioniPasto[pianoId];
     impostaCassettoPastoRs(el,cassettiAzioniPasto[pianoId]);
   });
-  el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId));
-  el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId));
+  el.querySelector('[data-rs-col-info]')?.addEventListener('click',()=>apriModalInfoColazione(voce.componenti,voce.colazioneSpecialeId,voce));
+  el.querySelector('[data-rs-col-recipe]')?.addEventListener('click',()=>apriModalDettaglioColazione(voce.componenti,voce.colazioneSpecialeId,voce));
   el.querySelector('[data-rs-col-edit]')?.addEventListener('click',()=>{
     draft.aperta=!draft.aperta;
     el.classList.toggle('pasto-card-aperta',draft.aperta);
@@ -4609,7 +4819,7 @@ async function renderColazione(giorno, elementId){
     b.addEventListener('click', async ()=>{
       const idScelto=b.dataset.csOpt||null;
       if(idScelto){
-        if(!voce.colazioneSpecialeId && conteggioCS>=CAP_COLAZIONE_SPECIALE){
+        if(!voce.colazioneSpecialeId && CAP_COLAZIONE_SPECIALE!==null && conteggioCS>=CAP_COLAZIONE_SPECIALE){
           await avviso('Hai già raggiunto il tetto di '+CAP_COLAZIONE_SPECIALE+' colazioni speciali questa settimana.');
           return;
         }
@@ -4619,7 +4829,7 @@ async function renderColazione(giorno, elementId){
         draft.colazioneSpecialeId=null;
         const componenti={};
         for(const g of COLAZIONE_GRUPPI){
-          const opzioni=opzioniColazioneGruppo(g, varianti);
+          const opzioni=opzioniColazioneGruppo(g, variantiScelta);
           const precedente=voce.componenti&&voce.componenti[g.chiave];
           componenti[g.chiave]=precedente || (g.obbligatorio&&opzioni.length?opzioni[0].id:null);
         }
@@ -4662,7 +4872,7 @@ async function renderColazione(giorno, elementId){
   });
 }
 
-async function apriModalDettaglioColazione(componenti, colazioneSpecialeId){
+async function apriModalDettaglioColazione(componenti, colazioneSpecialeId, voce){
   if(colazioneSpecialeId){
     const cs = await getOne('ricette', colazioneSpecialeId);
     document.getElementById('modalDettaglioTitolo').textContent = 'Colazione';
@@ -4673,7 +4883,7 @@ async function apriModalDettaglioColazione(componenti, colazioneSpecialeId){
     apriModalInAlto('modalDettaglio');
     return;
   }
-  const varianti = await getAll('varianti');
+  const varianti = await variantiColazioneCorrenti(await getAll('varianti'),voce);
   let righe = '';
   for(const g of COLAZIONE_GRUPPI){
     const id = componenti&&componenti[g.chiave];
@@ -4691,8 +4901,8 @@ async function apriModalDettaglioColazione(componenti, colazioneSpecialeId){
   apriModalInAlto('modalDettaglio');
 }
 
-async function apriModalInfoColazione(componenti, colazioneSpecialeId){
-  const varianti = await getAll('varianti');
+async function apriModalInfoColazione(componenti, colazioneSpecialeId, voce){
+  const varianti = await variantiColazioneCorrenti(await getAll('varianti'),voce);
   const nutri = await nutrizioneColazione(componenti, varianti, colazioneSpecialeId);
   let elementiHtml='';
   if(colazioneSpecialeId){
@@ -4781,7 +4991,8 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
   const haContenutoSpuntino = !!voce.ricettaId;
   const scaduto = haContenutoSpuntino && fasciaPastoSuperata(giorno, pasto);
   if(voce.consumato){
-    const ricettaConsumata = voce.ricettaId ? await getOne('ricette', voce.ricettaId) : null;
+    const templateConsumata=voce.ricettaId?await getOne('ricette',voce.ricettaId):null;
+    const ricettaConsumata=templateConsumata?await materializzaSpuntinoCorrente(templateConsumata,voce):null;
     const nutriCons = ricettaConsumata ? await nutrizionePerPersona(ricettaConsumata) : null;
     const etichettaCons = ricettaConsumata ? await etichettaOpzioneSpuntino(ricettaConsumata, await getAll('varianti')) : null;
     // Spuntino 1 e 2: una volta scaduti sono chiusi definitivamente, nessuna correzione.
@@ -4810,6 +5021,7 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
   // essere che farai uno o due spuntini o, magari, nemmeno uno") — resta vuoto finché
   // non lo aggiungi tu deliberatamente
   let ricetta = voce.ricettaId ? await getOne('ricette', voce.ricettaId) : null;
+  if(ricetta)ricetta=await materializzaSpuntinoCorrente(ricetta,voce);
 
   let corpoHtml = '';
 
@@ -4857,8 +5069,9 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
       apriModalInfoNutrizionale(r);
     });
     el.querySelector('[data-rimuovi-s]').addEventListener('click', async ()=>{
-      await annullaScalaInventarioPerRicetta(ricetta, voce.porzioni);
+      // La programmazione non ha scaricato scorte: rimuoverla non le aumenta.
       voce.ricettaId = null;
+      delete voce.ingredientiEffettivi;delete voce.nutrizioneTotale;delete voce.sottotipoSpuntino;
       await put('piano', voce);
       renderBloccoSemplice(pasto, giorno, elementId);
       if(giorno===giornoSelezionato) renderNutrizioneGiorno();
@@ -4878,18 +5091,39 @@ async function renderBloccoSemplice(pasto, giorno, elementId){
    automaticamente quelle che hanno già raggiunto il tetto (settimanale o
    giornaliero) definito dal PDF, così non è mai possibile scegliere qualcosa che
    sforerebbe. Non è un motore che propone: è la lista fissa del PDF, filtrata. */
-async function opzioniSpuntinoDisponibili(giorno){
+async function materializzaSpuntinoCorrente(recipe,voce){
+  if(voce?.ingredientiEffettivi)return {...recipe,porzioni:1,ingredienti:structuredClone(voce.ingredientiEffettivi),nutrizioneManualeTotale:voce.nutrizioneTotale};
+  const [cfg,variants,bases]=await Promise.all([risolviSetUtenteCorrente(),getAll('varianti'),getAll('ingredienti')]);
+  const ingredienti=[];
+  for(const i of recipe.ingredienti||[]){
+    const v=variants.find(x=>x.id===i.variantId),base=bases.find(x=>x.id===v?.ingredienteId);
+    if(!v){ingredienti.push({...i});continue;}
+    const fallback=base?.gruppo==='frutta'?(cfg.fruit.portionMin+cfg.fruit.portionMax)/2:i.quantita;
+    const q=await DietaPlannerMotorV12.doseContestoVariante(v,'spuntino',fallback);
+    ingredienti.push({...i,quantita:q,grammi:q,ingredienteId:base?.id,nome:v.nome,gruppo:base?.gruppo,allergeni:base?.allergeni||[]});
+  }
+  const current={...recipe,ingredienti};delete current.nutrizioneManualeTotale;
+  return current;
+}
+async function opzioniSpuntinoDisponibili(giorno,excludeId){
   await sincronizzaRicetteSpuntinoBase();
-  const ricette = await getAll('ricette');
-  const candidate = ricette.filter(r=>r.tipoPortata==='spuntino' && !r.esclusa);
-  const {spuntini: consumiSettimana} = await getConsumiSpuntiniSettimana();
-  const contoGiornalieroFruttaSecca = await contaSottotipoSpuntinoGiorno(giorno, 'frutta_secca_giornaliero');
-  return candidate.filter(r=>{
-    const sott = r.sottotipoSpuntino;
-    if(!sott) return true; // nessun tetto per questo tipo (es. yogurt, uovo sodo...)
-    if(CAP_SPUNTINO_SETTIMANALE[sott]!==undefined && consumiSettimana[sott] >= CAP_SPUNTINO_SETTIMANALE[sott]) return false;
-    if(CAP_SPUNTINO_GIORNALIERO[sott]!==undefined && contoGiornalieroFruttaSecca >= CAP_SPUNTINO_GIORNALIERO[sott]) return false;
-    return true;
+  const [ricette,basi,varianti,resolved,conteggi]=await Promise.all([
+    getAll('ricette'),getAll('ingredienti'),getAll('varianti'),risolviSetUtenteCorrente(),conteggiSpuntini(giorno,excludeId)
+  ]);
+  if(!resolved.valid)return [];
+  const counts=Object.keys(resolved.ingredientConstraints).length?await conteggiIngredientiContesti(giorno,excludeId):null;
+  const correnti=await Promise.all(ricette.filter(r=>r.tipoPortata==='spuntino').map(r=>materializzaSpuntinoCorrente(r)));
+  return correnti.filter(r=>{
+    if(r.tipoPortata!=='spuntino'||r.esclusa||r.disponibile===false)return false;
+    if(!(r.ingredienti||[]).length)return false;
+    for(const i of r.ingredienti){
+      const v=varianti.find(x=>x.id===i.variantId),base=basi.find(x=>x.id===v?.ingredienteId);
+      if(!base||!Array.isArray(base.allergeni)||ingredienteEsclusoClinicamenteNelSet(base,resolved))return false;
+      if(counts&&!ingredienteEntroLimiti(base.id,'spuntino',resolved,counts))return false;
+    }
+    const sott=r.sottotipoSpuntino;
+    const weekly=resolved.snackWeeklyCaps?.[sott],daily=resolved.snackDailyCaps?.[sott];
+    return !(weekly!=null&&(conteggi.settimana[sott]||0)>=weekly)&&!(daily!=null&&(conteggi.giorno[sott]||0)>=daily);
   });
 }
 
@@ -4897,15 +5131,18 @@ async function opzioniSpuntinoDisponibili(giorno){
    esplicite. L'upsert e idempotente: non duplica e non sovrascrive scelte utente. */
 async function sincronizzaRicetteSpuntinoBase(){
   const varianti=await getAll('varianti');
+  const cfg=await risolviSetUtenteCorrente();
+  if(!cfg.valid)return;
+  const dosi=cfg.snackPortions;
   const perNome=new Map(varianti.map(v=>[String(v.nome||'').toLowerCase(),v]));
   const definizioni=[
-    ['grana','Parmigiano grattugiato',20,'grana_spuntino'],
-    ['crackers','Crackers',30,'crackers_spuntino'],
-    ['pane-marmellata','Panino',25,'pane_marmellata_spuntino','Marmellata',5],
-    ['granita','Granita fatta in casa',150,'granita_spuntino'],
-    ['patatine','Patatine in busta',25,'patatine_grisbi'],
-    ['frutta-secca','Noci e mandorle',15,'frutta_secca_giornaliero'],
-    ['yogurt','Yogurt bianco',125,null]
+    ['grana','Parmigiano grattugiato',dosi.grana,'grana_spuntino'],
+    ['crackers','Crackers',dosi.crackers,'crackers_spuntino'],
+    ['pane-marmellata','Panino',dosi.pane,'pane_marmellata_spuntino','Marmellata',dosi.marmellata],
+    ['granita','Granita fatta in casa',dosi.granita,'granita_spuntino'],
+    ['patatine','Patatine in busta',dosi.patatine,'patatine_grisbi'],
+    ['frutta-secca','Noci e mandorle',dosi.fruttaSecca,'frutta_secca_giornaliero'],
+    ['yogurt','Yogurt bianco',dosi.yogurt,null]
   ];
   for(const [slugSp,nome,qta,sott,nome2,qta2] of definizioni){
     const v=perNome.get(nome.toLowerCase());
@@ -4914,8 +5151,8 @@ async function sincronizzaRicetteSpuntinoBase(){
     const id='spuntino-base-'+slugSp;
     const esistente=await getOne('ricette',id);
     if(esistente&&esistente.fonte!=='spuntino-base')continue;
-    const ingredienti=[{variantId:v.id,quantita:qta}];
-    if(v2)ingredienti.push({variantId:v2.id,quantita:qta2});
+    const ingredienti=[{variantId:v.id,quantita:await DietaPlannerMotorV12.doseContestoVariante(v,'spuntino',qta)}];
+    if(v2)ingredienti.push({variantId:v2.id,quantita:await DietaPlannerMotorV12.doseContestoVariante(v2,'spuntino',qta2)});
     await put('ricette',{
       id,nome:nome2?'Pane con marmellata':nome,tipoPortata:'spuntino',
       sottotipoSpuntino:sott,porzioni:1,fascia:'facile',ingredienti,
@@ -4941,7 +5178,7 @@ async function renderContenutoAlternativaSemplice(pasto, voceCommittata, giorno,
   giorno = giorno || giornoSelezionato;
   const chiaveStato = giorno+'_'+pasto;
   const cont = document.getElementById('altContenuto_'+(elementId?'menu_':'')+chiaveStato);
-  const opzioni = await opzioniSpuntinoDisponibili(giorno);
+  const opzioni = await opzioniSpuntinoDisponibili(giorno,giorno+'_'+pasto);
   if(!opzioni.length){
     cont.innerHTML = `<div class="meta">Nessuno spuntino disponibile al momento — hai già raggiunto il limite di questa settimana per tutte le opzioni.</div>`;
     return;
@@ -4953,7 +5190,13 @@ async function renderContenutoAlternativaSemplice(pasto, voceCommittata, giorno,
   ).join('') + `</div>`;
   cont.querySelectorAll('[data-scegli-spuntino]').forEach(b=>{
     b.addEventListener('click', async ()=>{
-      voceCommittata.ricettaId = b.dataset.scegliSpuntino;
+      const scelta=(await opzioniSpuntinoDisponibili(giorno,giorno+'_'+pasto)).find(r=>r.id===b.dataset.scegliSpuntino);
+      if(!scelta){await avviso('Lo spuntino non è più disponibile con i vincoli attuali.');return;}
+      voceCommittata.ricettaId = scelta.id;
+      voceCommittata.sottotipoSpuntino=scelta.sottotipoSpuntino;
+      delete voceCommittata.nutrizioneTotale;
+      delete voceCommittata.ingredientiEffettivi;
+      voceCommittata.ingredientiEffettivi=await ingredientiEffettiviVoce(voceCommittata);
       await put('piano', voceCommittata);
       await segnaRicettaUsata(voceCommittata.ricettaId);
       pannelloApertoAlt[chiaveStato] = false;
@@ -5165,7 +5408,8 @@ function orarioPastoRs(pasto){
   const fascia=FASCE_ORARIE_PASTO[pasto];
   if(!fascia)return '';
   const ora=n=>String(n).padStart(2,'0')+':00';
-  return ora(fascia[0])+' – '+ora(fascia[1]);
+  const end=finePastoMinuti(pasto);
+  return ora(fascia[0])+' – '+String(Math.floor(end/60)).padStart(2,'0')+':'+String(end%60).padStart(2,'0');
 }
 function htmlTestataPastoRs(pasto){
   const simbolo=pasto==='cena'?'☾':'☀';
@@ -5541,8 +5785,8 @@ async function tettoPastiSpecialiRs(giorno,pianoId,ricette){
   const inizio=iso(lunedi),fine=iso(domenica),perId=new Map((ricette||[]).map(r=>[String(r.id),r]));
   const [piano,configRec]=await Promise.all([getAll('piano'),getOne('impostazioni','configAvanzata')]);
   const config=configAvanzataEffettivaSalvata(configRec&&configRec.valore||{});
-  const massimo=Number(config.specialMealsMax);
-  if(!Number.isFinite(massimo))return {raggiunto:false,massimo:null};
+  const massimo=config.specialMealsMax===null?null:Number(config.specialMealsMax);
+  if(massimo===null||!Number.isFinite(massimo))return {raggiunto:false,massimo:null};
   let conteggio=0;
   for(const voce of (piano||[])){
     const dataVoce=String(voce.id||'').slice(0,10);
@@ -5773,6 +6017,25 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   };
 
   el.querySelectorAll('[data-nm-alternativa]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('alternativa',e.currentTarget)));
+  if(modificabile){
+    const pending=bozzePropostaPasto[id]?.voce||voce;
+    const enabled=await DietaPlannerMotorV12.statoRollPasto(giorno,pasto,pending);
+    const commands=document.createElement('div');commands.className='row';
+    for(const tipo of ['C','P','V']){
+      const button=document.createElement('button');button.className='secondary';button.textContent='Ruota '+tipo;button.disabled=!enabled[tipo];
+      button.addEventListener('click',async()=>{
+        button.disabled=true;
+        try{
+          const next=await DietaPlannerMotorV12.ruotaPasto(giorno,pasto,tipo,bozzePropostaPasto[id]?.voce||voce);
+          if(!next){await avviso('Nessuna alternativa compatibile per '+tipo);return;}
+          bozzePropostaPasto[id]={modalita:'roll',tipo,voce:next};
+          await renderBloccoNuovoMotore(pasto,giorno,elementId);
+        }catch(e){await avviso(e.message);}finally{button.disabled=false;}
+      });
+      commands.appendChild(button);
+    }
+    el.appendChild(commands);
+  }
   el.querySelectorAll('[data-nm-salvafrigo]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('salvafrigo',e.currentTarget)));
 
   if(bozzePropostaPasto[id]){
@@ -5832,7 +6095,9 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId,cardEl){
         try{
           const target=voceProposta.categoriaTarget||await targetNuovoMotorePerPasto(giorno,pasto);
           const opzioni=bozza.modalita==='salvafrigo'?{soloAnteprima:true,usaInventario:true}:{soloAnteprima:true};
-          risultato=await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
+          risultato=bozza.modalita==='roll'
+            ?await DietaPlannerMotorV12.ruotaPasto(giorno,pasto,bozza.tipo,bozza.voce)
+            :await DietaPlannerMotorV12.rigeneraPasto(giorno,pasto,target,opzioni);
         }catch(err){
           console.error('[pasto proposta] rigenera',err);
         }finally{
@@ -5842,7 +6107,7 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId,cardEl){
           await avviso(bozza.modalita==='salvafrigo'?'Nessuna alternativa Salvafrigo compatibile con il piano odierno.':'Nessuna proposta alternativa valida trovata per questo pasto.');
           return false;
         }
-        bozzePropostaPasto[id]={modalita:bozza.modalita,voce:risultato};
+        bozzePropostaPasto[id]={modalita:bozza.modalita,tipo:bozza.tipo,voce:risultato};
         cassettiAzioniPasto[id]=true;
         await renderBloccoNuovoMotore(pasto,giorno,elementId);
         return true;
@@ -6050,10 +6315,10 @@ async function proponiRicettaAutomatica(giorno, pasto, escludiId, forzatoVariant
       if(sottotipo && extraCapEffettivi[sottotipo] && consumiSottotipi[sottotipo] >= extraCapEffettivi[sottotipo]){
         continue;
       }
-      if(r.sottotipoSpuntino && CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino] && consumiSpuntini[r.sottotipoSpuntino] >= CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]){
+      if(r.sottotipoSpuntino && CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]!=null && consumiSpuntini[r.sottotipoSpuntino] >= CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]){
         continue;
       }
-      if(r.sottotipoSpuntino && CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino] && (contiGiornalieri[r.sottotipoSpuntino]||0) >= CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]){
+      if(r.sottotipoSpuntino && CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]!=null && (contiGiornalieri[r.sottotipoSpuntino]||0) >= CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]){
         continue;
       }
       const variantiRicetta = r.ingredienti.filter(i=>i.variantId).map(i=>i.variantId);
@@ -6277,10 +6542,10 @@ async function analizzaScostamenti(pasto, giorno, ricetteCandidate){
         messaggi.push(`Tetto settimanale di "${sottotipo.replace('_',' ')}" già raggiunto: con "${r.nome}" saliresti a ${(consumiData.sottotipi[sottotipo]||0)+1}/${extraCapEffettivi[sottotipo]}`);
       }
     }
-    if(r.sottotipoSpuntino && CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino] && (consumiData.spuntini[r.sottotipoSpuntino]||0) >= CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]){
+    if(r.sottotipoSpuntino && CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]!=null && (consumiData.spuntini[r.sottotipoSpuntino]||0) >= CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]){
       messaggi.push(`Tetto settimanale per questo tipo di spuntino già raggiunto: con "${r.nome}" saliresti a ${(consumiData.spuntini[r.sottotipoSpuntino]||0)+1}/${CAP_SPUNTINO_SETTIMANALE[r.sottotipoSpuntino]}`);
     }
-    if(r.sottotipoSpuntino && CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]){
+    if(r.sottotipoSpuntino && CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]!=null){
       const contoOggi = await contaSottotipoSpuntinoGiorno(giorno, r.sottotipoSpuntino);
       if(contoOggi >= CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]){
         messaggi.push(`Già raggiunto il limite giornaliero per questo tipo di spuntino oggi: con "${r.nome}" saliresti a ${contoOggi+1}/${CAP_SPUNTINO_GIORNALIERO[r.sottotipoSpuntino]} al giorno`);
@@ -6546,6 +6811,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
 
   let corpoHtml = `
     ${descrizioneHtml}
+    <div class="meta">Allergeni: ${escCampoNuovoRicetta((ricetta.allergeniPresenti||DietaPlannerContracts.identity(ricetta).allergeniPresenti).join(', ')||'Nessuno dichiarato')}</div>
     <label style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">Porzioni da preparare (solo per la spesa)</label>
     <select id="modalDettaglioPorzioni" style="max-width:160px;">
       <option value="1" ${porzioniSel===1?'selected':''}>1 persona</option>
@@ -6778,6 +7044,11 @@ async function renderNutrizioneGiorno(){
     const voce = await getOne('piano', giornoSelezionato+'_'+pasto);
     if(!voce) continue;
 
+    if(voce.nutrizioneTotale||Array.isArray(voce.ingredientiEffettivi)){
+      aggiungiNutrizione(tot,await calcolaNutrizioneVoceConsumata(voce));
+      continue;
+    }
+
     if(voce.motoreNuovo && Array.isArray(voce.realizzazioni)){
       for(const real of voce.realizzazioni){
         const n = real && real.nutrientiEffettivi;
@@ -6988,41 +7259,25 @@ async function getConsumiProteiciSettimanaConsumati(){
 
 /* Tetti settimanali degli SPUNTINI (B12) — indipendente dalle statistiche di pranzo/cena
    sopra. Usata solo da chi lavora su uno spuntino. */
-async function getConsumiSpuntiniSettimana(){
-  const giorni = giorniSettimana();
-  const spuntini = {da_limitare:0, grana_spuntino:0, crackers_spuntino:0, pane_marmellata_spuntino:0};
-
-  const [tuttoIlPiano, tutteLeRicette] = await Promise.all([getAll('piano'), getAll('ricette')]);
-  const pianoPerId = {}; for(const v of tuttoIlPiano) pianoPerId[v.id] = v;
-  const ricettePerId = {}; for(const r of tutteLeRicette) ricettePerId[r.id] = r;
-
-  for(const g of giorni){
-    for(const slotSpuntino of ['spuntino1','spuntino2','spuntino3']){
-      const voceSpuntino = pianoPerId[g+'_'+slotSpuntino];
-      if(voceSpuntino && voceSpuntino.ricettaId){
-        const ricettaSpuntino = ricettePerId[voceSpuntino.ricettaId];
-        if(ricettaSpuntino && ricettaSpuntino.sottotipoSpuntino && spuntini.hasOwnProperty(ricettaSpuntino.sottotipoSpuntino)){
-          spuntini[ricettaSpuntino.sottotipoSpuntino]++;
-        }
-      }
-    }
+async function conteggiSpuntini(giorno,excludeId){
+  const [piano,logs,ricette]=await Promise.all([getAll('piano'),getAll('consumoGiorno'),getAll('ricette')]);
+  const rows=new Map(piano.map(v=>[v.id,v]));
+  for(const log of logs)rows.set(log.giorno+'_'+log.pasto,log);
+  const settimana={},giornalieri={},week=DietaPlannerContracts.week(giorno);
+  for(const [id,row] of rows){
+    if(id===excludeId||!/_spuntino[123]$/.test(id)||DietaPlannerContracts.week(id.slice(0,10))!==week)continue;
+    const sott=row.sottotipoSpuntino||ricette.find(r=>r.id===row.ricettaId)?.sottotipoSpuntino;
+    if(!sott)continue;
+    settimana[sott]=(settimana[sott]||0)+1;
+    if(id.slice(0,10)===giorno)giornalieri[sott]=(giornalieri[sott]||0)+1;
   }
-  return {spuntini};
+  return {settimana,giorno:giornalieri};
 }
-
-/* Cadenza GIORNALIERA (non settimanale) per spuntini come la frutta secca, che la
-   guida limita esplicitamente a 1 volta al giorno — controlla solo i due slot
-   spuntino di UN giorno specifico, non l'intera settimana. */
-async function contaSottotipoSpuntinoGiorno(giorno, sottotipo){
-  let conteggio = 0;
-  for(const slot of ['spuntino1','spuntino2','spuntino3']){
-    const voce = await getOne('piano', giorno+'_'+slot);
-    if(voce && voce.ricettaId){
-      const ricetta = await getOne('ricette', voce.ricettaId);
-      if(ricetta && ricetta.sottotipoSpuntino===sottotipo) conteggio++;
-    }
-  }
-  return conteggio;
+async function getConsumiSpuntiniSettimana(giorno){
+  return {spuntini:(await conteggiSpuntini(giorno||todayISO())).settimana};
+}
+async function contaSottotipoSpuntinoGiorno(giorno,sottotipo){
+  return (await conteggiSpuntini(giorno)).giorno[sottotipo]||0;
 }
 
 
@@ -7341,7 +7596,7 @@ async function generaColazioniSettimanaCorrente(scartoSettimane,opzioni){
   for(const giorno of giorni){
     if(giorno<=todayISO())continue;
     const id=giorno+'_colazione',esistente=await getOne('piano',id);
-    if(esistente&&esistente.colazioneSpecialeId)continue;
+    if(esistente&&(esistente.consumato||esistente.bloccata||esistente.colazioneSpecialeId))continue;
     if(esistente&&esistente.componenti&&!opzioni.forza)continue;
     const indice=(new Date(giorno+'T12:00:00').getDay()+6)%7;
     const usaPreferita=!!(prefRec&&prefRec.valore)&&(giorniPref.size>=7||giorniPref.has(indice));
@@ -7551,8 +7806,23 @@ async function renderMenuSettimanale(){
   tabEl.innerHTML = `<button data-menu-prev aria-label="Settimana precedente">‹</button>
     <button class="active" style="flex:1;">${labelGiornoConMese(giorni[0])} — ${labelGiornoConMese(giorni[6])}</button>
     <button data-menu-next aria-label="Settimana successiva">›</button>`;
-  tabEl.querySelector('[data-menu-prev]').addEventListener('click',()=>{menuSettimanaScarto--;menuDraft=null;renderMenuSettimanale();});
-  tabEl.querySelector('[data-menu-next]').addEventListener('click',()=>{menuSettimanaScarto++;menuDraft=null;renderMenuSettimanale();});
+  const cambiaSettimana=async delta=>{
+    if(menuDraft?.modificata){
+      const scelta=await mostraModaleAvviso('Il menù contiene modifiche da salvare.',[
+        {testo:'Salva e cambia settimana',classe:'primary',valore:'salva'},
+        {testo:'Scarta e cambia settimana',classe:'secondary',valore:'scarta'},
+        {testo:'Resta qui',classe:'secondary',valore:'annulla'}
+      ]);
+      if(!scelta||scelta==='annulla')return;
+      if(scelta==='salva'){
+        try{await commitMenuDraftAtomico();await aggiornaListaSpesaAutomatica(menuSettimanaScarto);}
+        catch(e){await avviso('Salvataggio non riuscito: '+e.message);return;}
+      }
+    }
+    menuSettimanaScarto+=delta;menuDraft=null;await renderMenuSettimanale();
+  };
+  tabEl.querySelector('[data-menu-prev]').addEventListener('click',()=>cambiaSettimana(-1));
+  tabEl.querySelector('[data-menu-next]').addEventListener('click',()=>cambiaSettimana(1));
   const el = document.getElementById('menuSettimanale');
   el.innerHTML = '';
 
@@ -7931,7 +8201,7 @@ document.getElementById('btnSalvaConfigAvanzata').addEventListener('click',salva
 document.getElementById('btnApriNutrizionista').addEventListener('click',()=>mostraVista('nutrizionista'));
 document.getElementById('btnTornaImpostazioni').addEventListener('click',()=>mostraVista('impostazioni'));
 document.getElementById('configProfiloAlimentare').addEventListener('change',async()=>{aggiornaCampiProfiloNutrizionista();await renderVincoliIngredientiNutrizionista();});
-document.getElementById('btnResetConfigAvanzata').addEventListener('click',async()=>{const def=configAvanzataDefaultCanonico();await put('impostazioni',{chiave:'configAvanzata',valore:def});await put('impostazioni',{chiave:'allergeniAttivi',valore:[]});await put('impostazioni',{chiave:'ingredientiBloccati',valore:[]});await put('impostazioni',{chiave:'vincoliIngredientiNutrizionista',valore:{}});await put('impostazioni',{chiave:'vincoliClassiCarboidrati',valore:{}});if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();applicaConfigAvanzataRuntime(def);await renderConfigAvanzata();document.getElementById('configAvanzataStato').textContent='Valori del piano ripristinati dalla baseline canonica.';});
+document.getElementById('btnResetConfigAvanzata').addEventListener('click',async()=>{const def=configAvanzataDefaultCanonico();await salvaImpostazioniNutrizionista([{chiave:'configAvanzata',valore:def},{chiave:'allergeniAttivi',valore:[]},{chiave:'ingredientiBloccati',valore:[]},{chiave:'vincoliIngredientiNutrizionista',valore:{}},{chiave:'vincoliClassiCarboidrati',valore:{}}]);if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();applicaConfigAvanzataRuntime(def);await renderConfigAvanzata();document.getElementById('configAvanzataStato').textContent='Valori del piano ripristinati dalla baseline canonica.';});
 document.getElementById('btnRicostruisciDopoProfilo').addEventListener('click',async()=>{
   /* Il profilo alimentare non cambia mai da solo durante l'uso normale -
      va ricalcolato solo quando lo decide chi gestisce il Nutrizionista.
@@ -7962,63 +8232,15 @@ async function aggiornaListaSpesaAutomatica(scartoSettimane){
 
   const fabbisogno = {};
   for(const g of giorni){
-    for(const pasto of ['colazione','pranzo','cena','spuntino']){
-      const voce = await getOne('piano', g+'_'+pasto);
-      if(!voce) continue;
-
-      if(pasto==='colazione'){
-        if(voce.componenti){
-          for(const chiave of Object.keys(voce.componenti)){
-            const variantId = voce.componenti[chiave];
-            if(!variantId) continue;
-            const v = varianti.find(x=>x.id===variantId);
-            const porz = v ? (v.porzioneColazione||0) : 0;
-            fabbisogno[variantId] = (fabbisogno[variantId]||0) + porz;
-          }
-        }
-        continue;
+    for(const pasto of ['colazione','pranzo','cena','spuntino1','spuntino2','spuntino3']){
+      const voce=await getOne('piano',g+'_'+pasto);
+      if(!voce||voce.consumato)continue;
+      for(const i of await ingredientiEffettiviVoce(voce)){
+        if(!i.variantId||i.nonRichiedeInventario)continue;
+        const quantity=Number(i.unita==='pz'?i.grammi:i.quantita);
+        if(!Number.isFinite(quantity)||quantity<0)throw new Error('Quantità spesa non valida: '+i.variantId);
+        fabbisogno[i.variantId]=(fabbisogno[i.variantId]||0)+quantity;
       }
-
-      const porzioniSel = voce.porzioni||1;
-      if(voce.motoreNuovo&&voce.realizzazioni&&voce.realizzazioni.length&&window.DietaPlannerMotorV12){
-        for(const real of voce.realizzazioni){
-          const ricetta=await ricettaNuovoDaRealizzazione(real);
-          if(!ricetta||ricetta.piattoSpeciale)continue;
-          const scala=porzioniSel/(ricetta.porzioni||1);
-          for(const ing of ricetta.ingredienti||[]){
-            if(!ing.variantId||ing.nonRichiedeInventario)continue;
-            // Il motore esprime gli ingredienti a pezzo (es. Uova) in pezzi nella
-            // quantita, ma spesa e inventario conservano sempre il peso equivalente.
-            // In questo modo 2 uova diventano 120 g interni e vengono mostrate come 2 pz.
-            const quantitaInventario=ing.unita==='pz'
-              ? (Number(ing.grammi)||Number(ing.quantita)||0)
-              : (Number(ing.quantita)||0);
-            fabbisogno[ing.variantId]=(fabbisogno[ing.variantId]||0)+quantitaInventario*scala;
-          }
-        }
-      }else{
-        const idRicette = voce.modo==='multi'
-          ? [...new Set((voce.realizzazioni&&voce.realizzazioni.length?voce.realizzazioni.map(x=>x.ricettaId):[voce.primoId, voce.secondoId, voce.contornoId]).filter(Boolean))]
-          : [voce.ricettaId].filter(Boolean);
-        for(const rid of idRicette){
-          const ricetta = await getOne('ricette', rid);
-          if(!ricetta || ricetta.piattoSpeciale) continue;
-          const scala = porzioniSel / (ricetta.porzioni || 2);
-          for(const ing of ricetta.ingredienti){
-            if(!ing.variantId) continue;
-            fabbisogno[ing.variantId] = (fabbisogno[ing.variantId]||0) + ing.quantita*scala;
-          }
-        }
-      }
-      /* La quota di olio EVO NON viene più aggiunta qui con un valore fisso
-         (era ALLOCAZIONE_CONDIMENTO_PASTO, rimossa): la quota canonica per
-         pasto principale (oilGramsPerMainMeal) è già inclusa nelle
-         quantità effettive delle realizzazioni reali (applicata da
-         motor-v12.js:normalizzaRealizzazioniOlio) e viene già aggregata dal
-         ramo motoreNuovo sopra, come qualunque altro ingrediente - nessuna
-         seconda somma qui. Questo blocco copriva solo il vecchio percorso
-         "multi" senza realizzazioni, mai raggiungibile dal motore attuale
-         (voce.secondoId non viene mai scritto con un valore reale). */
     }
   }
 
@@ -8059,6 +8281,19 @@ async function aggiornaListaSpesaAutomatica(scartoSettimane){
 const CATEGORIA_LABEL = {fresco:'fresco', conf:'conf.', surgelato:'surg.'};
 
 async function calcolaListaSpesa(scartoSettimane){
+  if(!document.getElementById('btnBarcodeSpesa')){
+    const button=document.createElement('button');button.id='btnBarcodeSpesa';button.className='secondary';button.textContent='Scansiona acquisto';
+    button.onclick=()=>DietaPlannerBarcode.open({read:getOne,all:getAll,commit:async(product,item)=>{
+      await new Promise((resolve,reject)=>{
+        const transaction=db.transaction(['prodotti','inventario'],'readwrite');
+        transaction.objectStore('prodotti').put(product);transaction.objectStore('inventario').put(item);
+        transaction.oncomplete=()=>{cacheGetAll.prodotti=null;cacheGetAll.inventario=null;resolve();};
+        transaction.onerror=()=>reject(transaction.error);transaction.onabort=()=>reject(transaction.error);
+      });
+      await calcolaListaSpesa(scartoSettimane);
+    }}).catch(e=>avviso(e.message));
+    document.getElementById('listaSpesa').before(button);
+  }
   scartoSettimane = scartoSettimane||0;
   await aggiornaListaSpesaAutomatica(scartoSettimane);
 
@@ -8207,6 +8442,11 @@ async function riprovaInizializzazioneRicettario(btn){
     }
     document.getElementById('modalImportaRicetteIniziale').classList.add('hidden');
     await renderVersioneHeader();
+    if(!document.getElementById('btnCoperturaRicette')){
+      const button=document.createElement('button');button.id='btnCoperturaRicette';button.textContent='Carenze di copertura ricette';button.className='secondary';
+      button.onclick=()=>mostraDiagnosticaCopertura().catch(e=>avviso(e.message));
+      document.getElementById('view-impostazioni')?.appendChild(button);
+    }
     await renderPiano();
     return true;
   }catch(err){
@@ -8585,6 +8825,7 @@ window.addEventListener('load', async ()=>{
   if('scrollRestoration' in history)history.scrollRestoration='manual';
   try{
     aggiornaLoader(5, 'Apro il database di prova...');
+    if(window.DietaPlannerCloud)await DietaPlannerCloud.ready;
     await openDB();
     {const cfgRuntime=await getOne('impostazioni','configAvanzata');applicaConfigAvanzataRuntime(cfgRuntime&&cfgRuntime.valore||{});}
     aggiornaLoader(25, 'Carico nuovo ricettario...');

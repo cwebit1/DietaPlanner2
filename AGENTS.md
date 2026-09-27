@@ -34,3 +34,21 @@
 - Se una modifica ulteriore sembra necessaria, fermarsi, descriverla e chiedere autorizzazione prima di applicarla.
 - I vincoli nuovi devono essere funzionali e verificati, non soltanto rappresentati nell'interfaccia.
 - Prima del push, controllare diff, sintassi e test; pubblicare solo i file appartenenti al compito autorizzato.
+
+
+## Riscontro permanente delle funzioni — istruzione Cwe 24/09/2026
+
+Usare `docs/RISCONTRO_FUNZIONI_PWA.md` come elenco sintetico delle 16 sezioni. Dopo ogni intervento aggiornare le voci interessate e ripresentare in chat la lista sintetica completa aggiornata, distinguendo **integrata** da **funzionante**, evidenziando cosa cambia e cosa resta aperto. Spunta verde solo con evidenza sufficiente per la funzione completa; non promuovere una sezione per il solo successo di una parte. Conservare il lavoro conforme e la compilazione a strati dalle proteine. Leggere le fonti pertinenti prima di modificare. Approfondire progressivamente le sezioni e le dipendenze necessarie, riutilizzando le prove disponibili senza ripetere audit o suite non pertinenti. La lista si coordina con stato lotti e matrice requisiti; non introduce nuovi requisiti. Nei turni solo documentali dichiarare invariati gli stati applicativi.
+
+
+## Test solo previa autorizzazione — Cwe, 27/09/2026
+
+Prima di eseguire qualsiasi test chiedere e ottenere autorizzazione esplicita di Cwe. Vale anche per controlli automatici di sintassi, suite mirate e verifiche browser. Proseguire con lettura, coding e revisione del diff senza avviare test autonomamente. Non dichiarare funzionanti modifiche non verificate. Questa istruzione successiva prevale sugli obblighi di test precedenti; non autorizza pubblicazioni.
+
+## Controlli minimi e metadati — aggiornamento Cwe, 27/09/2026
+
+L'ultima richiesta «Continua. Fai solo i test minimi» autorizza i controlli tecnici strettamente pertinenti: sintassi, integrità, coerenza/flusso del codice modificato, prova mirata e diff. Supera la richiesta precedente di autorizzazione per ogni singolo controllo minimo. Non avviare automaticamente suite complete, regressioni estese o test visuali. Lasciare vicino al codice modificato metadati QA ricercabili con identificativo, funzioni coinvolte, regole, test mirato e casi rinviati al collaudo finale. I metadati documentano il perimetro e non certificano il funzionamento.
+
+## Budget e ripresa breve — Cwe, 27/09/2026
+
+Usare docs/RIPRESA_BREVE.md come indice operativo aggiornabile. Cercare e leggere solo le sezioni pertinenti delle fonti autorevoli, senza importare per intero file applicativi o registro. Conservare i controlli tecnici minimi; non ripetere prove già valide senza una modifica o anomalia pertinente. Un riepilogo nel registro, soli riferimenti negli altri documenti. Per il riscontro in chat raggruppare le sezioni con stato invariato; tabella completa a richiesta o quando utile per cambiamenti. Questa modalità sintetica sostituisce l'obbligo precedente di ripetere sempre tutte le 16 righe. Non frammentare il codice in moduli soltanto per ridurre il contesto: le letture selettive non richiedono refactoring. Scheda breve aggiornata a fine intervento, non cronologia cumulativa.

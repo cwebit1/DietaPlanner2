@@ -42,6 +42,9 @@
     snackDailyCaps:{frutta_secca_giornaliero:1},
     cooldownDays:{carboidrati:7,verdure:2},
     oilGramsPerDay:10,
+    rotationDays:{stack:15,roll:15},
+    breakfastRegularCount:7,
+    snackPortions:{grana:20,crackers:30,pane:25,marmellata:5,granita:150,patatine:20,fruttaSecca:10,yogurt:125},
     deadlines:{pranzo:'15:00',cena:'22:00'},
     carbSlots:14,
     carbCellMax:6,
@@ -138,50 +141,36 @@
     return n;
   }
 
+  // Il PDF fornisce default; i valori espliciti del nutrizionista sono
+  // vincolanti. null su un massimo significa nessun tetto, non zero.
+  function clinicalCount(raw,key,fallback,errors,label,nullable){
+    if(!own(raw,key)||raw[key]===undefined)return fallback;
+    if(raw[key]===null)return nullable?null:fallback;
+    const value=raw[key];
+    const n=(typeof value==='number'||(typeof value==='string'&&value.trim()!==''))?Number(value):NaN;
+    if(!Number.isInteger(n)||n<0){
+      pushUnique(errors,label+': deve essere un intero non negativo.');
+      return fallback;
+    }
+    return n;
+  }
+
   function resolveProteinFrequencies(raw,warnings,errors){
-    const out={};
-    raw=raw||{};
+    const out={};raw=raw||{};
     for(const key of Object.keys(PDF_BASELINE.proteinFrequencies)){
       const pdf=PDF_BASELINE.proteinFrequencies[key],req=raw[key]||{};
-      const reqMin=own(req,'min')?finite(req.min):pdf.min;
-      const reqMax=own(req,'max')?(req.max===null?null:finite(req.max)):pdf.max;
-
-      let min=reqMin===null?pdf.min:reqMin;
-      let max=reqMax;
-
-      if(min<pdf.min){
-        pushUnique(warnings,key+': minimo nutrizionista alzato al minimo PDF '+pdf.min+'.');
-        min=pdf.min;
-      }
-      if(pdf.max!==null&&min>pdf.max){
-        pushUnique(errors,key+': minimo nutrizionista '+min+' supera il massimo PDF '+pdf.max+'.');
-        min=pdf.max;
-      }
-
-      if(pdf.max!==null){
-        if(max===null||max===undefined){
-          if(max===null) pushUnique(warnings,key+': massimo null non può allargare il massimo PDF '+pdf.max+'.');
-          max=pdf.max;
-        }else if(max>pdf.max){
-          pushUnique(warnings,key+': massimo nutrizionista ridotto al massimo PDF '+pdf.max+'.');
-          max=pdf.max;
-        }
-      }else if(max!==null&&max!==undefined&&max<0){
-        pushUnique(errors,key+': massimo nutrizionista negativo.');
-        max=null;
-      }
-
-      if(max!==null&&max!==undefined&&max<min){
-        pushUnique(errors,key+': minimo effettivo '+min+' supera il massimo effettivo '+max+'.');
-        max=min;
-      }
-
-      let target=own(req,'target')?finite(req.target):APP_DEFAULTS.proteinTargets[key];
-      if(target===null) target=APP_DEFAULTS.proteinTargets[key];
+      const min=clinicalCount(req,'min',pdf.min,errors,key+' minimo',false);
+      const max=clinicalCount(req,'max',pdf.max,errors,key+' massimo',true);
+      if(max!==null&&max<min)pushUnique(errors,key+': minimo '+min+' supera il massimo '+max+'.');
+      // Target tecnico, non esposto come prescrizione: resta nel range
+      // clinico impostato, anche quando si restringe una configurazione salvata.
+      let target=clinicalCount(req,'target',APP_DEFAULTS.proteinTargets[key],errors,key+' target',false);
       target=Math.max(min,target);
-      if(max!==null&&max!==undefined) target=Math.min(max,target);
-
-      const quantity=positive(req.quantita);
+      if(max!==null)target=Math.min(max,target);
+      const quantity=req.quantita===null||req.quantita===undefined?null:positive(req.quantita);
+      if(req.quantita!==null&&req.quantita!==undefined&&
+        (quantity===null||!['number','string'].includes(typeof req.quantita)))
+        pushUnique(errors,key+': quantità non valida.');
       out[key]={min,max,target,quantita:quantity};
     }
     return out;
@@ -191,45 +180,52 @@
     raw=raw||{};
     const out={};
     for(const [key,pdfMax] of Object.entries(PDF_BASELINE.subtypeCaps)){
-      let value=own(raw,key)?integer(raw[key]):pdfMax;
-      if(value===null) value=pdfMax;
-      if(value<0){
-        pushUnique(errors,key+': tetto sottotipo negativo.');
-        value=0;
-      }
-      if(value>pdfMax){
-        pushUnique(warnings,key+': tetto sottotipo ridotto al massimo PDF '+pdfMax+'.');
-        value=pdfMax;
-      }
-      out[key]=value;
+      out[key]=clinicalCount(raw,key,pdfMax,errors,key+' massimo',true);
     }
     return out;
   }
 
+  function clinicalQuantity(raw,key,fallback,errors,label,allowZero){
+    if(!own(raw,key)||raw[key]===null||raw[key]===undefined)return fallback;
+    const value=raw[key];
+    const n=(typeof value==='number'||(typeof value==='string'&&value.trim()!==''))?Number(value):NaN;
+    if(!Number.isFinite(n)||(allowZero?n<0:n<=0)){
+      pushUnique(errors,label+(allowZero?': deve essere un numero non negativo.':': deve essere una quantità positiva.'));
+      return fallback;
+    }
+    return n;
+  }
+
+  function ingredientQuantity(resolved,id,context,fallback,options){
+    options=options||{};
+    const exact=resolved.recipeDoses?.[options.recipeId]?.[options.name];
+    if(exact!=null)return exact;
+    if(options.recipeDose!=null&&options.recipeDose!=='')return Number(options.recipeDose);
+    const rule=resolved.ingredientConstraints?.[id];
+    const contextual=rule?.contexts?.[context]?.quantity;
+    if(contextual!=null&&!rule.contexts[context].quantityIsDefault)return contextual;
+    if(context==='pastoPrincipale'&&rule?.quantity!=null)return rule.quantity;
+    if(context==='pastoPrincipale'&&resolved.proteinFrequencies?.[options.macro]?.quantita!=null)
+      return resolved.proteinFrequencies[options.macro].quantita;
+    if(contextual!=null)return contextual;
+    return fallback;
+  }
+
+  function mainMealConstraints(resolved,otherCounts){
+    return Object.fromEntries(Object.entries(resolved.ingredientConstraints).map(([id,rule])=>{
+      const used=otherCounts[id]||0;
+      return [id,{...rule,min:rule.min==null?null:Math.max(0,rule.min-used),max:rule.max==null?null:Math.max(0,rule.max-used)}];
+    }));
+  }
+
   function resolveFruit(raw,warnings,errors){
     raw=raw||{};
-    let min=own(raw,'min')?finite(raw.min):PDF_BASELINE.fruit.dailyMin;
-    let max=own(raw,'max')?finite(raw.max):PDF_BASELINE.fruit.dailyMax;
-    let portionMin=own(raw,'portionMin')?finite(raw.portionMin):PDF_BASELINE.fruit.portionMinGrams;
-    let portionMax=own(raw,'portionMax')?finite(raw.portionMax):PDF_BASELINE.fruit.portionMaxGrams;
-
-    min=min===null?PDF_BASELINE.fruit.dailyMin:min;
-    max=max===null?PDF_BASELINE.fruit.dailyMax:max;
-    portionMin=portionMin===null?PDF_BASELINE.fruit.portionMinGrams:portionMin;
-    portionMax=portionMax===null?PDF_BASELINE.fruit.portionMaxGrams:portionMax;
-
-    if(min<PDF_BASELINE.fruit.dailyMin){pushUnique(warnings,'Frutta: minimo giornaliero alzato al PDF.');min=PDF_BASELINE.fruit.dailyMin;}
-    if(min>PDF_BASELINE.fruit.dailyMax){pushUnique(errors,'Frutta: minimo giornaliero supera il massimo PDF.');min=PDF_BASELINE.fruit.dailyMax;}
-    if(max>PDF_BASELINE.fruit.dailyMax){pushUnique(warnings,'Frutta: massimo giornaliero ridotto al PDF.');max=PDF_BASELINE.fruit.dailyMax;}
-    if(max<PDF_BASELINE.fruit.dailyMin){pushUnique(errors,'Frutta: massimo giornaliero sotto il minimo PDF.');max=PDF_BASELINE.fruit.dailyMin;}
-    if(min>max){pushUnique(errors,'Frutta: minimo superiore al massimo.');max=min;}
-
-    if(portionMin<PDF_BASELINE.fruit.portionMinGrams){pushUnique(warnings,'Frutta: porzione minima alzata al PDF.');portionMin=PDF_BASELINE.fruit.portionMinGrams;}
-    if(portionMin>PDF_BASELINE.fruit.portionMaxGrams){pushUnique(errors,'Frutta: porzione minima supera il massimo PDF.');portionMin=PDF_BASELINE.fruit.portionMaxGrams;}
-    if(portionMax>PDF_BASELINE.fruit.portionMaxGrams){pushUnique(warnings,'Frutta: porzione massima ridotta al PDF.');portionMax=PDF_BASELINE.fruit.portionMaxGrams;}
-    if(portionMax<PDF_BASELINE.fruit.portionMinGrams){pushUnique(errors,'Frutta: porzione massima sotto il minimo PDF.');portionMax=PDF_BASELINE.fruit.portionMinGrams;}
-    if(portionMin>portionMax){pushUnique(errors,'Frutta: porzione minima superiore alla massima.');portionMax=portionMin;}
-
+    const min=clinicalQuantity(raw,'min',PDF_BASELINE.fruit.dailyMin,errors,'Frutta minimo giornaliero',true);
+    const max=(own(raw,'max')&&raw.max===null)?null:clinicalQuantity(raw,'max',PDF_BASELINE.fruit.dailyMax,errors,'Frutta massimo giornaliero',true);
+    const portionMin=clinicalQuantity(raw,'portionMin',PDF_BASELINE.fruit.portionMinGrams,errors,'Frutta porzione minima');
+    const portionMax=clinicalQuantity(raw,'portionMax',PDF_BASELINE.fruit.portionMaxGrams,errors,'Frutta porzione massima');
+    if(max!==null&&min>max)pushUnique(errors,'Frutta: minimo superiore al massimo.');
+    if(portionMin>portionMax)pushUnique(errors,'Frutta: porzione minima superiore alla massima.');
     return {min,max,portionMin,portionMax};
   }
 
@@ -240,35 +236,31 @@
     const keys=new Set([...Object.keys(clinical),...Object.keys(userCaps)]);
     const contexts=['colazione','pastoPrincipale','spuntino'];
     for(const id of keys){
-      const c=clinical[id]||{},user=own(userCaps,id)?nonNegative(userCaps[id]):null;
+      const c=clinical[id]||{},user=clinicalCount(userCaps,id,null,errors,'Ingrediente '+id+' massimo utente',true);
       const contextRules={};
       for(const context of contexts){
         const raw=c.contesti&&c.contesti[context]||{};
-        const q=raw.quantita===null||raw.quantita===undefined?null:positive(raw.quantita);
-        const mx=raw.max===null||raw.max===undefined?null:nonNegative(raw.max);
-        if(raw.quantita!==null&&raw.quantita!==undefined&&q===null)pushUnique(errors,'Ingrediente '+id+' ('+context+'): quantità contestuale non valida.');
-        if(raw.max!==null&&raw.max!==undefined&&mx===null)pushUnique(errors,'Ingrediente '+id+' ('+context+'): massimo contestuale non valido.');
+        const q=clinicalQuantity(raw,'quantita',null,errors,'Ingrediente '+id+' ('+context+') quantità contestuale');
+        const mx=clinicalCount(raw,'max',null,errors,'Ingrediente '+id+' ('+context+') massimo contestuale',true);
         contextRules[context]={quantity:q,max:mx};
+        if(raw._quantityDefault===true)contextRules[context].quantityIsDefault=true;
       }
       if(c.stato==='escluso'){
         out[id]={state:'excluded',clinicalState:'escluso',min:null,max:0,quantity:null,contexts:contextRules,userMax:user};
         continue;
       }
       const clinicalLimited=c.stato==='limitato';
-      let min=clinicalLimited&&c.min!==null&&c.min!==undefined?nonNegative(c.min):null;
-      let clinicalMax=clinicalLimited&&c.max!==null&&c.max!==undefined?nonNegative(c.max):null;
-      const quantity=clinicalLimited?positive(c.quantita):null;
-      if(clinicalLimited&&c.quantita!==null&&c.quantita!==undefined&&quantity===null)pushUnique(errors,'Ingrediente '+id+': quantità non valida.');
+      const min=clinicalLimited?clinicalCount(c,'min',null,errors,'Ingrediente '+id+' minimo',true):null;
+      const clinicalMax=clinicalLimited?clinicalCount(c,'max',null,errors,'Ingrediente '+id+' massimo',true):null;
+      const quantity=clinicalLimited?clinicalQuantity(c,'quantita',null,errors,'Ingrediente '+id+' quantità'):null;
       if(clinicalLimited&&min!==null&&clinicalMax!==null&&clinicalMax<min){
         pushUnique(errors,'Ingrediente '+id+': minimo clinico '+min+' supera il massimo clinico '+clinicalMax+'.');
-        clinicalMax=min;
       }
       let max=clinicalMax;
       if(user!==null) max=max===null?user:Math.min(max,user);
 
       if(min!==null&&max!==null&&max<min){
         pushUnique(errors,'Ingrediente '+id+': il tetto utente '+max+' è sotto il minimo clinico '+min+'.');
-        max=min;
       }
       const state=clinicalLimited?'limited':(user!==null?'user_limited':'available');
       out[id]={state,clinicalState:c.stato||'disponibile',min,max,quantity,contexts:contextRules,userMax:user};
@@ -367,25 +359,23 @@
     return out;
   }
 
-  function resolveCarbohydratePlan(input,errors,limitedCarbTotalMax){
+  function resolveCarbohydratePlan(input,errors,limitedCarbTotalMax,clinicalCaps){
+    clinicalCaps=clinicalCaps||PDF_BASELINE.carbohydrateWeeklyCaps;
     limitedCarbTotalMax=limitedCarbTotalMax===undefined?APP_DEFAULTS.limitedCarbTotalMax:limitedCarbTotalMax;
     const selection=normalizeCarbohydrateSelection(input);
     const fixedCounts={},excludedKeys=[],autoEligibleKeys=[];
     let fixedTotal=0,limitedFixedTotal=0;
 
     for(const [key,state] of Object.entries(selection)){
-      const pdfCap=PDF_BASELINE.carbohydrateWeeklyCaps[key];
+      const pdfCap=clinicalCaps[key];
       if(state.mode==='excluded'){
         excludedKeys.push(key);
         continue;
       }
       if(state.mode==='fixed'){
         let n=Math.max(0,integer(state.count)||0);
-        if(n>APP_DEFAULTS.carbCellMax){
-          pushUnique(errors,key+': '+n+' occorrenze superano il tetto applicativo per singolo carboidrato '+APP_DEFAULTS.carbCellMax+'.');
-        }
-        if(pdfCap!==undefined&&n>pdfCap){
-          pushUnique(errors,key+': '+n+' occorrenze superano il tetto PDF '+pdfCap+'.');
+        if(pdfCap!==undefined&&pdfCap!==null&&n>pdfCap){
+          pushUnique(errors,key+': '+n+' occorrenze superano il tetto nutrizionista '+pdfCap+'.');
         }
         fixedCounts[key]=n;
         fixedTotal+=n;
@@ -422,27 +412,12 @@
     };
   }
 
-  function resolveVegetablePortions(raw,warnings){
+  function resolveVegetablePortions(raw,warnings,errors){
     raw=raw||{};
-    let vegetable=positive(raw.vegetablePortionGrams)||PDF_BASELINE.vegetables.vegetablePortionMinGrams;
-    let salad=positive(raw.saladPortionGrams)||PDF_BASELINE.vegetables.saladPortionMinGrams;
-    if(vegetable<PDF_BASELINE.vegetables.vegetablePortionMinGrams){
-      pushUnique(warnings,'Verdura: porzione ortaggi alzata al minimo PDF.');
-      vegetable=PDF_BASELINE.vegetables.vegetablePortionMinGrams;
-    }
-    if(vegetable>PDF_BASELINE.vegetables.vegetablePortionMaxGrams){
-      pushUnique(warnings,'Verdura: porzione ortaggi ridotta al massimo PDF.');
-      vegetable=PDF_BASELINE.vegetables.vegetablePortionMaxGrams;
-    }
-    if(salad<PDF_BASELINE.vegetables.saladPortionMinGrams){
-      pushUnique(warnings,'Verdura: porzione insalata alzata al minimo PDF.');
-      salad=PDF_BASELINE.vegetables.saladPortionMinGrams;
-    }
-    if(salad>PDF_BASELINE.vegetables.saladPortionMaxGrams){
-      pushUnique(warnings,'Verdura: porzione insalata ridotta al massimo PDF.');
-      salad=PDF_BASELINE.vegetables.saladPortionMaxGrams;
-    }
-    return {vegetablePortionGrams:vegetable,saladPortionGrams:salad};
+    return {
+      vegetablePortionGrams:clinicalQuantity(raw,'vegetablePortionGrams',PDF_BASELINE.vegetables.vegetablePortionMinGrams,errors,'Porzione ortaggi'),
+      saladPortionGrams:clinicalQuantity(raw,'saladPortionGrams',PDF_BASELINE.vegetables.saladPortionMinGrams,errors,'Porzione insalata')
+    };
   }
 
   function vegetableCoverage(entries,portionConfig){
@@ -482,7 +457,7 @@
     const proteinFrequencies=resolveProteinFrequencies(config.proteinFrequencies,warnings,errors);
     const subtypeCaps=resolveSubtypeCaps(config.subtypeCaps,warnings,errors);
     const fruit=resolveFruit(config.fruit,warnings,errors);
-    const vegetablePortions=resolveVegetablePortions(config.vegetables,warnings);
+    const vegetablePortions=resolveVegetablePortions(config.vegetables,warnings,errors);
 
     /* Regola definitiva di Cwe: la settimana ha sempre due pasti
        principali al giorno con categorie proteiche DIVERSE (mai un
@@ -501,33 +476,12 @@
       errors.push('Categorie proteiche disponibili insufficienti dopo profilo ed esclusioni ('+categorieProteicheAmmesse.length+'): servono almeno due categorie proteiche ammesse per completare pranzo e cena con categorie sempre diverse.');
     }
 
-    const specialBreakfastRequested=own(config,'specialBreakfastMax')?nonNegative(config.specialBreakfastMax):APP_DEFAULTS.specialBreakfastMax;
-    let specialBreakfastMax=specialBreakfastRequested===null?APP_DEFAULTS.specialBreakfastMax:specialBreakfastRequested;
-    if(specialBreakfastMax>PDF_BASELINE.specialBreakfastMax){
-      pushUnique(warnings,'Colazioni speciali: massimo ridotto al PDF '+PDF_BASELINE.specialBreakfastMax+'.');
-      specialBreakfastMax=PDF_BASELINE.specialBreakfastMax;
-    }
-
-    const snackWeeklyCaps=Object.assign({},APP_DEFAULTS.snackWeeklyCaps,config.snackWeeklyCaps||{});
-    for(const [key,pdfMax] of Object.entries(PDF_BASELINE.snackWeeklyMax)){
-      let n=nonNegative(snackWeeklyCaps[key]);
-      if(n===null) n=APP_DEFAULTS.snackWeeklyCaps[key];
-      if(n>pdfMax){
-        pushUnique(warnings,'Spuntino '+key+': massimo ridotto al PDF '+pdfMax+'.');
-        n=pdfMax;
-      }
-      snackWeeklyCaps[key]=n;
-    }
-    const snackDailyCaps=Object.assign({},APP_DEFAULTS.snackDailyCaps,config.snackDailyCaps||{});
-    for(const [key,pdfMax] of Object.entries(PDF_BASELINE.snackDailyMax)){
-      let n=nonNegative(snackDailyCaps[key]);
-      if(n===null) n=APP_DEFAULTS.snackDailyCaps[key];
-      if(n>pdfMax){
-        pushUnique(warnings,'Spuntino '+key+': massimo giornaliero ridotto al PDF '+pdfMax+'.');
-        n=pdfMax;
-      }
-      snackDailyCaps[key]=n;
-    }
+    const specialBreakfastMax=clinicalCount(config,'specialBreakfastMax',APP_DEFAULTS.specialBreakfastMax,errors,'Colazioni speciali massimo',true);
+    const snackWeeklyCaps={},snackDailyCaps={};
+    for(const [key,value] of Object.entries(APP_DEFAULTS.snackWeeklyCaps))
+      snackWeeklyCaps[key]=clinicalCount(config.snackWeeklyCaps||{},key,value,errors,'Spuntino '+key+' massimo settimanale',true);
+    for(const [key,value] of Object.entries(APP_DEFAULTS.snackDailyCaps))
+      snackDailyCaps[key]=clinicalCount(config.snackDailyCaps||{},key,value,errors,'Spuntino '+key+' massimo giornaliero',true);
 
     /* Decisione esplicita di Cwe (prevale sul testo PDF "2-3 cucchiaini per
        pasto"): l'olio EVO ha un'unica fonte quantitativa GIORNALIERA, non
@@ -537,22 +491,28 @@
        quota giornaliera raddoppierebbe silenziosamente un vecchio 10 g
        "per pasto" in 20 g/die, esattamente l'errore da evitare. Solo il
        nuovo campo canonico "oilGramsPerDay" viene letto. */
-    let oilGramsPerDay=positive(config.oilGramsPerDay)||APP_DEFAULTS.oilGramsPerDay;
-    if(oilGramsPerDay<PDF_BASELINE.oil.minGramsPerDay){
-      pushUnique(warnings,'Olio: quantità giornaliera alzata al minimo PDF '+PDF_BASELINE.oil.minGramsPerDay+' g.');
-      oilGramsPerDay=PDF_BASELINE.oil.minGramsPerDay;
-    }
-    if(oilGramsPerDay>PDF_BASELINE.oil.maxGramsPerDay){
-      pushUnique(warnings,'Olio: quantità giornaliera ridotta al massimo PDF '+PDF_BASELINE.oil.maxGramsPerDay+' g.');
-      oilGramsPerDay=PDF_BASELINE.oil.maxGramsPerDay;
-    }
-    /* Quota per pasto principale derivata, mai una seconda impostazione
-       indipendente: pranzo e cena si dividono in parti uguali il totale
-       giornaliero. Colazione e spuntini non ricevono questa quota. */
-    const oilGramsPerMainMeal=oilGramsPerDay/2;
+    const oilGramsPerDay=clinicalQuantity(config,'oilGramsPerDay',APP_DEFAULTS.oilGramsPerDay,errors,'Olio giornaliero',true);
+    const oilLunchPercent=clinicalQuantity(config,'oilLunchPercent',50,errors,'Percentuale olio a pranzo',true);
+    if(oilLunchPercent>100)pushUnique(errors,'Percentuale olio a pranzo: massimo 100.');
+    const oilGramsByMeal={pranzo:oilGramsPerDay*oilLunchPercent/100,cena:oilGramsPerDay*(100-oilLunchPercent)/100};
+    const oilGramsPerMainMeal=oilGramsPerDay/2; // compatibilità per chiamanti senza contesto pasto
 
     const userIngredientCaps=user.ingredientWeeklyCaps||user.tettiIngredienteSettimanali||{};
-    const clinicalIngredients=nutritionist.ingredientConstraints||input.vincoliIngredientiNutrizionista||{};
+    const clinicalIngredients=Object.fromEntries(Object.entries(nutritionist.ingredientConstraints||input.vincoliIngredientiNutrizionista||{}).map(([id,rule])=>[id,{...rule,contesti:{...rule?.contesti}}]));
+    for(const base of input.ingredientCatalog||[]){
+      const defaults=contextDefaultsForIngredient(base);
+      if(!Object.keys(defaults).length)continue;
+      const rule=clinicalIngredients[base.id]||(clinicalIngredients[base.id]={});
+      rule.contesti=rule.contesti||{};
+      for(const [context,d] of Object.entries(defaults)){
+        const fallback={};
+        if(d.quantityDefault!=null)fallback.quantita=d.quantityDefault;
+        if(d.maxPerWeek!=null)fallback.max=d.maxPerWeek;
+        const stored=rule.contesti[context]||{},useDefault=stored.quantita==null&&fallback.quantita!=null;
+        rule.contesti[context]={...fallback,...stored,_quantityDefault:useDefault};
+        if(useDefault)rule.contesti[context].quantita=fallback.quantita;
+      }
+    }
     const ingredientConstraints=resolveIngredientConstraints(clinicalIngredients,userIngredientCaps,errors);
 
     const carbInput=user.carbohydrates||{
@@ -561,12 +521,45 @@
       states:user.configCarboidratiStati||{}
     };
     const limitedCarbTotalMax=resolveLimitedCarbTotalMax(config,errors);
-    const carbohydrates=resolveCarbohydratePlan(carbInput,errors,limitedCarbTotalMax);
+    const carbohydrateWeeklyCaps={};
+    for(const [key,value] of Object.entries(PDF_BASELINE.carbohydrateWeeklyCaps))
+      carbohydrateWeeklyCaps[key]=clinicalCount(config.carbohydrateWeeklyCaps||{},key,value,errors,'Carboidrato '+key+' massimo',true);
+    const carbohydrates=resolveCarbohydratePlan(carbInput,errors,limitedCarbTotalMax,carbohydrateWeeklyCaps);
 
-    const specialMealsMax=nonNegative(config.specialMealsMax);
+    const specialMealsMax=clinicalCount(config,'specialMealsMax',APP_DEFAULTS.specialMealsMax,errors,'Pasti speciali massimo',true);
     const cooldownDays=Object.assign({},APP_DEFAULTS.cooldownDays,config.cooldownDays||{});
-    const deadlines=Object.assign({},APP_DEFAULTS.deadlines,config.deadlines||{});
+    const deadlines={};
+    for(const [meal,value] of Object.entries(APP_DEFAULTS.deadlines)){
+      const requested=config.deadlines?.[meal]??value;
+      if(typeof requested!=='string'||!/^([01]\d|2[0-3]):[0-5]\d$/.test(requested)){
+        pushUnique(errors,'Orario '+meal+': usare HH:MM valido.');deadlines[meal]=value;
+      }else deadlines[meal]=requested;
+    }
+    const rotationDays={};
+    for(const key of ['stack','roll'])rotationDays[key]=clinicalCount(config.rotationDays||{},key,APP_DEFAULTS.rotationDays[key],errors,'Intervallo '+key,false);
+    const breakfastRegularCount=clinicalCount(config,'breakfastRegularCount',APP_DEFAULTS.breakfastRegularCount,errors,'Contatore colazioni',false);
+    if(breakfastRegularCount<1)pushUnique(errors,'Contatore colazioni: almeno una colazione.');
+    const snackPortions={};
+    for(const [key,value] of Object.entries(APP_DEFAULTS.snackPortions))snackPortions[key]=clinicalQuantity(config.snackPortions||{},key,value,errors,'Dose spuntino '+key);
 
+
+    const carbohydrateClasses={};
+    for(const key of ['complessi','semplici']){
+      const raw=config.carbohydrateClasses?.[key]||{};
+      const min=clinicalCount(raw,'min',null,errors,'Classe '+key+' minimo',true);
+      const max=clinicalCount(raw,'max',null,errors,'Classe '+key+' massimo',true);
+      if(min!=null&&max!=null&&min>max)pushUnique(errors,'Classe '+key+': minimo superiore al massimo.');
+      carbohydrateClasses[key]={min,max};
+    }
+    const recipeDoses={};
+    for(const [id,ingredients] of Object.entries(config.recipeDoses||{})){
+      if(!ingredients||typeof ingredients!=='object'||Array.isArray(ingredients)){pushUnique(errors,'Dosi ricetta '+id+': formato non valido.');continue;}
+      recipeDoses[id]={};
+      for(const name of Object.keys(ingredients)){
+        const q=clinicalQuantity(ingredients,name,null,errors,'Ricetta '+id+' / '+name);
+        if(q!=null)recipeDoses[id][name]=q;
+      }
+    }
     const allergens=[...new Set(nutritionist.allergens||input.allergeniAttivi||[])];
     const blockedIngredientIds=[...new Set(nutritionist.blockedIngredientIds||input.ingredientiBloccati||[])];
 
@@ -584,12 +577,12 @@
       fruit,
       vegetables:vegetablePortions,
       specialBreakfastMax,
-      specialMealsMax:specialMealsMax===null?APP_DEFAULTS.specialMealsMax:specialMealsMax,
+      specialMealsMax,
       snackWeeklyCaps,
       snackDailyCaps,
       oilGramsPerDay,
-      oilGramsPerMainMeal,
-      cooldownDays,
+      oilGramsPerMainMeal,oilLunchPercent,oilGramsByMeal,carbohydrateWeeklyCaps,
+      cooldownDays,rotationDays,breakfastRegularCount,snackPortions,recipeDoses,carbohydrateClasses,
       deadlines,
       safety:{allergens,blockedIngredientIds}
     };
@@ -602,7 +595,7 @@
     PROFILE_FORBIDDEN_MACROS:clone(PROFILE_FORBIDDEN_MACROS),
     PDF_CONTEXT_RULES_EXACT:clone(PDF_CONTEXT_RULES_EXACT),
     PDF_CONTEXT_RULES_SUBTYPE:clone(PDF_CONTEXT_RULES_SUBTYPE),
-    contextDefaultsForIngredient,
+    contextDefaultsForIngredient,ingredientQuantity,mainMealConstraints,
     legacyCarbohydrateUserCounts,
     normalizeCarbohydrateSelection,
     resolveCarbohydratePlan:function(input){const errors=[];const plan=resolveCarbohydratePlan(input,errors);return Object.assign({valid:errors.length===0,errors},plan);},

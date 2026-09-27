@@ -103,3 +103,40 @@ superato 24 suite su 24; lo stress dedicato ha verificato 350 pasti. La prova
 browser della build corrente ha coperto generazione, persistenza, righe C/P/V,
 Roll C e Salvafrigo. Il responsive Android resta aperto come previsto da
 `UI-04` e non viene chiuso da questa evidenza.
+
+
+## 26/09/2026 — Precedenza nutrizionista per frequenze P e sottotipi
+
+Rimosso il tetto PDF nel resolver per proteinFrequencies e subtypeCaps. I valori espliciti restano invariati; null sul massimo elimina quel tetto, zero esclude, omissione usa i default. Invalidi negativi, decimali, valori non numerici e min>max. UI chiarisce massimo vuoto/zero; Set e filtro motore leggono i valori risolti attraverso i collegamenti esistenti. Nessuna modifica della compilazione a strati, rotazione o cataloghi.
+
+Prove superate: tests/nutrition-config.test.js (aspettative P aggiornate alla decisione 23/09) e tests/pwa-config-proteine-percorso.test.js (funzioni reali UI, salvataggio/riapertura simulati, resolver motore, Set, soglia cap, zero/null, allergeni e rifiuto invalidi senza scritture). Sintassi dei moduli/test e 4 script inline, integrità HTML, coerenza chiamanti e diff verificati. Archivio simulato: IndexedDB reale non certificato. Sezione 1 ancora parziale per gli altri parametri e collegamenti; nessuna nuova spunta di sezione.
+
+
+## 26/09/2026 — Parametri frutta e porzioni verdura dal Set nutrizionista
+
+Rimossi i clamp PDF da frequenze/range frutta e porzioni ortaggi/insalata. Aggiunti i due campi verdura alla UI e alla configurazione canonica salvata/riletta. Valori numerici invalidi e range incoerenti sono respinti; porzioni positive, frequenze frutta non negative anche frazionarie. Il massimo giornaliero frutta null significa nessun tetto e l'indicatore lo mostra correttamente. Il conteggio usa il range di porzione risolto già previsto dal processo.
+
+Verificato il percorso UI salvataggio/riapertura → resolver del motore → conteggio frutta e calcolo residuo V → snapshot. Il caso con V richiesta 300 g e S 80 g produce solo 220 g di contorno, senza cambiare i template. Controllata anche insalata a 90 g. Il test iniziale confrontava esattamente 220 con 220.00000000000003: corretta esclusivamente la tolleranza floating point della prova (1e-8), nessuna modifica del processo o dei dati per ottenere il PASS.
+
+**Prove:** tests/pwa-config-frutta-verdura.test.js e tests/nutrition-config.test.js superati; sintassi resolver/test/4 script inline, integrità HTML e diff controllati. DOM e archivio simulati, nessuna attestazione IndexedDB reale. Nessuna suite estesa o test visuale.
+
+**Limiti:** non sono state completate la selezione/dose di ogni scelta frutta nei diversi contesti né le altre regole degli spuntini; conteggio e parametri configurati non certificano l'intera sezione 8. Sezione 1 resta parziale per olio, speciali/spuntini, carboidrati, dosi/intervalli e persistenza reale. Conservati ordine a strati, priorità verdure e rotazione; nessuna distribuzione automatica della frutta aggiunta.
+
+
+### 27/09/2026 — Evidenze parziali punto 1
+Limiti speciali/spuntini/carboidrati, olio ripartito/zero, dosi spuntini, intervalli stack/roll e salvataggio atomico collegati; validazione ingredienti rinforzata. Prove e residui in STATO_LOTTI_E_TEST.md, voce del 27/09. Sezione 1 non chiusa: quantità contestuali/snapshot, copertura completa parametri e prova dispositivo ancora aperti.
+
+27/09/2026 — Dose contestuale pasto principale: nuova proposta materializzata prima del filtro; snapshot preesistente preservato, prova su catalogo reale in pwa-config-dosi-proposte.test.js. Punto 1 resta parziale.
+
+
+27/09/2026 — Punto 1: configurazione dosi/contesti/ricette/classi/orari collegata al runtime; snapshot colazione/spuntini e budget condivisi verificati puntualmente. Prove e limiti nel registro. Test browser IndexedDB BLOCCATO per eseguibile assente; minimi su casi combinati parziali/speciali non ancora certificati. Sezione non chiusa.
+
+
+## 27/09/2026 — Conteggi preservati: modifica non collaudata
+
+Unificati in motor-v12.js i conteggi iniziali di piano/consumi per slot, con lettura delle realizzazioni salvate ed esclusione di vuoti/speciali dal bilancio ordinario. Applicazione al singolo pasto, alla rigenerazione settimanale e al giorno precedente fuori settimana. Dettagli nel registro modifiche. Nessun test eseguito: richiesta autorizzazione preventiva obbligatoria salvata in AGENTS.md. Punto 1 ancora parziale: da verificare conteggi e coerenza dei record legacy nel validatore finale; restano browser/IndexedDB e dati S/G da Qwen. Sezioni 1 e 8 ◐ integrata / ◐ funzionante; altre 14 🔎/🔎. Nessuna nuova certificazione.
+
+
+## 27/09/2026 — Validatore allineato e tracce QA
+
+Validatore settimanale collegato alla stessa lettura di generazione/rigenerazione per snapshot e ID legacy; riferimenti mancanti segnalati esplicitamente. Metadati @qa-metadata / P1-conteggi-preservati in motor-v12.js indicano funzioni, regole, prova mirata e casi da approfondire senza ricostruire l'analisi. Sintassi, struttura e diff controllati; pwa-conteggi-preservati e singolo percorso pwa-integrazione-runtime superati (archivio simulato). Nessuna suite estesa o verifica visuale. Il precedente divieto di controlli minimi è superato dall'ultima autorizzazione utente, registrata in AGENTS.md. Punto 1 ancora parziale: restano combinazioni annotate, IndexedDB reale e dati S/G. Stati complessivi invariati: 1 e 8 ◐/◐; altre 14 sezioni 🔎/🔎. Dettagli nel registro.

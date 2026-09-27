@@ -1,5 +1,5 @@
 {
-  "versione": 73,
+  "versione": 74,
   "ricette": [
     {
       "gruppi": [
@@ -2574,7 +2574,10 @@
         "C",
         "PP"
       ],
-      "id": 38
+      "id": 38,
+      "ingredientiDaDefinire": [
+        "Pomodoro fresco"
+      ]
     },
     {
       "gruppi": [

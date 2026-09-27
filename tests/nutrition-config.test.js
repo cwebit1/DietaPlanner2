@@ -81,7 +81,7 @@ assert.deepEqual(
     user:{carbohydrates:{states:{piadina:{mode:'fixed',count:3}}}}
   });
   assert.equal(r.valid,false);
-  assert(r.errors.some(x=>x.includes('piadina')&&x.includes('tetto PDF 2')));
+  assert(r.errors.some(x=>x.includes('piadina')&&x.includes('tetto nutrizionista 2')));
 }
 
 {
@@ -141,15 +141,15 @@ assert.deepEqual(
     }
   });
   assert.equal(r.valid,true);
-  assert.equal(r.proteinFrequencies.carne.min,1);
-  assert.equal(r.proteinFrequencies.carne.max,3);
-  assert.equal(r.proteinFrequencies.carne.target,3);
-  assert.equal(r.subtypeCaps.affettati,1);
-  assert.equal(r.specialBreakfastMax,2);
-  assert.equal(r.snackWeeklyCaps.granita_spuntino,3);
-  assert.equal(r.oilGramsPerDay,15);
-  assert.equal(r.oilGramsPerMainMeal,7.5);
-  assert(r.warnings.length>=5);
+  assert.equal(r.proteinFrequencies.carne.min,0);
+  assert.equal(r.proteinFrequencies.carne.max,9);
+  assert.equal(r.proteinFrequencies.carne.target,9);
+  assert.equal(r.subtypeCaps.affettati,7);
+  assert.equal(r.specialBreakfastMax,8);
+  assert.equal(r.snackWeeklyCaps.granita_spuntino,9);
+  assert.equal(r.oilGramsPerDay,40);
+  assert.equal(r.oilGramsPerMainMeal,20);
+  assert.equal(r.warnings.length,0);
 }
 
 {
@@ -201,7 +201,7 @@ assert.deepEqual(
     user:{ingredientWeeklyCaps:{x:0}}
   });
   assert.equal(r.valid,false);
-  assert.equal(r.ingredientConstraints.x.max,1,'il minimo clinico deve restare soddisfacibile');
+  assert.equal(r.ingredientConstraints.x.max,0,'configurazione invalida: non ampliare il tetto utente per farla passare');
   assert(r.errors.some(x=>x.includes('sotto il minimo clinico')));
 }
 
@@ -238,11 +238,11 @@ assert.deepEqual(
   const r=N.resolveNutritionConfig({
     nutritionist:{config:{fruit:{min:9,max:9,portionMin:999,portionMax:999}}}
   });
-  assert.equal(r.valid,false);
-  assert.equal(r.fruit.min,3);
-  assert.equal(r.fruit.max,3);
-  assert.equal(r.fruit.portionMin,200);
-  assert.equal(r.fruit.portionMax,200);
+  assert.equal(r.valid,true);
+  assert.equal(r.fruit.min,9);
+  assert.equal(r.fruit.max,9);
+  assert.equal(r.fruit.portionMin,999);
+  assert.equal(r.fruit.portionMax,999);
 }
 
 console.log('nutrition-config resolver: ok');

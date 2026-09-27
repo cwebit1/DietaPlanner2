@@ -1,5 +1,12 @@
 # DietaPlanner — Baseline nutrizionista PDF V1.2
 
+> **Precedenza aggiornata da Cwe, 23/09/2026:** tutte le quantità, ricorrenze
+> e frequenze sono configurabili nel Set nutrizionista. I numeri del PDF
+> restano riferimenti e valori iniziali, non limiti immutabili per il
+> nutrizionista. Le precedenti istruzioni di clamp al PDF sono superate per
+> questo livello; il Set utente resta subordinato alla configurazione clinica.
+> Vedere la regola prevalente nella specifica e nei prompt di completamento.
+
 **Data baseline:** 2026-08-29  
 **Fonte nutrizionale primaria:** `PERCORSO ALIMENTARE MIRIA SPILLER.pdf` (22 pagine, letto integralmente e verificato visivamente nelle tabelle principali).  
 **Scopo:** documento di riferimento anti-regressione per tutti gli interventi su Setting nutrizionista, Set utente, `motor-v12.js`, `engine-core.js`, `ingredienti-new.json` e `db-ricette.json`.

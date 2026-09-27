@@ -1,0 +1,27 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+require('../motor-v12.js');
+const source=fs.readFileSync(require('node:path').join(__dirname,'../index.html'),'utf8');
+const db={piano:[],consumoGiorno:[],varianti:[{id:'mela',ingredienteId:'mela',porzioneColazione:175}],ingredienti:[{id:'mela',gruppo:'frutta',allergeni:[]}],ricette:[{id:'patatine',sottotipoSpuntino:'patatine_grisbi'}]};
+const context={structuredClone,console,DietaPlannerMotorV12:global.DietaPlannerMotorV12,DietaPlannerContracts:require('../pwa-contracts.js'),getAll:async name=>structuredClone(db[name]),getOne:async(name,id)=>structuredClone(db[name].find(x=>x.id===id)),risolviSetUtenteCorrente:async()=>({valid:true,ingredientConstraints:{},carbohydrateClasses:{semplici:{min:null,max:null}},fruit:{portionMin:150,portionMax:200},safety:{allergens:['latte']}}),esclusionePianoIngrediente:()=>false,ricettaNuovoDaRealizzazione:async real=>({ingredienti:real.ingredientiEffettivi})};
+vm.createContext(context);
+db.spesa=[];db.inventario=[];
+context.giorniSettimana=()=>['2026-10-05'];
+context.put=async(name,row)=>{const at=db[name].findIndex(x=>x.id===row.id);if(at<0)db[name].push(row);else db[name][at]=row;};
+context.delKey=async(name,id)=>{db[name]=db[name].filter(x=>x.id!==id);};
+vm.runInContext(source.slice(source.indexOf('async function aggiornaListaSpesaAutomatica('),source.indexOf('const CATEGORIA_LABEL')),context);
+for(const [start,end] of [['function contestoAlimentare','async function renderIndicatoreFrutta'],['async function conteggiSpuntini','async function getConsumiSpuntiniSettimana'],['function ingredienteEsclusoClinicamenteNelSet','async function renderSetLimitiPersonaliIngredienti']])vm.runInContext(source.slice(source.indexOf(start),source.indexOf(end,source.indexOf(start))),context);
+(async()=>{
+ db.piano=[{id:'2026-10-05_colazione',componenti:{frutta:'mela'}},{id:'2026-10-05_pranzo',realizzazioni:[{ingredientiEffettivi:[{variantId:'mela',quantita:175,gruppo:'frutta'}]}]},{id:'2026-10-05_spuntino1',ricettaId:'patatine'},{id:'2026-09-28_spuntino1',ricettaId:'patatine'}];
+ db.consumoGiorno=[{id:'log',giorno:'2026-10-05',pasto:'pranzo',ingredientiEffettivi:[{variantId:'mela',quantita:175,gruppo:'frutta'}]},{id:'snack',giorno:'2026-10-05',pasto:'spuntino1',ricettaId:'patatine'}];
+ assert.equal(await context.calcolaFruttaOggi('2026-10-05'),2,'colazione più pranzo, log e piano contati una volta');
+ assert.equal((await context.conteggiSpuntini('2026-10-05')).settimana.patatine_grisbi,1,'settimana richiesta e sottotipo non hardcoded');
+ assert.equal((await context.conteggiSpuntini('2026-10-05','2026-10-05_spuntino1')).settimana.patatine_grisbi,undefined,'sostituzione toglie lo slot corrente');
+ db.piano=[{id:'2026-10-05_spuntino2',ingredientiEffettivi:[{variantId:'mela',quantita:150}]},{id:'2026-10-05_pranzo',consumato:true,ingredientiEffettivi:[{variantId:'mela',quantita:175}]}];
+ db.inventario=[{variantId:'mela',stato:'disponibile',quantita:50}];
+ await context.aggiornaListaSpesaAutomatica(0);
+ assert.equal(db.spesa[0].mancante,100,'spuntino2 entra in spesa; pasto consumato escluso; giacenza sottratta');
+ db.ingredienti[0].allergeni=['latte'];
+ await assert.rejects(()=>context.validaIngredientiVoce(db.piano[0]),/Ingrediente escluso/,'snapshot senza allergeni non aggira la classificazione canonica');
+ console.log('PASS funzioni UI reali: frutta in colazione e snapshot, deduplicazione storico, settimana spuntini e sostituzione.');
+})().catch(e=>{console.error(e);process.exitCode=1;});

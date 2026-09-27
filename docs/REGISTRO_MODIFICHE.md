@@ -4401,3 +4401,501 @@ collaudo visivo live viene eseguito dopo la pubblicazione.
 
 **Commit funzionali:** `c7eaacdd80ef29b14ef6eb79ef18d43d2f3b0ddf`, `a9d47476b8c61cec687c85375b2f0f6a3f9909d8`, `7e4efcf310de632885c07beb704c28dd4474b60a`.
 
+# Consolidamento definitivo delle specifiche PWA — 22 settembre 2026
+
+**Causa/difetto:** i requisiti del PWA erano distribuiti tra tutti i file
+Markdown di `DietaPlanner` e `DietaPlanner2`, con regole correnti, storiche,
+sostituite e scostamenti implementativi mescolati. In particolare non esisteva
+un unico contratto che riunisse unicità settimanale, semantica binaria di
+`stack` e `roll`, fallback non fatale del cooldown di 15 giorni, rotazione
+interna dei legumi e trattamento esplicito di sughi e condimenti.
+
+**Correzione applicata:** aggiunto
+`docs/SPECIFICA_PWA_DEFINITIVA.md`, costruito dopo la lettura e il confronto di
+tutti i file Markdown delle due repo. Il documento definisce gerarchia delle
+fonti, architettura, flusso del motore, regole nutrizionali e di rotazione,
+interfaccia, persistenza, criteri di verifica, scostamenti correnti, regole
+sostituite, ordine di sistemazione e prompt vincolanti per ciascun filone. I
+documenti preesistenti non sono stati eliminati o riscritti: la decisione su
+cosa rimuovere resta riservata a Cwe.
+
+**File modificati:**
+
+- `docs/SPECIFICA_PWA_DEFINITIVA.md` (nuovo);
+- `docs/REGISTRO_MODIFICHE.md` (sola aggiunta di questa sezione).
+
+**Verifiche eseguite:**
+
+- inventario completo dei `.md` in entrambe le repo;
+- confronto byte per byte dei documenti comuni e diff delle versioni
+  divergenti;
+- verifica presenza e struttura del nuovo documento;
+- `git diff --check -- docs/SPECIFICA_PWA_DEFINITIVA.md` → pulito;
+- nessun test applicativo eseguito, perché non è stato modificato codice
+  runtime.
+
+**Hash commit:** non disponibile; intervento non committato.
+
+## Correzione definitiva della semantica binaria stack/roll — 22 settembre 2026
+
+**Causa/difetto:** la specifica consolidata descriveva `stack` come
+partecipazione al cooldown e `roll` come permesso di modifica. Era
+un'interpretazione errata del contratto binario definito da Cwe.
+
+**Correzione applicata:** `docs/SPECIFICA_PWA_DEFINITIVA.md` ora stabilisce
+che `1` significa disponibile e `0` non disponibile. Dopo l'uso lo stato passa
+da `1` a `0`; torna a `1` dopo 15 giorni oppure quando il relativo pool è
+esaurito. Il ripristino anticipato dello stack viene registrato come carenza di
+copertura. `roll` usa lo stesso stato binario nel ciclo delle alternative e si
+resetta a esaurimento del pool. Rimossi punteggi e ordinamenti non richiesti.
+
+**File modificati:** `docs/SPECIFICA_PWA_DEFINITIVA.md` e, per sola aggiunta,
+`docs/REGISTRO_MODIFICHE.md`.
+
+**Verifiche:** ricerca dei riferimenti incoerenti a partecipazione, esenzione,
+permesso e recupero ordinato; controllo delle sezioni collegate;
+`git diff --check -- docs/SPECIFICA_PWA_DEFINITIVA.md` pulito. Nessun test
+runtime, perché è stata modificata soltanto la documentazione.
+
+**Hash commit:** non disponibile; intervento non committato.
+
+## Correzione specifica: rotazione universale, non dedicata ai legumi — 22 settembre 2026
+
+**Causa/difetto:** la prima stesura della specifica evidenziava la “rotazione
+dei legumi” come filone autonomo. Questa formulazione poteva essere tradotta in
+una correzione speciale per tofu/legumi, lasciando invariata la ripetizione
+delle fonti nelle altre macro e negli altri ruoli.
+
+**Correzione applicata:** la regola è stata riscritta come rotazione universale
+per `sourceKey`, applicata con un unico meccanismo a tutte le macro, fonti e
+componenti con `stack:1`: proteine, carboidrati, verdure, salse, guarnizioni,
+condimenti, cotture e ricette. Il tofu resta soltanto un caso osservato e una
+fixture obbligatoria, non una logica dedicata. Aggiornati anche matrice degli
+scostamenti, regole sostituite, ordine di implementazione, criterio di uscita,
+prompt vincolante e anomalie.
+
+**File modificati:**
+
+- `docs/SPECIFICA_PWA_DEFINITIVA.md`;
+- `docs/REGISTRO_MODIFICHE.md` (sola aggiunta di questa sezione).
+
+**Verifiche eseguite:** ricerca completa dei riferimenti a legumi, tofu,
+`sourceKey` e rotazione nel documento; controllo di coerenza delle sezioni
+collegate; `git diff --check -- docs/SPECIFICA_PWA_DEFINITIVA.md` pulito;
+nessun test applicativo, perché non è stato modificato codice runtime.
+
+**Hash commit:** non disponibile; intervento non committato.
+
+### Nota di prevalenza sulla semantica binaria
+
+La successiva istruzione esplicita di Cwe sostituisce la formulazione
+`componenti con stack:1` usata nella sezione precedente: `stack` e `roll` sono
+stati binari mutabili, con `1` disponibile e `0` non disponibile. Vale la
+correzione definitiva registrata sopra e riportata nella specifica consolidata.
+
+## Ambito definitivo della rotazione stack P/C — 22 settembre 2026
+
+**Correzione:** la rotazione `stack` riguarda esclusivamente ricette e fonti P
+e C. Per P resta inoltre il criterio già implementato che impedisce alla stessa
+proteina concreta di comparire in due giorni consecutivi. V, S, G, condimenti
+e cotture restano affidati alle rispettive regole di priorità, compatibilità,
+residuo, inventario e LRU. Aggiornate tutte le sezioni collegate di
+`docs/SPECIFICA_PWA_DEFINITIVA.md`.
+
+**Verifiche:** ricerca dei riferimenti alla precedente rotazione universale,
+controllo di coerenza delle sezioni stack, stato, fasi e prompt;
+`git diff --check` pulito. Nessun test runtime, perché è stata modificata solo
+la documentazione. **Hash commit:** non disponibile; intervento non committato.
+
+## Classificazione allergeni e intolleranze — 22 settembre 2026
+
+**Requisito aggiunto:** ogni ingrediente registra gli allergeni contenuti e
+ogni ricetta espone l'unione degli allergeni dei propri ingredienti e
+componenti. Il motore applica le allergie e intolleranze configurate dal
+nutrizionista come filtro su programmazione, alternativa, Roll, Salvafrigo,
+inserimento manuale e sostituzioni. La realizzazione conserva gli allergeni
+effettivamente presenti.
+
+**File modificati:** `docs/SPECIFICA_PWA_DEFINITIVA.md` e, per sola aggiunta,
+`docs/REGISTRO_MODIFICHE.md`. **Verifiche:** struttura delle sezioni collegate,
+ricerca dei riferimenti e `git diff --check`; nessun test runtime perché è
+stata modificata soltanto documentazione. **Hash commit:** non disponibile.
+
+## Audit dei 31 criteri PWA — 22 settembre 2026
+
+**Richiesta:** salvare l'elenco funzionale approvato e marcare come completati
+soltanto i criteri riscontrati nel runtime reale e sostenuti da un controllo
+mirato.
+
+**Intervento:** creato `docs/CRITERI_PWA_STATO_IMPLEMENTAZIONE.md` con i 31
+criteri, legenda verificabile, evidenze per riga, integrazioni necessarie,
+priorità e controlli eseguiti. Esito: 12 criteri implementati e verificati, 12
+parziali, 7 da integrare.
+
+**Risultati principali:** il contratto binario `stack/roll`, `dishKey`,
+rotazione P/C completa, Roll UI e barcode sono assenti o divergenti; sughi e
+condimenti conservano carenze di dose. Allergeni ingrediente, resolver,
+frequenze, flusso P→C→V, carboidrati, V/S/G, olio, bozza Menu, anteprime,
+consumo e PWA hanno invece evidenze concrete. Login Google è parziale rispetto
+a ruoli/whitelist/sincronizzazione.
+
+**Verifiche:** sintassi dei cinque file JS autonomi e dei quattro script inline;
+integrità dei tre cataloghi; 23 test mirati eseguiti una volta: 18 test passati
+e 5 falliti.
+I fallimenti sono due snapshot catalogo fermi alla versione 21 invece della
+22, contratto Roll/VSG, contratto auth sul vecchio header e preferenze runtime
+sul conflitto reale Patate disattivata come V contro Patate FIXED come C.
+Nessuna suite completa o verifica visuale.
+`git diff --check` pulito.
+
+**File modificati:** nuovo `docs/CRITERI_PWA_STATO_IMPLEMENTAZIONE.md` e sola
+aggiunta a `docs/REGISTRO_MODIFICHE.md`. **Hash commit:** non disponibile;
+intervento non committato.
+
+## Rimozione criterio Poco tempo e test selettivi dei requisiti — 22 settembre 2026
+
+**Richiesta:** eliminare il punto 13 `setPocoTempo`, rinumerare l'elenco e
+predisporre controlli essenziali selezionabili per ogni criterio, oltre a un
+runner finale di revisione.
+
+**Intervento:** il requisito `setPocoTempo` è stato rimosso dalla specifica e
+dalla matrice; i criteri successivi sono stati rinumerati, per un totale di 30.
+Aggiunto `tests/criteri-pwa-selettivi.test.js`, eseguibile su un numero, una
+lista o un intervallo, e `tests/revisione-finale-criteri-pwa.test.js`, che
+riesegue una volta tutti i controlli. I requisiti incompleti producono un FAIL
+esplicito e restano aperti fino all'implementazione.
+
+**Verifiche:** sintassi dei due nuovi script pulita; lista composta da 30
+criteri; campione selettivo verificato su un criterio conforme e uno mancante;
+runner finale eseguito una volta con risultato attuale 18 PASS e 12 FAIL. I
+FAIL correnti sono i criteri 2, 4, 6, 7, 8, 9, 15, 17, 22, 25, 27 e 28 e
+corrispondono alle lacune documentate. `git diff --check` pulito; nessuna suite
+completa e nessun controllo visuale.
+
+**File modificati:** `docs/SPECIFICA_PWA_DEFINITIVA.md`,
+`docs/CRITERI_PWA_STATO_IMPLEMENTAZIONE.md`, nuovi
+`tests/criteri-pwa-selettivi.test.js` e
+`tests/revisione-finale-criteri-pwa.test.js`, più questa sola aggiunta al
+registro. **Hash commit:** non disponibile; intervento non committato.
+
+## Prompt vincolanti per ciascun criterio PWA — 22 settembre 2026
+
+**Richiesta:** predisporre un prompt operativo autonomo per ciascuno dei 30
+criteri approvati, oltre a un prompt conclusivo di revisione, senza confondere
+i prompt con gli script di test.
+
+**Intervento:** creato `docs/PROMPT_INTERVENTI_PWA.md`. Il documento contiene
+30 prompt numerati e separati, ciascuno limitato al proprio criterio, con
+obiettivo, vincoli di perimetro, protezione delle regole già conformi e
+comando del test selettivo corrispondente. Aggiunto un prompt finale che
+riesamina tutti gli interventi e produce l'esito PASS/FAIL dei 30 criteri.
+
+**Verifiche:** controllata la sequenza completa 1–30, la corrispondenza tra
+numero del prompt e selettore di test, la presenza del prompt finale e
+l'assenza di criteri cancellati. `git diff --check` pulito. Nessuna suite
+runtime eseguita, perché l'intervento aggiunge soltanto istruzioni operative.
+
+**File modificati:** nuovo `docs/PROMPT_INTERVENTI_PWA.md` e questa sola
+aggiunta a `docs/REGISTRO_MODIFICHE.md`. **Hash commit:** non disponibile;
+intervento non committato.
+
+## Revisione dei prompt come integrazione dei 30 criteri — 22 settembre 2026
+
+**Difetto:** i prompt precedenti imponevano confini per singolo punto senza
+specificare adeguatamente dipendenze e transazioni condivise. La sequenza P/C
+era ambigua, la gestione stack non distingueva aggiornamento temporaneo e
+commit, e i selettori statici potevano produrre PASS senza prova funzionale.
+
+**Correzione:** aggiunto un contratto comune con responsabilità dei dati,
+pipeline condivisa, ordine d'integrazione, stati temporanei/persistenti,
+rollback, sostituzione, consumo idempotente e diagnostica. Tutti i 30 prompt
+ora dichiarano criteri collegati, obblighi d'integrazione e prova funzionale
+di uscita. Precisati priorità P+C.user sull'intero pool P, unicità anche dei
+contorni, consecutività della fonte P ai confini settimana, soglia V/S/G e
+contatore colazione a 7. Riallineato roll al ritorno a 1 dopo 15 giorni o a
+esaurimento indicato da Cwe. La revisione finale richiede evidenze runtime e
+una fixture integrata, distinguendo PASS funzionale da controllo statico.
+
+**Allineamento fonti:** sostituiti i prompt A–F concorrenti nella specifica
+con riferimento al contratto unico; rimosso il residuo del criterio cancellato;
+precisata l'impossibilità di rilassare vincoli inderogabili mediante reset.
+La matrice conserva gli esiti storici ma esplicita che non certificano il
+runtime corrente né il successo dei soli selettori statici.
+
+**Verifiche:** confronto documentale dei 30 punti con specifica/matrice e
+lettura mirata dei percorsi motore coinvolti; sequenza 1–30, selettori,
+dipendenze e criteri di uscita presenti; blocchi Markdown e riferimenti file
+validi; controllo integrità, coerenza del flusso e diff. Nessuna modifica al
+codice applicativo, nessuna suite runtime o verifica visuale: questo lavoro
+corregge i contratti di intervento, non certifica l'implementazione del PWA.
+
+**File modificati:** `docs/PROMPT_INTERVENTI_PWA.md`,
+`docs/SPECIFICA_PWA_DEFINITIVA.md`,
+`docs/CRITERI_PWA_STATO_IMPLEMENTAZIONE.md` e registro in sola aggiunta.
+**Hash commit:** non disponibile; nessun commit o pubblicazione eseguito.
+
+## 23/09/2026 — Interventi PWA: integrazione in corso, non rilascio
+
+**Difetti e correzioni:** introdotti contratti comuni per identità piatto,
+fonti P/C, disponibilità a 15 giorni, riapertura per esaurimento e diagnostica.
+Separato il reset C dal reset P; mantenuti duplicati settimanali e consecutività
+P come esclusioni. Il caso di generazione bloccato al dodicesimo pasto esauriva
+i contorni distinti: il backtracking limitato ora risale a una scelta che ne
+risparmia uno. Collegati Roll C/P/V, validazione comune prima del salvataggio,
+bridge atomico e diagnostica consultabile/esportabile. Dosi mancanti escluse,
+non inventate. Conservate le modifiche documentali precedenti.
+
+Aggiunti consumo atomico e snapshot, soglia colazione 7, protezione della bozza
+al cambio settimana, scanner EAN e archivio prodotti, separazione UID,
+whitelist e sincronizzazione con backup/conflitti, cache offline coerente.
+Queste parti non sono tutte certificate: cloud, fotocamera e transazioni
+browser richiedono ancora verifica. Nessuna pubblicazione effettuata.
+
+**Ulteriori difetti corretti nella continuazione:** conteggio frutta da
+colazione e quantità effettive, deduplicazione storico/piano, spuntini nella
+settimana richiesta e cap per tutti i sottotipi, filtri clinici sulle scritture
+UI non consumate. Spesa riferita ai tre slot reali degli spuntini e ai pasti
+non consumati, usando le stesse quantità del consumo. Rimuovere uno spuntino
+programmato non restituisce più scorte mai scaricate; puliti gli snapshot
+della proposta rimossa/sostituita. Snapshot nutrizionale conservato al consumo.
+
+**Verifiche:** test motore/cataloghi reali con 14 pasti, unicità, consecutività
+P, anteprima e rifiuto di duplicato SUPERATO (persistenza in memoria). Test
+contratti 15 giorni/reset separato/FEFO/colazione/EAN SUPERATO. Test funzioni UI
+frutta/spuntini/spesa SUPERATO. Sintassi moduli e quattro script inline,
+integrità JSON e diff whitespace verificati. Nessuna suite completa, test
+visuale o screenshot. I selettori regex sono dichiarati statici; il runner
+finale mantiene esplicitamente la revisione aperta.
+
+**Limiti:** non sono conclusi tutti i 30 criteri. Restano frutta automatica,
+percorsi manuali e colazioni, verifiche transazionali reali, acquisto manuale,
+dosi di catalogo, migrazioni account e prove cloud/offline/dispositivo.
+`ESITO_INTERVENTI_PWA.md` elenca ogni punto senza promuovere controlli statici
+a prove funzionali.
+
+**File interessati:** `index.html`, `motor-v12.js`, `pwa-contracts.js`,
+`barcode-spesa.js`, `db-ricette.json`, `firebase-auth.js`, `firestore.rules`,
+`sw.js`; tre test runtime mirati e due script di verifica criteri; documento
+esito, stato lotti e registro. **Commit:** nessuno; modifiche locali, nessun
+push o rilascio.
+
+**Verifica conclusiva della continuazione:** test UI esteso al rifiuto di
+snapshot che omette un allergene presente nell'ingrediente canonico: SUPERATO.
+Sintassi inline ricontrollata dopo il filtro comune. Controllo anti-cancellazione
+del registro: diff con sole aggiunte. La matrice iniziale ora rimanda in apertura
+all'esito corrente, per non confondere vecchie spunte e modifiche non certificate.
+
+## 23/09/2026 — Prompt di completamento e chiarimenti funzionali
+
+**Richiesta:** preparare il prompt per completare il PWA secondo tutte le
+specifiche, sottoponendo a Cwe i chiarimenti necessari in chat.
+**Intervento:** creato `docs/PROMPT_COMPLETAMENTO_PWA_E_CHIARIMENTI.md`, coordinato
+con i 30 prompt e l'esito corrente. Distinte decisioni aperte (ambito ripetizioni,
+verdura ricorrente, dosi, collocazione frutta, registrazione del consumo effettivo,
+funzioni local/limited, conservazione dati) dai difetti da risolvere autonomamente.
+Le proposte restano non approvate; stack/roll/P/C e gli altri vincoli già definiti
+non vengono rimessi in discussione. Richieste integrazione completa, evidenze
+funzionali per criterio e consegna in chat; nessuna certificazione da regex o
+solo memoria, nessuna pubblicazione implicita. Evidenziata anche la necessità
+tecnica di proteggere i Setting nel modello a permessi durante la sincronizzazione.
+**Verifiche:** confronto con esito, specifica, baseline, documento accessi e
+catalogo corrente; coerenza delle domande, riferimenti documentali, sequenza,
+struttura Markdown e diff. Solo documentazione: nessuna modifica runtime e
+nessuna ripetizione di test applicativi. Registro aggiornato in sola aggiunta.
+**Commit:** nessuno; nessun push, deploy o modifica dei dati utente.
+
+## 23/09/2026 — Rettifica chiarimenti e lettura PDF originale
+
+**Causa:** il prompt precedente proponeva chiarimenti/regole non necessari.
+**Correzione:** ritirate le sette domande, registrate le istruzioni esplicite
+ di Cwe: frutta e spuntini liberi ma dosati; ricorrente esaurita sostituita
+secondo la sequenza esistente senza errori/piantate; dosi S/G da Qwen e poi
+integrazione; collocazione frutta conforme al PDF; consumo reale senza
+segnalazioni di violazione; accessi e politiche storico lasciati come sono.
+**Fonte letta:** recuperato il PDF originale PERCORSO ALIMENTARE MIRIA SPILLER,
+letto integralmente il testo di 22 pagine. Pagine 10–13: frutta anche a
+colazione, ai pasti e/o agli spuntini; pagina 19: spuntini facoltativi;
+pagine 2, 7 e 21: flessibilità e pasti liberi senza sgarro/compensazione.
+Rilevate dosi operative divergenti dal PDF pagina 19: frutta secca 15 g
+invece di circa 10, patatine 25 g invece di circa 20. Registrate da correggere,
+non modificate nel runtime in questo turno.
+**File:** prompt completamento, specifica definitiva, precedenza nei prompt
+30 interventi e questo registro in sola aggiunta. **Verifiche:** coerenza
+con risposta utente/PDF, struttura documenti e diff; nessun test applicativo
+ripetuto perché il codice non è stato modificato. **Commit:** nessuno;
+nessun push, pubblicazione o invio a Qwen eseguito.
+
+## 23/09/2026 — Quantità, ricorrenze e frequenze tutte nel Set nutrizionista
+
+**Decisione Cwe:** TUTTE le quantità, ricorrenze e frequenze devono essere
+configurabili dalla pagina Set nutrizionista. **Contratto aggiornato:** PDF e
+successive dosi Qwen sono valori iniziali; i valori espliciti del nutrizionista
+prevalgono, senza clamp silenziosi al PDF. Unico resolver, contesti separati,
+propagazione a tutti i percorsi, Set utente subordinato e storico preservato.
+Documentati campi/UI, persistenza, risoluzione e prova runtime richiesti per
+ogni parametro. Le regole di accesso non vengono cambiate.
+**Riscontro:** il resolver attuale contiene ancora clamp al PDF; conformità
+non dichiarata e nessun codice applicativo modificato in questo turno.
+**File:** specifica definitiva, baseline (avviso di precedenza), prompt dei
+30 punti, prompt completamento, esito e registro in sola aggiunta.
+**Verifiche:** confronto della gerarchia e dei clamp esistenti, integrità
+Markdown, diff e controllo anti-cancellazione registro. Nessun test runtime
+ripetuto per questo aggiornamento documentale. **Commit:** nessuno; nessun
+push o pubblicazione.
+
+## 23/09/2026 — Prompt esecutivo unico di chiusura PWA
+
+**Richiesta:** preparare un prompt per concludere il progetto senza riaprire
+questioni già risolte e con verifica vincolante degli errori.
+**Intervento:** creato `docs/PROMPT_CHIUSURA_PROGETTO_PWA.md`, con otto blocchi
+esecutivi e copertura esplicita dei 30 criteri. Inclusi Set nutrizionista
+interamente configurabile, resolver unico, PDF come valori iniziali,
+rotazioni P/C, esaurimento ricorrente, libertà e dosi frutta/spuntini, dati
+S/G da Qwen, consumo reale senza violazione, transazioni/UI/offline e
+mantenimento di accessi e politiche storico. Richiesti dati di ritorno Qwen
+identificabili, avanzamento delle parti indipendenti, prove reali proporzionate,
+correzione dei difetti rilevati e nessuna chiusura fittizia. I precedenti due
+prompt rimandano al coordinatore senza cancellare i dettagli approvati.
+**Verifiche:** copertura dei numeri 1–30, confronto con ultime istruzioni,
+integrità Markdown, riferimenti, diff e sola aggiunta al registro. Nessuna
+modifica runtime o test applicativo ripetuto: incarico di preparazione prompt.
+**File:** nuovo prompt chiusura, rimandi in prompt completamento/interventi,
+registro. **Commit:** nessuno; nessun push, invio esterno o pubblicazione.
+
+## 24/09/2026 — Prompt di completamento per dipendenze integrate
+
+**Causa:** il precedente prompt riproponeva attività generali senza distinguere abbastanza implementazioni esistenti, difetti e verifiche residue.
+**Intervento:** sostituito il prompt coordinatore con piano unico dei 30 criteri e gruppi di dipendenze. Inseriti riscontri attuali su clamp PDF, dosi spuntini, ricorrente, editor manuali, snapshot colazioni e conferma condizionale nel test. Vincolati configurazione, selezione, persistenza e consumi a soddisfare insieme i criteri, preservando lavoro conforme, accessi e politiche storico.
+**File:** docs/PROMPT_CHIUSURA_PROGETTO_PWA.md e registro in sola aggiunta. Nessuna modifica applicativa.
+**Verifiche:** lettura dei percorsi citati e delle decisioni prevalenti; integrità Markdown, confronto con versione precedente, diff e controllo append-only del registro. Nessun test runtime ripetuto per la modifica documentale.
+**Commit:** nessuno; nessun push o pubblicazione.
+
+
+## 24/09/2026 — Separazione esplicita fra implementato, difettoso, mancante e da verificare
+
+**Causa:** il prompt continuava a presentare requisiti generali come attività da eseguire e il report conservava richieste superate.
+**Intervento:** aggiornata la lista dei 30 punti in ESITO_INTERVENTI_PWA.md con parti provate, limiti delle prove e solo lavoro residuo. Distinti editor/acquisti manuali incompleti, resolver ancora vincolato al PDF, dati Qwen mancanti e funzioni già implementate da verificare. Rimossi dal lavoro residuo gli obblighi non richiesti di frutta automatica e migrazioni cloud. Il prompt rimanda alla lista come perimetro operativo e qualifica le regole generali come criteri di accettazione.
+**Esito comunicato:** implementazioni reali presenti, integrazione incompleta, copertura dei test limitata e documentazione non allineata; nessuna prova che tutti i punti riaperti siano regressioni. Nessuna attribuzione inventata del consumo di budget.
+**Verifiche:** confronto con codice acquisto manuale, test esistenti e report; integrità delle 30 righe, diff documentale e append-only registro. Nessun test applicativo rilanciato, nessuna modifica runtime.
+**File:** esito, prompt coordinatore e registro. **Commit:** nessuno; nessun push o pubblicazione.
+
+
+## 24/09/2026 — Salvataggio elenco sommario e istruzioni permanenti
+
+**Richiesta e risultato:** salvate le 16 sezioni in `docs/RISCONTRO_FUNZIONI_PWA.md` e l'obbligo permanente in AGENTS.md di aggiornarle e ripresentarle in chat dopo ogni intervento, con stati distinti integrata/funzionante e verde solo a riscontro sufficiente. Registrato il vincolo di approfondimento progressivo e riuso delle prove per contenere le risorse. Aggiunto rimando nello stato lotti. Nessuna modifica applicativa: stati delle sezioni da consolidare, prove precedenti conservate.
+**Verifiche:** integrità della tabella (16 voci), riferimenti locali, diff documentale e append-only registro. Nessun test runtime necessario o eseguito. **Commit:** nessuno; nessun push o pubblicazione.
+
+
+## 26/09/2026 — Precedenza nutrizionista per frequenze P e sottotipi
+
+Rimosso il tetto PDF nel resolver per proteinFrequencies e subtypeCaps. I valori espliciti restano invariati; null sul massimo elimina quel tetto, zero esclude, omissione usa i default. Invalidi negativi, decimali, valori non numerici e min>max. UI chiarisce massimo vuoto/zero; Set e filtro motore leggono i valori risolti attraverso i collegamenti esistenti. Nessuna modifica della compilazione a strati, rotazione o cataloghi.
+
+Prove superate: tests/nutrition-config.test.js (aspettative P aggiornate alla decisione 23/09) e tests/pwa-config-proteine-percorso.test.js (funzioni reali UI, salvataggio/riapertura simulati, resolver motore, Set, soglia cap, zero/null, allergeni e rifiuto invalidi senza scritture). Sintassi dei moduli/test e 4 script inline, integrità HTML, coerenza chiamanti e diff verificati. Archivio simulato: IndexedDB reale non certificato. Sezione 1 ancora parziale per gli altri parametri e collegamenti; nessuna nuova spunta di sezione.
+
+**File:** nutrition-config.js, index.html (testi esplicativi), tests/nutrition-config.test.js, nuovo tests/pwa-config-proteine-percorso.test.js; riscontro 16 sezioni, stato lotti, matrice, esito e registro aggiornati. **Commit:** nessuno; nessun push o pubblicazione. Controllo append-only registro superato.
+
+
+## 26/09/2026 — Parametri frutta e porzioni verdura dal Set nutrizionista
+
+Rimossi i clamp PDF da frequenze/range frutta e porzioni ortaggi/insalata. Aggiunti i due campi verdura alla UI e alla configurazione canonica salvata/riletta. Valori numerici invalidi e range incoerenti sono respinti; porzioni positive, frequenze frutta non negative anche frazionarie. Il massimo giornaliero frutta null significa nessun tetto e l'indicatore lo mostra correttamente. Il conteggio usa il range di porzione risolto già previsto dal processo.
+
+Verificato il percorso UI salvataggio/riapertura → resolver del motore → conteggio frutta e calcolo residuo V → snapshot. Il caso con V richiesta 300 g e S 80 g produce solo 220 g di contorno, senza cambiare i template. Controllata anche insalata a 90 g. Il test iniziale confrontava esattamente 220 con 220.00000000000003: corretta esclusivamente la tolleranza floating point della prova (1e-8), nessuna modifica del processo o dei dati per ottenere il PASS.
+
+**Prove:** tests/pwa-config-frutta-verdura.test.js e tests/nutrition-config.test.js superati; sintassi resolver/test/4 script inline, integrità HTML e diff controllati. DOM e archivio simulati, nessuna attestazione IndexedDB reale. Nessuna suite estesa o test visuale.
+
+**Limiti:** non sono state completate la selezione/dose di ogni scelta frutta nei diversi contesti né le altre regole degli spuntini; conteggio e parametri configurati non certificano l'intera sezione 8. Sezione 1 resta parziale per olio, speciali/spuntini, carboidrati, dosi/intervalli e persistenza reale. Conservati ordine a strati, priorità verdure e rotazione; nessuna distribuzione automatica della frutta aggiunta.
+
+**File:** nutrition-config.js; index.html; tests/nutrition-config.test.js; nuovo tests/pwa-config-frutta-verdura.test.js; riscontro 16 sezioni, stato lotti, esito, matrice e registro. **Commit:** nessuno; nessun push/release. Registro aggiornato in sola aggiunta.
+
+
+## 27/09/2026 — Punto 1: limiti, intervalli, dosi spuntini e commit configurazione
+
+Ripresa del lavoro locale del 26/09, qui registrato senza attribuire chiusura all'intera sezione.
+
+- Tolti i clamp PDF residui per speciali, spuntini, olio e tetti individuali dei carboidrati limitati. Default conservati; massimo null senza tetto, zero esclusione. Il Set utente legge i tetti risolti del nutrizionista; restano i 14 slot strutturali.
+- Collegati dosi spuntini, soglia contatore colazione e intervalli stack/roll configurabili (default 15 giorni). Conservati reset per esaurimento compatibile, log, maschere P/C e ordine della compilazione a strati.
+- Olio giornaliero configurabile anche a zero e ripartibile fra pranzo e cena. La normalizzazione opera sulle realizzazioni e mantiene il totale del pasto, senza aggiungere olio alle ricette che non lo prevedono.
+- Salvataggio e ripristino dei cinque record nutrizionista in una sola transazione IndexedDB. Cache invalidata soltanto al completamento; nessun aggiornamento parziale in caso di abort.
+- Validazione ingredienti: quantità positive, frequenze intere non negative, null distinto da zero; valori negativi/non numerici/booleani respinti. Intervalli incoerenti segnalati senza rialzare silenziosamente il massimo. Corretto il vecchio test che pretendeva l'ampliamento del tetto utente nonostante configurazione invalida.
+
+**Prove effettuate:** nutrition-config; pwa-config-proteine-percorso; pwa-config-frutta-verdura; pwa-config-limiti-intervalli; pwa-config-commit; pwa-config-ingredienti-validazione; contratti essenziali e percorso runtime su 14 pasti (questi ultimi nel segmento precedente della stessa lavorazione). Sintassi JS e quattro script inline, integrità documento e diff controllati. DOM/archivio/transazioni simulati: non equivalgono a prova IndexedDB sul dispositivo. Nessuna suite completa o verifica visuale.
+
+**Punto 1 ancora parziale:** precedenza delle dosi ingrediente/contesto rispetto alle dosi delle ricette compilate; aggiornamento delle nuove proposte dopo cambio configurazione preservando snapshot consumati; configurabilità completa delle dosi ricetta/S/G senza inventare dati; applicazione completa delle classi carboidrati e orari. I relativi campi o controlli parziali non costituiscono prova del percorso completo. Persistenza sul dispositivo da verificare.
+
+**File applicativi:** nutrition-config.js, motor-v12.js, pwa-contracts.js, index.html; test mirati e documenti di riscontro. Catalogo non modificato da questo intervento. **Commit:** nessuno; nessun push o pubblicazione.
+
+
+## 27/09/2026 — Punto 1: dosi correnti nella selezione delle nuove proposte
+
+**Difetto:** poolAmmesso leggeva le quantità della cache persistente compilata, potenzialmente precedenti al salvataggio del nutrizionista. Il ricalcolo successivo dei condimenti non rendeva corretti i controlli precedenti di selezione/copertura.
+
+**Correzione:** prima del filtro di ammissibilità, materializzazione della combinazione usando il percorso esistente e il resolver corrente. Nessuna scrittura nel catalogo, nessuna modifica dello storico o dell'ordine P → C → V. Le eccezioni di dose esplicite della ricetta restano tali; questo intervento non introduce override per ricetta e non inventa dosi S/G mancanti.
+
+**Prova mirata:** tests/pwa-config-dosi-proposte.test.js usa i cataloghi reali con archivio simulato: cambia una dose contestuale a 137, verifica il nuovo candidato e i nutrienti, rimaterializza il vecchio snapshot e ne verifica quantità immutate; verifica anche cache persistente immutata. Primo tentativo del test usava il nome macro errato “proteine”; corretto il selettore del test ai token P reali senza modificare catalogo o processo. Sintassi, integrità e diff controllati.
+
+**Stato:** punto 1 ancora parziale. Risolto l'uso di dosi stantie nel pool delle nuove proposte; restano copertura completa colazione/spuntini, precedenze e configurazione di dosi per ricetta, parametri temporali/classi e verifica sul dispositivo. Le altre sezioni mantengono gli stati precedenti; nessuna nuova certificazione generale.
+
+**File:** motor-v12.js; tests/pwa-config-dosi-proposte.test.js; registro, stato, riscontro, matrice ed esito. Nessun commit/push/release.
+
+Controllo del percorso coinvolto completato: pwa-integrazione-runtime.test.js superato (14 pasti, unicità, consecutività fonte P, anteprima e commit validato in memoria). Eseguito perché è cambiata la costruzione del pool comune. Nessuna suite estesa o visuale.
+
+
+## 27/09/2026 — Punto 1: integrazione dosi, contesti, classi, orari e conteggi condivisi
+
+**Difetti affrontati:** quantità colazione memorizzate nelle varianti e non aggiornate alle nuove impostazioni; quantità specifiche ricetta non configurabili; contesti mancanti per parte degli ingredienti; orari salvati ma non consumati dalla chiusura effettiva; campi classi carboidrati separati dal resolver; limiti dei pasti principali senza conteggio degli altri contesti; rischio di riusare snapshot quando si cambia o rimuove una scelta.
+
+**Modifiche applicate:**
+- Tutti gli ingredienti compaiono nella pagina nutrizionista con i tre contesti. Dosi delle ricette e delle alternative di condimento configurabili per modello/ingrediente; dato vuoto conserva il riferimento esistente. Dose S/G mancante resta mancante fino all'inserimento esplicito: nessuna quantità inventata.
+- Resolver unico delle dosi: override specifico ricetta, eccezione esplicita del template, override contestuale, dose principale ingrediente/macro, riferimento contestuale PDF, catalogo. La dose principale non si estende alla colazione/spuntino. I default PDF sono distinti dagli override; null sui massimi resta nessun tetto anche dopo riapertura.
+- Colazione e spuntini materializzano le dosi correnti, incluse conversioni pezzi/grammi e porzione frutta; salvano ingredienti/nutrizione per conservare le quantità pianificate. Riepiloghi e dettagli leggono gli snapshot. Cambio/rimozione della scelta invalida lo snapshot precedente; un semplice cambio Setting non lo riscrive.
+- Limiti contestuali applicati alla selezione colazione/spuntini e alla validazione di salvataggio; massimo del pasto principale verificato sul pasto completo. Conteggi piano/storico deduplicati per slot. Per il motore, colazioni e spuntini già presenti riducono il budget globale dell'ingrediente senza ridurre il tetto del solo pasto principale.
+- Minimi ingredienti: esclusione delle combinazioni che lascerebbero troppo pochi slot per soddisfarli nella settimana completa; controllo finale e gestione del budget residuo quando si conserva una parte del piano. Nessuna modifica all'ordine di compilazione P → C → V.
+- Classi carboidrati portate nel resolver e nel dato canonico salvato, con lettura compatibile del record precedente. Controlli su min/max, tetto semplici a colazione e classe complessi nel commit settimanale. Minimo semplici verificato quando sono presenti sette colazioni.
+- Orari HH:MM validati; scadenza al minuto usata da chiusura del pasto, consumo automatico e orario visualizzato. Il testo del tetto colazioni speciali mostra la configurazione effettiva.
+
+**Verifiche superate:** sintassi dei moduli, test modificati e quattro script inline; integrità HTML; diff. Prove mirate: resolver; configurazione proteine (estesa a salvataggio/riapertura di dose ricetta, orario e classi); frutta/verdura; validazione ingredienti; dosi nuove proposte; limiti/intervalli; contesti/orari; spuntini/frutta; protocollo commit configurazione. Prova del percorso comune su catalogo reale: 14 pasti, unicità, consecutività P, anteprima e commit. Tutte queste prove usano archivi simulati. Il percorso completo è stato ricontrollato dopo l'integrazione dei conteggi condivisi; gli ultimi affinamenti della precedenza delle dosi e dei minimi sui piani parzialmente preservati hanno controlli mirati.
+
+**Anomalie emerse nei controlli:** la copia JSON trasformava Infinity in null prima della validazione: sostituita con copie che conservano il valore invalido. Aggiornati i contesti dei test VM per caricare le nuove funzioni reali; nessun dato del catalogo modificato per ottenere il PASS. Il tentativo `node --check index.html` non è una verifica valida per Node: controllo eseguito correttamente estraendo i quattro script inline.
+
+**Verifica reale bloccata:** preparato tests/pwa-config-indexeddb-browser.test.js per commit, abort e riapertura del browser usando la funzione applicativa. Playwright è installato ma gli eseguibili Chromium/headless shell non sono presenti. Test non eseguito, NON superato. Non sono stati installati browser né eseguite verifiche visuali/screenshot.
+
+**Stato onesto:** sezione 1 ancora ◐ integrata / ◐ funzionante, senza certificazione complessiva. Restano da chiudere la prova sul runtime PWA reale e l'esercizio combinato dei minimi con rigenerazione parziale/pasti speciali; i dati S/G demandati a Qwen non sono stati forniti da questo intervento. Le nuove funzioni descritte hanno le prove puntuali sopra, non una garanzia su ogni combinazione di impostazioni. Le altre sezioni mantengono lo stato precedente; la sezione 8 beneficia delle dosi/snapshot ma non è integralmente certificata.
+
+**File:** index.html, nutrition-config.js, motor-v12.js; test pwa-config-contesti-orari e pwa-config-indexeddb-browser nuovi, test mirati aggiornati; documenti di riscontro, stato, matrice, esito e registro. Cataloghi invariati in questo intervento. **Commit:** nessuno. Nessun push/pubblicazione. Registro append-only.
+
+
+## 27/09/2026 — Punto 1: conteggi dei pasti preservati e rigenerazione parziale
+
+**Difetto:** i conteggi iniziali potevano includere record vuoti, speciali o duplicati piano/consumo, facendo apparire completa una settimana ordinaria; alcuni percorsi leggevano ricette in cache invece delle realizzazioni salvate.
+
+**Intervento:** in motor-v12.js introdotta lettura comune piano/consumi con precedenza al consumo per slot; lettura delle realizzazioni salvate quando presenti, esclusione dei record vuoti e degli speciali dai conteggi ordinari. Applicata al contesto del singolo pasto, alla settimana preservata e alla categoria AUTO del giorno precedente fuori settimana. Gli slot da rigenerare sono esclusi dai conteggi iniziali. Nessuna modifica alla compilazione P → C → V o ai contratti di consecutività delle fonti.
+
+**Verifica:** sola lettura del codice e del diff. Nessun test o controllo automatico di sintassi eseguito dopo l'istruzione di Cwe; autorizzazione preventiva registrata in AGENTS.md. Le prove precedenti non certificano questa modifica.
+
+**Stato:** punto 1 ancora parziale; restano verifica mirata dei conteggi modificati e coerenza con i record storici legacy nel validatore finale, collaudo IndexedDB/browser e dati S/G da Qwen. Nessuna nuova spunta verde. Sezioni 1 e 8 ◐/◐, tutte le altre 🔎/🔎.
+
+**File:** motor-v12.js, AGENTS.md, registro, stato, riscontro, matrice ed esito. Commit: nessuno. Nessun push o pubblicazione.
+
+
+## 27/09/2026 — Punto 1: validatore condiviso e metadati di collaudo
+
+**Causa:** il validatore settimanale ignorava i record storici senza realizzazioni mentre la generazione li conteggiava. La lettura comune poteva scartare riferimenti non leggibili, riducendo silenziosamente i conteggi.
+
+**Modifica:** il validatore usa ricetteOrdinariePerConteggi come generazione singola/settimanale, legge gli ID legacy e primoCereale; conserva la priorità agli snapshot e l'esclusione degli speciali dal bilancio ordinario. Ricette o realizzazioni mancanti e ricette ordinarie senza ingredienti producono un errore esplicito. Nessun recupero dal vecchio database. Mantenuto il default data del contesto settimanale.
+
+**Metadati:** blocco @qa-metadata in motor-v12.js, ID P1-conteggi-preservati: percorsi, regole, test mirato, limiti della prova e casi futuri (IndexedDB, rigenerazione parziale/blocchi/speciali, domenica-lunedì, commit legacy misti). Nessuna telemetria, scrittura utente o esecuzione automatica aggiunta. AGENTS aggiornato all'autorizzazione dei soli controlli minimi.
+
+**Controlli:** sintassi di motore e nuovo test superata; controllo struttura tramite caricamento del motore, parsing metadati e lettura diff; git diff --check superato. pwa-conteggi-preservati.test.js superato: deduplica, speciali/vuoti, legacy, priorità snapshot, catalogo immutato, errori sui riferimenti mancanti/ingredienti assenti. Materializzatore simulato in questa prova. Eseguita una sola prova esistente del percorso direttamente coinvolto, pwa-integrazione-runtime.test.js: cataloghi reali, 14 pasti, unicità, consecutività fonte, anteprima e commit validato superati su archivio in memoria. Nessuna suite completa, prova visuale o IndexedDB reale. Queste prove non coprono ancora tutte le combinazioni annotate nei metadati.
+
+**Esito:** allineamento implementato e verifiche mirate superate; punto 1 resta parziale, non certificato integralmente. Sezioni 1 e 8 ◐/◐; altre sezioni 🔎/🔎. Restano collaudo dei casi indicati e browser reale, dati S/G da Qwen.
+
+**File:** motor-v12.js, tests/pwa-conteggi-preservati.test.js, AGENTS.md e documenti di riscontro. Commit: nessuno; nessun push/release.
+
+## 27/09/2026 — Riduzione del contesto e passaggio di consegne
+
+Creato docs/RIPRESA_BREVE.md con stato, interventi già implementati, prove disponibili, residui, regole essenziali e prompt di ripresa nello stesso workspace. AGENTS impone letture selettive, riuso delle prove valide, resoconti non duplicati e riscontro sintetico per stati invariati. Nessun refactoring o modifica applicativa; nessun test eseguito per questa modifica documentale. Non garantita una percentuale di risparmio. Le modifiche locali non sono trasferite dal solo documento. Stati invariati: 1/8 parziali; 2–7/9–16 da verificare. Nessun commit/push.
+
+
+## 27/09/2026 — Checkpoint Git autorizzato da Cwe
+
+Richiesta esplicita: «Pusha». Preparato commit del lavoro locale accumulato: applicazione, configurazione, contratti, catalogo, sincronizzazione, spesa, test e documentazione già presenti nel workspace. Scheda RIPRESA_BREVE aggiornata per ripresa dal repository. Fetch eseguito: main inizialmente allineato a origin/main. Controlli minimi: sintassi di tutti i JS modificati/nuovi e script inline, parsing JSON, chiusura HTML, diff e registro solo aggiunte superati. Riutilizzate le prove mirate già registrate, senza nuove suite. Stato funzionale invariato e parziale; il push non costituisce certificazione di completamento. Hash identificabile nel commit che contiene questa voce, messaggio «Salva avanzamento PWA e scheda di ripresa».

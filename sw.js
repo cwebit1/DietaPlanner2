@@ -1,109 +1,41 @@
-/* Service Worker — Dieta Planner
-   Strategia: l'HTML e i JSON vengono SEMPRE presi dalla rete.
-   Solo se sei offline viene usata l'ultima copia salvata.
-   Questo garantisce che l'app installata veda sempre l'ultima
-   versione caricata su GitHub, senza dover reinstallare nulla. */
-
-const CACHE_NAME = 'dieta-planner-v2';
-
-/* All'attivazione: cancella le cache vecchie e prende il
-   controllo di tutte le pagine aperte immediatamente. */
-self.addEventListener('activate', (event) => {
-  event.waitUntil(
-    caches.keys().then((nomi) => {
-      return Promise.all(
-        nomi
-          .filter((n) => n !== CACHE_NAME)
-          .map((n) => caches.delete(n))
-      );
-    }).then(() => self.clients.claim())
-  );
+/* Un'unica versione di HTML, motore, cataloghi e contratti, anche offline.
+   L'installazione fallisce se una risorsa obbligatoria manca: resta la versione
+   precedente. Il nuovo worker attende la chiusura delle vecchie pagine. */
+const CACHE_NAME='dietaplanner-shell-contracts-v3';
+const APP_FILES=['./','index.html','nutrition-config.js','engine-core.js',
+  'pwa-contracts.js','barcode-spesa.js','motor-v12.js','firebase-auth.js',
+  'db-ricette.json','ingredienti-new.json','db-visuale.json',
+  'manifest.json','icon-192.png','icon-512.png'];
+const appURL=path=>new URL(path,self.registration.scope).href;
+self.addEventListener('install',event=>{
+  event.waitUntil((async()=>{
+    const responses=await Promise.all(APP_FILES.map(async path=>{
+      const response=await fetch(new Request(appURL(path),{cache:'reload'}));
+      if(!response.ok)throw new Error('Risorsa release assente: '+path);
+      return [appURL(path),response];
+    }));
+    const cache=await caches.open(CACHE_NAME);
+    await Promise.all(responses.map(([url,response])=>cache.put(url,response)));
+  })());
 });
-
-/* All'installazione: attiva subito, senza aspettare che
-   l'utente chiuda e riapra l'app. */
-self.addEventListener('install', (event) => {
-  self.skipWaiting();
+self.addEventListener('activate',event=>{
+  event.waitUntil((async()=>{
+    for(const name of await caches.keys()){
+      if((name.startsWith('dietaplanner-shell-')||name.startsWith('dieta-planner-'))&&name!==CACHE_NAME)await caches.delete(name);
+    }
+    await self.clients.claim();
+  })());
 });
-
-/* Ad ogni richiesta:
-   - HTML (index.html, la pagina stessa): SEMPRE dalla rete.
-     Solo se sei completamente offline, usa l'ultima copia.
-   - JSON (ingredienti-new.json, db-ricette.json): SEMPRE dalla rete,
-     con fallback alla cache se offline.
-   - manifest.json e icone: cache-first (cambiano raramente).
-   - Tutto il resto: network-first con fallback. */
-self.addEventListener('fetch', (event) => {
-  const url = new URL(event.request.url);
-
-  /* Richieste non-GET (es. POST): ignora, lascia gestire al browser */
-  if (event.request.method !== 'GET') return;
-
-  /* File HTML: network-first assoluto */
-  if (url.pathname.endsWith('.html') || url.pathname === '/' || url.pathname.endsWith('/')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((risposta) => {
-          /* Salva una copia in cache per il fallback offline */
-          const copia = risposta.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, copia);
-          });
-          return risposta;
-        })
-        .catch(() => {
-          /* Offline: usa l'ultima copia salvata */
-          return caches.match(event.request).then((cached) => {
-            return cached || new Response('Offline', { status: 503 });
-          });
-        })
-    );
-    return;
+self.addEventListener('fetch',event=>{
+  const url=new URL(event.request.url),scope=new URL(self.registration.scope);
+  if(event.request.method!=='GET'||url.origin!==scope.origin||!url.pathname.startsWith(scope.pathname))return;
+  url.search='';url.hash='';
+  const shell=APP_FILES.some(path=>appURL(path)===url.href);
+  if(shell){
+    event.respondWith((async()=>{
+      const cache=await caches.open(CACHE_NAME),cached=await cache.match(url.href);
+      return cached||new Response('Versione applicazione incompleta: riaprire dopo aggiornamento',{status:503});
+    })());
   }
-
-  /* File JSON (ingredienti-new.json, db-ricette.json): network-first */
-  if (url.pathname.endsWith('.json') && !url.pathname.includes('manifest')) {
-    event.respondWith(
-      fetch(event.request)
-        .then((risposta) => {
-          const copia = risposta.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, copia);
-          });
-          return risposta;
-        })
-        .catch(() => {
-          return caches.match(event.request).then((cached) => {
-            return cached || new Response('{}', {
-              status: 200,
-              headers: { 'Content-Type': 'application/json' }
-            });
-          });
-        })
-    );
-    return;
-  }
-
-  /* manifest.json: cache-first (cambia raramente) */
-  if (url.pathname.includes('manifest')) {
-    event.respondWith(
-      caches.match(event.request).then((cached) => {
-        return cached || fetch(event.request);
-      })
-    );
-    return;
-  }
-
-  /* Tutto il resto (icone, ecc.): network-first con fallback */
-  event.respondWith(
-    fetch(event.request)
-      .then((risposta) => {
-        const copia = risposta.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, copia);
-        });
-        return risposta;
-      })
-      .catch(() => caches.match(event.request))
-  );
+  // Immagini opzionali restano indipendenti dal contratto del motore.
 });
