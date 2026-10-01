@@ -3454,6 +3454,11 @@ function formattaQuantita(variante, grammi){
   }
   return `${Math.round(grammi)}g`;
 }
+/* @qa-metadata {"id":"P7-quantita-native-riepiloghi","paths":["formattaQuantitaIngrediente","htmlIngredientiPastoRs","htmlCaroselloColazioneRs","etichettaOpzioneSpuntino","apriModalDettaglioRicetta"],"focusedTest":"tests/pwa-quantita-native-riepiloghi.test.js","rules":["pz espliciti mostrati come quantità nativa anche frazionaria","grammi legacy preservati","porzioni scalate senza usare il peso corrente per reinterpretare i pezzi snapshot"],"pending":["riepilogo reale dopo aggiornamento shell"]} */
+function formattaQuantitaIngrediente(variante, ingrediente, scala=1){
+  if(ingrediente.unita==='pz') return `${Number(ingrediente.quantita)*scala} pz`;
+  return formattaQuantita(variante,Number(ingrediente.grammi??ingrediente.quantita)*scala);
+}
 
 /* Ritorna il badge HTML della fascia di difficoltà con colore:
    verde=facile, giallo=medio, rosso=difficile */
@@ -5267,7 +5272,7 @@ async function etichettaOpzioneSpuntino(ricetta, varianti){
   const nomePulito = ricetta.nome.replace(/\s*\((spuntino|occasionale)\)\s*/gi, '').trim();
   const quantita = ricetta.ingredienti.map(i=>{
     const v = varianti.find(x=>x.id===i.variantId);
-    return v ? `${v.nome} ${formattaQuantita(v, i.quantita)}` : null;
+    return v ? `${v.nome} ${formattaQuantitaIngrediente(v, i)}` : null;
   }).filter(Boolean).join(', ');
   return quantita ? `${nomePulito} — ${quantita}` : nomePulito;
 }
@@ -5583,7 +5588,7 @@ function htmlIngredientiPastoRs(ricetta,mappaVarianti,mappaIngredienti){
     const variante=ing.variantId?mappaVarianti.get(String(ing.variantId)):null;
     const ingredienteBase=variante&&mappaIngredienti?mappaIngredienti.get(String(variante.ingredienteId||'')):null;
     const nome=ing.nomeLibero||ing.nome||(variante&&variante.nome)||'Ingrediente';
-    const quantita=Number(ing.quantita)>0?formattaQuantita(variante,Number(ing.quantita)):'';
+    const quantita=Number(ing.quantita)>0?formattaQuantitaIngrediente(variante,ing):'';
     return '<div class="ingredient"><span class="food-icon">'+htmlIconaIngredientePastoRs(nome,variante,ingredienteBase)+'</span><span class="ingredient-name">'+escPastoRs(nome)+(quantita?'<small>'+escPastoRs(quantita)+'</small>':'')+'</span></div>';
   }).join('');
 }
@@ -5642,7 +5647,7 @@ function htmlCaroselloColazioneRs(voce,varianti,mappaIngredienti,descrizione,nut
   if(ricettaSpeciale){
     for(const ing of (ricettaSpeciale.ingredienti||[]).slice(0,3)){
       const v=ing.variantId?perId.get(String(ing.variantId)):null;
-      ingredienti.push({nome:ing.nomeLibero||ing.nome||(v&&v.nome)||'Ingrediente',quantita:Number(ing.quantita)>0?formattaQuantita(v,Number(ing.quantita)):'',variante:v});
+      ingredienti.push({nome:ing.nomeLibero||ing.nome||(v&&v.nome)||'Ingrediente',quantita:Number(ing.quantita)>0?formattaQuantitaIngrediente(v,ing):'',variante:v});
     }
   }else{
     for(const gruppo of COLAZIONE_GRUPPI){
@@ -6832,8 +6837,7 @@ function risolviRiferimentiIngredienteTesto(testoEscapato, ricetta, varianti, sc
     const ing = (ricetta.ingredienti||[]).find(i=>i.variantId===variantId);
     if(!ing) return match;
     const variante = varianti.find(v=>v.id===ing.variantId) || null;
-    const grammiPerFormato = ing.unita==='pz' ? (Number(ing.grammi)||Number(ing.quantita)||0) : (Number(ing.quantita)||0);
-    return formattaQuantita(variante, grammiPerFormato*scala);
+    return formattaQuantitaIngrediente(variante, ing, scala);
   });
 }
 /* Risoluzione dei contenuti editoriali (descrizione, procedimento
@@ -6877,10 +6881,8 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
   const ingredientiHtml = ricetta.ingredienti.map(i=>{
     const variante = i.variantId ? varianti.find(v=>v.id===i.variantId) : null;
     const nome = variante ? variante.nome : (i.nomeLibero||'?');
-    // Stesso contratto già usato da lista spesa/inventario: "quantita" è nell'unità
-    // nativa (pezzi per Uova/Friselle), formattaQuantita si aspetta sempre grammi.
-    const grammiPerFormato = i.unita==='pz' ? (Number(i.grammi)||Number(i.quantita)||0) : (Number(i.quantita)||0);
-    const qtaTesto = formattaQuantita(variante, grammiPerFormato*scala);
+    // Quantità nativa esplicita dello snapshot; porzioni scalate solo per la spesa.
+    const qtaTesto = formattaQuantitaIngrediente(variante, i, scala);
     return `<li>${nome}: ${qtaTesto}</li>`;
   }).join('');
 
@@ -7296,71 +7298,36 @@ async function renderFrequenzeSettimana(){
    pranzo/cena. Non ha nulla a che fare con gli spuntini (facoltativi, tetti a parte):
    tenerle insieme in un'unica funzione voleva dire ricalcolare anche i tetti degli
    spuntini ogni volta che si rigenera un pranzo, sprecando lavoro senza motivo. */
-async function getConsumiProteiciSettimana(){
+/* @qa-metadata {"id":"P11-frequenze-snapshot","paths":["conteggiProteiciSettimana","getConsumiProteiciSettimana","getConsumiProteiciSettimanaConsumati","renderFrequenzeSettimana"],"focusedTest":"tests/pwa-frequenze-snapshot.test.js","rules":["realizzazioni correnti e storico prevalgono sugli ID legacy","gruppo congelato prevale sul catalogo","log consumato deduplicato per slot"],"pending":["barra Uova nel browser dopo aggiornamento shell"]} */
+async function conteggiProteiciSettimana(soloConsumati){
   const giorni = giorniSettimana();
   const gruppi = {carne:0,pesce:0,formaggi:0,uova:0,legumi:0};
   const sottotipi = {carne_rossa:0, affettati:0, pesce_grande:0, pesce_conservato:0};
-
-  const [tuttoIlPiano, tutteLeRicette] = await Promise.all([getAll('piano'), getAll('ricette')]);
-  const pianoPerId = {}; for(const v of tuttoIlPiano) pianoPerId[v.id] = v;
-  const ricettePerId = {}; for(const r of tutteLeRicette) ricettePerId[r.id] = r;
-
+  const [piano, ricette, logs] = await Promise.all([getAll('piano'), getAll('ricette'), soloConsumati?getAll('consumoGiorno'):Promise.resolve([])]);
+  const pianoPerId = new Map(piano.map(v=>[v.id,v]));
+  for(const log of logs)pianoPerId.set(log.giorno+'_'+log.pasto,{...log,consumato:true});
+  const ricettePerId = new Map(ricette.map(r=>[r.id,r]));
   for(const g of giorni){
     for(const pasto of ['pranzo','cena']){
-      const voce = pianoPerId[g+'_'+pasto];
-      if(!voce) continue;
-      const idRicette = voce.modo==='multi'
-        ? [voce.primoId, voce.secondoId, voce.contornoId].filter(Boolean)
-        : [voce.ricettaId].filter(Boolean);
-      for(const rid of idRicette){
-        const ricetta = ricettePerId[rid];
-        if(!ricetta || !ricetta.gruppoProteico) continue;
-        const sottotipo = ricetta.gruppoProteico;
-        const gruppo = SOTTOTIPO_A_GRUPPO[sottotipo] || sottotipo; // retrocompatibilità con vecchi tag piatti
-        if(gruppi.hasOwnProperty(gruppo)) gruppi[gruppo]++;
-        if(sottotipi.hasOwnProperty(sottotipo)) sottotipi[sottotipo]++;
+      const voce=pianoPerId.get(g+'_'+pasto);
+      if(!voce || (soloConsumati&&!voce.consumato))continue;
+      const realizzazioni=voce.realizzazioni&&voce.realizzazioni.length
+        ? voce.realizzazioni
+        : [...new Set((voce.modo==='multi'?[voce.primoId,voce.secondoId,voce.contornoId]:[voce.ricettaId]).filter(Boolean))].map(ricettaId=>({ricettaId}));
+      for(const real of realizzazioni){
+        const sottotipo=Object.prototype.hasOwnProperty.call(real,'gruppoProteico')?real.gruppoProteico:ricettePerId.get(real.ricettaId)?.gruppoProteico;
+        if(!sottotipo)continue;
+        const gruppo=SOTTOTIPO_A_GRUPPO[sottotipo]||sottotipo;
+        if(Object.prototype.hasOwnProperty.call(gruppi,gruppo))gruppi[gruppo]++;
+        if(Object.prototype.hasOwnProperty.call(sottotipi,sottotipo))sottotipi[sottotipo]++;
       }
     }
   }
-  return {gruppi, sottotipi};
+  return {gruppi,sottotipi};
 }
-
-/* Come sopra, ma SOLO i pasti già davvero consumati (voce.consumato===true) — usata
-   esclusivamente per la card che l'utente vede ("Frequenze proteiche"), che deve
-   riflettere quanto è stato REALMENTE mangiato finora questa settimana, non quanto è
-   già programmato per i giorni ancora a venire (altrimenti lunedì mattina mostrerebbe
-   già pesce/formaggio previsti per mercoledì, come se fossero già stati mangiati).
-   Il motore e l'allarme F continuano a usare getConsumiProteiciSettimana() sopra,
-   che deve vedere l'intera settimana pianificata per non sforare i tetti quando
-   genera/valuta nuove proposte — solo la visualizzazione cambia. */
-async function getConsumiProteiciSettimanaConsumati(){
-  const giorni = giorniSettimana();
-  const gruppi = {carne:0,pesce:0,formaggi:0,uova:0,legumi:0};
-  const sottotipi = {carne_rossa:0, affettati:0, pesce_grande:0, pesce_conservato:0};
-
-  const [tuttoIlPiano, tutteLeRicette] = await Promise.all([getAll('piano'), getAll('ricette')]);
-  const pianoPerId = {}; for(const v of tuttoIlPiano) pianoPerId[v.id] = v;
-  const ricettePerId = {}; for(const r of tutteLeRicette) ricettePerId[r.id] = r;
-
-  for(const g of giorni){
-    for(const pasto of ['pranzo','cena']){
-      const voce = pianoPerId[g+'_'+pasto];
-      if(!voce || !voce.consumato) continue;
-      const idRicette = voce.modo==='multi'
-        ? [voce.primoId, voce.secondoId, voce.contornoId].filter(Boolean)
-        : [voce.ricettaId].filter(Boolean);
-      for(const rid of idRicette){
-        const ricetta = ricettePerId[rid];
-        if(!ricetta || !ricetta.gruppoProteico) continue;
-        const sottotipo = ricetta.gruppoProteico;
-        const gruppo = SOTTOTIPO_A_GRUPPO[sottotipo] || sottotipo;
-        if(gruppi.hasOwnProperty(gruppo)) gruppi[gruppo]++;
-        if(sottotipi.hasOwnProperty(sottotipo)) sottotipi[sottotipo]++;
-      }
-    }
-  }
-  return {gruppi, sottotipi};
-}
+async function getConsumiProteiciSettimana(){return conteggiProteiciSettimana(false);}
+/* La card mostra soltanto i consumi; le scelte manuali considerano anche il piano. */
+async function getConsumiProteiciSettimanaConsumati(){return conteggiProteiciSettimana(true);}
 
 /* Tetti settimanali degli SPUNTINI (B12) — indipendente dalle statistiche di pranzo/cena
    sopra. Usata solo da chi lavora su uno spuntino. */

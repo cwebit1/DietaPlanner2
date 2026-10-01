@@ -587,3 +587,5 @@ Push eseguito, deploy Pages riuscito. Nuovi riscontri reali nei residui della ma
 
 ## 02/10/2026 — Peso fette documentato
 Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mirata conversione/nutrienti/scarico/override/snapshot e shell v6 superata; dettagli nel registro omonimo. Collaudo UI ancora da completare, dosi S/G sospese.
+
+02/10/2026 — Set e Menu verificati nel browser e promossi nella matrice. Correzioni riepilogo pz/frequenze snapshot provate; shell v7 predisposta, attivazione reale da verificare. Resoconto nel registro «Riepiloghi quantitativi e frequenze da snapshot».
