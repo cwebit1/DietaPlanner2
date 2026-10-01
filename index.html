@@ -2273,7 +2273,9 @@ function componentiColazioneDaSet(prefValore, varianti){
   }
   return componenti;
 }
+/* @qa-metadata {"id":"P8-colazione-automatica-completa","funzioni":["componentiDaSchemaColazione","scegliColazioneAutomaticaCoerente"],"regole":["colazione automatica ordinaria richiede proteina e carboidrato complesso","nessuna dose o componente inventata","scelte esplicite del Set preservate"],"test":"tests/pwa-colazione-automatica-completa.test.js","rinviati":["collaudo generazione dopo aggiornamento cache"]} */
 function componentiDaSchemaColazione(schema, varianti){
+  if(!schema?.proteine || !schema?.carboidrati) return null;
   const componenti={};
   for(const gr of COLAZIONE_GRUPPI) componenti[gr.chiave]=null;
   for(const chiave of ['proteine','carboidrati','grassi','carboidrati_semplici']){
@@ -8414,7 +8416,7 @@ async function segnaAcquistoSpesaAtomico(id){
 }
 
 /* @qa-metadata
-{"id":"PWA-barcode-barra-diretto","paths":["btnBarcodeBarra","apriBarcodeSpesa","calcolaListaSpesa"],"focusedTest":"tests/pwa-barcode-barra.test.js","rules":["icona apre direttamente lo stesso lettore della Spesa","apertura non cambia vista o bozze","acquisto mantiene transazione prodotti/inventario","riepilogo ricalcolato solo nella vista Spesa"],"pending":["fotocamera e pulsante touch sul dispositivo"]}
+{"id":"PWA-barcode-barra-diretto","paths":["btnBarcodeBarra","apriBarcodeSpesa","calcolaListaSpesa"],"focusedTest":"tests/pwa-barcode-barra.test.js","rules":["icona apre direttamente lo stesso lettore della Spesa","apertura non cambia vista o bozze","acquisto mantiene transazione prodotti/inventario","riepilogo ricalcolato solo nella vista Spesa"],"pending":["fotocamera e pulsante touch sul dispositivo"],"evidence":["01/10 browser reale: icona, EAN manuale, prodotto 2x125g, inventario 250g e riavvio superati"]}
 */
 let spesaSettimanaScarto=0;
 async function apriBarcodeSpesa(scartoSettimane=spesaSettimanaScarto){

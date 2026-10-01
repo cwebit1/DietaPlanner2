@@ -8,7 +8,7 @@ Questa lista distingue lavoro già realizzato, difetti e verifiche residue. Stat
 |---|---|---|---|
 | 1 | Cataloghi | ✅ Caricamento cataloghi reali provato. | 🔎 Cache e migrazione browser da verificare; conservare il caricamento. |
 | 2 | Ricette e componenti | ✅ Identità compilate e snapshot principali presenti. | 01/10: identità pasto combinato/separato comune provata e collegata a costruzione/commit. Resta UI/dispositivo. |
-| 3 | Configurazione | ✅ Resolver/precedenze/parametri collegati e verificati nei percorsi documentati. | S/G sospese; collaudo configurazione su IndexedDB reale. Vedere matrice corrente dei 16 punti. |
+| 3 | Configurazione | ✅ Resolver/precedenze/parametri collegati e verificati nei percorsi documentati. | S/G sospese; orario pranzo salvato e riletto su IndexedDB reale. Altri parametri da collaudare. Vedere matrice corrente dei 16 punti. |
 | 4 | Allergeni | ✅ Filtro clinico e snapshot allergeni verificati; classificazioni del catalogo Lotto F preservate. | D: interazione esclusioni e proposte sul dispositivo; nessuna classificazione inventata. |
 | 5 | Frequenze P | ✅ Frequenze risolte e conteggi condivisi verificati nei percorsi documentati. | D: salvataggio/riapertura sul dispositivo; prove tecniche riutilizzate. |
 | 6 | Rotazione P/C | ✅ Rotazione P/C, consecutività e intervalli configurati verificati. | D: persistenza cicli/log al riavvio; nessuna riscrittura del motore. |
@@ -31,8 +31,8 @@ Questa lista distingue lavoro già realizzato, difetti e verifiche residue. Stat
 | 23 | Pagina Pasto | ✅ Pipeline proposte/snapshot e conferma verificati. | D: interazione e resa visiva dei comandi; nessun nuovo restyling. |
 | 24 | Menu | ✅ Bozza, commit/errori, reset atomico sul piano reale con Menu aperto e isolamento consumo verificati. | D: navigazione/cambio settimana e IndexedDB reale. |
 | 25 | Dettaglio | ✅ Snapshot e protezione porzioni consumate; abort conserva oggetto. | D: preferiti, consultazione storico e timer touch. |
-| 26 | Inventario e spesa | ✅ Fabbisogno meno consumati/scorte provato. ◐ Acquisto manuale atomico verificato in simulazione. | 30/09: transazione unica, doppia conferma e abort provati; conservato calcolo spesa. Resta IndexedDB reale. |
-| 27 | Barcode | ✅ Checksum e quantità provati. 🔎 Scanner e acquisto implementati. | Collaudo dispositivo non eseguito; mantenere codice salvo difetti accertati. |
+| 26 | Inventario e spesa | ✅ Fabbisogno meno consumati/scorte provato. ◐ Acquisto manuale atomico verificato in simulazione. | 30/09: transazione unica, doppia conferma e abort provati; conservato calcolo spesa. Acquisto barcode manuale 2×125g e persistenza reale verificati; restano altri percorsi. |
+| 27 | Barcode | ✅ Checksum e quantità provati. 🔎 Scanner e acquisto implementati. | Icona diretta e inserimento EAN/prodotto manuali superati nel browser; fotocamera ancora dispositivo. |
 | 28 | Accessi e cloud | ⏸ Mantenere per decisione utente. | Non riaprire sviluppo o migrazioni cloud; nessuna certificazione implicita. |
 | 29 | Offline | ✅ Shell v4, install fallito e query offline verificati in simulazione. | D: installazione, aggiornamento e avvio locale offline reali. |
 | 30 | Controlli e stato | ✅ Conferma obbligatoria provata; riepiloghi riallineati ai 16 punti. | Conservare evidenze e matrice corrente; collaudo finale circoscritto dai metadati. |

@@ -581,3 +581,6 @@ Campi dei modelli collegati in maschera-ricette.html; modifica dosi ingredienti 
 ## 01/10/2026 — Accesso rapido barcode
 
 Icona diretta nella barra inferiore, collegata al lettore comune della Spesa senza cambio vista/bozze. Prova mirata collegamento/acquisto/rollback superata, sintassi e diff verificati. Stati complessivi invariati; resta fotocamera/touch sul dispositivo. Resoconto nel registro «Barcode diretto nella barra inferiore». Nessuna pubblicazione.
+
+## 01/10/2026 — Push autorizzato e browser reale
+Push eseguito, deploy Pages riuscito. Nuovi riscontri reali nei residui della matrice dei 16 punti; dettagli nel registro «Push autorizzato e collaudo browser reale». Corretto il difetto dimostrato delle colazioni automatiche incomplete, prova mirata superata e shell v5 predisposta. Certificazione completa ancora aperta per i soli casi non provati, hardware/servizi e sospensioni; nessuna spunta assegnata senza evidenza completa.

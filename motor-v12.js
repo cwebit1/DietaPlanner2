@@ -3497,7 +3497,7 @@ async function statoRollPasto(giorno,pasto,vocePendente){
 }
 
 /* @qa-metadata
-{"id":"PWA-roll-anteprima-atomica","paths":["ruotaPasto","validaRecordsContratti","commitPianoContratti"],"focusedTest":"tests/pwa-roll-anteprima-atomica.test.js","rules":["anteprima non scrive cicli/log","cicli e pasto committati insieme","conflitto ciclo intercettato","cicli pendenti non salvati nel piano"],"pending":["interazione e concorrenza IndexedDB sul dispositivo"]}
+{"id":"PWA-roll-anteprima-atomica","paths":["ruotaPasto","validaRecordsContratti","commitPianoContratti"],"focusedTest":"tests/pwa-roll-anteprima-atomica.test.js","rules":["anteprima non scrive cicli/log","cicli e pasto committati insieme","conflitto ciclo intercettato","cicli pendenti non salvati nel piano"],"pending":["interazione e concorrenza IndexedDB sul dispositivo"],"evidence":["01/10 browser reale: Roll C anteprima/Annulla e Roll P anteprima/Imposta superati; riavvio cicli non ancora provato"]}
 */
 async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
   opzioni=opzioni||{};
