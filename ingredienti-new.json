@@ -1,5 +1,5 @@
 {
-  "versione": 22,
+  "versione": 23,
   "ingredienti": {
     "Aglio": {
       "kcal": 149,
@@ -720,7 +720,10 @@
       "sottoCategoriaColazione": "carboidrati",
       "gradimento": 1,
       "porzione": 4,
-      "unitaPorzione": "fette",
+      "unitaPorzione": "pezzi",
+      "pesoPezzo": 8.8,
+      "pesoPorzioneGrammi": 35.2,
+      "fontePesoPezzo": "Mulino Bianco Fette Biscottate Dorate: 8,8 g/fetta — https://www.mulinobianco.it/le-dorate (verificato 02/10/2026; riferimento iniziale autorizzato)",
       "notaPorzione": "3-4 fette (PDF)",
       "stock": 1,
       "formatoRiordino": {

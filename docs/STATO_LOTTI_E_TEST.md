@@ -584,3 +584,6 @@ Icona diretta nella barra inferiore, collegata al lettore comune della Spesa sen
 
 ## 01/10/2026 — Push autorizzato e browser reale
 Push eseguito, deploy Pages riuscito. Nuovi riscontri reali nei residui della matrice dei 16 punti; dettagli nel registro «Push autorizzato e collaudo browser reale». Corretto il difetto dimostrato delle colazioni automatiche incomplete, prova mirata superata e shell v5 predisposta. Certificazione completa ancora aperta per i soli casi non provati, hardware/servizi e sospensioni; nessuna spunta assegnata senza evidenza completa.
+
+## 02/10/2026 — Peso fette documentato
+Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mirata conversione/nutrienti/scarico/override/snapshot e shell v6 superata; dettagli nel registro omonimo. Collaudo UI ancora da completare, dosi S/G sospese.

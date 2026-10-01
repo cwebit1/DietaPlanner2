@@ -137,3 +137,5 @@ Unificati in motor-v12.js i conteggi iniziali di piano/consumi per slot, con let
 ## 27/09/2026 — Validatore allineato e tracce QA
 
 Validatore settimanale collegato alla stessa lettura di generazione/rigenerazione per snapshot e ID legacy; riferimenti mancanti segnalati esplicitamente. Metadati @qa-metadata / P1-conteggi-preservati in motor-v12.js indicano funzioni, regole, prova mirata e casi da approfondire senza ricostruire l'analisi. Sintassi, struttura e diff controllati; pwa-conteggi-preservati e singolo percorso pwa-integrazione-runtime superati (archivio simulato). Nessuna suite estesa o verifica visuale. Il precedente divieto di controlli minimi è superato dall'ultima autorizzazione utente, registrata in AGENTS.md. Punto 1 ancora parziale: restano combinazioni annotate, IndexedDB reale e dati S/G. Stati complessivi invariati: 1 e 8 ◐/◐; altre 14 sezioni 🔎/🔎. Dettagli nel registro.
+
+02/10/2026: conversione fette corretta con peso documentato autorizzato; prova pwa-fette-peso-documentato superata. Riferimento registro «Peso fette documentato»; stati complessivi non promossi dalla sola prova quantitativa.
