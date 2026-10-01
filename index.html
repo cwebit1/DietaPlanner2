@@ -1103,6 +1103,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
   <button data-view="menu"><span class="ic">📅</span>Menù</button>
   <button data-view="ricette"><span class="ic">📖</span>Ricette</button>
   <button data-view="spesa"><span class="ic">🛒</span>Spesa</button>
+  <button id="btnBarcodeBarra" type="button" aria-label="Scansiona acquisto"><span class="ic" aria-hidden="true"><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M1 5V1h4M17 1h4v4M21 15v4h-4M5 19H1v-4M4 5v10M7 5v10M11 5v10M15 5v10M18 5v10" stroke="currentColor" stroke-width="1.5"/></svg></span>Barcode</button>
   <button data-view="inventario"><span class="ic">🧊</span>Inventario</button>
   <button data-view="set"><span class="ic">🎛</span>Set</button>
   <button data-view="impostazioni"><span class="ic">⚙</span>Ecco</button>
@@ -1533,6 +1534,9 @@ async function commitMenuDraftAtomico(){
   const result=await DietaPlannerMotorV12.validaRecordsContratti(records,deleted);
   return commitPianoContratti(records,deleted,result,true);
 }
+/* @qa-metadata
+{"id":"PWA-commit-errori-sincroni","paths":["commitPianoContratti","commitSetDraftAtomico","renderMenuFooter","mostraVista"],"focusedTest":"tests/pwa-commit-errori-sincroni.test.js","rules":["errore sincrono dopo una scrittura abortisce tutta la transazione","cache invalidata solo al commit","salvataggio fallito conserva bozza e vista"],"pending":["riapertura IndexedDB sul dispositivo"]}
+*/
 function commitPianoContratti(records,deleted,result,forceRaw){
   if(!forceRaw&&records.length&&records.every(v=>menuDraftIntercetta('piano',v.id))){
     for(const v of records)menuDraft.voci.set(v.id,structuredClone(v));
@@ -1542,25 +1546,42 @@ function commitPianoContratti(records,deleted,result,forceRaw){
   }
   return new Promise((resolve,reject)=>{
     const transaction=db.transaction(['piano','impostazioni','diagnosticaCopertura'],'readwrite');
+    transaction.oncomplete=()=>{for(const name of ['piano','impostazioni','diagnosticaCopertura'])cacheGetAll[name]=null;if(result.tracking)DietaPlannerMotorV12.adottaTrackingDopoCommit(result.tracking);resolve();};
+    transaction.onerror=()=>reject(transaction.error);
+    transaction.onabort=()=>reject(transaction.error||new Error('Salvataggio annullato'));
+    try{
     const plan=transaction.objectStore('piano');
     for(const [id,expected] of Object.entries(result.baseline||{})){
       const check=plan.get(id);
       check.onsuccess=()=>{if(JSON.stringify(check.result||null)!==JSON.stringify(expected))transaction.abort();};
     }
-    for(const v of records)plan.put(v);
+    const settings=transaction.objectStore('impostazioni');
+    for(const update of result.rollUpdates||[]){
+      const check=settings.get(update.chiave);
+      check.onsuccess=()=>{if(JSON.stringify(check.result||null)!==JSON.stringify(update.baseline))transaction.abort();};
+      settings.put({chiave:update.chiave,valore:update.valore});
+    }
+    for(const v of records){const clean={...v};delete clean._rollPending;plan.put(clean);}
     for(const id of deleted)plan.delete(id);
     transaction.objectStore('impostazioni').put({chiave:'stackBinario',valore:result.stack});
     if(result.tracking)transaction.objectStore('impostazioni').put({chiave:'motoreNuovoTracking',valore:result.tracking});
     for(const row of result.diagnostics)transaction.objectStore('diagnosticaCopertura').put(row);
-    transaction.oncomplete=()=>{for(const name of ['piano','impostazioni','diagnosticaCopertura'])cacheGetAll[name]=null;if(result.tracking)DietaPlannerMotorV12.adottaTrackingDopoCommit(result.tracking);resolve();};
-    transaction.onerror=()=>reject(transaction.error);
-    transaction.onabort=()=>reject(transaction.error||new Error('Salvataggio annullato'));
+    }catch(error){transaction.abort();reject(error);}
   });
 }
 function commitSetDraftAtomico(){
   if(!setDraft||!setDraft.voci.size)return Promise.resolve();
-  const modifiche=[...setDraft.voci.entries()];cacheGetAll.impostazioni=null;
-  return new Promise((resolve,reject)=>{const trans=db.transaction('impostazioni','readwrite'),store=trans.objectStore('impostazioni');for(const [chiave,v] of modifiche){if(v===null)store.delete(chiave);else store.put(v);}trans.oncomplete=()=>resolve();trans.onerror=()=>reject(trans.error);trans.onabort=()=>reject(trans.error||new Error('Commit Set annullato'));});
+  const modifiche=[...setDraft.voci.entries()];
+  return new Promise((resolve,reject)=>{
+    const trans=db.transaction('impostazioni','readwrite');
+    trans.oncomplete=()=>{cacheGetAll.impostazioni=null;resolve();};
+    trans.onerror=()=>reject(trans.error);
+    trans.onabort=()=>reject(trans.error||new Error('Commit Set annullato'));
+    try{
+      const store=trans.objectStore('impostazioni');
+      for(const [chiave,v] of modifiche){if(v===null)store.delete(chiave);else store.put(v);}
+    }catch(error){trans.abort();reject(error);}
+  });
 }
 async function mostraDiagnosticaCopertura(){
   const rows=await getAll('diagnosticaCopertura');
@@ -1922,6 +1943,7 @@ function configAvanzataDaRisolta(resolved,sorgente){
   if(r.rotationDays)out.rotationDays=cloneConfigurazione(r.rotationDays);
   if(r.carbohydrateClasses)out.carbohydrateClasses=cloneConfigurazione(r.carbohydrateClasses);
   if(r.recipeDoses)out.recipeDoses=cloneConfigurazione(r.recipeDoses);
+  if(r.quoteVegetali)out.quoteVegetali=cloneConfigurazione(r.quoteVegetali);
   if(r.snackPortions)out.snackPortions=cloneConfigurazione(r.snackPortions);
   if(r.breakfastRegularCount!==undefined)out.breakfastRegularCount=r.breakfastRegularCount;
   if(r.specialBreakfastMax!==undefined)out.specialBreakfastMax=r.specialBreakfastMax;
@@ -2013,6 +2035,7 @@ async function renderConfigAvanzata(){
   for(const [key,value] of Object.entries(cfg.snackPortions))html+='<div class="nutri-row single"><span class="nutri-name">Dose spuntino '+key+'</span><span class="nutri-unit">g</span><input type="number" min="0" step="any" data-cfg-avanzata="snackPortions.'+key+'" value="'+value+'"></div>';
   for(const k of ['pranzo','cena'])html+='<div class="nutri-row single"><span class="nutri-name">Scadenza '+k+'</span><span class="nutri-unit">ora</span><input type="time" data-cfg-avanzata="deadlines.'+k+'" data-cfg-testo="1" value="'+((cfg.deadlines||cfgDefault.deadlines)[k]||'')+'"></div>';
   box.innerHTML=html;
+  box.insertAdjacentHTML('beforeend','<div class="nutri-source-label">Sughi e guarnizioni vegetali</div><p>Quantità per composizione e massimo in grammi. I modelli dichiarano quale quota utilizzare. Le dosi specifiche delle ricette prevalgono; il Set definisce quantità e massimi mancanti. Quantità vuota: da impostare; massimo vuoto: nessun tetto.</p>'+['S','G'].map(role=>'<div class="nutri-row"><span class="nutri-name">'+(role==='S'?'Sugo (S)':'Guarnizione (G)')+'</span><span class="nutri-unit">g</span><input type="number" min="0" step="any" aria-label="Quantità '+role+'" data-cfg-avanzata="quoteVegetali.'+role+'.quantita" value="'+(cfg.quoteVegetali?.[role]?.quantita??'')+'"><input type="number" min="0" step="any" aria-label="Massimo '+role+'" data-cfg-avanzata="quoteVegetali.'+role+'.massimo" value="'+(cfg.quoteVegetali?.[role]?.massimo??'')+'"></div>').join(''));
   aggiornaCampiProfiloNutrizionista();
   const active=new Set(a&&a.valore||[]),el=document.getElementById('configAllergeniAttivi');el.innerHTML=ALLERGENI_UE.map(([k,i,l])=>'<button type="button" data-allergene="'+k+'" class="'+(active.has(k)?'active':'')+'" title="'+l+'">'+i+' '+l+'</button>').join('');el.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>b.classList.toggle('active')));
   const classi=classiRec&&classiRec.valore||{},classBox=document.getElementById('configClassiCarboidrati');classBox.innerHTML='<div class="nutri-row header"><span>Classe</span><span>Unità</span><span>Min</span><span>Max</span></div>'+rigaNumericaConfig('vincoliClassiCarboidrati.complessi','Complessi',classi.complessi&&classi.complessi.min,classi.complessi&&classi.complessi.max,'sett.')+rigaNumericaConfig('vincoliClassiCarboidrati.semplici','Semplici',classi.semplici&&classi.semplici.min,classi.semplici&&classi.semplici.max,'sett.');
@@ -2084,10 +2107,11 @@ async function salvaConfigAvanzata(){
      configRuntime) - va invalidata qui, all'unico punto reale dove queste
      impostazioni cambiano davvero, non con controlli sparsi altrove. */
   if(window.DietaPlannerMotorV12&&typeof window.DietaPlannerMotorV12.invalidaConfigRuntime==='function')window.DietaPlannerMotorV12.invalidaConfigRuntime();
+  if(window.DietaPlannerMotorV12?.aggiornaCacheDosiRicette)await window.DietaPlannerMotorV12.aggiornaCacheDosiRicette();
   applicaConfigAvanzataRuntime(cfgEffettiva);
   await renderConfigAvanzata();
   const note=resolved.warnings&&resolved.warnings.length?' · '+resolved.warnings.join(' '):'';
-  document.getElementById('configAvanzataStato').textContent='✅ Configurazione salvata senza modificare il catalogo ricette'+note;
+  document.getElementById('configAvanzataStato').textContent='✅ Configurazione salvata'+note;
 }
 
 const NOMI_GIORNI_ESTESI = ['Domenica','Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato'];
@@ -2626,7 +2650,8 @@ async function salvaSetCompleto(mostraMessaggio){
   await put('impostazioni',{chiave:'tabellaGiornoCategoria',valore:cloneConfigurazione(tabellaProteineDraft||{})});
   const caps=await salvaLimitiPersonaliSet(false);
   if(!caps.ok){if(mostraMessaggio!==false)await avviso('⚠ '+caps.errori.join(' '));return caps;}
-  await commitSetDraftAtomico();
+  try{await commitSetDraftAtomico();}
+  catch(error){if(mostraMessaggio!==false)await avviso('Salvataggio non riuscito: '+error.message);return {ok:false,errori:[error.message]};}
   if(setDraft){setDraft.voci.clear();setDraft.modificata=false;}
   tabellaProteineAnteprima=null;
   /* I limiti personali appena salvati entrano nella config nutrizionale
@@ -3229,6 +3254,9 @@ async function primiSpecialiDisponibili(){
 /* =========================================================
    NAV
    ========================================================= */
+/* @qa-metadata
+{"id":"PWA-set-uscita-validata","paths":["mostraVista","salvaSetCompleto"],"focusedTest":"tests/pwa-set-uscita-validata.test.js","rules":["Salva ed esci usa le stesse validazioni del pulsante Salva","dati invalidi o abort conservano bozza e vista","chiusura avviso non scarta la bozza"],"pending":["riapertura Set su dispositivo"]}
+*/
 async function mostraVista(nome){
   const vistaAttuale = document.querySelector('nav.tabbar button.active')?.dataset.view;
   if(vistaAttuale==='menu' && nome!=='menu' && menuDraft && menuDraft.modificata){
@@ -3240,8 +3268,12 @@ async function mostraVista(nome){
         {testo:'Annulla', classe:'secondary', valore:'annulla'}
       ]
     );
-    if(scelta==='annulla')return;
-    if(scelta==='salva'){await commitMenuDraftAtomico();aggiornaListaSpesaAutomatica(menuSettimanaScarto);}
+    if(!scelta||scelta==='annulla')return;
+    if(scelta==='salva'){
+      try{await commitMenuDraftAtomico();}
+      catch(error){await avviso('Salvataggio non riuscito: '+error.message);return;}
+      aggiornaListaSpesaAutomatica(menuSettimanaScarto);
+    }
     menuDraft=null;
   }
   if(vistaAttuale==='set' && nome!=='set' && setDraft && setDraft.modificata){
@@ -3253,8 +3285,11 @@ async function mostraVista(nome){
         {testo:'Annulla', classe:'secondary', valore:'annulla'}
       ]
     );
-    if(scelta==='annulla')return;
-    if(scelta==='salva'){await commitSetDraftAtomico();}
+    if(!scelta||scelta==='annulla')return;
+    if(scelta==='salva'){
+      const result=await salvaSetCompleto(false);
+      if(!result.ok){await avviso('Salvataggio non riuscito: '+result.errori.join(' '));return;}
+    }
     setDraft=null;
     tabellaProteineDraft=null;
     tabellaProteineAnteprima=null;
@@ -3270,9 +3305,10 @@ async function mostraVista(nome){
   if(nome==='impostazioni')renderInfoVersioniRemote();
   if(nome==='nutrizionista')renderConfigAvanzata();
 }
-document.querySelectorAll('nav.tabbar button').forEach(btn=>{
+document.querySelectorAll('nav.tabbar button[data-view]').forEach(btn=>{
   btn.addEventListener('click', ()=> mostraVista(btn.dataset.view));
 });
+document.getElementById('btnBarcodeBarra').addEventListener('click',()=>apriBarcodeSpesa());
 
 /* =========================================================
    VIEW: SET — configurazione piano dieta settimanale
@@ -4420,6 +4456,61 @@ async function consumaVoceAtomica(voce,giorno,pasto){
     transaction.onabort=()=>reject(transaction.error||new Error('Il pasto è cambiato durante il consumo: riprovare'));
   });
 }
+/* @qa-metadata
+{"id":"PWA-consumo-manuale-atomico","paths":["salvaConsumoManualeAtomico","apriModalEditorColazione","apriModalEditorPasto","correctInventory"],"focusedTest":"tests/pwa-consumo-manuale-atomico.test.js","rules":["piano/storico/scorte/contatore/ultimo uso atomici","snapshot vecchio escluso dalla nuova selezione","doppio evento non ripete lo scarico","correzione per differenza e mancanze reali"],"pending":["IndexedDB reale","scarico legacy ignoto/scorta rimossa richiede riscontro utente"]}
+*/
+async function salvaConsumoManualeAtomico(voce,giorno,pasto){
+  const next={...voce,origine:'utente',consumato:true,dataConsumato:giorno};
+  delete next.ingredientiEffettivi;delete next.nutrizioneTotale;
+  if(next.modo==='unico'){
+    next.realizzazioni=[];next.motoreNuovo=false;next.bilancioVerdura=null;
+  }
+  const ingredients=await ingredientiEffettiviVoce(next);
+  next.nutrizioneTotale=await calcolaNutrizioneVoceConsumata(ingredients.length?{...next,ingredientiEffettivi:ingredients}:next);
+  next.ingredientiEffettivi=ingredients;
+  const config=await risolviSetUtenteCorrente();
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction(['piano','inventario','consumoGiorno','impostazioni','ricette'],'readwrite');
+    const plan=transaction.objectStore('piano'),inventory=transaction.objectStore('inventario'),logsStore=transaction.objectStore('consumoGiorno'),settings=transaction.objectStore('impostazioni'),recipes=transaction.objectStore('ricette');
+    let current,stock,logs,recipe,counter,failure,ready=0;
+    const finish=()=>{
+      if(++ready!==5)return;
+      try{
+        const prior=logs.find(l=>l.giorno===giorno&&l.pasto===pasto)||logs.find(l=>l.id===next.id+'_'+giorno);
+        const signature=v=>JSON.stringify([v?.modo||null,v?.ricettaId||null,v?.colazioneSpecialeId||null,v?.componenti||null,v?.porzioni||1]);
+        if(current?.consumato&&signature(current)===signature(next))return;
+        const delta=DietaPlannerContracts.correctInventory(stock,next.ingredientiEffettivi,prior,giorno);
+        for(const row of delta.changed)inventory.put(row);
+        const consumed={...next,scorteMancanti:delta.missing};plan.put(consumed);
+        const log={...structuredClone(consumed),id:next.id+'_'+giorno,giorno,pasto,ricettaIds:[next.ricettaId||next.colazioneSpecialeId].filter(Boolean),registratoIl:new Date().toISOString()};
+        if(pasto==='colazione'){
+          const previousBreakfasts=logs.filter(l=>l.pasto==='colazione').sort((a,b)=>a.giorno.localeCompare(b.giorno));
+          const breakfasts=previousBreakfasts.filter(l=>l.giorno!==giorno).concat(log).sort((a,b)=>a.giorno.localeCompare(b.giorno));
+          let count=previousBreakfasts.length?(Number(previousBreakfasts[0].contatorePrima)||0):(Number(counter?.valore)||0);
+          for(const b of breakfasts){
+            if(b===log)log.contatorePrima=count;
+            count=DietaPlannerContracts.nextBreakfastCount(count,b,config.breakfastRegularCount);
+          }
+          settings.put({chiave:'contatoreColazioniMorigerate',valore:count});
+        }
+        if(prior&&prior.id!==log.id)logsStore.delete(prior.id);
+        logsStore.put(log);
+        if(recipe)recipes.put({...recipe,ultimoUsato:Date.now()});
+      }catch(error){failure=error;transaction.abort();}
+    };
+    const r1=plan.get(next.id);r1.onsuccess=()=>{current=r1.result;finish();};
+    const r2=inventory.getAll();r2.onsuccess=()=>{stock=r2.result;finish();};
+    const r3=logsStore.getAll();r3.onsuccess=()=>{logs=r3.result;finish();};
+    const r4=recipes.get(next.ricettaId||next.colazioneSpecialeId||'');r4.onsuccess=()=>{recipe=r4.result;finish();};
+    const r5=settings.get('contatoreColazioniMorigerate');r5.onsuccess=()=>{counter=r5.result;finish();};
+    transaction.oncomplete=()=>{for(const name of ['piano','inventario','consumoGiorno','impostazioni','ricette'])cacheGetAll[name]=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error||failure);
+    transaction.onabort=()=>reject(failure||transaction.error||new Error('Consumo non salvato'));
+  });
+}
+/* @qa-metadata
+{"id":"PWA-consumo-menu-isolato","paths":["elaboraConsumoAutomatico","renderMenuSettimanale"],"focusedTest":"tests/menu-consumo-automatico-store-reale.test.js","rules":["consumo e pulizia automatica scrivono sul piano reale","la bozza resta attiva durante l'attesa","render superato non ripristina bozze scartate"],"pending":["concorrenza su IndexedDB reale"]}
+*/
 async function elaboraConsumoAutomatico(){
   const tuttoIlPiano = await getAllRaw('piano');
   const tutteLeRicette = await getAll('ricette');
@@ -4436,7 +4527,7 @@ async function elaboraConsumoAutomatico(){
     const haContenutoVoce = !!((voce.realizzazioni&&voce.realizzazioni.length) || voce.primoId || voce.secondoId || voce.contornoId || voce.ricettaId || voce.primoCereale || voce.componenti || voce.colazioneSpecialeId);
 
     if(!haContenutoVoce){
-      if(passato && !voce.consumato) await delKey('piano',voce.id);
+      if(passato && !voce.consumato) await rawDelKey('piano',voce.id);
       continue;
     }
     if(voce.consumato) continue;
@@ -4448,7 +4539,7 @@ async function elaboraConsumoAutomatico(){
 
     // Record automatici retroattivi privi di una programmazione valida: non sono pasti.
     if(passato && voce.origine!=='utente' && (!Number.isFinite(programmatoMs) || (deadline && programmatoMs>deadline.getTime()))){
-      await delKey('piano',voce.id);
+      await rawDelKey('piano',voce.id);
       continue;
     }
     if(!passato && !Number.isFinite(programmatoMs)) continue;
@@ -4584,6 +4675,14 @@ async function htmlRiepilogoColazione(componenti, colazioneSpecialeId, varianti,
   }).join('')}</div>`;
 }
 
+/* @qa-metadata
+{"id":"PWA-premio-colazione-consumo","paths":["programmaPremioColazione","renderColazione","consumaVoceAtomica"],"focusedTest":"tests/pwa-premio-colazione-consumo.test.js","rules":["scelta premio non azzera contatore","scelta standard non riapre il premio","reset al consumo secondo resolver"],"pending":["click/UI su dispositivo"]}
+*/
+async function programmaPremioColazione(voce,scelta){
+  const next={...voce,premioCostanza:true,programmatoIl:voce.programmatoIl||new Date().toISOString()};
+  if(scelta!=='standard'){next.colazioneSpecialeId=scelta;next.componenti=null;}
+  await put('piano',next);
+}
 async function renderColazione(giorno, elementId){
   giorno = giorno || giornoSelezionato;
   const el = document.getElementById(elementId || 'blocColazione');
@@ -4619,7 +4718,7 @@ async function renderColazione(giorno, elementId){
   const recContatorePremioRender = await getOne('impostazioni', 'contatoreColazioniMorigerate');
   const contatorePremioRender = recContatorePremioRender ? recContatorePremioRender.valore : 0;
   const sogliaColazione=(await risolviSetUtenteCorrente()).breakfastRegularCount;
-  const mostraPremioCostanza = contatorePremioRender >= sogliaColazione && !voce.colazioneSpecialeId && !voce.consumato && !colazioneScaduta && giorno === todayISO();
+  const mostraPremioCostanza = contatorePremioRender >= sogliaColazione && !voce.premioCostanza && !voce.colazioneSpecialeId && !voce.consumato && !colazioneScaduta && giorno === todayISO();
   if(mostraPremioCostanza){
     const tutteRicettePremio = await getAll('ricette');
     const colazioniSpecialiPremio = tutteRicettePremio
@@ -4638,10 +4737,7 @@ async function renderColazione(giorno, elementId){
     el.querySelectorAll('[data-premio-colazione]').forEach(b=>{
       b.addEventListener('click', async ()=>{
         const scelta = b.dataset.premioColazione;
-        if(scelta !== 'standard'){
-          await put('piano', {id:pianoId, colazioneSpecialeId:scelta, componenti:null, premioCostanza:true});
-        }
-        await put('impostazioni', {chiave:'contatoreColazioniMorigerate', valore: 0});
+        await programmaPremioColazione(voce,scelta);
         delete draftColazione[pianoId];
         renderColazione(giorno, elementId);
         if(giorno===giornoSelezionato) renderNutrizioneGiorno();
@@ -5270,9 +5366,8 @@ async function apriModalEditorPasto(giorno, pasto){
         voce.consumato = true;
         voce.dataConsumato = giorno;
         voce.origine = 'utente';
-        await put('piano', voce);
-        await registraConsumoStorico(voce,'utente');
-        await segnaRicettaUsata(rid);
+        try{await salvaConsumoManualeAtomico(voce,giorno,pasto);}
+        catch(error){avviso(error.message);return;}
         document.getElementById('modalDettaglio').classList.add('hidden');
         renderPiano();
         if(document.getElementById('view-menu').classList.contains('active')) renderMenuSettimanale();
@@ -5315,7 +5410,7 @@ async function apriModalEditorColazione(giorno){
   document.getElementById('modalDettaglioContenuto').querySelectorAll('[data-editor-col-speciale]').forEach(b=>{
     b.addEventListener('click', async ()=>{
       const pianoId = giorno+'_colazione';
-      const voce={id:pianoId, colazioneSpecialeId:b.dataset.editorColSpeciale, componenti:null, consumato:true, dataConsumato:giorno}; await put('piano',voce); await registraConsumoStorico(voce,'utente');
+      const voce={id:pianoId, colazioneSpecialeId:b.dataset.editorColSpeciale, componenti:null, consumato:true, dataConsumato:giorno}; try{await salvaConsumoManualeAtomico(voce,giorno,'colazione');}catch(error){avviso(error.message);return;}
       document.getElementById('modalDettaglio').classList.add('hidden');
       renderPiano();
     });
@@ -5340,14 +5435,14 @@ async function apriModalEditorColazione(giorno){
       componenti[gruppo] = attivo ? (attivo.dataset.editorColOpt || null) : null;
     });
     const pianoId = giorno+'_colazione';
-    const voce={id:pianoId, componenti, colazioneSpecialeId:null, consumato:true, dataConsumato:giorno}; await put('piano',voce); await registraConsumoStorico(voce,'utente');
+    const voce={id:pianoId, componenti, colazioneSpecialeId:null, consumato:true, dataConsumato:giorno}; try{await salvaConsumoManualeAtomico(voce,giorno,'colazione');}catch(error){avviso(error.message);return;}
     document.getElementById('modalDettaglio').classList.add('hidden');
     renderPiano();
   });
   document.getElementById('modalDettaglioContenuto').appendChild(btnSalvaGruppi);
   document.getElementById('modalDettaglioContenuto').querySelector('[data-editor-col-niente]').addEventListener('click', async ()=>{
     const pianoId = giorno+'_colazione';
-    const voce={id:pianoId, componenti:null, colazioneSpecialeId:null, consumato:true, dataConsumato:giorno}; await put('piano',voce); await registraConsumoStorico(voce,'utente');
+    const voce={id:pianoId, componenti:null, colazioneSpecialeId:null, consumato:true, dataConsumato:giorno}; try{await salvaConsumoManualeAtomico(voce,giorno,'colazione');}catch(error){avviso(error.message);return;}
     document.getElementById('modalDettaglio').classList.add('hidden');
     renderPiano();
   });
@@ -6813,7 +6908,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
     ${descrizioneHtml}
     <div class="meta">Allergeni: ${escCampoNuovoRicetta((ricetta.allergeniPresenti||DietaPlannerContracts.identity(ricetta).allergeniPresenti).join(', ')||'Nessuno dichiarato')}</div>
     <label style="font-size:0.7rem;color:var(--text-dim);margin-bottom:4px;">Porzioni da preparare (solo per la spesa)</label>
-    <select id="modalDettaglioPorzioni" style="max-width:160px;">
+    <select id="modalDettaglioPorzioni" style="max-width:160px;" ${voce?.consumato?'disabled':''}>
       <option value="1" ${porzioniSel===1?'selected':''}>1 persona</option>
       <option value="2" ${porzioniSel===2?'selected':''}>2 persone</option>
       <option value="3" ${porzioniSel===3?'selected':''}>3 persone</option>
@@ -6922,12 +7017,17 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
     });
   });
 
+  /* @qa-metadata
+  {"id":"PWA-dettaglio-porzioni-storico","paths":["apriModalDettaglioRicetta"],"focusedTest":"tests/pwa-dettaglio-porzioni.test.js","rules":["dettaglio non modifica porzioni di un consumo","errore salvataggio non modifica oggetto mostrato","porzioni positive intere"],"pending":["timer e selettore touch sul dispositivo"]}
+  */
   document.getElementById('modalDettaglioPorzioni').addEventListener('change', async (e)=>{
-    const nuove = parseInt(e.target.value);
+    const nuove = Number(e.target.value);
+    if(!Number.isInteger(nuove)||nuove<=0||voce?.consumato)return;
     if(voce){
-      voce.porzioni = nuove;
-      await put('piano', voce);
-      apriModalDettaglioRicetta(ricetta, voce);
+      const aggiornata={...voce,porzioni:nuove};
+      try{await put('piano', aggiornata);}
+      catch(error){e.target.value=String(voce.porzioni||1);await avviso('Salvataggio non riuscito: '+error.message);return;}
+      apriModalDettaglioRicetta(ricetta, aggiornata);
     } else {
       apriModalDettaglioRicetta(ricetta, nuove);
     }
@@ -7114,6 +7214,9 @@ async function renderNutrizioneGiorno(){
   `;
 }
 
+/* @qa-metadata
+{"id":"PWA-nutrizione-render-snapshot","paths":["calcolaNutrizioneRicetta","renderNutrizioneGiorno"],"focusedTest":"tests/pwa-nutrizione-render-snapshot.test.js","rules":["grammi effettivi precedono quantità in pezzi","riepilogo usa nutrienti congelati anche dopo cambio catalogo"],"pending":["riscontro visuale delle barre sul dispositivo"]}
+*/
 async function calcolaNutrizioneRicetta(ricetta){
   // se sono stati compilati valori nutrizionali complessivi (a mano o con AI), hanno
   // sempre la precedenza: garantiscono un valore affidabile anche con ingredienti
@@ -7128,7 +7231,7 @@ async function calcolaNutrizioneRicetta(ricetta){
     if(!ing.variantId) continue;
     const v = varianti.find(x=>x.id===ing.variantId);
     if(!v) continue;
-    const fattore = ing.quantita/100;
+    const fattore = Number(ing.grammi??ing.quantita)/100;
     kcal += (v.kcal100||0)*fattore;
     prot += (v.prot100||0)*fattore;
     carb += (v.carb100||0)*fattore;
@@ -7782,22 +7885,10 @@ async function toggleLockRealizzazioneMenu(giorno,pasto,ricettaId,btnEl){
 
 async function renderMenuSettimanale(){
   const mieGen = ++menuRenderGen;
-  // Stesso controllo reattivo già presente in renderPiano: senza questo, un
-  // utente che entra direttamente su Menù (senza mai passare da Piano) non
-  // vedrebbe applicato il blocco automatico "programmato -> consumato" per i
-  // pasti il cui orario è già superato.
-  // La bozza va disattivata temporaneamente: altrimenti, dal secondo render
-  // in poi nella stessa settimana (dopo Rigenera/Resetta), le scritture di
-  // elaboraConsumoAutomatico su 'piano' verrebbero intercettate da
-  // menuDraftIntercetta e il consumo automatico resterebbe sospeso nella
-  // bozza invece di essere un fatto reale committato subito.
-  const draftAttivo=menuDraft;
-  menuDraft=null;
-  try{
-    await elaboraConsumoAutomatico();
-  }finally{
-    menuDraft=draftAttivo;
-  }
+  // Il consumo e le eliminazioni automatiche usano direttamente gli store reali.
+  // Non sospendere la bozza: un altro comando/render può intervenire durante l'attesa.
+  await elaboraConsumoAutomatico();
+  if(mieGen!==menuRenderGen)return;
   const giorni = giorniSettimana(menuSettimanaScarto);
   if(!menuDraft || menuDraft.scarto!==menuSettimanaScarto){
     menuDraft={scarto:menuSettimanaScarto,giorni:new Set(giorni),voci:new Map(),modificata:false};
@@ -7891,7 +7982,8 @@ function renderMenuFooter(){
   });
   f.querySelector('#btnSalvaMenu').addEventListener('click',async()=>{
     if(!menuDraft)return;
-    await commitMenuDraftAtomico();
+    try{await commitMenuDraftAtomico();}
+    catch(error){await avviso('Salvataggio non riuscito: '+error.message);return;}
     menuDraft=null;await avviso('Menù salvato.');await renderMenuSettimanale();aggiornaListaSpesaAutomatica(menuSettimanaScarto);
   });
   f.querySelector('#btnVaiSpesaFooter').addEventListener('click',()=>{ mostraVista('spesa'); calcolaListaSpesa(menuSettimanaScarto); });
@@ -8132,6 +8224,15 @@ async function renderInventario(){
   }
 }
 
+/* @qa-metadata
+{"id":"PWA-inventario-quantita-valida","paths":["quantitaInventarioDaInput","btnSalvaIngrediente"],"focusedTest":"tests/pwa-inventario-quantita.test.js","rules":["quantità finita non negativa prima di scrivere","zero e campo vuoto mantengono significato esistente"],"pending":["editor touch e unità su dispositivo"]}
+*/
+function quantitaInventarioDaInput(value){
+  if(typeof value==='string'&&value.trim()==='')return 0;
+  const quantity=typeof value==='number'||typeof value==='string'?Number(value):NaN;
+  if(!Number.isFinite(quantity)||quantity<0)throw new Error('La quantità in inventario deve essere un numero non negativo.');
+  return quantity;
+}
 document.getElementById('btnSalvaIngrediente').addEventListener('click', async ()=>{
   const modificaId = document.getElementById('ingModifVarianteId').value;
   const modificaInventarioId = document.getElementById('ingModifInventarioId').value;
@@ -8139,7 +8240,9 @@ document.getElementById('btnSalvaIngrediente').addEventListener('click', async (
   const gruppo = document.getElementById('ingGruppo').value.trim().toLowerCase();
   const categoria = document.getElementById('ingCategoria').value;
   const derivati = derivaDaCategoria(categoria);
-  const qtaIniziale = parseFloat(document.getElementById('ingQtaIniziale').value)||0;
+  let qtaIniziale;
+  try{qtaIniziale=quantitaInventarioDaInput(document.getElementById('ingQtaIniziale').value);}
+  catch(error){await avviso(error.message);return;}
   const kcal = parseFloat(document.getElementById('ingKcal').value)||0;
   const prot = parseFloat(document.getElementById('ingProt').value)||0;
   const carb = parseFloat(document.getElementById('ingCarb').value)||0;
@@ -8280,21 +8383,63 @@ async function aggiornaListaSpesaAutomatica(scartoSettimane){
 
 const CATEGORIA_LABEL = {fresco:'fresco', conf:'conf.', surgelato:'surg.'};
 
+/* @qa-metadata
+{"id":"PWA-acquisto-manuale-atomico","paths":["segnaAcquistoSpesaAtomico","calcolaListaSpesa"],"focusedTest":"tests/pwa-acquisto-manuale-atomico.test.js","rules":["inventario e spesa in una transazione","quantità riletta dallo store","doppia conferma idempotente","cache invalidata solo al commit"],"pending":["IndexedDB reale e interazione sul dispositivo"]}
+*/
+async function segnaAcquistoSpesaAtomico(id){
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction(['spesa','inventario'],'readwrite');
+    const shopping=transaction.objectStore('spesa'),inventory=transaction.objectStore('inventario');
+    let purchase,stock,failure,ready=0;
+    const finish=()=>{
+      if(++ready!==2)return;
+      if(!purchase||purchase.comprato)return;
+      try{
+        const quantity=Number(purchase.totaleAcquisto);
+        if(!purchase.variantId||!Number.isFinite(quantity)||quantity<=0)throw new Error('Quantità di acquisto non valida');
+        const existing=stock.find(i=>i.variantId===purchase.variantId&&i.stato==='disponibile');
+        const item=existing?{...existing,quantita:Number(existing.quantita)+quantity,dataAcquisto:todayISO()}:
+          {id:uid(),variantId:purchase.variantId,zona:derivaDaCategoria(purchase.categoria||'conf').zona,quantita:quantity,stato:'disponibile',dataAcquisto:todayISO()};
+        if(!Number.isFinite(item.quantita))throw new Error('Quantità di inventario non valida');
+        inventory.put(item);
+        shopping.put({...purchase,comprato:true});
+      }catch(error){failure=error;transaction.abort();}
+    };
+    const r1=shopping.get(id);r1.onsuccess=()=>{purchase=r1.result;finish();};
+    const r2=inventory.getAll();r2.onsuccess=()=>{stock=r2.result;finish();};
+    transaction.oncomplete=()=>{cacheGetAll.spesa=null;cacheGetAll.inventario=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error||failure);
+    transaction.onabort=()=>reject(failure||transaction.error||new Error('Acquisto non salvato'));
+  });
+}
+
+/* @qa-metadata
+{"id":"PWA-barcode-barra-diretto","paths":["btnBarcodeBarra","apriBarcodeSpesa","calcolaListaSpesa"],"focusedTest":"tests/pwa-barcode-barra.test.js","rules":["icona apre direttamente lo stesso lettore della Spesa","apertura non cambia vista o bozze","acquisto mantiene transazione prodotti/inventario","riepilogo ricalcolato solo nella vista Spesa"],"pending":["fotocamera e pulsante touch sul dispositivo"]}
+*/
+let spesaSettimanaScarto=0;
+async function apriBarcodeSpesa(scartoSettimane=spesaSettimanaScarto){
+  try{
+    await DietaPlannerBarcode.open({read:getOne,all:getAll,commit:async(product,item)=>{
+      await new Promise((resolve,reject)=>{
+        const transaction=db.transaction(['prodotti','inventario'],'readwrite');
+        transaction.oncomplete=()=>{cacheGetAll.prodotti=null;cacheGetAll.inventario=null;resolve();};
+        transaction.onerror=()=>reject(transaction.error);
+        transaction.onabort=()=>reject(transaction.error||new Error('Acquisto annullato'));
+        try{transaction.objectStore('prodotti').put(product);transaction.objectStore('inventario').put(item);}
+        catch(error){transaction.abort();reject(error);}
+      });
+      if(document.getElementById('view-spesa').classList.contains('active'))await calcolaListaSpesa(scartoSettimane);
+    }});
+  }catch(error){await avviso(error.message);}
+}
 async function calcolaListaSpesa(scartoSettimane){
   if(!document.getElementById('btnBarcodeSpesa')){
     const button=document.createElement('button');button.id='btnBarcodeSpesa';button.className='secondary';button.textContent='Scansiona acquisto';
-    button.onclick=()=>DietaPlannerBarcode.open({read:getOne,all:getAll,commit:async(product,item)=>{
-      await new Promise((resolve,reject)=>{
-        const transaction=db.transaction(['prodotti','inventario'],'readwrite');
-        transaction.objectStore('prodotti').put(product);transaction.objectStore('inventario').put(item);
-        transaction.oncomplete=()=>{cacheGetAll.prodotti=null;cacheGetAll.inventario=null;resolve();};
-        transaction.onerror=()=>reject(transaction.error);transaction.onabort=()=>reject(transaction.error);
-      });
-      await calcolaListaSpesa(scartoSettimane);
-    }}).catch(e=>avviso(e.message));
+    button.onclick=()=>apriBarcodeSpesa();
     document.getElementById('listaSpesa').before(button);
   }
   scartoSettimane = scartoSettimane||0;
+  spesaSettimanaScarto=scartoSettimane;
   await aggiornaListaSpesaAutomatica(scartoSettimane);
 
   const settimanaChiave = giorniSettimana(scartoSettimane)[0];
@@ -8344,22 +8489,8 @@ async function calcolaListaSpesa(scartoSettimane){
       </div>
     `;
     row.querySelector('[data-comprato]').addEventListener('click', async ()=>{
-      const derivati = derivaDaCategoria(s.categoria||'conf');
-      const inventarioAttuale = await getAll('inventario');
-      const esistente = inventarioAttuale.find(i=>i.variantId===s.variantId && i.stato==='disponibile');
-      if(esistente){
-        // si somma alla riga già disponibile, invece di crearne una nuova frammentata
-        esistente.quantita += s.totaleAcquisto;
-        esistente.dataAcquisto = todayISO();
-        await put('inventario', esistente);
-      } else {
-        await put('inventario', {
-          id:uid(), variantId:s.variantId, zona:derivati.zona, quantita:s.totaleAcquisto,
-          stato:'disponibile', dataAcquisto:todayISO()
-        });
-      }
-      s.comprato = true;
-      await put('spesa', s);
+      try{await segnaAcquistoSpesaAtomico(s.id);}
+      catch(error){avviso(error.message);return;}
       calcolaListaSpesa(scartoSettimane);
     });
     el.appendChild(row);
@@ -8485,10 +8616,38 @@ document.getElementById('btnControllaAggiornamenti')?.addEventListener('click', 
     await avviso('Nuovo ricettario ricaricato: '+esito.template+' template -> '+esito.concrete+' combinazioni concrete.');
   }finally{btn.disabled=false;btn.textContent='Controlla aggiornamenti ora';}
 });
+/* @qa-metadata
+{"id":"PWA-backup-integrale","paths":["esportaBackupDati","importaBackupDati","fileImporta"],"focusedTest":"tests/pwa-backup-atomico.test.js","rules":["tutti gli archivi incluso storico","snapshot readonly coerente","importazione merge atomica","abort preserva dati precedenti"],"pending":["file e riapertura IndexedDB sul dispositivo"]}
+*/
+function esportaBackupDati(){
+  return new Promise((resolve,reject)=>{
+    const names=Array.from(db.objectStoreNames),result={};
+    const transaction=db.transaction(names,'readonly');
+    for(const name of names){const request=transaction.objectStore(name).getAll();request.onsuccess=()=>{result[name]=request.result;};}
+    transaction.oncomplete=()=>resolve(result);
+    transaction.onerror=()=>reject(transaction.error);transaction.onabort=()=>reject(transaction.error||new Error('Backup non completato'));
+  });
+}
+async function importaBackupDati(backup){
+  if(!backup||typeof backup!=='object'||Array.isArray(backup))throw new Error('Formato backup non valido');
+  const names=Object.keys(backup),allowed=new Set(Array.from(db.objectStoreNames));
+  if(!names.length)throw new Error('Backup vuoto');
+  for(const name of names){
+    if(!allowed.has(name)||!Array.isArray(backup[name]))throw new Error('Archivio backup non valido: '+name);
+    const key=name==='impostazioni'?'chiave':'id';
+    for(const row of backup[name])if(!row||typeof row!=='object'||Array.isArray(row)||!((typeof row[key]==='string'&&row[key].length)||(typeof row[key]==='number'&&Number.isFinite(row[key]))))throw new Error('Record backup non valido: '+name);
+  }
+  await new Promise((resolve,reject)=>{
+    const transaction=db.transaction(names,'readwrite');let failure;
+    transaction.oncomplete=()=>{for(const name of names)cacheGetAll[name]=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error||failure);transaction.onabort=()=>reject(failure||transaction.error||new Error('Backup non importato'));
+    try{for(const name of names)for(const row of backup[name])transaction.objectStore(name).put(row);}
+    catch(error){failure=error;transaction.abort();}
+  });
+  if(window.DietaPlannerMotorV12?.invalidaConfigRuntime)window.DietaPlannerMotorV12.invalidaConfigRuntime();
+}
 document.getElementById('btnEsporta').addEventListener('click', async ()=>{
-  const stores = ['ingredienti','varianti','inventario','ricette','piano','impostazioni'];
-  const backup = {};
-  for(const s of stores) backup[s] = await getAll(s);
+  const backup = await esportaBackupDati();
   const blob = new Blob([JSON.stringify(backup,null,2)], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -8506,11 +8665,9 @@ document.getElementById('fileImporta').addEventListener('change', async (e)=>{
   const testo = await file.text();
   try{
     const backup = JSON.parse(testo);
-    for(const store of Object.keys(backup)){
-      for(const obj of backup[store]) await put(store, obj);
-    }
-    await avviso('Backup importato.');
-    renderPiano();
+    await importaBackupDati(backup);
+    await avviso('Backup importato. Riapro i dati aggiornati.');
+    location.reload();
   }catch(err){
     await avviso('File non valido: '+err.message);
   }
@@ -8612,12 +8769,25 @@ document.getElementById('btnAzzeraStorico').addEventListener('click', async ()=>
   if(document.getElementById('view-menu').classList.contains('active')) renderMenuSettimanale();
 });
 
+/* @qa-metadata
+{"id":"PWA-reset-bozze","paths":["btnResetPiano","azzeraPianoAtomico"],"focusedTest":"tests/pwa-reset-bozze.test.js","rules":["reset sul piano reale anche con Menu aperto","reset non lascia una bozza Menu risalvabile","storico consumi preservato","abort conserva piano e bozze"],"pending":["navigazione su dispositivo"]}
+*/
+function azzeraPianoAtomico(){
+  return new Promise((resolve,reject)=>{
+    const transaction=db.transaction('piano','readwrite');
+    transaction.oncomplete=()=>{cacheGetAll.piano=null;resolve();};
+    transaction.onerror=()=>reject(transaction.error);
+    transaction.onabort=()=>reject(transaction.error||new Error('Reset piano annullato'));
+    try{transaction.objectStore('piano').clear();}
+    catch(error){transaction.abort();reject(error);}
+  });
+}
 document.getElementById('btnResetPiano').addEventListener('click', async ()=>{
   const ok = await chiediConferma('Cancellare TUTTI i pasti pianificati (ogni giorno e ogni settimana)? Questa azione non si può annullare. Ricette, inventario, lista spesa e ingredienti restano intatti.', 'Cancella', 'Annulla');
   if(!ok) return;
-  const piano = await getAll('piano');
-  for(const voce of piano) await delKey('piano', voce.id);
-  cacheGetAll.piano = null;
+  try{await azzeraPianoAtomico();}
+  catch(error){await avviso('Reset non riuscito: '+error.message);return;}
+  menuDraft=null;
   for(const chiave in bozzePropostaPasto)delete bozzePropostaPasto[chiave]; draftColazione = {};
   await avviso('Piano settimanale azzerato.');
   renderPiano();

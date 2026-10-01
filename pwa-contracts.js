@@ -10,7 +10,10 @@ function identity(recipe){
   const ingredients=recipe.ingredientiEffettivi||recipe.ingredienti||[];
   const source=i=>canonical(i.ingredienteId||i.variantId||i.nome);
   const food=ingredients.filter(i=>!i.condimento&&i.categoria!=='Condimenti');
-  const preparation=unique((recipe.slot||[]).map(s=>canonical(s.cottura&&s.cottura.nome)).filter(Boolean));
+  let preparation=unique((recipe.slot||[]).map(s=>canonical(s.cottura&&s.cottura.nome)).filter(Boolean));
+  if(Array.isArray(recipe.ingredientiEffettivi)&&recipe.dishKey){
+    try{const frozen=JSON.parse(recipe.dishKey);if(Array.isArray(frozen[1]))preparation=unique(frozen[1].map(canonical));}catch(_){}
+  }
   const dishKey=JSON.stringify([unique(food.map(i=>source(i))),preparation]);
   const sourceKeys=unique(food.filter(i=>protein.has(i.categoria)).map(i=>'P:'+source(i)));
   const rotationKeys=unique(food.filter(i=>protein.has(i.categoria)||i.categoria==='C').map(i=>(protein.has(i.categoria)?'P:':'C:')+source(i)));
@@ -24,6 +27,16 @@ function decorate(recipe){
   const problemiQuantita=(recipe.ingredienti||[]).filter(i=>i.doseMancante).map(i=>i.nome);
   return Object.assign(recipe,id,{chiaviStack:id.rotationKeys,problemiQuantita});
 }
+/* @qa-metadata
+{"id":"PWA-identita-pasto-combinato","paths":["mealIdentity","mealHardReason","events"],"focusedTest":"tests/pwa-identita-pasto-combinato.test.js","rules":["stessa preparazione combinata/separata stessa identità pasto","ingredienti e cotture ordinati canonicamente","unicità limitata alla settimana","controlli ricetta/rotazione conservati","cottura snapshot preservata dopo cambio catalogo"],"pending":["proposte manuali e storico su dispositivo"]}
+*/
+function mealIdentity(recipes){
+  return identity({ingredienti:(recipes||[]).flatMap(r=>r.ingredientiEffettivi||r.ingredienti||[]),slot:(recipes||[]).flatMap(r=>JSON.parse(identity(r).dishKey)[1].map(nome=>({cottura:{nome}})))});
+}
+function mealHardReason(recipes,date,history){
+  const dishKey=mealIdentity(recipes).dishKey;
+  return (history||[]).some(e=>week(e.date)===week(date)&&e.mealDishKey===dishKey)?'piatto_gia_usato':null;
+}
 function events(records,resolve){
   const out=[],seen=new Set();
   for(const record of records||[]){
@@ -31,13 +44,11 @@ function events(records,resolve){
     if(!slot||seen.has(slot))continue;
     seen.add(slot);
     const date=String(slot).slice(0,10);
-    const reals=record.realizzazioni||((record.ricettaIds||[]).map(ricettaId=>({ricettaId})));
-    for(const real of reals){
-      const base=resolve(real.ricettaId)||{};
-      if(!(real.ingredientiEffettivi||base.ingredienti||[]).length)continue;
-      const id=identity(Object.assign({},base,real));
-      out.push({...id,date,slot});
-    }
+    const legacyIds=record.ricettaIds?.length?record.ricettaIds:[record.ricettaId,record.primoId,record.secondoId,record.contornoId].filter(Boolean);
+    const reals=record.realizzazioni?.length?record.realizzazioni:unique(legacyIds).map(ricettaId=>({ricettaId}));
+    const recipes=reals.map(real=>Object.assign({},resolve(real.ricettaId)||{},real)).filter(r=>(r.ingredientiEffettivi||r.ingredienti||[]).length);
+    const mealDishKey=mealIdentity(recipes).dishKey;
+    for(const recipe of recipes)out.push({...identity(recipe),mealDishKey,date,slot});
   }
   return out;
 }
@@ -88,7 +99,37 @@ function consumeInventory(inventory,ingredients,date){
   }
   return {changed:[...changed.values()],missing};
 }
-const api={identity,decorate,events,hardReason,availability,filter,diagnostics,dayNumber,week,nextBreakfastCount,consumeInventory};
+// Correzione di un consumo: differenza rispetto alle quantità realmente scaricate.
+function consumptionDifference(ingredients,previous){
+  if(previous&&!Array.isArray(previous.scorteMancanti)&&previous.origine!=='utente')throw new Error('Dati di scarico del consumo precedente non disponibili: correggere prima le scorte.');
+  const totals=new Map();
+  const add=(i,sign)=>{
+    if(!i.variantId||i.nonRichiedeInventario)return;
+    const quantity=Number(i.unita==='pz'?i.grammi:i.quantita);
+    if(!Number.isFinite(quantity)||quantity<0)throw new Error('Quantità di consumo non valida o conversione in grammi mancante');
+    const row=totals.get(i.variantId)||{...i,unita:'g',quantita:0};row.quantita+=sign*quantity;totals.set(i.variantId,row);
+  };
+  for(const i of ingredients)add(i,1);
+  // I vecchi editor manuali non scaricavano scorte; i record automatici conservano le mancanze.
+  if(Array.isArray(previous?.scorteMancanti)&&Array.isArray(previous?.ingredientiEffettivi)){
+    for(const i of previous.ingredientiEffettivi)add(i,-1);
+    for(const i of previous.scorteMancanti)add(i,1);
+  }
+  return [...totals.values()].filter(i=>Math.abs(i.quantita)>0.000001);
+}
+function correctInventory(inventory,ingredients,previous,date){
+  const difference=consumptionDifference(ingredients,previous),stock=inventory.map(i=>({...i})),credits=[];
+  for(const i of difference.filter(i=>i.quantita<0)){
+    const row=stock.filter(r=>r.variantId===i.variantId&&r.stato==='disponibile')
+      .sort((a,b)=>String(a.dataScadenza||'9999').localeCompare(String(b.dataScadenza||'9999')))[0];
+    if(!row)throw new Error('Scorta precedente non più presente: impossibile correggere automaticamente '+i.variantId);
+    row.quantita=Number(row.quantita)-i.quantita;credits.push(row);
+  }
+  const debit=consumeInventory(stock,difference.filter(i=>i.quantita>0),date);
+  const changed=new Map(credits.map(i=>[i.id,i]));for(const i of debit.changed)changed.set(i.id,i);
+  return {changed:[...changed.values()],missing:debit.missing};
+}
+const api={identity,mealIdentity,mealHardReason,decorate,events,hardReason,availability,filter,diagnostics,dayNumber,week,nextBreakfastCount,consumeInventory,correctInventory};
 root.DietaPlannerContracts=api;
 if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

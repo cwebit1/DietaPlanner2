@@ -1,5 +1,5 @@
 {
-  "versione": 74,
+  "versione": 75,
   "ricette": [
     {
       "gruppi": [
@@ -29,7 +29,14 @@
             }
           ],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -47,7 +54,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PF"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -68,7 +82,13 @@
         "C",
         "PF"
       ],
-      "id": 1
+      "id": 1,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PF"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -130,7 +150,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -158,7 +185,12 @@
         }
       ],
       "classe": "PP",
-      "id": 2
+      "id": 2,
+      "copertura": {
+        "ruoli": [
+          "PP"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -185,7 +217,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -213,7 +252,12 @@
         }
       ],
       "classe": "PC",
-      "id": 3
+      "id": 3,
+      "copertura": {
+        "ruoli": [
+          "PC"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -225,12 +269,22 @@
               "nome": "Pomodori gratinati",
               "stack": 1,
               "roll": 1,
-              "dose": 12
+              "dose": 12,
+              "quantita": {
+                "fonte": "ricetta"
+              }
             }
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -238,7 +292,14 @@
           "ingredienti": [],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -261,7 +322,13 @@
         "V",
         "C"
       ],
-      "id": 5
+      "id": 5,
+      "copertura": {
+        "ruoli": [
+          "V",
+          "C"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -287,7 +354,14 @@
           ],
           "cotture": [],
           "testo2": "al",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -301,7 +375,18 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "S"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S.massimo"
+          }
         },
         {
           "testo1": "",
@@ -324,7 +409,13 @@
         "C",
         "S"
       ],
-      "id": 6
+      "id": 6,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "S"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -345,7 +436,14 @@
           ],
           "cotture": [],
           "testo2": "alla Norma",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -359,7 +457,18 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "S"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S.massimo"
+          }
         },
         {
           "testo1": "",
@@ -382,7 +491,13 @@
         "C",
         "S"
       ],
-      "id": 7
+      "id": 7,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "S"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -413,7 +528,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -427,7 +549,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PF"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -441,7 +570,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -457,7 +593,14 @@
         "PF",
         "PC"
       ],
-      "id": 8
+      "id": 8,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PF",
+          "PC"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -488,7 +631,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -508,7 +658,14 @@
             }
           ],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PU"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -518,12 +675,22 @@
               "nome": "Pomodoro fresco",
               "stack": 1,
               "roll": 1,
-              "dose": 200
+              "dose": 200,
+              "quantita": {
+                "fonte": "ricetta"
+              }
             }
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -539,7 +706,14 @@
         "PU",
         "V"
       ],
-      "id": 9
+      "id": 9,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PU",
+          "V"
+        ]
+      }
     },
     {
       "id": 10,
@@ -572,7 +746,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -596,7 +777,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PF"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -616,16 +804,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Cetriolo",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e carote",
@@ -637,16 +842,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Carote",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e peperoni",
@@ -658,18 +880,42 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Peperoni",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             }
-          ]
+          ],
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -684,7 +930,14 @@
         "C",
         "PF",
         "V"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PF",
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -726,7 +979,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PU"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -754,7 +1014,12 @@
         }
       ],
       "classe": "PU",
-      "id": 11
+      "id": 11,
+      "copertura": {
+        "ruoli": [
+          "PU"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -821,7 +1086,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -849,7 +1121,12 @@
         }
       ],
       "classe": "PL",
-      "id": 12
+      "id": 12,
+      "copertura": {
+        "ruoli": [
+          "PL"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -926,7 +1203,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -954,7 +1238,12 @@
         }
       ],
       "classe": "PC",
-      "id": 13
+      "id": 13,
+      "copertura": {
+        "ruoli": [
+          "PC"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -980,7 +1269,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1039,7 +1335,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PF"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1062,7 +1365,13 @@
         "C",
         "PF"
       ],
-      "id": 14
+      "id": 14,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PF"
+        ]
+      }
     },
     {
       "id": 16,
@@ -1095,7 +1404,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1114,7 +1430,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1134,16 +1457,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Cetriolo",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e carote",
@@ -1155,16 +1495,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Carote",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e peperoni",
@@ -1176,18 +1533,42 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Peperoni",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             }
-          ]
+          ],
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1201,14 +1582,28 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         }
       ],
       "classe": [
         "C",
         "PP",
         "V"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PP",
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1269,7 +1664,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1293,7 +1695,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1313,7 +1722,12 @@
         }
       ],
       "classe": "V",
-      "id": 18
+      "id": 18,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1374,7 +1788,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1413,7 +1834,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1437,7 +1865,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1449,7 +1884,12 @@
         }
       ],
       "classe": "V",
-      "id": 19
+      "id": 19,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1468,7 +1908,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1482,7 +1929,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1502,7 +1956,12 @@
         }
       ],
       "classe": "V",
-      "id": 20
+      "id": 20,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1518,7 +1977,14 @@
           ],
           "cotture": [],
           "testo2": "julienne",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1546,7 +2012,12 @@
         }
       ],
       "classe": "V",
-      "id": 21
+      "id": 21,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1573,7 +2044,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1601,7 +2079,12 @@
         }
       ],
       "classe": "V",
-      "id": 22
+      "id": 22,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1628,7 +2111,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1656,7 +2146,12 @@
         }
       ],
       "classe": "V",
-      "id": 23
+      "id": 23,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1678,7 +2173,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1706,7 +2208,12 @@
         }
       ],
       "classe": "V",
-      "id": 24
+      "id": 24,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1728,7 +2235,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1756,7 +2270,12 @@
         }
       ],
       "classe": "V",
-      "id": 25
+      "id": 25,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -1817,7 +2336,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1866,7 +2392,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1890,7 +2423,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -1902,7 +2442,12 @@
         }
       ],
       "classe": "V",
-      "id": 26
+      "id": 26,
+      "copertura": {
+        "ruoli": [
+          "V"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2004,7 +2549,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2032,7 +2584,12 @@
         }
       ],
       "classe": "PC",
-      "id": 27
+      "id": 27,
+      "copertura": {
+        "ruoli": [
+          "PC"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2048,7 +2605,14 @@
             }
           ],
           "testo2": "di",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2062,7 +2626,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2085,7 +2656,13 @@
         "C",
         "PL"
       ],
-      "id": 28
+      "id": 28,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PL"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2101,7 +2678,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2115,7 +2699,18 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "G"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G.massimo"
+          }
         },
         {
           "testo1": "",
@@ -2138,7 +2733,13 @@
         "PC",
         "G"
       ],
-      "id": 31
+      "id": 31,
+      "copertura": {
+        "ruoli": [
+          "PC",
+          "G"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2154,7 +2755,14 @@
           ],
           "cotture": [],
           "testo2": "al",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2168,7 +2776,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2191,7 +2806,13 @@
         "C",
         "PC"
       ],
-      "id": 32
+      "id": 32,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PC"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2207,7 +2828,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PC"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2221,7 +2849,18 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "G"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G.massimo"
+          }
         },
         {
           "testo1": "",
@@ -2244,7 +2883,13 @@
         "PC",
         "G"
       ],
-      "id": 33
+      "id": 33,
+      "copertura": {
+        "ruoli": [
+          "PC",
+          "G"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2291,7 +2936,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2310,7 +2962,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2330,7 +2989,12 @@
         }
       ],
       "classe": "PL",
-      "id": 34
+      "id": 34,
+      "copertura": {
+        "ruoli": [
+          "PL"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2352,7 +3016,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2380,7 +3051,12 @@
         }
       ],
       "classe": "PL",
-      "id": 35
+      "id": 35,
+      "copertura": {
+        "ruoli": [
+          "PL"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2399,7 +3075,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2413,7 +3096,14 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "Condimento"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2433,7 +3123,12 @@
         }
       ],
       "classe": "PL",
-      "id": 36
+      "id": 36,
+      "copertura": {
+        "ruoli": [
+          "PL"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2459,7 +3154,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2483,7 +3185,14 @@
           ],
           "cotture": [],
           "testo2": "e pomodoro",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2506,7 +3215,13 @@
         "C",
         "PP"
       ],
-      "id": 37
+      "id": 37,
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PP"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2532,7 +3247,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2551,7 +3273,14 @@
           ],
           "cotture": [],
           "testo2": "e pomodoro",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2577,7 +3306,13 @@
       "id": 38,
       "ingredientiDaDefinire": [
         "Pomodoro fresco"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PP"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2593,7 +3328,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2607,7 +3349,18 @@
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "G"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.G.massimo"
+          }
         },
         {
           "testo1": "",
@@ -2630,7 +3383,13 @@
         "PP",
         "G"
       ],
-      "id": 39
+      "id": 39,
+      "copertura": {
+        "ruoli": [
+          "PP",
+          "G"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2651,7 +3410,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2671,7 +3437,14 @@
             }
           ],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2694,7 +3467,13 @@
         "PP",
         "C"
       ],
-      "id": 40
+      "id": 40,
+      "copertura": {
+        "ruoli": [
+          "PP",
+          "C"
+        ]
+      }
     },
     {
       "gruppi": [
@@ -2721,7 +3500,14 @@
             }
           ],
           "testo2": "gratinati",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PP"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2749,7 +3535,12 @@
         }
       ],
       "classe": "PP",
-      "id": 41
+      "id": 41,
+      "copertura": {
+        "ruoli": [
+          "PP"
+        ]
+      }
     },
     {
       "id": 42,
@@ -2782,7 +3573,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2796,7 +3594,14 @@
           ],
           "cotture": [],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PL"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2816,16 +3621,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Cetriolo",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e carote",
@@ -2837,16 +3659,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Carote",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             },
             {
               "nome": "pomodorini e peperoni",
@@ -2858,18 +3697,42 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Peperoni",
                   "stack": 1,
                   "roll": 1,
                   "dose": 112.5,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "V"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "V"
+                ]
+              }
             }
-          ]
+          ],
+          "ruoli": [
+            "V"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2884,7 +3747,14 @@
         "C",
         "PL",
         "V"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PL",
+          "V"
+        ]
+      }
     },
     {
       "id": 43,
@@ -2942,7 +3812,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -2962,16 +3839,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Melanzane",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "zucchine e carote",
@@ -2983,16 +3877,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Carote",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "zucchine e pomodoro",
@@ -3004,16 +3915,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Pomodoro fresco",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "pomodoro e melanzane",
@@ -3025,16 +3953,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Melanzane",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "piselli e carote",
@@ -3046,16 +3991,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Carote",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "piselli e pomodoro fresco",
@@ -3067,16 +4029,33 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Pomodoro fresco",
                   "stack": 1,
                   "roll": 1,
                   "dose": 40,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "pomodoro e basilico",
@@ -3088,15 +4067,34 @@
                   "stack": 1,
                   "roll": 1,
                   "dose": 70,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 },
                 {
                   "nome": "Basilico fresco",
                   "stack": 1,
                   "roll": 1,
-                  "categoria": "Condimenti"
+                  "categoria": "Condimenti",
+                  "ruoli": [
+                    "Condimento"
+                  ],
+                  "quantita": {
+                    "fonte": "ingrediente",
+                    "contesto": "pastoPrincipale"
+                  },
+                  "limite": null
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             },
             {
               "nome": "aglio, olio e pomodorini",
@@ -3107,24 +4105,62 @@
                   "nome": "Aglio",
                   "stack": 1,
                   "roll": 1,
-                  "categoria": "Condimenti"
+                  "categoria": "Condimenti",
+                  "ruoli": [
+                    "Condimento"
+                  ],
+                  "quantita": {
+                    "fonte": "ingrediente",
+                    "contesto": "pastoPrincipale"
+                  },
+                  "limite": null
                 },
                 {
                   "nome": "Olio extravergine oliva",
                   "stack": 1,
                   "roll": 1,
-                  "categoria": "Condimenti"
+                  "categoria": "Condimenti",
+                  "ruoli": [
+                    "Condimento"
+                  ],
+                  "quantita": {
+                    "fonte": "ingrediente",
+                    "contesto": "pastoPrincipale"
+                  },
+                  "limite": null
                 },
                 {
                   "nome": "Pomodorini",
                   "stack": 1,
                   "roll": 1,
                   "dose": 70,
-                  "categoria": "V"
+                  "categoria": "V",
+                  "ruoli": [
+                    "S"
+                  ],
+                  "quantita": {
+                    "fonte": "ricetta"
+                  }
                 }
-              ]
+              ],
+              "copertura": {
+                "ruoli": [
+                  "S"
+                ]
+              }
             }
-          ]
+          ],
+          "ruoli": [
+            "S"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S.massimo"
+          }
         },
         {
           "testo1": "",
@@ -3146,7 +4182,13 @@
       "classe": [
         "C",
         "S"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "S"
+        ]
+      }
     },
     {
       "id": 44,
@@ -3179,7 +4221,14 @@
           ],
           "cotture": [],
           "testo2": "con",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "C"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -3189,7 +4238,10 @@
               "nome": "Uova",
               "stack": 1,
               "roll": 1,
-              "dose": 1
+              "dose": 1,
+              "quantita": {
+                "fonte": "ricetta"
+              }
             }
           ],
           "cotture": [
@@ -3200,7 +4252,14 @@
             }
           ],
           "testo2": "e",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PU"
+          ],
+          "quantita": {
+            "fonte": "ingrediente",
+            "contesto": "pastoPrincipale"
+          }
         },
         {
           "testo1": "",
@@ -3210,12 +4269,27 @@
               "nome": "Piselli surgelati",
               "stack": 1,
               "roll": 1,
-              "dose": 60
+              "dose": 60,
+              "quantita": {
+                "fonte": "ricetta"
+              }
             }
           ],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": true
+          "mostraNomi": true,
+          "ruoli": [
+            "PL",
+            "S"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S.massimo"
+          }
         },
         {
           "testo1": "",
@@ -3223,7 +4297,18 @@
           "ingredienti": [],
           "cotture": [],
           "testo2": "",
-          "mostraNomi": false
+          "mostraNomi": false,
+          "ruoli": [
+            "S"
+          ],
+          "quantita": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S"
+          },
+          "limite": {
+            "fonte": "nutrizionista",
+            "parametro": "quoteVegetali.S.massimo"
+          }
         }
       ],
       "classe": [
@@ -3231,7 +4316,24 @@
         "PU",
         "PL",
         "S"
-      ]
+      ],
+      "copertura": {
+        "ruoli": [
+          "C",
+          "PU",
+          "PL",
+          "S"
+        ],
+        "proteine": [
+          {
+            "tipo": "congiunta",
+            "ruoli": [
+              "PU",
+              "PL"
+            ]
+          }
+        ]
+      }
     }
   ]
 }

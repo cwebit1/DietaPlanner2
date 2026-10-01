@@ -218,6 +218,43 @@
     }));
   }
 
+  // Le dichiarazioni appartengono al modello, non al catalogo esploso.
+  // Nessun default numerico per S/G: quantità e massimo sono distinti.
+  function recipeIngredientQuantity(resolved,id,component,options,fallback){
+    const declaration=component.quantita;
+    if(!declaration)return {quantity:ingredientQuantity(resolved,id,'pastoPrincipale',fallback,options),missing:false};
+    const exact=resolved.recipeDoses?.[options.recipeId]?.[options.name];
+    if(exact!=null)return {quantity:exact,missing:false};
+    let quantity=null;
+    if(declaration.fonte==='ricetta')quantity=component.dose??null;
+    else if(declaration.fonte==='ingrediente'){
+      const partial=['S','G','Condimento'].some(role=>(component.ruoli||[]).includes(role));
+      const rule=resolved.ingredientConstraints?.[id],context=rule?.contexts?.[declaration.contesto];
+      quantity=partial?(context&&!context.quantityIsDefault?context.quantity:rule?.quantity)??null:ingredientQuantity(resolved,id,declaration.contesto,null,{...options,recipeDose:undefined});
+      if(quantity==null&&options.fallbackAllowed)quantity=fallback;
+    }
+    else if(declaration.fonte==='nutrizionista'){
+      const match=/^quoteVegetali\.([SG])$/.exec(declaration.parametro||'');
+      if(!match)throw new Error('Riferimento quantità ricetta non valido: '+declaration.parametro);
+      quantity=resolved.quoteVegetali?.[match[1]]?.quantita??null;
+      if(quantity!=null&&declaration.quota!=null)quantity*=Number(declaration.quota);
+    }else throw new Error('Fonte quantità ricetta non valida: '+declaration.fonte);
+    if(declaration.fonte==='ingrediente'&&quantity==null&&!['S','G','Condimento'].some(role=>(component.ruoli||[]).includes(role)))quantity=fallback;
+    if(quantity!=null&&(!Number.isFinite(Number(quantity))||Number(quantity)<0))throw new Error('Quantità ricetta non valida: '+options.name);
+    return {quantity:quantity==null?0:Number(quantity),missing:quantity==null};
+  }
+
+  function recipeRoleLimits(resolved,ingredients){
+    const limits={S:null,G:null};
+    for(const i of ingredients||[]){
+      if(!i.limite)continue;
+      const match=/^quoteVegetali\.([SG])\.massimo$/.exec(i.limite.parametro||'');
+      if(i.limite.fonte!=='nutrizionista'||!match)throw new Error('Riferimento limite ricetta non valido');
+      limits[match[1]]=resolved.quoteVegetali?.[match[1]]?.massimo??null;
+    }
+    return limits;
+  }
+
   function resolveFruit(raw,warnings,errors){
     raw=raw||{};
     const min=clinicalQuantity(raw,'min',PDF_BASELINE.fruit.dailyMin,errors,'Frutta minimo giornaliero',true);
@@ -551,6 +588,14 @@
       if(min!=null&&max!=null&&min>max)pushUnique(errors,'Classe '+key+': minimo superiore al massimo.');
       carbohydrateClasses[key]={min,max};
     }
+    const quoteVegetali={};
+    for(const role of ['S','G']){
+      const raw=config.quoteVegetali?.[role]||{};
+      const quantita=clinicalQuantity(raw,'quantita',null,errors,'Quota '+role+' quantità',true);
+      const massimo=clinicalQuantity(raw,'massimo',null,errors,'Quota '+role+' massimo',true);
+      if(quantita!=null&&massimo!=null&&quantita>massimo)pushUnique(errors,'Quota '+role+': quantità superiore al massimo.');
+      quoteVegetali[role]={quantita,massimo};
+    }
     const recipeDoses={};
     for(const [id,ingredients] of Object.entries(config.recipeDoses||{})){
       if(!ingredients||typeof ingredients!=='object'||Array.isArray(ingredients)){pushUnique(errors,'Dosi ricetta '+id+': formato non valido.');continue;}
@@ -582,7 +627,7 @@
       snackDailyCaps,
       oilGramsPerDay,
       oilGramsPerMainMeal,oilLunchPercent,oilGramsByMeal,carbohydrateWeeklyCaps,
-      cooldownDays,rotationDays,breakfastRegularCount,snackPortions,recipeDoses,carbohydrateClasses,
+      cooldownDays,rotationDays,breakfastRegularCount,snackPortions,recipeDoses,quoteVegetali,carbohydrateClasses,
       deadlines,
       safety:{allergens,blockedIngredientIds}
     };
@@ -595,7 +640,7 @@
     PROFILE_FORBIDDEN_MACROS:clone(PROFILE_FORBIDDEN_MACROS),
     PDF_CONTEXT_RULES_EXACT:clone(PDF_CONTEXT_RULES_EXACT),
     PDF_CONTEXT_RULES_SUBTYPE:clone(PDF_CONTEXT_RULES_SUBTYPE),
-    contextDefaultsForIngredient,ingredientQuantity,mainMealConstraints,
+    contextDefaultsForIngredient,ingredientQuantity,recipeIngredientQuantity,recipeRoleLimits,mainMealConstraints,
     legacyCarbohydrateUserCounts,
     normalizeCarbohydrateSelection,
     resolveCarbohydratePlan:function(input){const errors=[];const plan=resolveCarbohydratePlan(input,errors);return Object.assign({valid:errors.length===0,errors},plan);},

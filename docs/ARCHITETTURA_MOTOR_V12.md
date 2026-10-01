@@ -51,6 +51,13 @@ Ogni template contiene quattro gruppi. Ogni gruppo dichiara categoria,
 ingredienti, eventuali cotture, testo di collegamento e visibilità del nome.
 Gli ingredienti e le cotture possiedono `stack` e `roll`; `dose` è riservata a
 eccezioni esplicite.
+Dal 30/09/2026 i gruppi dichiarano `ruoli`, `quantita` (fonte e riferimento)
+e l’eventuale `limite`; i componenti possono precisare o sovrascrivere
+queste dichiarazioni. Il modello e le composizioni espongono `copertura`;
+le quote proteiche congiunte sono dichiarate dove già definite. Le dosi
+specifiche restano nelle unità native; le quote S/G configurate sono in grammi.
+`nutrition-config.js` risolve fonti e limiti; il compilatore conserva
+le dichiarazioni e materializza S/G. I record legacy restano leggibili.
 
 Le combinazioni concrete derivano dal prodotto cartesiano degli slot
 non-Condimenti. Il gruppo Condimenti fornisce varianti compatibili e non

@@ -1,41 +1,41 @@
 # Interventi PWA — lista operativa al 24 settembre 2026
 
-Questa lista distingue lavoro già realizzato, difetti e verifiche residue. Sostituisce le precedenti conclusioni operative; le prove precedenti restano documentate sotto. Nessuna nuova suite eseguita in questa riclassificazione.
+Questa lista distingue lavoro già realizzato, difetti e verifiche residue. Stato tecnico aggiornato il 01/10/2026, coerente con la matrice dei 16 punti. Le prove pregresse restano valide e non sono rieseguite; nuove prove circoscritte ai difetti effettivamente corretti. I residui D richiedono dispositivo/servizio reale, S è sospeso su istruzione.
 
 **Legenda:** ✅ comportamento provato nel perimetro indicato; 🔎 presente, da verificare; ❌ difetto accertato; ⚠️ incoerenza da seguire nei chiamanti; ⬜ mancante; ⏸ mantenere su istruzione. Una spunta su una parte non certifica l'intero criterio o il browser. I numeri sono quelli della lista corrente dei 30 criteri, non ripristinano il vecchio punto eliminato.
 
 | # | Criterio | Cosa c’è e stato | Solo lavoro residuo |
 |---|---|---|---|
 | 1 | Cataloghi | ✅ Caricamento cataloghi reali provato. | 🔎 Cache e migrazione browser da verificare; conservare il caricamento. |
-| 2 | Ricette e componenti | ✅ Identità compilate e snapshot principali presenti. | 🔎 Verificare equivalenza combinato/separato e percorsi manuali; integrare solo lacune provate. |
-| 3 | Configurazione | ◐ Frequenze P/sottotipi corrette il 26/09; altri clamp PDF ancora presenti. | Conservare la precedenza P/sottotipi verificata; completare gli altri parametri e collegamenti mancanti. |
-| 4 | Allergeni | ✅ Filtro motore e rifiuto di snapshot che omette allergeni provati. | 🔎 Verificare copertura catalogo, speciali e proposte manuali. Il consumo reale resta distinto. |
-| 5 | Frequenze P | 🔎 Implementate, con prova di una settimana. | Verificare configurazioni interessate dal resolver; nessuna riscrittura preventiva. |
-| 6 | Rotazione P/C | ✅ Separazione reset C/P e consecutività P provate nei casi esistenti. | Conservare; verificare propagazione dei parametri temporali modificati. |
-| 7 | Stack | ✅ Soglia 14/15 giorni e filtro al reset provati nelle funzioni comuni. | 🔎 Persistenza e collegamento del log da verificare nel flusso completo. |
-| 8 | Roll binario | 🔎 Ciclo e riapertura implementati. | Verificare estrazione, esaurimento e persistenza UI; non reimplementare il ciclo. |
-| 9 | Unicità piatti | ✅ Settimana di 14 pasti senza duplicati e rifiuto duplicato al commit provati. | 🔎 Equivalenza combinato/separato e proposte manuali non certificate. |
-| 10 | Bozza e conferma | 🔎 Transazione e controllo concorrenza presenti. | Verificare comportamento IndexedDB reale, blocchi e annullamento. |
-| 11 | Sequenza P/C/V | ✅ Caso prima bloccato al dodicesimo pasto completato a 14. Sequenza presente. | 🔎 Verificare C.user nel caso specifico interessato; conservare algoritmo esistente. |
-| 12 | Carboidrati | 🔎 Copertura e validazione FIXED presenti. | Verificare un caso FIXED pertinente e relativi conteggi. |
-| 13 | Verdure | ⚠️ Ripiego presente nella scelta, vincolo obbligatorio nella chiusura. | Tracciare esaurimento e assegnazione del vincolo, poi correggere il conflitto dimostrato anche nei chiamanti. |
-| 14 | Residuo V/S/G | 🔎 Calcolo e normalizzazione presenti. | Verificare numericamente con dosi documentate; collegare override nutrizionista. |
-| 15 | Dosi sughi | ⬜ Dati mancanti nel catalogo; esclusione delle dosi mancanti già presente. | Preparare elenco Qwen e integrare i risultati disponibili. Non rifare la quarantena. |
-| 16 | Olio | 🔎 Normalizzazione per pasto presente. | Verificare quantità risolta e propagazione; aggiungere solo eventuali collegamenti mancanti. |
-| 17 | Roll C/P/V | 🔎 Comandi e validazione candidati presenti. | Verificare cambio del ruolo richiesto e conferma; correggere solo difetti rilevati. |
-| 18 | Alternativa | ✅ Anteprima senza scrittura piano provata. 🔎 Conferma implementata. | Correggere il test condizionale: deve trovare una proposta e provarne la conferma. |
-| 19 | Salvafrigo | 🔎 Percorso comune presente. | Verificare scelta con scorte e deficit controllati; nessuna riscrittura preventiva. |
-| 20 | Consumo | ❌ Transazione comune presente, editor manuali scrivono ancora separatamente. | Integrare editor con snapshot, contatori e scorte; verificare doppio evento e rollback. |
-| 21 | Colazione | ✅ Contatore soglia 7 e reset provati. | 🔎 Snapshot in programmazione e speciali da verificare/completare; conservare contatore. |
-| 22 | Frutta e spuntini | ✅ Conteggi, deduplicazione e settimana richiesta provati. ❌ Dosi locali persistono. | Collegare dosi configurate. Nessun nuovo obbligo di distribuzione automatica della frutta. |
-| 23 | Pagina Pasto | 🔎 Comandi e lettura snapshot presenti. | Verificare collegamenti toccati dagli interventi; grafica conservata, verifica visuale utente. |
-| 24 | Menu | 🔎 Salva/scarta/resta presente. | Verificare navigazione e bozza nel percorso reale; conservare UI. |
-| 25 | Dettaglio | 🔎 Allergeni esposti, contenuti e timer presenti. | Verificare lettura snapshot storico; nessuna nuova realizzazione della pagina. |
-| 26 | Inventario e spesa | ✅ Fabbisogno meno consumati/scorte provato. ❌ Acquisto manuale con scritture separate. | Rendere atomico acquisto manuale e provarne idempotenza; conservare calcolo spesa. |
+| 2 | Ricette e componenti | ✅ Identità compilate e snapshot principali presenti. | 01/10: identità pasto combinato/separato comune provata e collegata a costruzione/commit. Resta UI/dispositivo. |
+| 3 | Configurazione | ✅ Resolver/precedenze/parametri collegati e verificati nei percorsi documentati. | S/G sospese; collaudo configurazione su IndexedDB reale. Vedere matrice corrente dei 16 punti. |
+| 4 | Allergeni | ✅ Filtro clinico e snapshot allergeni verificati; classificazioni del catalogo Lotto F preservate. | D: interazione esclusioni e proposte sul dispositivo; nessuna classificazione inventata. |
+| 5 | Frequenze P | ✅ Frequenze risolte e conteggi condivisi verificati nei percorsi documentati. | D: salvataggio/riapertura sul dispositivo; prove tecniche riutilizzate. |
+| 6 | Rotazione P/C | ✅ Rotazione P/C, consecutività e intervalli configurati verificati. | D: persistenza cicli/log al riavvio; nessuna riscrittura del motore. |
+| 7 | Stack | ✅ Stack, soglie e filtro al reset verificati. | D: riavvio e consultazione log reali. |
+| 8 | Roll binario | ✅ Roll in anteprima senza scritture e commit/conflitto/abort provati. | D: interazione C/P/V e persistenza su dispositivo. |
+| 9 | Unicità piatti | ✅ Settimana di 14 pasti senza duplicati e rifiuto duplicato al commit provati. | 01/10: unicità pasto combinato/separato aggiunta conservando i contratti per ricetta; proposte manuali da collaudare sul dispositivo. |
+| 10 | Bozza e conferma | ✅ Commit con baseline, abort sincrono e preservazione bozza verificati. | D: IndexedDB reale e gesti Salva/Annulla. |
+| 11 | Sequenza P/C/V | ✅ P→C→V e priorità PX+C.user verificati; algoritmo preservato. | Nessuna verifica tecnica residua nei casi documentati; collaudo UI nella sezione Pasto. |
+| 12 | Carboidrati | ✅ FIXED/AUTO, tetti e conteggi verificati nei percorsi documentati. | D: selezione e riapertura Set sul dispositivo. |
+| 13 | Verdure | ✅ Ricorrente esaurita rilascia la priorità; chiusura conserva ripiego compatibile. | 01/10: slot reale e pool senza ricorrente verificati. Resta collaudo dispositivo. |
+| 14 | Residuo V/S/G | ✅ Residuo, override e snapshot verificati con dosi dichiarate. | S: sole dosi S/G mancanti sospese; D: resa quantità sul dispositivo. |
+| 15 | Dosi sughi | ⬜ Dati mancanti nel catalogo; esclusione delle dosi mancanti già presente. | Sospeso su istruzione Cwe; aromi esclusi. Non riaprire in questo incarico. |
+| 16 | Olio | ✅ Quota risolta e normalizzazione sulle realizzazioni verificate. | D: resa delle quantità nei dettagli; dosi esistenti conservate. |
+| 17 | Roll C/P/V | ✅ Roll reale con conferma atomica e nessuna scrittura durante anteprima. | D: comandi C/P/V sul dispositivo. |
+| 18 | Alternativa | ✅ Anteprima senza scrittura piano provata. 🔎 Conferma implementata. | 30/09: proposta obbligatoria e conferma provate su cataloghi reali/in memoria; altri pasti preservati e rifiuto senza scritture. Resta dispositivo. |
+| 19 | Salvafrigo | ✅ Salvafrigo sulla pipeline comune, priorità scorte e residuo documentati nel Lotto G. | D: interazione con scorte reali e fascia oraria. |
+| 20 | Consumo | ◐ Consumo automatico e quattro ingressi editor manuali transazionali; correzioni verificate in simulazione. | 30/09: snapshot, contatori, differenza scorte, doppio evento e rollback verificati. Restano dispositivo e correzione di scorta eliminata. |
+| 21 | Colazione | ✅ Snapshot, contatore e premio al consumo verificati. | D: composizione e consumo premio su dispositivo. |
+| 22 | Frutta e spuntini | ✅ Conteggi, deduplicazione, contesti e dosi configurate collegati e provati. | Collaudo scelta/consumo su dispositivo; frutta/spuntini liberi e dosati. |
+| 23 | Pagina Pasto | ✅ Pipeline proposte/snapshot e conferma verificati. | D: interazione e resa visiva dei comandi; nessun nuovo restyling. |
+| 24 | Menu | ✅ Bozza, commit/errori, reset atomico sul piano reale con Menu aperto e isolamento consumo verificati. | D: navigazione/cambio settimana e IndexedDB reale. |
+| 25 | Dettaglio | ✅ Snapshot e protezione porzioni consumate; abort conserva oggetto. | D: preferiti, consultazione storico e timer touch. |
+| 26 | Inventario e spesa | ✅ Fabbisogno meno consumati/scorte provato. ◐ Acquisto manuale atomico verificato in simulazione. | 30/09: transazione unica, doppia conferma e abort provati; conservato calcolo spesa. Resta IndexedDB reale. |
 | 27 | Barcode | ✅ Checksum e quantità provati. 🔎 Scanner e acquisto implementati. | Collaudo dispositivo non eseguito; mantenere codice salvo difetti accertati. |
 | 28 | Accessi e cloud | ⏸ Mantenere per decisione utente. | Non riaprire sviluppo o migrazioni cloud; nessuna certificazione implicita. |
-| 29 | Offline | 🔎 Cache e avvio locale implementati. | Verificare riapertura/aggiornamento coinvolti dai cambiamenti; dispositivo non certificato. |
-| 30 | Controlli e stato | ❌ Prove utili presenti, ma conferma condizionale e riepiloghi superati. | Correggere queste lacune; riusare prove pertinenti. Nessuna suite completa automatica. |
+| 29 | Offline | ✅ Shell v4, install fallito e query offline verificati in simulazione. | D: installazione, aggiornamento e avvio locale offline reali. |
+| 30 | Controlli e stato | ✅ Conferma obbligatoria provata; riepiloghi riallineati ai 16 punti. | Conservare evidenze e matrice corrente; collaudo finale circoscritto dai metadati. |
 
 ## Prove eseguite
 
@@ -62,17 +62,12 @@ Questa lista distingue lavoro già realizzato, difetti e verifiche residue. Sost
 2. Prove con copertura inferiore al requisito: una settimana deterministica non certifica ogni configurazione; archivio simulato non certifica IndexedDB; il ramo if(proposal) può saltare la conferma.
 3. Il nuovo prompt ripresentava requisiti generali come attività, senza separare implementazione e verifica. La ripetizione nel prompt non dimostra una regressione del codice.
 4. Report non allineato alle decisioni successive: distribuzione automatica frutta e migrazioni cloud non sono nuovi lavori richiesti. Anche il testo finale del runner contiene quel riferimento superato alla frutta: correggerne il resoconto, senza costruire la funzione non richiesta.
-5. La configurabilità completa è stata documentata ma i clamp del resolver sono ancora nel codice. Questo adeguamento resta da eseguire; non è un lavoro concluso.
+5. Il quadro del 24/09 riportava clamp e collegamenti allora incompleti: superati dagli interventi 26–30/09. Non riaprire sulla base di quella descrizione storica.
 
 Non ci sono evidenze sufficienti per attribuire ogni voce aperta a una regressione, né per quantificare il consumo di budget di ciascuna attività. Il lavoro applicativo esiste ma la chiusura dell'integrazione è incompleta.
 
 ## Interventi coordinati residui
-
-- Configurazione: correggere resolver e dosi locali; collegare solo campi e utilizzatori mancanti dopo censimento. Conservare conteggi e selezione conformi.
-- Scritture: riutilizzare le transazioni esistenti per editor consumo e acquisto manuale, mantenendo coerenti snapshot, storico, contatori e scorte.
-- Verdure: seguire il vincolo ricorrente dalla scelta alla validazione e al Roll; attuare il ripiego all'esaurimento preservando gli altri vincoli.
-- Dati: completare dosi S/G tramite Qwen quando disponibili.
-- Verifiche: eseguire solo i controlli residui pertinenti e quelli obbligatori sulle modifiche. Le voci 🔎 diventano interventi soltanto dopo un difetto concreto.
+Stato corrente nella matrice dei 16 punti di RISCONTRO_FUNZIONI_PWA.md (01/10/2026): residui S/V/D circoscritti per sezione. Configurazione, dosi contestuali, editor consumo/acquisti, ripiego ricorrente, conferma proposta e contatore premio non sono più interventi applicativi da rifare. Dosi S/G sospese e aromi esclusi. Collettore finale non eseguito: suite completa/regressioni estese/visuali non autorizzate.
 
 
 ## 26/09/2026 — Precedenza nutrizionista per frequenze P e sottotipi

@@ -24,7 +24,7 @@ assert(start>=0&&end>start);vm.runInContext(source.slice(start,end),context);
  await assert.rejects(()=>context.ricetteOrdinariePerConteggi({realizzazioni:[{ricettaId:'missing'}]}),/Realizzazione non leggibile/);
  await assert.rejects(()=>context.ricetteOrdinariePerConteggi({ricettaIds:['missing']}),/Ricetta salvata non leggibile/);
  await assert.rejects(()=>context.ricetteOrdinariePerConteggi({id,realizzazioni:[{snapshot:{ingredienti:[]}}]}),/senza ingredienti leggibili/);
- const metadata=JSON.parse(source.match(/\/\* @qa-metadata\s*([\s\S]*?)\*\//)[1]);
+ const metadata=source.split('/* @qa-metadata').slice(1).map(part=>JSON.parse(part.split('*/')[0])).find(m=>m.id==='P1-conteggi-preservati');
  assert.equal(metadata.id,'P1-conteggi-preservati');assert(fs.existsSync(require('node:path').join(__dirname,'..',metadata.focusedTest)));
  console.log('PASS: deduplica slot, speciali/vuoti, legacy, priorita snapshot, riferimenti mancanti e metadati QA. Helper reali; materializzazione simulata.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

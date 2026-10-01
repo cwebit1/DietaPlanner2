@@ -1,0 +1,27 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
+const stores=Object.fromEntries(['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario','diagnosticaCopertura'].map(n=>[n,new Map()]));
+global.getAll=async n=>[...stores[n].values()].map(v=>structuredClone(v));
+global.getOne=async(n,k)=>structuredClone(stores[n].get(k));
+global.put=async(n,v)=>stores[n].set(v.id??v.chiave,structuredClone(v));global.delKey=async(n,k)=>stores[n].delete(k);
+global.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(__dirname,'..',String(url).split('?')[0]),'utf8'))});
+global.todayISO=()=> '2026-10-01';require('../motor-v12.js');const M=global.DietaPlannerMotorV12;
+(async()=>{
+ await M.inizializza({basePath:''});const id='nrv_pomodoro_fresco',day='2026-10-05';
+ await put('impostazioni',{chiave:'verduraRicorrente',valore:id});await put('impostazioni',{chiave:'verduraRicorrentePasti',valore:['pranzo_0']});
+ assert.equal(await M.verduraRicorrenteRichiesta(day,'pranzo'),id,'inventario vuoto consente programmazione');
+ await put('inventario',{id:'esaurita',variantId:id,stato:'disponibile',quantita:0});
+ assert.equal(await M.verduraRicorrenteRichiesta(day,'pranzo'),null,'esaurimento quantitativo rimuove solo la priorità ricorrente');
+ await put('inventario',{id:'seconda',variantId:id,stato:'disponibile',quantita:200});
+ assert.equal(await M.verduraRicorrenteRichiesta(day,'pranzo'),id,'altra confezione positiva mantiene la ricorrente');
+ assert.equal(await M.verduraRicorrenteRichiesta(day,'cena'),null,'slot non selezionato');
+ stores.inventario.delete('seconda');
+ const recipes=M.getRicette(),vegetables=recipes.filter(r=>{const c=M.copertura(r);return c.V&&!c.C&&!c.P;}),base=recipes.find(r=>{const c=M.copertura(r);return c.tokens.has('PP')&&c.C&&!c.V;});
+ const noTomato=vegetables.filter(r=>!r.ingredienti.some(i=>i.variantId===id));
+ const completed=M.completaResiduoVerduraRicette([base],noTomato,day,{vegetablePortionGrams:200,saladPortionGrams:70},undefined,undefined,undefined,id);
+ assert(M.rispettaRicorrenteDisponibile(completed,noTomato,id),'ripiego compatibile accettato alla chiusura');
+ assert(!M.rispettaRicorrenteDisponibile(completed,vegetables,id),'ricorrente valida resta prioritaria quando presente nel pool');
+ assert(M.coperturaVerduraRicette(completed,{vegetablePortionGrams:200,saladPortionGrams:70}).coperturaCompleta);
+ const solved=await M.risolviSlotSingolo(day,'pranzo','PC',{});assert(solved?.realizzazioni?.length,'slot reale completato con ricorrente esaurita');assert(solved.bilancioVerdura.coperturaCompleta);
+ console.log('PASS: ricorrente positiva/esaurita, inventario vuoto, ripiego preservato e slot reale completo. Archivio in memoria.');
+})().catch(e=>{console.error(e);process.exitCode=1;});

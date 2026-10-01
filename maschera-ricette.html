@@ -226,6 +226,8 @@ const OPZIONI_SELETTORE = ['C','PC','PP','PF','PU','PL','V','Condimenti','Nessun
 
 function creaGruppo(idGruppo) {
   const el = document.getElementById(idGruppo);
+  delete el.dataset.modelloOriginale;
+  delete el.dataset.composizioni;
   delete el.dataset.categoriaAttiva; // pulizia esplicita: l'innerHTML sotto non resetta il dataset dell'elemento contenitore
   const isCondimenti = (idGruppo === 'gruppo4');
   el.innerHTML = `
@@ -236,6 +238,22 @@ function creaGruppo(idGruppo) {
         ${OPZIONI_SELETTORE.map(o => `<button type="button" class="opzione-selettore" data-valore="${o}" onclick="selezionaOpzione('${idGruppo}','${o}')">${o}</button>`).join('')}
       </div>
       <div class="array-block campo-ingredienti"><div class="stato">Seleziona una categoria.</div></div>
+      <label>Quota vegetale del gruppo</label>
+      <select class="campo-ruolo-vegetale" onchange="aggiornaQuotaGruppo('${idGruppo}',true)">
+        <option value="">Nessuna quota vegetale</option>
+        <option value="V">V — porzione di verdura</option>
+        <option value="S">S — sugo</option>
+        <option value="G">G — guarnizione / condimento della proteina</option>
+      </select>
+      <label>Fonte della quantità</label>
+      <select class="campo-fonte-quantita" onchange="aggiornaQuotaGruppo('${idGruppo}')">
+        <option value="">Mantieni la dichiarazione esistente</option>
+        <option value="nutrizionista">Quota S/G dal Set nutrizionista</option>
+        <option value="ricetta">Dosi specifiche degli ingredienti della ricetta</option>
+        <option value="ingrediente">Dose ingrediente nel contesto pasto principale</option>
+      </select>
+      <div class="stato campo-limite-quota"></div>
+      <div class="stato">Le dosi specifiche degli ingredienti prevalgono sulla fonte del gruppo. Campo dose vuoto: nessuna dose specifica.</div>
       <div class="campo-composizioni" style="display:none;"></div>
       ${isCondimenti ? '' : `
       <label>Cotture compatibili</label>
@@ -288,6 +306,8 @@ function selezionaOpzione(idGruppo, valore) {
   const el = document.getElementById(idGruppo);
   el.querySelectorAll('.opzione-selettore').forEach(b => b.classList.toggle('attivo', b.dataset.valore === valore));
   el.dataset.categoriaAttiva = valore;
+  if(valore==='V'&&!el.querySelector('.campo-ruolo-vegetale').value)el.querySelector('.campo-ruolo-vegetale').value='V';
+  aggiornaQuotaGruppo(idGruppo);
   renderIngredientiGruppo(idGruppo, valore);
 }
 
@@ -320,12 +340,12 @@ function renderIngredientiGruppo(idGruppo, valore, preselezionati) {
     const condimentiCompatibili = pre && Array.isArray(pre.condimentiCompatibili) ? pre.condimentiCompatibili : null;
     const condimentiEncoded = encodeURIComponent(JSON.stringify(condimentiCompatibili));
     return `
-    <div class="ingrediente-riga ingrediente-riga-due-colonne" data-condimenti-iniziali="${condimentiEncoded}">
+    <div class="ingrediente-riga ingrediente-riga-due-colonne" data-condimenti-iniziali="${condimentiEncoded}" data-originale="${encodeURIComponent(JSON.stringify(pre||{}))}">
       <label class="colonna-sx">
         <input type="checkbox" class="ingr-check" data-nome="${nome}" data-stack="${stack}" data-roll="${roll}" ${set.has(nome) ? 'checked' : ''}>
         <span class="nome-ingr">${nome}</span>
       </label>
-      <input type="number" class="campo-dose colonna-dx" placeholder="g" value="${dose}">
+      <input type="number" min="0" step="any" class="campo-dose colonna-dx" aria-label="Dose specifica di ${nome}" placeholder="Dose" value="${dose}">
       <div class="compat-condimenti" style="display:none;"></div>
     </div>
   `;
@@ -382,6 +402,66 @@ function aggiornaCompatibilitaCondimenti() {
   }
 }
 
+/* @qa-metadata
+{"id":"MASCHERA-quote-SG","paths":["leggiGruppo","scriviGruppo","leggiFormCorrente","salvaVoce","applicaQuotaGruppo","applicaDoseIngrediente"],"focusedTest":"tests/maschera-quote-sg.test.js","rules":["ruoli S/G distinti da categoria alimentare","quantità specifica salvata in dose con fonte ricetta","massimi referenziati al Set nutrizionista","dosi vuote non inventate","modifica conserva metadati e composizioni"],"pending":["interazione maschera sul dispositivo","salvataggio GitHub non eseguito"]}
+*/
+function doseRicettaDaCampo(value){
+  if(String(value).trim()==='')return undefined;
+  const dose=Number(value);
+  if(!Number.isFinite(dose)||dose<0)throw new Error('La dose deve essere un numero non negativo.');
+  return dose;
+}
+function applicaDoseIngrediente(originale,value){
+  const out=structuredClone(originale),dose=doseRicettaDaCampo(value);
+  if(dose===out.dose)return out;
+  if(dose===undefined){delete out.dose;if(out.quantita?.fonte==='ricetta')delete out.quantita;}
+  else{out.dose=dose;out.quantita={fonte:'ricetta'};}
+  return out;
+}
+function applicaQuotaGruppo(originale,ruolo,fonte){
+  const out=structuredClone(originale);
+  const ruoloPrecedente=(out.ruoli||[]).find(x=>['V','S','G'].includes(x));
+  const roles=(out.ruoli||[out.categoria]).filter(x=>x&&x!=='Nessuno'&&x!=='Condimenti'&&!['V','S','G'].includes(x));
+  if(out.categoria==='Condimenti'&&!roles.length)roles.push('Condimento');
+  if(ruolo)roles.push(ruolo);
+  out.ruoli=[...new Set(roles)];
+  const partial=['S','G'].includes(ruolo);
+  if(fonte==='nutrizionista'&&!partial)throw new Error('La quota nutrizionista richiede il ruolo S o G.');
+  if(fonte==='nutrizionista')out.quantita={...(out.quantita?.fonte===fonte?out.quantita:{}),fonte:'nutrizionista',parametro:'quoteVegetali.'+ruolo};
+  else if(fonte==='ricetta')out.quantita={...(out.quantita?.fonte===fonte?out.quantita:{}),fonte:'ricetta'};
+  else if(fonte==='ingrediente')out.quantita={fonte:'ingrediente',contesto:out.quantita?.fonte===fonte?out.quantita.contesto:'pastoPrincipale'};
+  else if(partial&&out.quantita?.fonte==='nutrizionista')out.quantita={...out.quantita,parametro:'quoteVegetali.'+ruolo};
+  else if(!partial&&out.quantita?.fonte==='nutrizionista')delete out.quantita;
+  if(ruoloPrecedente&&ruoloPrecedente!==ruolo){
+    const aggiornaComponente=i=>{
+      if(!i.ruoli?.includes(ruoloPrecedente))return;
+      i.ruoli=i.ruoli.filter(r=>r!==ruoloPrecedente);if(ruolo)i.ruoli.push(ruolo);
+      if(i.quantita?.fonte==='nutrizionista'&&i.quantita.parametro==='quoteVegetali.'+ruoloPrecedente){
+        if(partial)i.quantita.parametro='quoteVegetali.'+ruolo;else delete i.quantita;
+      }
+      if(i.limite?.parametro==='quoteVegetali.'+ruoloPrecedente+'.massimo'){
+        if(partial)i.limite.parametro='quoteVegetali.'+ruolo+'.massimo';else delete i.limite;
+      }
+    };
+    (out.ingredienti||[]).forEach(aggiornaComponente);
+    for(const c of out.composizioni||[]){
+      (c.ingredienti||[]).forEach(aggiornaComponente);
+      if(c.copertura?.ruoli?.includes(ruoloPrecedente)){c.copertura.ruoli=c.copertura.ruoli.filter(r=>r!==ruoloPrecedente);if(ruolo)c.copertura.ruoli.push(ruolo);}
+    }
+  }
+  if(partial)out.limite={fonte:'nutrizionista',parametro:'quoteVegetali.'+ruolo+'.massimo'};
+  else if(/^quoteVegetali\.[SG]\.massimo$/.test(out.limite?.parametro||''))delete out.limite;
+  return out;
+}
+function aggiornaQuotaGruppo(idGruppo,cambioRuolo){
+  const el=document.getElementById(idGruppo),ruolo=el.querySelector('.campo-ruolo-vegetale').value;
+  if(cambioRuolo&&['S','G'].includes(ruolo))el.querySelector('.campo-fonte-quantita').value='nutrizionista';
+  if(cambioRuolo&&!['S','G'].includes(ruolo)&&el.querySelector('.campo-fonte-quantita').value==='nutrizionista')el.querySelector('.campo-fonte-quantita').value='';
+  el.querySelector('.campo-limite-quota').textContent=['S','G'].includes(ruolo)
+    ?'Massimo dal Set nutrizionista: quoteVegetali.'+ruolo+'.massimo (sulla somma della quota).'
+    :'Nessun massimo S/G per questo gruppo.';
+}
+
 function leggiGruppo(idGruppo) {
   const el = document.getElementById(idGruppo);
   const testo1 = el.querySelector('.campo-testo1').value.trim();
@@ -389,9 +469,8 @@ function leggiGruppo(idGruppo) {
   const ingredienti = [...el.querySelectorAll('.ingr-check:checked')].map(chk => {
     const riga = chk.closest('.ingrediente-riga');
     const campoDose = riga ? riga.querySelector('.campo-dose') : null;
-    const dose = campoDose && campoDose.value !== '' ? Number(campoDose.value) : undefined;
-    const obj = { nome: chk.dataset.nome, stack: Number(chk.dataset.stack) || 1, roll: Number(chk.dataset.roll) || 1 };
-    if (dose !== undefined) obj.dose = dose;
+    const originale=JSON.parse(decodeURIComponent(riga.dataset.originale||'%7B%7D'));
+    const obj=applicaDoseIngrediente({...originale,nome:chk.dataset.nome,stack:Number(chk.dataset.stack),roll:Number(chk.dataset.roll)},campoDose?.value??'');
     const compat = [...riga.querySelectorAll('.compat-cond-check:checked')].map(x => x.dataset.nome);
     if (riga.querySelector('.compat-condimenti') && condimentiSelezionatiCorrenti().length) obj.condimentiCompatibili = compat;
     return obj;
@@ -399,24 +478,35 @@ function leggiGruppo(idGruppo) {
   const campoTesto2 = el.querySelector('.campo-testo2');
   const testo2 = campoTesto2 ? campoTesto2.value.trim() : '';
   const cotture = [...el.querySelectorAll('.cottura-check:checked')].map(chk => ({
-    nome: chk.dataset.nome, stack: Number(chk.dataset.stack) || 1, roll: Number(chk.dataset.roll) || 1
+    nome: chk.dataset.nome, stack: Number(chk.dataset.stack), roll: Number(chk.dataset.roll)
   }));
   const mostraNomi = el.querySelector('.campo-flag-mostra').checked;
   let composizioni=[];
   try { composizioni=JSON.parse(decodeURIComponent(el.dataset.composizioni||'%5B%5D')); } catch(e) {}
-  const out={ testo1, categoria, ingredienti, cotture, testo2, mostraNomi };
+  const originale=JSON.parse(decodeURIComponent(el.dataset.modelloOriginale||'%7B%7D'));
+  const out={...originale,testo1,categoria,ingredienti,cotture,testo2,mostraNomi};
+  if(originale.categoria&&originale.categoria!==categoria)out.ruoli=[categoria];
+  for(const field of el.querySelectorAll('.campo-dose-composizione')){
+    const c=Number(field.dataset.composizione),i=Number(field.dataset.ingrediente);
+    composizioni[c].ingredienti[i]=applicaDoseIngrediente(composizioni[c].ingredienti[i],field.value);
+  }
   if(composizioni.length)out.composizioni=composizioni;
-  return out;
+  return applicaQuotaGruppo(out,el.querySelector('.campo-ruolo-vegetale').value,el.querySelector('.campo-fonte-quantita').value);
 }
 
 function scriviGruppo(idGruppo, dati) {
   const el = document.getElementById(idGruppo);
+  el.dataset.modelloOriginale=encodeURIComponent(JSON.stringify(dati));
+  el.querySelector('.campo-ruolo-vegetale').value=(dati.ruoli||[dati.categoria]).find(x=>['V','S','G'].includes(x))||'';
+  el.querySelector('.campo-fonte-quantita').value=dati.quantita?.fonte||'';
+  aggiornaQuotaGruppo(idGruppo);
   const composizioni=Array.isArray(dati.composizioni)?dati.composizioni:[];
   el.dataset.composizioni=encodeURIComponent(JSON.stringify(composizioni));
   const boxComposizioni=el.querySelector('.campo-composizioni');
   if(boxComposizioni&&composizioni.length){
     boxComposizioni.style.display='block';
-    boxComposizioni.innerHTML='<div class="stato">Composizioni fisse: '+composizioni.map(c=>c.nome+' ['+(c.ingredienti||[]).map(i=>i.nome+(i.dose!==undefined?' '+i.dose+'g':'')).join(' + ')+']').join(' · ')+'</div>';
+    const esc=value=>String(value).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+    boxComposizioni.innerHTML='<div class="stato">Dosi delle composizioni fisse</div>'+composizioni.map((c,ci)=>'<div><strong>'+esc(c.nome)+'</strong>'+(c.ingredienti||[]).map((i,ii)=>'<label>'+esc(i.nome)+'<input type="number" min="0" step="any" class="campo-dose-composizione" data-composizione="'+ci+'" data-ingrediente="'+ii+'" value="'+(i.dose??'')+'" placeholder="Dose specifica"></label>').join('')+'</div>').join('');
   }
   el.querySelector('.campo-testo1').value = dati.testo1 || '';
   const campoTesto2 = el.querySelector('.campo-testo2');
@@ -441,11 +531,13 @@ function scriviGruppo(idGruppo, dati) {
 function leggiFormCorrente() {
   const gruppi = [leggiGruppo('gruppo1'), leggiGruppo('gruppo2'), leggiGruppo('gruppo3'), leggiGruppo('gruppo4')];
   const classiUsate = new Set();
-  gruppi.forEach(g => { if (g.categoria && g.categoria !== 'Nessuno' && g.categoria !== 'Condimenti') classiUsate.add(g.categoria); });
-  const out = { gruppi };
+  gruppi.forEach(g => { if (g.categoria && g.categoria !== 'Nessuno') (g.ruoli||[g.categoria]).filter(r=>r!=='Condimento').forEach(r=>classiUsate.add(r)); });
+  const originale=INDICE_IN_MODIFICA===null?{}:structuredClone(VOCI[INDICE_IN_MODIFICA]);
+  const out = {...originale,gruppi};
+  out.copertura={...(out.copertura||{}),ruoli:[...classiUsate]};
   const stackScope = document.getElementById('campoStackScope').value.trim();
-  if (stackScope) out.stackScope = stackScope;
-  if (classiUsate.size) out.classe = classiUsate.size === 1 ? [...classiUsate][0] : [...classiUsate];
+  if (stackScope) out.stackScope = stackScope;else delete out.stackScope;
+  if (classiUsate.size) out.classe = classiUsate.size === 1 ? [...classiUsate][0] : [...classiUsate];else delete out.classe;
   return out;
 }
 
@@ -458,7 +550,9 @@ function svuotaForm() {
 }
 
 async function salvaVoce() {
-  const dati = leggiFormCorrente();
+  let dati;
+  try{dati=leggiFormCorrente();}
+  catch(error){const stato=document.getElementById('statoSalvaVoce');stato.textContent=error.message;stato.className='stato err';return;}
   let indiceSalvato;
   let creata;
   if (INDICE_IN_MODIFICA !== null) {

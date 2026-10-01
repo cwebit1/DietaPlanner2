@@ -15,30 +15,30 @@ Lista approvata da Cwe il 24/09/2026. È il quadro sintetico da aggiornare e rip
 
 ## Lista di riscontro
 
-Stati iniziali di sezione: da consolidare con gli esiti già disponibili, senza nuove certificazioni in questo aggiornamento documentale.
+Revisione dei 16 punti completata nel codice il 01/10/2026, nei percorsi e requisiti documentati; collaudo finale distinto dallo sviluppo. ✅ Integrata indica collegamenti riscontrati; ✅ Funzionante richiede evidenze di comportamento per l’intera sezione. ◐ conserva prove parziali con residuo esplicito, non indica una riscrittura da fare. S = parte espressamente sospesa; D = collaudo finale sul dispositivo/servizio reale. Non restano verifiche tecniche V aperte nei percorsi esaminati. Nessuna nuova lacuna applicativa dimostrata resta senza correzione nel perimetro esaminato; ciò non certifica tutti i percorsi possibili né autorizza release.
 
-| # | Sezione | Funzioni comprese | Integrata | Funzionante |
-|---|---|---|---|---|
-| 1 | Configurazione nutrizionista | Quantità, frequenze, ricorrenze, allergeni, profili, limiti e valori iniziali | ◐ | ◐ |
-| 2 | Set utente | Scelte P/C, preferenze, esclusioni consentite, verdure ricorrenti, colazione | 🔎 | 🔎 |
-| 3 | Cataloghi | Ingredienti, ricette, classificazioni, dosi, immagini, disponibilità e aggiornamenti | 🔎 | 🔎 |
-| 4 | Compilazione a strati | Proteine → combinazioni P+C → completamento C → residuo V con S/G | 🔎 | 🔎 |
-| 5 | Esclusioni e rotazione | Stati binari, stack, roll, unicità, consecutività, esaurimento e log | 🔎 | 🔎 |
-| 6 | Programmazione Menu | Generazione, settimane, blocchi, bozze, conferma e annullamento | 🔎 | 🔎 |
-| 7 | Pasto del giorno | Proposte, cambio piatto, Roll P/C/V, Alternativa, Salvafrigo e speciali | 🔎 | 🔎 |
-| 8 | Colazione, frutta e spuntini | Composizione, dosi, libertà di scelta, frequenze e contatori | ◐ | ◐ |
-| 9 | Ricette e dettaglio | Consultazione, preferiti, ingredienti, quantità, procedimento, timer e assegnazione | 🔎 | 🔎 |
-| 10 | Consumo e storico | Consumo automatico e manuale, correzioni, snapshot e conteggi | 🔎 | 🔎 |
-| 11 | Nutrizione | Totali del giorno, frequenze settimanali, indicatori e grafici | 🔎 | 🔎 |
-| 12 | Inventario | Inserimento/modifica, giacenze, scadenze, congelamento e scarico | 🔎 | 🔎 |
-| 13 | Spesa e barcode | Fabbisogni, sottrazione scorte, acquisti, scansione e associazione prodotti | 🔎 | 🔎 |
-| 14 | Navigazione e interfaccia | Calendario, caroselli, comandi, finestre e stati visualizzati | 🔎 | 🔎 |
-| 15 | Account e dati | Accesso locale/Google, sincronizzazione, backup, ripristino e reset | 🔎 | 🔎 |
-| 16 | PWA e manutenzione | Avvio, installazione, offline, cache, aggiornamenti e diagnostica | 🔎 | 🔎 |
+| # | Sezione | Funzioni comprese | Integrata | Funzionante | Evidenza disponibile | Residuo preciso |
+|---|---|---|---|---|---|---|
+| 1 | Configurazione nutrizionista | Quantità, frequenze, ricorrenze, allergeni, profili, limiti e valori iniziali | ◐ | ◐ | Resolver e salvataggio/riapertura: pwa-config-proteine-percorso, contesti-orari, commit; modelli-quote-vegetali. | S: dosi S/G sospese. D: salvataggio/riapertura IndexedDB sul dispositivo. |
+| 2 | Set utente | Scelte P/C, preferenze, esclusioni consentite, verdure ricorrenti, colazione | ✅ | ◐ | Lotto E; set-preferenze-runtime, carboidrati-priorita-pxcuser; ricorrente-ripiego; Set-uscita-validata e commit-errori-sincroni. | D: Salva/Annulla e riapertura delle scelte P/C, preferenze e ricorrente su dispositivo. |
+| 3 | Cataloghi | Ingredienti, ricette, classificazioni, dosi, immagini, disponibilità e aggiornamenti | ◐ | ◐ | Lotto F: referenze dei 39 modelli, categorie e unità; disponibilità/visuale per ID; nuovi ruoli preservano dati nativi; maschera-quote-sg verifica lettura/salvataggio dosi e dichiarazioni nei 39 modelli. | S: sole dosi S/G mancanti, aromi esclusi. D: aggiornamento cataloghi e immagini in PWA installata. |
+| 4 | Compilazione a strati | Proteine → combinazioni P+C → completamento C → residuo V con S/G | ✅ | ✅ | Generazione reale di 14 pasti; C.user, FIXED/AUTO, minimi/blocchi e residuo; nuovo slot reale con ricorrente esaurita. | Nessun difetto residuo dimostrato nel motore per i cataloghi/configurazioni coperti. S/G senza dose respinte, non inventate. |
+| 5 | Esclusioni e rotazione | Stati binari, stack, roll, unicità, consecutività, esaurimento e log | ✅ | ◐ | Contratti essenziali, cronologia legacy, pwa-integrazione-runtime; Roll anteprima/commit/conflitto e identità pasto combinato/separato nuovi. | D: proposte manuali combinato/separato, persistenza cicli e diagnostica al riavvio. Identità comune verificata con fixture e collegata a costruzione/commit. |
+| 6 | Programmazione Menu | Generazione, settimane, blocchi, bozze, conferma e annullamento | ✅ | ◐ | Lucchetti, conteggi preservati e minimi/blocchi; commit comune con baseline; reset atomico sul piano reale anche con Menu aperto; errori sincroni abortiscono e render superato non ripristina bozze. | D: Salva/Annulla, cambio settimana e conflitto concorrente nel Menu su IndexedDB reale. |
+| 7 | Pasto del giorno | Proposte, cambio piatto, Roll P/C/V, Alternativa, Salvafrigo e speciali | ✅ | ◐ | Anteprima/conferma obbligatoria; Roll reale senza scritture e commit unico; Salvafrigo e rigenerazione su pipeline comune. | D: comandi C/P/V, Annulla/Imposta, fascia oraria e priorità Salvafrigo con scorte reali. |
+| 8 | Colazione, frutta e spuntini | Composizione, dosi, libertà di scelta, frequenze e contatori | ✅ | ◐ | Contesti/pz-g, dosi e conteggi frutta/spuntini; editor atomico; premio standard/speciale non azzera alla scelta. | D: composizione, scadenza e consumo premio; scelta libera frutta/spuntini e riepiloghi sul dispositivo. |
+| 9 | Ricette e dettaglio | Consultazione, preferiti, ingredienti, quantità, procedimento, timer e assegnazione | ✅ | ◐ | Snapshot quantitativi, rendering V/S/G per ricetta, visuale per ID e timer; dettaglio delle realizzazioni materializzate; dettaglio-porzioni protegge consumati e oggetto su abort. | D: storico dopo cambio catalogo, preferiti, assegnazione porzioni e timer touch. Contenuto editoriale assente usa fallback già previsto. |
+| 10 | Consumo e storico | Consumo automatico e manuale, correzioni, snapshot e conteggi | ✅ | ◐ | Consumo manuale atomico: quattro ingressi, doppio evento, correzione, mancanze, contatore e abort; consumo/pulizia raw e bozza attiva nel Menu verificati. | D: consumo automatico/manuale con bozza aperta su IndexedDB reale. Limite dati: scarico/lotti legacy non tracciati; scarico ignoto o scorta eliminata causa abort esplicito. |
+| 11 | Nutrizione | Totali del giorno, frequenze settimanali, indicatori e grafici | ✅ | ◐ | Quantità/nutrienti negli snapshot, override e frutta deduplicata piano/storico; contesti-orari e spuntini-frutta-runtime; nutrizione-render-snapshot verifica i numeri nel DOM e conversione pz/g. | D: resa delle barre/grafici e interazione sul dispositivo. Totali numerici giorno con snapshot e pz/g verificati nel DOM; frequenze e deduplicazione già provate nei percorsi documentati. |
+| 12 | Inventario | Inserimento/modifica, giacenze, scadenze, congelamento e scarico | ✅ | ◐ | FEFO/pz-g, correzione quantitativa, acquisto atomico; editor ora rifiuta negativo/NaN/Infinity prima di scrivere. | D: editor g/pz, congelamento/data apertura e scadenze; nessuna provenienza lotto inventata nelle correzioni legacy. |
+| 13 | Spesa e barcode | Fabbisogni, sottrazione scorte, acquisti, scansione e associazione prodotti | ✅ | ◐ | Fabbisogno meno consumati/scorte, checksum e confezioni; acquisto manuale atomico/idempotente e rollback; icona Barcode diretta nella barra, helper comune e rollback verificati. | D: fotocamera EAN, associazione prodotto e conferma confezioni g/ml/pz, riapertura lista dopo acquisto. |
+| 14 | Navigazione e interfaccia | Calendario, caroselli, comandi, finestre e stati visualizzati | ✅ | ◐ | Navigazione/bozza e rendering per ricetta conservati; reset-bozze atomico anche con Menu aperto. Prove browser storiche riusate entro il loro perimetro. | D: Android touch/tastiera/visualViewport, calendario e caroselli; nessun test visuale automatico eseguito. |
+| 15 | Account e dati | Accesso locale/Google, sincronizzazione, backup, ripristino e reset | ✅ | ◐ | Accessi/politiche correnti conservati; contratto Google/UID esistente; backup tutti gli archivi e import merge atomico/abort; reset piano reale atomico con Menu aperto. | D: login/riavvio Google, separazione UID e sincronizzazione/conflitti su progetto Firebase reale; file backup e riapertura dopo import. Nessun nuovo RBAC/migrazione. |
+| 16 | PWA e manutenzione | Avvio, installazione, offline, cache, aggiornamenti e diagnostica | ✅ | ◐ | Shell v4 distinta: risorsa mancante conserva versione precedente, attivazione/query offline simulate; metadati QA e riepiloghi aggiornati. | D: installazione/aggiornamento/offline su PWA installata, inclusa scelta locale senza rete e diagnostica. Nessuna release autorizzata. |
 
 ## Ultimo aggiornamento
 
-24/09/2026: salvati elenco e istruzioni permanenti. Nessuna modifica applicativa e nessun nuovo test runtime. Prove e difetti precedenti restano in ESITO_INTERVENTI_PWA.md; stato generale in STATO_LOTTI_E_TEST.md.
+01/10/2026: tutti i 16 punti esaminati e sviluppo chiuso nel perimetro documentato. Ulteriori difetti di commit, uscita Set, concorrenza bozza, porzioni storico e grammi nei nutrienti corretti e verificati. Prove pregresse conservate. Registro «Chiusura dei percorsi tecnici dei 16 punti» per le sole novità. Stati Funzionante restano distinti dal collaudo dispositivo; S/G sospese. La matrice sopra è lo stato corrente; le note datate successive descrivono lo stato al momento del singolo intervento.
 
 
 ## 26/09/2026 — Frequenze proteiche e tetti sottotipi
@@ -117,3 +117,28 @@ Unificati in motor-v12.js i conteggi iniziali di piano/consumi per slot, con let
 Validatore settimanale collegato alla stessa lettura di generazione/rigenerazione per snapshot e ID legacy; riferimenti mancanti segnalati esplicitamente. Metadati @qa-metadata / P1-conteggi-preservati in motor-v12.js indicano funzioni, regole, prova mirata e casi da approfondire senza ricostruire l'analisi. Sintassi, struttura e diff controllati; pwa-conteggi-preservati e singolo percorso pwa-integrazione-runtime superati (archivio simulato). Nessuna suite estesa o verifica visuale. Il precedente divieto di controlli minimi è superato dall'ultima autorizzazione utente, registrata in AGENTS.md. Punto 1 ancora parziale: restano combinazioni annotate, IndexedDB reale e dati S/G. Stati complessivi invariati: 1 e 8 ◐/◐; altre 14 sezioni 🔎/🔎. Dettagli nel registro.
 
 Ripresa sintetica del 27/09/2026: vedi RIPRESA_BREVE.md. Solo modifica documentale; stati applicativi invariati (1/8 ◐/◐; 2–7/9–16 🔎/🔎).
+
+
+## 30/09/2026 — Punto 1: contratti legacy e verifiche dei preservati
+
+Allineati ID legacy singoli/multipli alla cronologia e ai controlli del commit; verificati gli ingressi della rigenerazione parziale con blocchi/speciali e il confine domenica-lunedì. Evidenze e limiti nel registro, voce omonima. Sezioni 1 e 8 restano ◐/◐; altre 14 🔎/🔎. Provata anche la rigenerazione parziale con minimo ingrediente e blocchi, inclusa una variante con consumo utente-speciale, su solver/cataloghi reali e archivio in memoria. Restano collaudo PWA/IndexedDB reale e dati S/G; nessuna spunta verde complessiva.
+
+
+## 30/09/2026 — Modelli dichiarativi e quote S/G
+
+Applicata la proposta autorizzata: dichiarazioni nel modello sorgente, resolver/Set nutrizionista e propagazione all’esploso con S/G numerici. Prove mirate e limiti nel registro, voce omonima. Restano parametri nutrizionista non impostati e collaudo PWA/IndexedDB reale. Sezioni 1 e 8 ◐/◐; altre 14 🔎/🔎, nessuna certificazione complessiva.
+
+
+30/09/2026 — Quantità iniziali S/G 80 g: verifiche mirate nel test `pwa-modelli-quote-vegetali`; dosi specifiche e Set prevalgono, massimi configurabili senza tetto iniziale. Dettagli: registro «Valore iniziale S/G concluso». Macroaree restano parziali; IndexedDB reale e dosi aromi non dichiarate restano aperti.
+
+
+30/09/2026 — Rettifica: rimosso default universale S/G 80 g; conservate dosi native e verifiche struttura/resolver. Dati mancanti circoscritti da definire con Cwe; riferimento registro «Rettifica default S/G e lacune contestualizzate». Stati complessivi invariati.
+
+
+30/09/2026 — Aromi esclusi su istruzione Cwe: non sono più un residuo di questo intervento. Restano dati S/G; stati complessivi invariati. Riferimento registro «Aromi esclusi dal perimetro».
+
+
+30/09/2026 — Dosi S/G sospese su istruzione Cwe. Verificata conferma proposta obbligatoria nel percorso runtime; acquisto manuale ora atomico e idempotente con prove di abort/doppio evento in simulazione. Riferimento registro «Prosecuzione: conferma proposte e acquisto manuale». Restano dispositivo e consumo manuale/editor; macrosezioni invariate.
+
+
+30/09/2026 — Consumo manuale/editor: quattro ingressi ora atomici, snapshot aggiornati, rettifica quantitativa scorte e contatore, doppio evento/abort verificati in simulazione. Riferimento registro «Consumo manuale/editor atomico». Resta dispositivo; scorta eliminata non ricreata e lotti legacy non certificati. Macroaree invariate, S/G sospese.

@@ -13,6 +13,6 @@ for(const file of files){
     const {criteria,runSelection}=require('./criteri-pwa-selettivi.test.js');
     await runSelection([...criteria.keys()]);
   }
-  console.log('Revisione 30 punti APERTA: vedere docs/ESITO_INTERVENTI_PWA.md. Prove IndexedDB browser, scanner e cloud non certificate; frutta automatica e percorsi manuali ancora incompleti.');
+  console.log('Revisione 30 punti APERTA: vedere docs/ESITO_INTERVENTI_PWA.md. Vedere il riscontro dei 16 punti: collaudo dispositivo/IndexedDB, scanner e cloud non certificato; dosi S/G sospese, aromi esclusi. Frutta/spuntini liberi e dosati.');
   process.exitCode=failed?1:2; // 2 = prove mirate superate, revisione complessiva non chiusa
 })();

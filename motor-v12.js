@@ -70,7 +70,8 @@ function giorniTra(a,b){
   return Math.floor((x-y)/86400000);
 }
 function tokenClasse(ricetta){
-  const c=Array.isArray(ricetta.classe)?ricetta.classe:[ricetta.classe];
+  const declared=ricetta.copertura?.ruoli||ricetta.coperturaDichiarata?.ruoli;
+  const c=declared||(Array.isArray(ricetta.classe)?ricetta.classe:[ricetta.classe]);
   return c.filter(Boolean);
 }
 function macroCategoria(cat){ return CAT_TO_MACRO[cat]||null; }
@@ -358,10 +359,12 @@ async function loadJson(url){
 
 function groupOptions(g){
   if(!g || g.categoria==='Nessuno' || g.categoria==='Condimenti') return [];
-  const ings=Array.isArray(g.ingredienti)?g.ingredienti:[];
+  const inherit=i=>({...clone(i),ruoli:i.ruoli??g.ruoli,quantita:i.quantita??g.quantita,limite:Object.prototype.hasOwnProperty.call(i,'limite')?i.limite:g.limite});
+  const ings=(Array.isArray(g.ingredienti)?g.ingredienti:[]).map(inherit);
   const composizioni=(Array.isArray(g.composizioni)?g.composizioni:[]).map(c=>({
     nome:c.nome,
-    componenti:clone(c.ingredienti||[]),
+    componenti:(c.ingredienti||[]).map(inherit),
+    copertura:clone(c.copertura||null),
     stack:c.stack===undefined?1:c.stack,
     roll:c.roll===undefined?1:c.roll,
     condimentiCompatibili:Array.isArray(c.condimentiCompatibili)?clone(c.condimentiCompatibili):undefined
@@ -405,7 +408,7 @@ function generaCombinazioni(ricetta){
     testo1:g.testo1||'',
     testo2:g.testo2||'',
     mostraNomi:!!g.mostraNomi,
-    ingredienti:(g.ingredienti||[]).map(clone),
+    ingredienti:(g.ingredienti||[]).map(i=>({...clone(i),ruoli:i.ruoli??g.ruoli,quantita:i.quantita??g.quantita,limite:i.limite??g.limite})),
     cotture:(g.cotture||[]).map(clone)
   }));
   return combinazioni.map(x=>({slot:x,condimenti:clone(condimenti)}));
@@ -641,7 +644,9 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
       const exact=(await configRuntime()).resolved.recipeDoses?.[ricetta.id]?.[nome];
       let q=await quantitaConfigurata(nome,meta,{recipeId:ricetta.id,name:nome,recipeDose:componente.dose});
       const roles=ruoliVerduraDaClasse(ricetta.classe);
-      const doseMancante=exact==null&&componente.dose==null&&((categoria==='V'&&(roles.S||roles.G)&&!roles.V)||(categoria==='Condimenti'&&meta.gruppo!=='grassi'));
+      const declared=componente.quantita?N.recipeIngredientQuantity((await configRuntime()).resolved,state.baseByName.get(nome.toLowerCase())?.id,componente,{recipeId:ricetta.id,name:nome,fallbackAllowed:meta.gruppo==='grassi',macro:Object.keys(PROTEIN_MACRO_TO_TOKEN).find(k=>PROTEIN_MACRO_TO_TOKEN[k]===categoria)},q):null;
+      if(declared)q=declared.quantity;
+      const doseMancante=declared?declared.missing:exact==null&&componente.dose==null&&((categoria==='V'&&(roles.S||roles.G)&&!roles.V)||(categoria==='Condimenti'&&meta.gruppo!=='grassi'));
       if(doseMancante)q=0;
       if(exact==null&&(macroCounts[macro]||0)>1 && !(componente.dose!==undefined&&componente.dose!==null&&componente.dose!=='')) q=q/macroCounts[macro];
       const base=state.baseByName.get(nome.toLowerCase());
@@ -655,6 +660,9 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
         ingredienteId:base?base.id:null,
         quantita:q,
         doseMancante,
+        ruoli:componente.ruoli?clone(componente.ruoli):undefined,
+        regolaQuantita:componente.quantita?clone(componente.quantita):undefined,
+        limite:componente.limite?clone(componente.limite):null,
         grammi:grammiDaQuantita(meta,q),
         unita:meta.unitaPorzione==='pezzi'?'pz':'g',
         allergeni:Array.isArray(meta.allergeni)?meta.allergeni.slice():[],
@@ -680,12 +688,15 @@ async function preparaIngredientiDettagliati(ricetta,combinazione){
       const variante=state.variantByName.get(nome.toLowerCase());
       const exact=(await configRuntime()).resolved.recipeDoses?.[ricetta.id]?.[nome];
       let q=await quantitaConfigurata(nome,meta,{recipeId:ricetta.id,name:nome,recipeDose:x.dose});
-      const doseMancante=exact==null&&x.dose==null&&meta.gruppo!=='grassi';
+      const declared=x.quantita?N.recipeIngredientQuantity((await configRuntime()).resolved,base?.id,x,{recipeId:ricetta.id,name:nome,fallbackAllowed:meta.gruppo==='grassi'},q):null;
+      if(declared)q=declared.quantity;
+      const doseMancante=declared?declared.missing:exact==null&&x.dose==null&&meta.gruppo!=='grassi';
       if(doseMancante)q=0;
       out.push({
         nome,categoria:'Condimenti',macro:null,slotIndex:null,
         variantId:variante?variante.id:null,ingredienteId:base?base.id:null,
         quantita:q,doseMancante,grammi:grammiDaQuantita(meta,q),
+        ruoli:x.ruoli?clone(x.ruoli):undefined,regolaQuantita:x.quantita?clone(x.quantita):undefined,limite:x.limite?clone(x.limite):null,
         unita:meta.unitaPorzione==='pezzi'?'pz':'g',
         allergeni:Array.isArray(meta.allergeni)?meta.allergeni.slice():[],
         sottotipo:meta.sottotipo||null,gruppo:meta.gruppo||null,
@@ -726,20 +737,23 @@ function chiaviStack(combinazione){
 }
 
 async function compilaRicetta(ricetta,combinazione,index){
+  validaDichiarazioniModello(ricetta);
   const selezionata=combinazioneConCondimento(combinazione,0);
   const n=costruisciNomeRicetta(ricetta,selezionata);
   const ingredienti=await preparaIngredientiDettagliati(ricetta,selezionata);
   const nut=calcolaNutrienti(ingredienti);
   const classe=tokenClasse(ricetta);
   const id='nr_'+ricetta.id+'_'+index;
-  return K.decorate({
+  return K.decorate(aggiornaQuoteVegetali({
     id,
     recipeModelId:ricetta.id,
     ingredientiDaDefinire:clone(ricetta.ingredientiDaDefinire||[]),
     comboIndex:index,
     nome:n.display,
     partiRicetta:n.parti,
-    classe:clone(ricetta.classe),
+    classe:clone(classe),
+    coperturaDichiarata:clone(ricetta.copertura||null),
+    limitiQuoteVegetali:N.recipeRoleLimits((await configRuntime()).resolved,ingredienti),
     categoriaPrincipale:categoriaPrincipale(classe),
     gruppoProteico:gruppoProteicoDaIngredienti(ingredienti,classe),
     ingredienti,
@@ -758,7 +772,32 @@ async function compilaRicetta(ricetta,combinazione,index){
     templateOrigine:clone(ricetta),
     condimentoVarianteIndex:0,
     numeroVariantiCondimento:selezionata.numeroVariantiCondimento
-  });
+  }));
+}
+
+function validaDichiarazioniModello(ricetta){
+  if(!ricetta.copertura)return; // Lettura compatibile dei template legacy.
+  const allowed=new Set(['C','PC','PP','PF','PU','PL','V','S','G','Condimento']);
+  const checkRoles=roles=>{
+    if(!Array.isArray(roles)||roles.some(role=>!allowed.has(role)))throw new Error('Ruoli non validi nel modello '+ricetta.id);
+    if(roles.filter(role=>['V','S','G'].includes(role)).length>1)throw new Error('Ruolo vegetale ambiguo nel modello '+ricetta.id);
+  };
+  // Il modello intero può contenere più ruoli vegetali; ogni componente
+  // deve invece dire quale quota fornisce, anche se è contemporaneamente P.
+  if(!Array.isArray(ricetta.copertura.ruoli)||ricetta.copertura.ruoli.some(role=>!allowed.has(role)))throw new Error('Copertura non valida nel modello '+ricetta.id);
+  for(const group of ricetta.gruppi||[]){
+    if(group.categoria==='Nessuno')continue;
+    checkRoles(group.ruoli);
+    for(const i of [...(group.ingredienti||[]),...(group.composizioni||[]).flatMap(c=>c.ingredienti||[])]){
+      if(i.ruoli)checkRoles(i.ruoli);
+      const rule=i.quantita||group.quantita;
+      if(!rule||!['ingrediente','ricetta','nutrizionista'].includes(rule.fonte))throw new Error('Fonte quantità mancante nel modello '+ricetta.id);
+      if(rule.quota!=null&&(!Number.isFinite(rule.quota)||rule.quota<=0||rule.quota>1))throw new Error('Quota non valida nel modello '+ricetta.id);
+    }
+  }
+  for(const quota of ricetta.copertura.proteine||[]){
+    if(quota.tipo!=='congiunta'||!Array.isArray(quota.ruoli)||quota.ruoli.some(role=>!TOKEN_P.has(role)||!ricetta.copertura.ruoli.includes(role)))throw new Error('Quota proteica congiunta non valida nel modello '+ricetta.id);
+  }
 }
 
 async function sincronizzaIngredientiIndexedDB(){
@@ -850,6 +889,25 @@ async function sincronizzaCacheRicette(){
     if(r&&r.fonte==='nuovo-db-compilato'&&!valid.has(r.id)) await delKey('ricette',r.id);
   }
   for(const r of state.ricetteConcrete) await put('ricette',clone(r));
+}
+
+async function aggiornaCacheDosiRicette(){
+  invalidaConfigRuntime();
+  if(!state.pronto)return;
+  // Cache derivata: se la ricompilazione fallisce, il prossimo avvio la
+  // ricostruisce. Piano e consumo non fanno parte di questa operazione.
+  await put('impostazioni',{chiave:'versioneRicetteCache',valore:null});
+  const updated=[];
+  for(const recipe of state.ricetteConcrete)updated.push(await materializzaRicetta(recipe,recipe.condimentoVarianteIndex||0));
+  for(const recipe of updated)await put('ricette',clone(recipe));
+  state.ricetteConcrete=updated;
+  state.ricetteById=new Map(updated.map(r=>[r.id,r]));
+  await put('impostazioni',{chiave:'versioneRicetteCache',valore:await chiaveCacheRicette()});
+}
+
+async function chiaveCacheRicette(){
+  const cfg=await configRuntime();
+  return String(state.dbRicette.versione||0)+'_'+String(state.dbIngredientiVersione||0)+'_contracts-v2_'+JSON.stringify({quoteVegetali:cfg.resolved.quoteVegetali,recipeDoses:cfg.resolved.recipeDoses});
 }
 
 /* Applica alla cache funzionale soltanto il flag gestionale del catalogo
@@ -1253,6 +1311,7 @@ async function ricettaAmmessa(r,data,opts){
   if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante)) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
+  if(!rispettaLimitiQuoteVegetali(r,cfg.resolved))return false;
   const verdureDisattivate=cfg.userPreferences&&cfg.userPreferences.verdureDisattivateVariantIds;
   for(const i of r.ingredienti||[]){
     const allergeni=new Set([...(i.allergeni||[]),...(metaIngrediente(i.nome)?.allergeni||[])]);
@@ -1497,6 +1556,9 @@ function snapshotRealizzazione(realizzazione,ricetta){
   real.nutrientiEffettivi=clone(ricetta.nutrienti||calcolaNutrienti(real.ingredientiEffettivi));
   real.gruppoProteico=ricetta.gruppoProteico||null;
   real.ruoloVerdura=ruoliVerduraDaClasse(ricetta.classe);
+  const quotes=aggiornaQuoteVegetali({...ricetta});
+  real.S=quotes.S;real.G=quotes.G;real.quoteVegetaliComplete=quotes.quoteVegetaliComplete;
+  real.coperturaDichiarata=clone(ricetta.coperturaDichiarata||null);
   if(ricetta.residuoVerdura)real.residuoVerdura=clone(ricetta.residuoVerdura);
   else delete real.residuoVerdura;
   if(ricetta.redistribuzioneVerdura)real.redistribuzioneVerdura=clone(ricetta.redistribuzioneVerdura);
@@ -1517,7 +1579,7 @@ function applicaOverrideQuantitaRealizzazione(ricetta,realizzazione){
   copia.nutrizioneManualeTotale={kcal:copia.nutrienti.kcal,prot:copia.nutrienti.proteine,carb:copia.nutrienti.carboidrati,grassi:copia.nutrienti.grassi};
   if(realizzazione&&realizzazione.residuoVerdura)copia.residuoVerdura=clone(realizzazione.residuoVerdura);
   if(realizzazione&&realizzazione.redistribuzioneVerdura)copia.redistribuzioneVerdura=clone(realizzazione.redistribuzioneVerdura);
-  return copia;
+  return aggiornaQuoteVegetali(copia);
 }
 function realizzazioniDaRicette(ricette){
   return (ricette||[]).map(r=>snapshotRealizzazione({
@@ -1648,9 +1710,31 @@ function righeCoperturaVerdura(ricette,escludiRicettaId){
     if(escludiRicettaId&&r.id===escludiRicettaId)continue;
     const ruoli=ruoliVerduraDaClasse(r.classe);
     const ruolo=ruoli.V?'V':(ruoli.S?'S':(ruoli.G?'G':null));
-    for(const i of r.ingredienti||[])if(ingredienteVerduraQuantificabile(i))out.push({kind:tipoPorzioneVerdura(i),quantity:Number(i.grammi)||0,ruolo});
+    for(const i of r.ingredienti||[])if(ingredienteVerduraQuantificabile(i)){
+      const declared=Array.isArray(i.ruoli)?i.ruoli.find(v=>['V','S','G'].includes(v)):ruolo;
+      if(declared)out.push({kind:tipoPorzioneVerdura(i),quantity:Number(i.grammi)||0,ruolo:declared});
+    }
   }
   return out;
+}
+
+/* @qa-metadata
+{"id":"P1-modelli-quote-vegetali","paths":["preparaIngredientiDettagliati","righeCoperturaVerdura","snapshotRealizzazione","aggiornaCacheDosiRicette"],"focusedTest":"tests/pwa-modelli-quote-vegetali.test.js","rules":["ruoli e fonti dichiarati nel modello","quantita distinta dal massimo nutrizionista","dosi specifiche 60/70/40+40 preservate; nessuna dose universale S/G","snapshot immutabili"],"pending":["IndexedDB reale","dosi S/G mancanti sospese su istruzione Cwe"]}
+*/
+function aggiornaQuoteVegetali(r){
+  const sums={S:0,G:0};
+  for(const row of righeCoperturaVerdura([r]))if(row.ruolo in sums)sums[row.ruolo]+=row.quantity;
+  r.S=sums.S;r.G=sums.G;
+  r.quoteVegetaliComplete=!(r.ingredienti||[]).some(i=>i.doseMancante&&(i.ruoli||[]).some(role=>role==='S'||role==='G'));
+  return r;
+}
+function rispettaLimitiQuoteVegetali(r,resolved){
+  const current=aggiornaQuoteVegetali({...r}),limits=N.recipeRoleLimits(resolved,r.ingredienti);
+  return ['S','G'].every(role=>{
+    const declared=(r.ingredienti||[]).some(i=>i.ruoli?.includes(role));
+    if(declared&&current[role]<=0)return false;
+    return limits[role]==null||current[role]<=limits[role]+0.000001;
+  });
 }
 function coperturaVerduraRicette(ricette,portionConfig){
   const cfg=Object.assign({vegetablePortionGrams:200,saladPortionGrams:70},portionConfig||{});
@@ -1693,7 +1777,7 @@ function ridimensionaVerdureRicetta(ricetta,frazioneRichiesta,portionConfig){
   copia.nutrienti=calcolaNutrienti(copia.ingredienti||[]);
   copia.nutrizioneManualeTotale={kcal:copia.nutrienti.kcal,prot:copia.nutrienti.proteine,carb:copia.nutrienti.carboidrati,grassi:copia.nutrienti.grassi};
   copia.residuoVerdura={frazione:Number(frazioneRichiesta)||0,fattoreApplicato:fattore};
-  return copia;
+  return aggiornaQuoteVegetali(copia);
 }
 function indiceSettimana(data){
   const d=new Date(String(data)+'T12:00:00');
@@ -1740,6 +1824,19 @@ function prioritaVerdureProgrammazionePasti(candidati,data,variantiPrioritarie){
    compatibile con nessun candidato disponibile, si ricade invariato
    sull'ordinamento esistente (deperibilita' e programmazione settimanale,
    poi preferite) - nessuna modifica a quella logica. */
+/* @qa-metadata
+{"id":"PWA-ricorrente-ripiego","paths":["verduraRicorrenteRichiesta","chiudiPastoSequenziale","generaPianoSettimana","ruotaPasto"],"focusedTest":"tests/pwa-ricorrente-ripiego.test.js","rules":["ricorrente positiva prioritaria","scorta esplicitamente esaurita passa alle altre verdure","assenza di scorta non blocca programmazione","ripiego valido conservato alla chiusura"],"pending":["collaudo UI/dispositivo"]}
+*/
+function ricorrenteNonEsaurita(variantId,stock){
+  if(!variantId)return null;
+  const rows=(stock||[]).filter(r=>r.variantId===variantId);
+  if(rows.length&&!rows.some(r=>r.stato!=='esaurito'&&Number(r.quantita)>0))return null;
+  return variantId;
+}
+function rispettaRicorrenteDisponibile(ricette,pool,variantId){
+  if(!variantId||ricette.some(r=>(r.ingredienti||[]).some(i=>i.variantId===variantId)))return true;
+  return !(pool||[]).some(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&(r.ingredienti||[]).some(i=>i.variantId===variantId);});
+}
 function scegliDedicataConRicorrente(candidatiPool,data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId){
   if(requiredVegetableVariantId){
     const conRicorrente=candidatiPool.filter(r=>(r.ingredienti||[]).some(i=>i.variantId===requiredVegetableVariantId));
@@ -1777,10 +1874,11 @@ function completaResiduoVerduraRicette(ricette,pool,data,portionConfig,variantiP
       const incremento=totale.residuoGrammi/2;
       const fattore=(corrente+incremento)/corrente;
       out=out.map(r=>{
-        if(!ruoliVerduraDaClasse(r.classe)[ruolo])return r;
+        if(!righeCoperturaVerdura([r]).some(row=>row.ruolo===ruolo))return r;
         const copia=clone(r);
         for(const i of copia.ingredienti||[]){
           if(!ingredienteVerduraQuantificabile(i))continue;
+          if(Array.isArray(i.ruoli)&&!i.ruoli.includes(ruolo))continue;
           i.quantita=(Number(i.quantita)||0)*fattore;
           i.grammi=(Number(i.grammi)||0)*fattore;
           i.overrideQuantita='redistribuzione_'+ruolo.toLowerCase();
@@ -1788,7 +1886,7 @@ function completaResiduoVerduraRicette(ricette,pool,data,portionConfig,variantiP
         copia.nutrienti=calcolaNutrienti(copia.ingredienti||[]);
         copia.nutrizioneManualeTotale={kcal:copia.nutrienti.kcal,prot:copia.nutrienti.proteine,carb:copia.nutrienti.carboidrati,grassi:copia.nutrienti.grassi};
         copia.redistribuzioneVerdura=clone(meta);
-        return copia;
+        return aggiornaQuoteVegetali(copia);
       });
     }
     return out;
@@ -1941,7 +2039,7 @@ async function generaCandidatiPasto(target,data,opts){
         ricette=completaResiduoVerduraRicette(ricette,pool,data,opts.vegetablePortions,variantiPrioritarie,undefined,undefined,opts.requiredVegetableVariantId);
         if(!pastoCompletoPerToken(ricette,token,opts.vegetablePortions)) continue;
         if(coperturaVerduraRicette(ricette,opts.vegetablePortions).remainingFraction>0.000001)continue;
-        if(opts.requiredVegetableVariantId&&!ricette.some(r=>(r.ingredienti||[]).some(i=>i.variantId===opts.requiredVegetableVariantId)))continue;
+        if(!rispettaRicorrenteDisponibile(ricette,pool,opts.requiredVegetableVariantId))continue;
         const firma=firmaPastoDaRicette(ricette);
         if(firme.has(firma)) continue;
         firme.add(firma);
@@ -1979,7 +2077,9 @@ function minimiIngredientiFattibili(recipes,cfg,counts,remaining){
   "paths": ["contestoConteggiSettimana", "generaPianoSettimana", "validaRecordsContratti"],
   "rules": ["consumo prevale sul piano per slot", "snapshot prima del catalogo", "speciali fuori bilancio ordinario", "minimi completi su 14 pasti ordinari"],
   "focusedTest": "tests/pwa-conteggi-preservati.test.js",
-  "pending": ["IndexedDB reale", "rigenerazione parziale con pasti bloccati e speciali", "passaggio domenica-lunedi", "commit con record legacy misti a snapshot"],
+  "additionalFocusedTests": ["tests/pwa-config-preservati-percorso.test.js", "tests/pwa-config-minimi-blocchi-runtime.test.js"],
+  "verified": ["ingressi rigenerazione parziale e attivazione minimi con blocchi/speciali (solver simulato)", "cronologia e commit legacy/snapshot", "consecutivita domenica-lunedi e budget separati", "solver reale: minimo ingrediente e blocchi, anche con consumo utente-speciale preservato"],
+  "pending": ["IndexedDB reale", "collaudo finale delle ulteriori combinazioni di minimi e speciali"],
   "scope": "conteggi ordinari; non certifica rotazione o intera configurazione nutrizionista"
 }
 */
@@ -2049,15 +2149,28 @@ async function validaRecordsContratti(records,deletedIds){
     const old=await (typeof getOneRaw==='function'?getOneRaw('piano',record.id):getOne('piano',record.id));
     baseline[record.id]=old||null;
     if(old&&old.consumato&&JSON.stringify(old)!==JSON.stringify(record))throw new Error('Pasto già consumato: '+record.id);
-    for(const real of record.realizzazioni||[]){
-      const r=await materializzaRealizzazione(real);
+    const entries=[];
+    if(record.realizzazioni?.length){
+      for(const real of record.realizzazioni)entries.push({real,recipe:await materializzaRealizzazione(real)});
+    }else{
+      // Anche gli ID legacy devono passare i contratti; non convertirli
+      // in nuove proposte con dosi correnti o riscrivere il record salvato.
+      for(const recipe of await ricetteOrdinariePerConteggi(record))entries.push({real:null,recipe});
+    }
+    if(entries.some(e=>!e.recipe))throw new Error('Realizzazione non leggibile: '+record.id);
+    const mealDishKey=K.mealIdentity(entries.map(e=>e.recipe)).dishKey;
+    const mealReason=K.mealHardReason(entries.map(e=>e.recipe),date,history);
+    if(mealReason)throw new Error(record.id+': '+mealReason);
+    for(const {real,recipe:r} of entries){
       if(!r)throw new Error('Realizzazione non leggibile: '+real.ricettaId);
       if(!await ricettaAmmessa(r,date,{runtimeConfig:cfg,ignoraCooldown:true,weeklyIngredientCounts:{},weeklySubtypeCounts:{}}))throw new Error('Ricetta esclusa: '+r.nome);
       const reason=K.hardReason(r,date,history);
       if(reason)throw new Error(record.id+': '+reason+' — '+r.nome);
-      Object.assign(real,K.identity(r));
-      real.stack=real.rotationKeys.length?0:1;
-      history.push({...K.identity(r),date,slot:record.id});
+      if(real){
+        Object.assign(real,K.identity(r));
+        real.stack=real.rotationKeys.length?0:1;
+      }
+      history.push({...K.identity(r),mealDishKey,date,slot:record.id});
     }
     diagnostics.push(...(record.diagnosticaCopertura||[]));
   }
@@ -2113,11 +2226,19 @@ async function validaRecordsContratti(records,deletedIds){
     const names=(r.ingredienti||[]).filter(i=>i.condimento).map(i=>i.nome);
     if(names.length){rot.contatore++;for(const name of names)rot.ultimo[name]=rot.contatore;}
   }
-  return {stack,diagnostics,tracking,baseline};
+  const rollUpdates=[];
+  for(const record of records)for(const pending of record._rollPending||[]){
+    if(!pending.chiave.startsWith('rollBinario|'+record.id+'|'))throw new Error('Ciclo Roll non coerente con il pasto');
+    const current=await getOne('impostazioni',pending.chiave);
+    if(JSON.stringify(current||null)!==JSON.stringify(pending.baseline))throw new Error('Ciclo Roll cambiato: rigenerare la proposta');
+    rollUpdates.push(pending);
+    if(pending.diagnostica)diagnostics.push(pending.diagnostica);
+  }
+  return {stack,diagnostics,tracking,baseline,rollUpdates};
 }
 async function salvaRecordsContratti(records,deletedIds){
   const result=await validaRecordsContratti(records,deletedIds);
-  if(typeof commitPianoContratti==='function')await commitPianoContratti(records,deletedIds||[],result);
+  if(typeof commitPianoContratti==='function')await commitPianoContratti(records.map(record=>{const clean={...record};delete clean._rollPending;return clean;}),deletedIds||[],result);
   else throw new Error('Persistenza atomica del piano non disponibile');
   return records;
 }
@@ -2215,7 +2336,7 @@ async function chiudiPastoConVerdura(base,token,giorno,pool,ctx){
   const bloccateIds=ctx.realizzazioniBloccateIds||new Set();
   const ricette=completaResiduoVerduraRicette(base,pool,giorno,ctx.vegetablePortions,ctx.variantiPrioritarie,bloccateIds,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.verdurePreferiteVariantIds,ctx.requiredVegetableVariantId);
   if(!pastoCompletoPerToken(ricette,token,ctx.vegetablePortions))return null;
-  if(ctx.requiredVegetableVariantId&&!ricette.some(r=>(r.ingredienti||[]).some(i=>i.variantId===ctx.requiredVegetableVariantId)))return null;
+  if(!rispettaRicorrenteDisponibile(ricette,pool,ctx.requiredVegetableVariantId))return null;
   if(ctx.forbiddenProteinMacros&&[...macroProteicheRicette(ricette)].some(k=>ctx.forbiddenProteinMacros.has(k)))return null;
   if(!pastoRispettaConteggi(ricette,ctx.runtimeConfig,ctx.weeklyIngredientCounts,ctx.weeklySubtypeCounts))return null;
   /* Il pasto si chiude qui, per intero, in un solo passaggio: la
@@ -2243,6 +2364,7 @@ async function chiudiPastoConVerdura(base,token,giorno,pool,ctx){
     }
     risultato.ricette.push(r);
   }
+  if(ctx.contractHistory&&K.mealHardReason(risultato.ricette,giorno,ctx.contractHistory))return null;
   if(new Set(risultato.ricette.map(r=>K.identity(r).dishKey)).size!==risultato.ricette.length)return null;
   if(ctx.slotResiduiMinimi!==undefined&&!minimiIngredientiFattibili(risultato.ricette,ctx.runtimeConfig,ctx.weeklyIngredientCounts,ctx.slotResiduiMinimi))return null;
   if(ctx.candidatiScartati?.has(firmaCandidato(risultato)))return null;
@@ -2870,7 +2992,7 @@ async function risolviSettimanaSequenziale(slotRefs,ctx){
     carenzaContorni=false;
     const definizione=Object.assign({},slot,{target,carbKey:candidato.carbKeyUsato,requiredVegetableVariantId:ctx.requiredVegetable(slot)});
     scelte.push(candidato);slotDefs.push(definizione);
-    if(ctx.contractHistory)ctx.contractHistory.push(...candidato.ricette.map(r=>({...K.identity(r),date:slot.day,slot:slot.day+'_'+slot.pasto})));
+    if(ctx.contractHistory)ctx.contractHistory.push(...candidato.ricette.map(r=>({...K.identity(r),mealDishKey:K.mealIdentity(candidato.ricette).dishKey,date:slot.day,slot:slot.day+'_'+slot.pasto})));
     ctx.weeklyProteinCounts[target]=(ctx.weeklyProteinCounts[target]||0)+1;
     if(candidato.carbKeyUsato){
       if(residui[candidato.carbKeyUsato]>0)residui[candidato.carbKeyUsato]--;
@@ -2981,7 +3103,7 @@ async function generaPianoSettimana(scarto,opzioni){
     }
   }
   const [vrRec,vrPastiRec]=typeof getOne==='function'?await Promise.all([getOne('impostazioni','verduraRicorrente'),getOne('impostazioni','verduraRicorrentePasti')]):[null,null];
-  const vrId=vrRec&&vrRec.valore||null,vrPasti=new Set(vrPastiRec&&Array.isArray(vrPastiRec.valore)?vrPastiRec.valore:[]);
+  const vrId=ricorrenteNonEsaurita(vrRec&&vrRec.valore||null,typeof getAll==='function'?await getAll('inventario'):[]),vrPasti=new Set(vrPastiRec&&Array.isArray(vrPastiRec.valore)?vrPastiRec.valore:[]);
   /* Dato storico incoerente (l'interfaccia impedisce normalmente questa
      combinazione, ma può restare da configurazioni precedenti): la
      verdura ricorrente selezionata per almeno uno slot risulta tra le
@@ -3049,7 +3171,8 @@ async function verduraRicorrenteRichiesta(giorno,pasto){
     getOne('impostazioni','verduraRicorrentePasti')
   ]);
   const selezionati=new Set(pasti&&Array.isArray(pasti.valore)?pasti.valore:[]);
-  return scelta&&scelta.valore&&selezionati.has(pasto+'_'+indiceGiorno)?scelta.valore:null;
+  if(!scelta?.valore||!selezionati.has(pasto+'_'+indiceGiorno))return null;
+  return ricorrenteNonEsaurita(scelta.valore,typeof getAll==='function'?await getAll('inventario'):[]);
 }
 
 /* "Proponi nuovo pasto": stessa costruzione sequenziale P->C->V della
@@ -3152,7 +3275,7 @@ async function materializzaRicetta(base,condimentoVarianteIndex){
   const n=costruisciNomeRicetta(ricetta,selezionata);
   const ingredienti=await preparaIngredientiDettagliati(ricetta,selezionata);
   const nut=calcolaNutrienti(ingredienti);
-  return K.decorate(Object.assign({},clone(base),{
+  return K.decorate(aggiornaQuoteVegetali(Object.assign({},clone(base),{
     nome:n.display,
     partiRicetta:n.parti,
     ingredienti,
@@ -3162,8 +3285,10 @@ async function materializzaRicetta(base,condimentoVarianteIndex){
     condimentoVarianteIndex:selezionata.condimentoVarianteIndex,
     numeroVariantiCondimento:selezionata.numeroVariantiCondimento,
     stackScope:ricetta.stackScope||null,
+    coperturaDichiarata:clone(ricetta.copertura||null),
+    limitiQuoteVegetali:N.recipeRoleLimits((await configRuntime()).resolved,ingredienti),
     chiaviStack:chiaviStack(selezionata,ricetta.id,ricetta.stackScope)
-  }));
+  })));
 }
 
 async function materializzaRealizzazione(realizzazione){
@@ -3176,12 +3301,13 @@ async function materializzaRealizzazione(realizzazione){
     const nutrienti=realizzazione.nutrientiEffettivi
       ?clone(realizzazione.nutrientiEffettivi)
       :calcolaNutrienti(ingredienti);
-    return K.decorate(Object.assign({},ricetta,{
+    return K.decorate(aggiornaQuoteVegetali(Object.assign({},ricetta,{
       nome:realizzazione.nomeEffettivo||ricetta.nome,
       ingredienti,
+      coperturaDichiarata:clone(realizzazione.coperturaDichiarata||ricetta.coperturaDichiarata||null),
       nutrienti,
       nutrizioneManualeTotale:{kcal:nutrienti.kcal,prot:nutrienti.proteine,carb:nutrienti.carboidrati,grassi:nutrienti.grassi}
-    }));
+    })));
   }
   return ricetta;
 }
@@ -3370,6 +3496,9 @@ async function statoRollPasto(giorno,pasto,vocePendente){
   };
 }
 
+/* @qa-metadata
+{"id":"PWA-roll-anteprima-atomica","paths":["ruotaPasto","validaRecordsContratti","commitPianoContratti"],"focusedTest":"tests/pwa-roll-anteprima-atomica.test.js","rules":["anteprima non scrive cicli/log","cicli e pasto committati insieme","conflitto ciclo intercettato","cicli pendenti non salvati nel piano"],"pending":["interazione e concorrenza IndexedDB sul dispositivo"]}
+*/
 async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
   opzioni=opzioni||{};
   tipo=String(tipo||'').toUpperCase();
@@ -3384,7 +3513,8 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
   const history=await cronologiaContratti(new Set([id]));
   const cycleKey='rollBinario|'+id+'|'+tipo;
   const stored=await getOne('impostazioni',cycleKey);
-  const cycle=stored&&stored.valore||{};
+  const pending=(voce._rollPending||[]).find(x=>x.chiave===cycleKey);
+  const cycle=clone(pending?pending.valore:(stored&&stored.valore||{}));
   const date=typeof todayISO==='function'?todayISO():isoDate(new Date());
   const key=x=>{const r=x.ricetta||x;return r.id+'|'+(x.condimentoVarianteIndex||0);};
   const current=voce.realizzazioni[owner.indice];
@@ -3439,7 +3569,7 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
       const ricetta=await materializzaRealizzazione(realizzazione);
       if(ricetta&&(ricetta.ingredienti||[]).some(i=>i.variantId===requiredVegetableVariantId)){mantieneVincolo=true;break;}
     }
-    if(!mantieneVincolo)continue;
+    if(!mantieneVincolo&&!rispettaRicorrenteDisponibile([],poolVerdure,requiredVegetableVariantId))continue;
   }
   const aggiornata=Object.assign({},voce,{
     realizzazioni,
@@ -3451,8 +3581,7 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
   if(opzioni.soloVerifica)return aggiornata;
   if(reset)for(const option of compatible)cycle[key(option)]={roll:1,data:date};
   cycle[key(chosen)]={roll:0,data:date};
-  await put('impostazioni',{chiave:cycleKey,valore:cycle});
-  if(reset)await put('diagnosticaCopertura',{id:cycleKey+'|'+date,slot:id,data:date,requisito:'roll '+tipo,candidatiCompatibili:compatible.length,causa:'Alternative esaurite',elementoRiammesso:key(chosen)});
+  aggiornata._rollPending=(voce._rollPending||[]).filter(x=>x.chiave!==cycleKey).concat({chiave:cycleKey,baseline:pending?pending.baseline:(stored||null),valore:cycle,diagnostica:reset?{id:cycleKey+'|'+date,slot:id,data:date,requisito:'roll '+tipo,candidatiCompatibili:compatible.length,causa:'Alternative esaurite',elementoRiammesso:key(chosen)}:null});
   aggiornata.realizzazioni[owner.indice].roll=0;
   return aggiornata;
   }
@@ -3462,6 +3591,9 @@ async function ruotaPasto(giorno,pasto,tipo,vocePendente,opzioni){
    un Roll resta provvisorio (solo in memoria lato UI) finche' non si
    chiama questa funzione - coerente con "la ricetta passa sul piano
    alimentare solo quando si clicca Salva". */
+/* @qa-metadata
+{"id":"PWA-conferma-proposta","paths":["rigeneraPasto","salvaRoll","salvaRecordsContratti"],"focusedTest":"tests/pwa-integrazione-runtime.test.js","rules":["proposta obbligatoria nel test","anteprima senza scritture piano","conferma preserva altri pasti","commit respinto senza scritture parziali"],"pending":["transazioni IndexedDB e interazione PWA sul dispositivo"]}
+*/
 async function salvaRoll(voce){
   if(!voce) return voce;
   await salvaRecordsContratti([voce]);
@@ -3477,6 +3609,7 @@ async function inizializza(opts){
     loadJson(base+'db-visuale.json')
   ]);
   state.dbRicette=rdb;
+  state.dbIngredientiVersione=idb.versione;
   state.dbVisuale=vdb;
   state.ingredientiMap=idb.ingredienti||{};
   state.propostaCicli=new Map();
@@ -3492,7 +3625,7 @@ async function inizializza(opts){
   /* Il JSON e' soltanto la sorgente di compilazione. Il catalogo operativo e'
      sempre lo store IndexedDB "ricette": a versione invariata lo si legge
      direttamente; a versione cambiata lo si sostituisce e poi lo si rilegge. */
-  const versioneCache=String(rdb.versione||0)+'_'+String(idb.versione||0)+'_contracts-v2';
+  const versioneCache=await chiaveCacheRicette();
   let cacheValida=false;
   if(typeof getOne==='function'&&typeof getAll==='function'){
     try{
@@ -3567,9 +3700,9 @@ global.DietaPlannerMotorV12={
   creaMappaCompatibilitaCP,composizioneSeparataConsentita,
   chiaviStack,
   scegliCandidatoConMargine,
-  ingredienteVerduraQuantificabile,coperturaVerduraRicette,ridimensionaVerdureRicetta,completaResiduoVerduraRicette,punteggioVerduraProgrammazione,ordinaVerdureProgrammazione,
+  ingredienteVerduraQuantificabile,coperturaVerduraRicette,ridimensionaVerdureRicetta,completaResiduoVerduraRicette,ricorrenteNonEsaurita,rispettaRicorrenteDisponibile,verduraRicorrenteRichiesta,punteggioVerduraProgrammazione,ordinaVerdureProgrammazione,
   prioritaVerdureProgrammazionePasti,ricettaAmmessa,poolAmmesso,
   registraUtilizzo,categoriaPrincipale,copertura,scoreCopertura,pastoCompletoPerToken,ruoliVerduraDaClasse,calcolaBilancioVSG,caricaConfigurazioneNutrizionaleRisolta,migraStatoCarboidratiCanonicoSeNecessario,carbKeyNome,carbKeysRicetta,preparaBudgetCarboidrati,creaSequenzaCarboidrati,creaSequenzaProteine,carbRicettaAmmesso,consumaBudgetCarboidrati,accumulaConteggiPasto,pastoRispettaConteggi,stablePartition,ordinaPerVerdurePreferite,ordinaCarboidratiPerPocoTempo,caricaPreferenzeUtenteSet,
-  applicaDisponibilitaCatalogoVisuale,invalidaConfigRuntime,getContenutoVisualeRicetta
+  applicaDisponibilitaCatalogoVisuale,invalidaConfigRuntime,aggiornaCacheDosiRicette,getContenutoVisualeRicetta
 };
 })(typeof window!=='undefined'?window:globalThis);

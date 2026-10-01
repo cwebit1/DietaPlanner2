@@ -43,6 +43,12 @@ basata sul nuovo formato. In caso di conflitto nutrizionale prevale
 - Il Setting non modifica mai ricette o ingredienti al salvataggio.
 - La dose effettiva dipende da ingrediente e contesto: colazione, pasto
   principale o spuntino.
+- Decisione Cwe 30/09/2026: i modelli dichiarano ruoli, fonte della quantità,
+  riferimento al limite nutrizionista e copertura della composizione.
+  `quoteVegetali.S/G` distingue `quantita` da `massimo`, entrambi configurabili
+  nel Set nutrizionista. Nessuna dose universale iniziale: i valori provengono dalla ricetta o dal Set nutrizionista; quantità e massimi mancanti richiedono una decisione esplicita. Le dosi
+  specifiche già dichiarate si conservano; il massimo non viene copiato
+  come dose né applicato con riduzioni silenziose.
 
 ## 3. Carboidrati
 
@@ -189,6 +195,15 @@ basata sul nuovo formato. In caso di conflitto nutrizionale prevale
   residuo V.
 - Il residuo è salvato come dato della realizzazione e propagato atomicamente
   a nutrizione, inventario, spesa e storico.
+- I ruoli dei componenti sono dichiarati nel modello sorgente e possono
+  associare una fonte proteica al ruolo vegetale V/S/G. La categoria
+  alimentare non determina da sola il ruolo. L’esploso conserva la copertura
+  dichiarata e i campi numerici S/G in grammi effettivi; dosi non risolte
+  mantengono una diagnostica esplicita ed escludono il candidato.
+  I massimi S/G si applicano alla somma della quota nella ricetta, non a
+  ciascun ingrediente separatamente; V dei piatti unici non è soggetta
+  automaticamente ai limiti S/G. Configurazione e versione dei modelli
+  aggiornano la cache derivata, senza riscrivere piano o consumi salvati.
 
 ## 6. Programmazione settimanale e pasto odierno
 

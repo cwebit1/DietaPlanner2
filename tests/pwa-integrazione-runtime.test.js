@@ -33,8 +33,13 @@ const M=global.DietaPlannerMotorV12,K=require('../pwa-contracts.js');
   const original=structuredClone(records[0]),before=JSON.stringify(await getAll('piano'));
   const proposal=await M.rigeneraPasto(original.id.slice(0,10),'pranzo',original.categoriaTarget,{soloAnteprima:true});
   assert.equal(JSON.stringify(await getAll('piano')),before,'anteprima senza scritture piano');
-  if(proposal){await M.salvaRoll(proposal);assert.deepEqual((await getOne('piano',original.id)).realizzazioni,proposal.realizzazioni);}
-  const duplicate=structuredClone(records[1]);duplicate.realizzazioni=structuredClone((proposal||original).realizzazioni);
+  assert(proposal?.realizzazioni?.length,'la prova richiede una proposta reale: non può saltare la conferma');
+  await M.salvaRoll(proposal);
+  assert.deepEqual((await getOne('piano',original.id)).realizzazioni,proposal.realizzazioni,'conferma delle realizzazioni proposte');
+  assert.deepEqual((await getAll('piano')).filter(r=>r.id!==original.id),records.filter(r=>r.id!==original.id),'la conferma preserva gli altri pasti');
+  const duplicate=structuredClone(records[1]);duplicate.realizzazioni=structuredClone(proposal.realizzazioni);
+  const beforeRejected=JSON.stringify(await getAll('piano'));
   await assert.rejects(()=>M.salvaRoll(duplicate),/piatto_gia_usato|proteina_consecutiva/);
+  assert.equal(JSON.stringify(await getAll('piano')),beforeRejected,'commit respinto senza scritture parziali');
   console.log('PASS: catalogo, settimana 14 pasti, unicità, sourceKey, anteprima e commit validato. Persistenza simulata in memoria; transazioni browser non certificate.');
 })().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1,12 +1,15 @@
 /* Un'unica versione di HTML, motore, cataloghi e contratti, anche offline.
    L'installazione fallisce se una risorsa obbligatoria manca: resta la versione
    precedente. Il nuovo worker attende la chiusura delle vecchie pagine. */
-const CACHE_NAME='dietaplanner-shell-contracts-v3';
+const CACHE_NAME='dietaplanner-shell-contracts-v4';
 const APP_FILES=['./','index.html','nutrition-config.js','engine-core.js',
   'pwa-contracts.js','barcode-spesa.js','motor-v12.js','firebase-auth.js',
   'db-ricette.json','ingredienti-new.json','db-visuale.json',
   'manifest.json','icon-192.png','icon-512.png'];
 const appURL=path=>new URL(path,self.registration.scope).href;
+/* @qa-metadata
+{"id":"PWA-shell-coerente","paths":["install","activate","fetch"],"focusedTest":"tests/pwa-shell-aggiornamento.test.js","rules":["release preparata in cache distinta","risorsa mancante conserva worker precedente","nessun reset IndexedDB"],"pending":["installazione/aggiornamento/offline su dispositivo"]}
+*/
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{
     const responses=await Promise.all(APP_FILES.map(async path=>{

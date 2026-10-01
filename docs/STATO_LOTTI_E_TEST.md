@@ -540,3 +540,44 @@ Unificati in motor-v12.js i conteggi iniziali di piano/consumi per slot, con let
 ## 27/09/2026 — Validatore allineato e tracce QA
 
 Validatore settimanale collegato alla stessa lettura di generazione/rigenerazione per snapshot e ID legacy; riferimenti mancanti segnalati esplicitamente. Metadati @qa-metadata / P1-conteggi-preservati in motor-v12.js indicano funzioni, regole, prova mirata e casi da approfondire senza ricostruire l'analisi. Sintassi, struttura e diff controllati; pwa-conteggi-preservati e singolo percorso pwa-integrazione-runtime superati (archivio simulato). Nessuna suite estesa o verifica visuale. Il precedente divieto di controlli minimi è superato dall'ultima autorizzazione utente, registrata in AGENTS.md. Punto 1 ancora parziale: restano combinazioni annotate, IndexedDB reale e dati S/G. Stati complessivi invariati: 1 e 8 ◐/◐; altre 14 sezioni 🔎/🔎. Dettagli nel registro.
+
+
+## 30/09/2026 — Punto 1: contratti legacy e verifiche dei preservati
+
+Allineati ID legacy singoli/multipli alla cronologia e ai controlli del commit; verificati gli ingressi della rigenerazione parziale con blocchi/speciali e il confine domenica-lunedì. Evidenze e limiti nel registro, voce omonima. Sezioni 1 e 8 restano ◐/◐; altre 14 🔎/🔎. Provata anche la rigenerazione parziale con minimo ingrediente e blocchi, inclusa una variante con consumo utente-speciale, su solver/cataloghi reali e archivio in memoria. Restano collaudo PWA/IndexedDB reale e dati S/G; nessuna spunta verde complessiva.
+
+
+## 30/09/2026 — Modelli dichiarativi e quote S/G
+
+Applicata la proposta autorizzata: dichiarazioni nel modello sorgente, resolver/Set nutrizionista e propagazione all’esploso con S/G numerici. Prove mirate e limiti nel registro, voce omonima. Restano parametri nutrizionista non impostati e collaudo PWA/IndexedDB reale. Sezioni 1 e 8 ◐/◐; altre 14 🔎/🔎, nessuna certificazione complessiva.
+
+
+30/09/2026 — Quantità iniziali S/G 80 g: verifiche mirate nel test `pwa-modelli-quote-vegetali`; dosi specifiche e Set prevalgono, massimi configurabili senza tetto iniziale. Dettagli: registro «Valore iniziale S/G concluso». Macroaree restano parziali; IndexedDB reale e dosi aromi non dichiarate restano aperti.
+
+
+30/09/2026 — Rettifica: rimosso default universale S/G 80 g; conservate dosi native e verifiche struttura/resolver. Dati mancanti circoscritti da definire con Cwe; riferimento registro «Rettifica default S/G e lacune contestualizzate». Stati complessivi invariati.
+
+
+30/09/2026 — Aromi esclusi su istruzione Cwe: non sono più un residuo di questo intervento. Restano dati S/G; stati complessivi invariati. Riferimento registro «Aromi esclusi dal perimetro».
+
+
+30/09/2026 — Dosi S/G sospese su istruzione Cwe. Verificata conferma proposta obbligatoria nel percorso runtime; acquisto manuale ora atomico e idempotente con prove di abort/doppio evento in simulazione. Riferimento registro «Prosecuzione: conferma proposte e acquisto manuale». Restano dispositivo e consumo manuale/editor; macrosezioni invariate.
+
+
+30/09/2026 — Consumo manuale/editor: quattro ingressi ora atomici, snapshot aggiornati, rettifica quantitativa scorte e contatore, doppio evento/abort verificati in simulazione. Riferimento registro «Consumo manuale/editor atomico». Resta dispositivo; scorta eliminata non ricreata e lotti legacy non certificati. Macroaree invariate, S/G sospese.
+
+
+## 01/10/2026 — Revisione tecnica dei 16 punti
+Tutte le sezioni valutate; stato corrente e residui S/V/D nella matrice RISCONTRO_FUNZIONI_PWA.md, che supera gli stati iniziali e le note storiche incompatibili. Corretti i difetti dimostrati su ricorrente, Roll, backup, premio colazione, quantità inventario e reset-bozze; shell v4 preparata. Prove mirate dei percorsi modificati superate in memoria/simulazione. Dettagli e file nel registro «Revisione tecnica dei 16 punti». Identità dishKey del pasto combinato/separato verificata e collegata a costruzione/commit; residui circoscritti di dispositivo/servizi. Dosi S/G sospese, aromi esclusi. Nessun test visuale/suite completa, installazione browser, commit/push/pubblicazione. Chiusura della revisione tecnica non equivale a certificazione di release.
+
+## 01/10/2026 — Chiusura dei percorsi tecnici dei 16 punti
+
+Completate le correzioni eseguibili nei percorsi documentati: nessun residuo V individuato resta aperto. Nuove prove mirate di commit Menu/Set, uscita Set, isolamento consumo/bozza, porzioni storico e totali nutrizionali DOM superate. Matrice corrente in RISCONTRO_FUNZIONI_PWA; evidenze pregresse riutilizzate e stati obsoleti dell’esito riallineati. Restano esclusivamente collaudo finale D, limiti dei dati legacy e dosi S/G espressamente sospese; aromi esclusi. Resoconto unico nel registro omonimo. Nessuna certificazione release, commit o push.
+
+## 01/10/2026 — Maschera: quantità S/G
+
+Campi dei modelli collegati in maschera-ricette.html; modifica dosi ingredienti e composizioni, riferimenti nutrizionista e preservazione metadati verificati con prova mirata. Nessuna dose assegnata né scrittura GitHub. Stati complessivi dei 16 punti invariati; interazione dispositivo da collaudare. Resoconto nel registro omonimo.
+
+## 01/10/2026 — Accesso rapido barcode
+
+Icona diretta nella barra inferiore, collegata al lettore comune della Spesa senza cambio vista/bozze. Prova mirata collegamento/acquisto/rollback superata, sintassi e diff verificati. Stati complessivi invariati; resta fotocamera/touch sul dispositivo. Resoconto nel registro «Barcode diretto nella barra inferiore». Nessuna pubblicazione.
