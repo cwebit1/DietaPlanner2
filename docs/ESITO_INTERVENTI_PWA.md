@@ -143,3 +143,5 @@ Validatore settimanale collegato alla stessa lettura di generazione/rigenerazion
 02/10/2026 — Set e Menu verificati nel browser e promossi nella matrice. Correzioni riepilogo pz/frequenze snapshot provate; shell v7 predisposta, attivazione reale da verificare. Resoconto nel registro «Riepiloghi quantitativi e frequenze da snapshot».
 
 02/10/2026 — Shell v7 verificata, punti 9/11 promossi con quantità/porzioni/storico e frequenze/grafici reali. Flag speciale aggiorna ora il listener del Piano, prova mirata passata; shell v8 predisposta. Riferimento registro «Attivazione riepiloghi e selezione speciale».
+
+02/10/2026 — Shell v8 attivata, aggiornamento speciali verificato senza navigazione; apertura/scadenza inventario riscontrata al consumo. Sezioni verdi 2/4/6/7/9/11/12; residui precisi nella matrice, S/G sospese. Registro «Chiusura riscontri browser e residui».

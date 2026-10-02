@@ -580,7 +580,7 @@ function metaColazioneCanonica(d){
   }
   return null;
 }
-/* @qa-metadata {"id":"P8-fette-peso-documentato","paths":["grammiDaQuantita","doseContestoVariante","sincronizzaIngredientiIndexedDB","ingredientiEffettiviVoce","consumeInventory"],"focusedTest":"tests/pwa-fette-peso-documentato.test.js","rules":["4 fette native = 35.2 g","peso iniziale 8.8 g/fetta da produttore autorizzato","override nutrizionista in pezzi","snapshot preesistenti preservati"],"pending":["collaudo browser nuova colazione, spesa e consumo"]} */
+/* @qa-metadata {"id":"P8-fette-peso-documentato","paths":["grammiDaQuantita","doseContestoVariante","sincronizzaIngredientiIndexedDB","ingredientiEffettiviVoce","consumeInventory"],"focusedTest":"tests/pwa-fette-peso-documentato.test.js","rules":["4 fette native = 35.2 g","peso iniziale 8.8 g/fetta da produttore autorizzato","override nutrizionista in pezzi","snapshot preesistenti preservati"],"pending":["consumo colazione nuova in PWA installata"],"evidence":["02/10 browser: Latte/Fette 4pz 236kcal; acquisto 8pz normalizzato 70.4g e persistito"]} */
 function grammiDaQuantita(meta,q){
   q=Number(q)||0;
   if(!meta) return q;

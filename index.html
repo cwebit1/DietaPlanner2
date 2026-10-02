@@ -7041,7 +7041,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
     const aggiornata = await toggleFavorito(e.target.dataset.star);
     apriModalDettaglioRicetta(aggiornata || ricetta, voce || porzioniSel, modalitaModifica);
   });
-  /* @qa-metadata {"id":"P7-speciale-elenco-aggiornato","paths":["togglePiattoSpeciale","apriModalDettaglioRicetta","renderPiano","renderBloccoNuovoMotore"],"focusedTest":"tests/pwa-speciale-elenco-aggiornato.test.js","rules":["flag speciale salvato prima della ricostruzione listener","nessuna nuova dose o modello","fuori Piano non avvia rendering Piano"],"pending":["flag seguito da pannello senza navigazione nel browser"]} */
+  /* @qa-metadata {"id":"P7-speciale-elenco-aggiornato","paths":["togglePiattoSpeciale","apriModalDettaglioRicetta","renderPiano","renderBloccoNuovoMotore"],"focusedTest":"tests/pwa-speciale-elenco-aggiornato.test.js","rules":["flag speciale salvato prima della ricostruzione listener","nessuna nuova dose o modello","fuori Piano non avvia rendering Piano"],"pending":[],"evidence":["02/10 shell v8: togli/ripristina flag da dettaglio e pannello speciale disponibile senza navigazione"]} */
   document.querySelector('#modalDettaglioTitolo [data-speciale]')?.addEventListener('click', async (e)=>{
     const aggiornata = await togglePiattoSpeciale(e.target.dataset.speciale);
     // Il pannello Pasto conserva l'elenco speciali nel proprio listener:
@@ -7223,7 +7223,7 @@ async function renderNutrizioneGiorno(){
 }
 
 /* @qa-metadata
-{"id":"PWA-nutrizione-render-snapshot","paths":["calcolaNutrizioneRicetta","renderNutrizioneGiorno"],"focusedTest":"tests/pwa-nutrizione-render-snapshot.test.js","rules":["grammi effettivi precedono quantità in pezzi","riepilogo usa nutrienti congelati anche dopo cambio catalogo"],"pending":["riscontro visuale delle barre sul dispositivo"]}
+{"id":"PWA-nutrizione-render-snapshot","paths":["calcolaNutrizioneRicetta","renderNutrizioneGiorno"],"focusedTest":"tests/pwa-nutrizione-render-snapshot.test.js","rules":["grammi effettivi precedono quantità in pezzi","riepilogo usa nutrienti congelati anche dopo cambio catalogo"],"pending":["gesti touch Android"],"evidence":["02/10 barra Uova 1 e pannelli grafici reali; nessun test visuale automatico"]}
 */
 async function calcolaNutrizioneRicetta(ricetta){
   // se sono stati compilati valori nutrizionali complessivi (a mano o con AI), hanno
