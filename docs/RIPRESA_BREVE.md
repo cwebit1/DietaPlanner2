@@ -50,3 +50,6 @@ Ultimi riscontri: Roll C anteprima/Annulla e Roll P anteprima/Imposta superati; 
 Stato corrente: 7 sezioni verdi (2,4,6,7,9,11,12). Shell v8 pubblicata/attivata: riepilogo Uova 2pz, barra Uova 1 dopo consumo, porzioni piatto unico 2→4pz con nutrienti/persona invariati, speciali aggiornati senza navigazione. Registro «Chiusura riscontri browser e residui». Restano i soli casi precisati nella matrice (5/8/10 e dispositivo/Google/import/PWA), più S/G sospese nei punti 1/3; non ricominciare prove valide, né import/browser install già bloccati.
 
 Google/login: Cwe conferma funzionante il 02/10, residuo chiuso su sua evidenza; non ritentare né chiedere autenticazione. Punto 15 resta aperto soltanto per ripristino/import.
+
+## 02/10 — Ricerca barcode online
+Codice sconosciuto: API v3 Open Food Facts precompila nome/marca e quantità dichiarata, poi richiede ingrediente e conferma acquisto. Associazioni locali prima della rete; cache di sessione, timeout e inserimento manuale. Test mirati superati; shell v9 predisposta. Punto 13 resta parziale per fotocamera/ml sul dispositivo; riscontro API/CORS reale da completare dopo deploy. Registro «Barcode: ricerca Open Food Facts».

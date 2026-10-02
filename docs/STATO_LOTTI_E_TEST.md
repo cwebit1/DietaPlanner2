@@ -593,3 +593,5 @@ Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mi
 02/10/2026 — Shell v7 verificata, punti 9/11 promossi con quantità/porzioni/storico e frequenze/grafici reali. Flag speciale aggiorna ora il listener del Piano, prova mirata passata; shell v8 predisposta. Riferimento registro «Attivazione riepiloghi e selezione speciale».
 
 02/10/2026 — Shell v8 attivata, aggiornamento speciali verificato senza navigazione; apertura/scadenza inventario riscontrata al consumo. Sezioni verdi 2/4/6/7/9/11/12; residui precisi nella matrice, S/G sospese. Registro «Chiusura riscontri browser e residui».
+
+02/10/2026 — Lookup barcode Open Food Facts implementato; prove mirate locale/rete, conferma, quantità, cache, errori e risposta superata passate. Shell v9 predisposta; evidenza live e dispositivo distinti. Registro «Barcode: ricerca Open Food Facts».

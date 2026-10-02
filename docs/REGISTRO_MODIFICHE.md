@@ -5029,3 +5029,8 @@ Il pulsante Account raggiunge il popup ufficiale Google del progetto DietaPlanne
 
 ## 02/10/2026 — Login confermato da Cwe
 Cwe conferma «Quella parte di login funziona.. non preoccuparti». Login considerato verificato sulla sua evidenza; nessun ulteriore tentativo di autenticazione. Punto 15 circoscritto al ripristino/import, non promosso per la sola conferma del login. Solo scheda/riscontro/registro; base checkpoint 7df497e.
+
+## 02/10/2026 — Barcode: ricerca Open Food Facts
+Su richiesta Cwe, codice non associato interrogato via API v3; solo dati commerciali e quantità dichiarata, senza importare nutrienti o scegliere ingredienti dal nome. Locale prima della rete; cache sessione, limite richieste, timeout 6s e risposta superata ignorata. Conferma esplicita prima della transazione prodotti/inventario comune; fallback manuale sempre disponibile. Fonte/ODbL visibili; nessuna densità o scadenza inventata.
+Prove mirate DOM/API simulate: ricerca/località, cache, quantità kg/l e multipack, quantità ignota, 404/offline/timeout, conferma e nessuna scrittura anticipata, stale response e rate limit. Passati pwa-barcode-online, pwa-barcode-barra e pwa-shell-aggiornamento; sintassi e diff. Riscontro live API/CORS dopo deploy; fotocamera e ml/pz restano dispositivo, punto 13 non promosso.
+File barcode-spesa.js, sw.js v9, test mirati e documenti di stato; motore/cataloghi invariati. API ufficiale https://openfoodfacts.github.io/documentation/docs/Product-Opener/v3/products/get-api-v3-product-code/ . Base locale a15b3ed, remota c46f1ce; nuovo checkpoint accompagna la voce.
