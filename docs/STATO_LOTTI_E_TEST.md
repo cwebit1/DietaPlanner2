@@ -601,3 +601,5 @@ Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mi
 02/10/2026 — Corretto flusso barcode su segnalazione Cwe: camera diretta, azioni per stato, registrazione distinta da acquisto. Prove mirate simulate passate; camera/visuale Android ancora da riscontrare. Registro «Barcode: lettura immediata e azioni per stato».
 
 02/10/2026 — Rimossi pulsanti UI Ruota C/P/V; runtime e pipeline invariati. Evidenze precedenti su tali pulsanti storiche. Registro «Rimozione pulsanti Ruota C/P/V».
+
+02/10/2026 — Ricerca ingrediente barcode locale/offline mentre si scrive, buffer dieci righe e selezione esplicita verificati in simulazione. Registro «Barcode: ricerca rapida ingrediente».

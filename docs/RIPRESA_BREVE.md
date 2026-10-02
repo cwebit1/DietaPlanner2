@@ -57,3 +57,5 @@ Codice sconosciuto: API v3 Open Food Facts precompila nome/marca e quantità dic
 Barcode corretto secondo flusso Cwe: apertura avvia camera, tema scuro/linea rossa; risultato identificato offre Info/Aggiungi/Annulla, sconosciuto Registra/Annulla. Registrazione solo prodotti, acquisto separato. Test DOM/API e adattatore mirati superati; shell v11 predisposta. Riscontro camera/visuale Android all’utente. Registro «Barcode: lettura immediata e azioni per stato».
 
 02/10 — Rimossi dalla UI Pasto i tre pulsanti Ruota C/P/V su richiesta Cwe. Il renderer chiamava motor-v12, senza secondo motore; runtime, regole, stack e cataloghi invariati. Shell v12 predisposta. Registro «Rimozione pulsanti Ruota C/P/V».
+
+Barcode — ricerca ingrediente mentre si scrive nel modulo registrazione: testo contenuto, dieci righe di buffer e risultati ulteriori scorribili, selezione esplicita locale/offline. Prova mirata superata, shell v13 predisposta; touch/visuale utente. Registro «Barcode: ricerca rapida ingrediente».

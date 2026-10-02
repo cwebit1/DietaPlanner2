@@ -58,6 +58,10 @@ async function onlineProduct(code,{fetcher=root.fetch?.bind(root),signal,timeout
     throw new Error(controller.signal.aborted?'Ricerca interrotta o scaduta: compila manualmente.':'Ricerca online non disponibile: compila manualmente.');
   }finally{clearTimeout(timer);signal?.removeEventListener('abort',abort);}
 }
+function filterIngredients(variants,query){
+  const text=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('it').trim();
+  const needle=text(query);return variants.filter(v=>text(v.nome).includes(needle));
+}
 async function open(options){
   const {read,all,commit,register}=options;
   const variants=await all('varianti');
@@ -75,6 +79,9 @@ async function open(options){
     .barcode-acquisto .barcode-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
     .barcode-acquisto button{padding:10px 14px;border-radius:8px;cursor:pointer;background:var(--panel-2,#262d1e);color:var(--text,#eef0e6);border:1px solid var(--border,#374025)}
     .barcode-acquisto [type=submit]{background:#16803c;color:white;border:0;font-weight:bold}
+    .barcode-acquisto .barcode-ingredients{max-height:28rem;overflow-y:auto;border:1px solid var(--border,#374025);border-radius:8px}
+    .barcode-acquisto .barcode-ingredients button{display:block;width:100%;height:2.8rem;text-align:left;border-radius:0;border-width:0 0 1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    .barcode-acquisto .barcode-ingredients button[aria-pressed=true]{color:var(--accent,#9cc23a);background:var(--accent-dim,#4a5a2a)}
     .barcode-acquisto label{display:block;margin:12px 0}
     .barcode-acquisto input,.barcode-acquisto select{display:block;width:100%;box-sizing:border-box;margin-top:4px;background:var(--panel-2,#262d1e);color:var(--text,#eef0e6);border:1px solid var(--border,#374025);padding:10px}
   </style><form novalidate>
@@ -82,7 +89,7 @@ async function open(options){
     <p data-status role="status" hidden></p>
     <section data-camera-view hidden><div class="barcode-camera"><video autoplay playsinline muted></video><span class="barcode-line" aria-hidden="true"></span></div></section>
     <section data-search hidden><label>EAN-13<input name="code" inputmode="numeric" required pattern="[0-9]{13}"></label><button type="button" data-find>Leggi codice</button></section>
-    <section data-details hidden><label>Ingrediente<select name="variant" required></select></label><label>Nome prodotto<input name="name" required></label><label>Quantità per confezione<input name="amount" type="number" min="0.01" step="any" required></label><label>Unità<select name="unit"><option>g</option><option>ml</option><option>pz</option></select></label><label>Confezioni<input name="count" type="number" min="1" step="1" value="1" required></label><label>Scadenza (facoltativa)<input type="date" name="expiry"></label><label>Lotto (facoltativo)<input name="lot"></label></section>
+    <section data-details hidden><label>Cerca ingrediente…<input name="ingredientSearch" type="search" autocomplete="off" aria-controls="barcode-ingredient-results"></label><p data-ingredient-status role="status"></p><div id="barcode-ingredient-results" class="barcode-ingredients" data-ingredient-results role="group" aria-label="Ingredienti corrispondenti"></div><select name="variant" required hidden aria-label="Ingrediente selezionato"></select><label>Nome prodotto<input name="name" required></label><label>Quantità per confezione<input name="amount" type="number" min="0.01" step="any" required></label><label>Unità<select name="unit"><option>g</option><option>ml</option><option>pz</option></select></label><label>Confezioni<input name="count" type="number" min="1" step="1" value="1" required></label><label>Scadenza (facoltativa)<input type="date" name="expiry"></label><label>Lotto (facoltativo)<input name="lot"></label></section>
     <div class="barcode-actions"><button type="button" data-info hidden aria-expanded="false">Info</button><button type="button" data-new hidden>Registra prodotto</button><button type="submit" hidden>Aggiungi all’inventario</button><button type="button" data-close>Annulla</button></div>
   </form>`;
   const form=dialog.querySelector('form'),f=form.elements,status=dialog.querySelector('[data-status]');
@@ -94,6 +101,21 @@ async function open(options){
   dialog.querySelector('[data-details]').appendChild(credit);
   const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Seleziona ingrediente…';f.variant.appendChild(placeholder);
   for(const v of variants){const opt=document.createElement('option');opt.value=v.id;opt.textContent=v.nome;f.variant.appendChild(opt);}
+  /* @qa-metadata {"id":"P13-barcode-ricerca-ingrediente","paths":["filterIngredients","open.renderIngredients","open.form.onsubmit"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["ricerca locale per testo contenuto senza distinzione maiuscole/accenti","buffer dieci righe con restanti scorribili","selezione esplicita variantId","modifica query invalida selezione precedente"],"pending":["touch e riscontro visuale Android"]} */
+  const ingredientResults=dialog.querySelector('[data-ingredient-results]'),ingredientStatus=dialog.querySelector('[data-ingredient-status]');
+  const renderIngredients=()=>{
+    const matches=filterIngredients(variants,f.ingredientSearch.value);
+    ingredientResults.replaceChildren();
+    const selected=variants.find(v=>v.id===f.variant.value);
+    ingredientStatus.textContent=selected?'Selezionato: '+selected.nome:matches.length?matches.length+' ingredienti — tocca per selezionare':'Ingrediente non presente nel catalogo';
+    for(const v of matches){
+      const button=document.createElement('button');button.type='button';button.textContent=v.nome;button.title=v.nome;button.setAttribute('aria-pressed',String(v.id===f.variant.value));
+      button.onclick=()=>{f.variant.value=v.id;f.ingredientSearch.value=v.nome;renderIngredients();};ingredientResults.appendChild(button);
+    }
+  };
+  const syncIngredient=()=>{f.ingredientSearch.value=variants.find(v=>v.id===f.variant.value)?.nome||'';renderIngredients();};
+  f.ingredientSearch.addEventListener('input',()=>{f.variant.value='';renderIngredients();});
+  syncIngredient();
   let stream=null,frame=null,busy=false,sequence=0,request=null,suggestion=null,loadedCode='',phase='reading';
   /* @qa-metadata {"id":"P13-barcode-lettura-diretta","paths":["open.startCamera","open.setPhase","open.find","open.form.onsubmit","apriBarcodeSpesa.register"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["apertura avvia fotocamera senza pulsanti intermedi","azioni singole per stato","registrazione non aggiunge scorte","chiusura arresta camera anche durante permesso","tema scuro e linea rossa"],"pending":["fotocamera e riscontro visuale Android"]} */
   const details=dialog.querySelector('[data-details]'),search=dialog.querySelector('[data-search]'),info=dialog.querySelector('[data-info]'),title=dialog.querySelector('[data-product-name]'),recognized=dialog.querySelector('[data-recognized]'),create=dialog.querySelector('[data-new]'),submit=form.querySelector('[type="submit"]'),cameraView=dialog.querySelector('[data-camera-view]');
@@ -116,7 +138,7 @@ async function open(options){
     const code=f.code.value.trim();
     if(!validEAN(code))throw new Error('EAN-13 non valido');
     request?.abort();const ticket=++sequence;request=new AbortController();const signal=request.signal;
-    suggestion=null;loadedCode=code;f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';
+    suggestion=null;loadedCode=code;f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';syncIngredient();
     stop();preview(false);setPhase('lookup');message('Cerco il prodotto…');
     const controls=[f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')];controls.forEach(c=>c.disabled=true);
     try{
@@ -125,14 +147,14 @@ async function open(options){
       if(ticket!==sequence||code!==f.code.value.trim()||signal.aborted)return;
       if(product){
         suggestion=product;f.variant.value=local?product.variantId:'';f.name.value=product.nome||'';f.brand.value=product.marca||'';f.amount.value=product.quantita||'';f.unit.value=product.unita||'g';
-        preview(true);setPhase('identified');message('');
+        syncIngredient();preview(true);setPhase('identified');message('');
       }else {preview(false);setPhase('unknown');title.textContent='Codice non identificato';message('');}
     }catch(error){if(ticket===sequence){setPhase('unknown');title.textContent='Codice non identificato';message(error.message);}}
     finally{if(ticket===sequence){request=null;controls.forEach(c=>c.disabled=false);}}
   };
   f.code.addEventListener('input',()=>{
     request?.abort();request=null;++sequence;suggestion=null;
-    if(loadedCode&&f.code.value.trim()!==loadedCode){f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';loadedCode='';}
+    if(loadedCode&&f.code.value.trim()!==loadedCode){f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';loadedCode='';syncIngredient();}
     [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);preview(false);setPhase('manual');message('');
   });
   dialog.querySelector('[data-find]').onclick=()=>find().catch(e=>message(e.message));
@@ -164,6 +186,7 @@ async function open(options){
   dialog.addEventListener('close',()=>{++sequence;request?.abort();stop();dialog.remove();});
   form.onsubmit=async event=>{
     event.preventDefault();if(busy||request||!['identified','register'].includes(phase))return;
+    if(!f.variant.value){setDetails(true);message('Seleziona un ingrediente dai risultati.');f.ingredientSearch.focus();return;}
     if(!form.checkValidity()){setDetails(true);message('Completa o correggi i dati per aggiungere il prodotto.');form.reportValidity();return;}
     busy=true;
     try{
@@ -183,6 +206,6 @@ async function open(options){
   };
   document.body.appendChild(dialog);dialog.showModal();setPhase('reading');await startCamera();
 }
-const api={validEAN,quantity,productSuggestion,onlineProduct,open};root.DietaPlannerBarcode=api;
+const api={validEAN,quantity,productSuggestion,onlineProduct,filterIngredients,open};root.DietaPlannerBarcode=api;
 if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);
