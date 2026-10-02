@@ -16,7 +16,7 @@ function quantity(product,count,variant){
   if(product.unita!==native)throw new Error('Conversione '+product.unita+' → '+native+' non definita per questo ingrediente');
   return product.quantita*count;
 }
-/* @qa-metadata {"id":"P13-barcode-openfoodfacts","paths":["onlineProduct","productSuggestion","open.find","open.form.onsubmit"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["locale prima della rete","nessun nutriente o ingrediente canonico importato","quantità solo dichiarata e unità senza densità inventata","risposta superata non modifica modulo","nessuna scrittura prima della conferma"],"pending":["riscontro API/CORS dalla PWA e fotocamera Android"]} */
+/* @qa-metadata {"id":"P13-barcode-openfoodfacts","paths":["onlineProduct","productSuggestion","open.find","open.form.onsubmit"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["locale prima della rete","nessun nutriente o ingrediente canonico importato","quantità solo dichiarata e unità senza densità inventata","risposta superata non modifica modulo","nessuna scrittura prima della conferma"],"evidence":["02/10/2026 PWA pubblicata: API/CORS EAN 3017620422003 restituisce Nutella 400g, ingrediente vuoto"],"pending":["fotocamera Android e confezioni ml/pz sul dispositivo"]} */
 const onlineCache=new Map(),onlineRequests=[];
 function declaredQuantity(value,unit){
   const factors={g:['g',1],kg:['g',1000],mg:['g',0.001],ml:['ml',1],cl:['ml',10],l:['ml',1000],pz:['pz',1]};
