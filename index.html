@@ -8392,7 +8392,13 @@ async function segnaAcquistoSpesaAtomico(id){
 let spesaSettimanaScarto=0;
 async function apriBarcodeSpesa(scartoSettimane=spesaSettimanaScarto){
   try{
-    await DietaPlannerBarcode.open({read:getOne,all:getAll,commit:async(product,item)=>{
+    await DietaPlannerBarcode.open({read:getOne,all:getAll,register:product=>new Promise((resolve,reject)=>{
+      const transaction=db.transaction(['prodotti'],'readwrite');
+      transaction.oncomplete=()=>{cacheGetAll.prodotti=null;resolve();};
+      transaction.onerror=()=>reject(transaction.error);
+      transaction.onabort=()=>reject(transaction.error||new Error('Registrazione annullata'));
+      try{transaction.objectStore('prodotti').put(product);}catch(error){transaction.abort();reject(error);}
+    }),commit:async(product,item)=>{
       await new Promise((resolve,reject)=>{
         const transaction=db.transaction(['prodotti','inventario'],'readwrite');
         transaction.oncomplete=()=>{cacheGetAll.prodotti=null;cacheGetAll.inventario=null;resolve();};

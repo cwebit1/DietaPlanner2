@@ -345,6 +345,11 @@ Sono due meccaniche collegate ma distinte.
   Questi dati restano manuali, salvo che il codice letto li contenga
   esplicitamente in un formato supportato; l'app non deve inventarli né
   dedurli dalla data di scansione.
+- Flusso UI aggiornato da Cwe il 02/10/2026: icona → fotocamera subito,
+  tema scuro e linea rossa centrale; dopo lettura, codice identificato →
+  nome/spunta e Info/Aggiungi all’inventario/Annulla; sconosciuto →
+  Registra prodotto/Annulla. Registrazione salva solo l’associazione;
+  aggiunta inventario resta esplicita. Codice manuale solo se camera indisponibile.
 - Questa sezione registra il comportamento approvato ma non lo dichiara già
   implementato: schema persistente, interfaccia Spesa, permessi fotocamera,
   fallback del lettore e prove su dispositivi Android saranno definiti e

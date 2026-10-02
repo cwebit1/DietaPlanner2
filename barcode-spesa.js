@@ -59,27 +59,31 @@ async function onlineProduct(code,{fetcher=root.fetch?.bind(root),signal,timeout
   }finally{clearTimeout(timer);signal?.removeEventListener('abort',abort);}
 }
 async function open(options){
-  const {read,all,commit}=options;
+  const {read,all,commit,register}=options;
   const variants=await all('varianti');
   const dialog=document.createElement('dialog');
   dialog.className='barcode-acquisto';
   dialog.innerHTML=`<style>
-    .barcode-acquisto{width:min(92vw,560px);max-height:90vh;box-sizing:border-box;border-radius:16px;padding:24px}
+    .barcode-acquisto{width:min(92vw,560px);max-height:90vh;box-sizing:border-box;border-radius:16px;padding:24px;background:var(--panel,#20261a);color:var(--text,#eef0e6);border:1px solid var(--border,#374025);color-scheme:dark}
+    .barcode-acquisto::backdrop{background:#000b}
+    .barcode-acquisto .barcode-camera{position:relative;overflow:hidden;border-radius:12px;background:#000}
+    .barcode-acquisto video{display:block;width:100%;max-height:55vh;object-fit:cover}
+    .barcode-acquisto .barcode-line{position:absolute;top:50%;left:8%;right:8%;height:2px;background:#ff3535;box-shadow:0 0 8px #ff3535;pointer-events:none}
     .barcode-acquisto [hidden]{display:none!important}
     .barcode-acquisto .barcode-title{display:flex;align-items:center;gap:12px;margin:0 0 20px;font-size:2rem;overflow-wrap:anywhere}
     .barcode-acquisto [data-recognized]{color:#16803c;font-size:2.5rem;flex-shrink:0}
     .barcode-acquisto .barcode-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
-    .barcode-acquisto button{padding:10px 14px;border-radius:8px;cursor:pointer}
+    .barcode-acquisto button{padding:10px 14px;border-radius:8px;cursor:pointer;background:var(--panel-2,#262d1e);color:var(--text,#eef0e6);border:1px solid var(--border,#374025)}
     .barcode-acquisto [type=submit]{background:#16803c;color:white;border:0;font-weight:bold}
     .barcode-acquisto label{display:block;margin:12px 0}
-    .barcode-acquisto input,.barcode-acquisto select{display:block;width:100%;box-sizing:border-box;margin-top:4px}
+    .barcode-acquisto input,.barcode-acquisto select{display:block;width:100%;box-sizing:border-box;margin-top:4px;background:var(--panel-2,#262d1e);color:var(--text,#eef0e6);border:1px solid var(--border,#374025);padding:10px}
   </style><form novalidate>
     <h2 class="barcode-title"><span data-product-name>Leggi un prodotto</span><span data-recognized hidden role="img" aria-label="Codice riconosciuto">✓</span></h2>
-    <div class="barcode-actions"><button type="button" data-info aria-expanded="false">Altre informazioni</button><button type="button" data-new>Crea nuovo</button><button type="submit">Aggiungi prodotto</button></div>
     <p data-status role="status" hidden></p>
-    <section data-search><video hidden autoplay playsinline muted style="max-width:100%"></video><label>EAN-13<input name="code" inputmode="numeric" required pattern="[0-9]{13}"></label><button type="button" data-camera>Fotocamera</button><button type="button" data-find>Cerca codice</button></section>
+    <section data-camera-view hidden><div class="barcode-camera"><video autoplay playsinline muted></video><span class="barcode-line" aria-hidden="true"></span></div></section>
+    <section data-search hidden><label>EAN-13<input name="code" inputmode="numeric" required pattern="[0-9]{13}"></label><button type="button" data-find>Leggi codice</button></section>
     <section data-details hidden><label>Ingrediente<select name="variant" required></select></label><label>Nome prodotto<input name="name" required></label><label>Quantità per confezione<input name="amount" type="number" min="0.01" step="any" required></label><label>Unità<select name="unit"><option>g</option><option>ml</option><option>pz</option></select></label><label>Confezioni<input name="count" type="number" min="1" step="1" value="1" required></label><label>Scadenza (facoltativa)<input type="date" name="expiry"></label><label>Lotto (facoltativo)<input name="lot"></label></section>
-    <button type="button" data-close>Annulla</button>
+    <div class="barcode-actions"><button type="button" data-info hidden aria-expanded="false">Info</button><button type="button" data-new hidden>Registra prodotto</button><button type="submit" hidden>Aggiungi all’inventario</button><button type="button" data-close>Annulla</button></div>
   </form>`;
   const form=dialog.querySelector('form'),f=form.elements,status=dialog.querySelector('[data-status]');
   const brand=document.createElement('label');brand.textContent='Marca (facoltativa)';
@@ -90,28 +94,30 @@ async function open(options){
   dialog.querySelector('[data-details]').appendChild(credit);
   const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Seleziona ingrediente…';f.variant.appendChild(placeholder);
   for(const v of variants){const opt=document.createElement('option');opt.value=v.id;opt.textContent=v.nome;f.variant.appendChild(opt);}
-  let stream=null,frame=null,busy=false,sequence=0,request=null,suggestion=null,loadedCode='';
-  /* @qa-metadata {"id":"P13-barcode-compatto","paths":["open.setDetails","open.find","open.data-new","open.form.onsubmit"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["spunta solo per codice riconosciuto corrente","dati nascosti espandibili","dati obbligatori visibili prima della validazione","Crea nuovo non scrive inventario"],"evidence":["test DOM/API: vista compatta, spunta, espansione, crea nuovo e validazione prima del commit"],"pending":["verifica visuale utente e fotocamera Android"]} */
-  const details=dialog.querySelector('[data-details]'),search=dialog.querySelector('[data-search]'),info=dialog.querySelector('[data-info]'),title=dialog.querySelector('[data-product-name]'),recognized=dialog.querySelector('[data-recognized]');
-  const setDetails=expanded=>{details.hidden=!expanded;search.hidden=!expanded&&!!suggestion;info.setAttribute('aria-expanded',String(expanded));};
+  let stream=null,frame=null,busy=false,sequence=0,request=null,suggestion=null,loadedCode='',phase='reading';
+  /* @qa-metadata {"id":"P13-barcode-lettura-diretta","paths":["open.startCamera","open.setPhase","open.find","open.form.onsubmit","apriBarcodeSpesa.register"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["apertura avvia fotocamera senza pulsanti intermedi","azioni singole per stato","registrazione non aggiunge scorte","chiusura arresta camera anche durante permesso","tema scuro e linea rossa"],"pending":["fotocamera e riscontro visuale Android"]} */
+  const details=dialog.querySelector('[data-details]'),search=dialog.querySelector('[data-search]'),info=dialog.querySelector('[data-info]'),title=dialog.querySelector('[data-product-name]'),recognized=dialog.querySelector('[data-recognized]'),create=dialog.querySelector('[data-new]'),submit=form.querySelector('[type="submit"]'),cameraView=dialog.querySelector('[data-camera-view]');
+  const setDetails=expanded=>{details.hidden=!expanded;info.setAttribute('aria-expanded',String(expanded));};
+  const setPhase=value=>{
+    phase=value;search.hidden=value!=='manual';cameraView.hidden=value!=='reading';
+    info.hidden=value!=='identified';create.hidden=value!=='unknown';submit.hidden=!['identified','register'].includes(value);
+    submit.textContent=value==='register'?'Registra prodotto':'Aggiungi all’inventario';setDetails(value==='register');
+  };
   const message=text=>{status.textContent=text;status.hidden=!text;};
   const preview=matched=>{format.textContent=suggestion?.formatoDichiarato?'Formato dichiarato: '+suggestion.formatoDichiarato:'';format.hidden=!format.textContent;recognized.hidden=!matched;title.textContent=f.name.value.trim()||(matched?'Prodotto riconosciuto':'Leggi un prodotto');};
   info.onclick=()=>setDetails(details.hidden);
-  dialog.querySelector('[data-new]').onclick=()=>{
-    if(busy)return;
-    request?.abort();request=null;++sequence;stop();suggestion=null;loadedCode='';
-    f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.count.value='1';f.expiry.value='';f.lot.value='';
-    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);
-    preview(false);setDetails(true);message('Compila i dati del nuovo prodotto.');f.name.focus();
+  create.onclick=()=>{
+    if(busy||phase!=='unknown')return;
+    setPhase('register');message('Associa ingrediente, nome e quantità al codice letto.');f.name.focus();
   };
   f.name.addEventListener('input',()=>preview(!!suggestion&&suggestion.id===f.code.value.trim()));
-  const stop=()=>{if(frame)cancelAnimationFrame(frame);stream?.getTracks().forEach(t=>t.stop());stream=null;dialog.querySelector('video').hidden=true;};
+  const stop=()=>{if(frame)cancelAnimationFrame(frame);frame=null;stream?.getTracks().forEach(t=>t.stop());stream=null;cameraView.hidden=true;};
   const find=async()=>{
     const code=f.code.value.trim();
     if(!validEAN(code))throw new Error('EAN-13 non valido');
     request?.abort();const ticket=++sequence;request=new AbortController();const signal=request.signal;
     suggestion=null;loadedCode=code;f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';
-    preview(false);setDetails(false);message('Cerco il prodotto…');
+    stop();preview(false);setPhase('lookup');message('Cerco il prodotto…');
     const controls=[f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')];controls.forEach(c=>c.disabled=true);
     try{
       let product=await read('prodotti',code),local=!!product;
@@ -119,41 +125,45 @@ async function open(options){
       if(ticket!==sequence||code!==f.code.value.trim()||signal.aborted)return;
       if(product){
         suggestion=product;f.variant.value=local?product.variantId:'';f.name.value=product.nome||'';f.brand.value=product.marca||'';f.amount.value=product.quantita||'';f.unit.value=product.unita||'g';
-        preview(true);setDetails(false);message('');
-      }else {preview(false);setDetails(true);message('Prodotto non trovato: crea il prodotto o compila i dati.');}
-    }catch(error){if(ticket===sequence){setDetails(true);message(error.message);}}
+        preview(true);setPhase('identified');message('');
+      }else {preview(false);setPhase('unknown');title.textContent='Codice non identificato';message('');}
+    }catch(error){if(ticket===sequence){setPhase('unknown');title.textContent='Codice non identificato';message(error.message);}}
     finally{if(ticket===sequence){request=null;controls.forEach(c=>c.disabled=false);}}
   };
   f.code.addEventListener('input',()=>{
     request?.abort();request=null;++sequence;suggestion=null;
     if(loadedCode&&f.code.value.trim()!==loadedCode){f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';loadedCode='';}
-    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);preview(false);search.hidden=false;message('');
+    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);preview(false);setPhase('manual');message('');
   });
   dialog.querySelector('[data-find]').onclick=()=>find().catch(e=>message(e.message));
-  dialog.querySelector('[data-camera]').onclick=async()=>{
+  const startCamera=async()=>{
     try{
       stop();
       if(!root.BarcodeDetector||!navigator.mediaDevices?.getUserMedia)throw new Error('Lettura fotocamera non disponibile: inserisci il codice');
       const formats=await root.BarcodeDetector.getSupportedFormats();
       if(!formats.includes('ean_13'))throw new Error('EAN-13 non supportato: inserisci il codice');
       const detector=new root.BarcodeDetector({formats:['ean_13']});
-      stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
-      const video=dialog.querySelector('video');video.hidden=false;video.srcObject=stream;await video.play();
+      if(!dialog.open)return;
+      const acquired=await navigator.mediaDevices.getUserMedia({video:{facingMode:{ideal:'environment'}},audio:false});
+      if(!dialog.open){acquired.getTracks().forEach(t=>t.stop());return;}
+      stream=acquired;setPhase('reading');
+      const video=dialog.querySelector('video');video.srcObject=stream;await video.play();if(!dialog.open||!stream)return;
       const scan=async()=>{
         if(!dialog.open||!stream)return;
         try{
-          const results=await detector.detect(video),code=results.find(x=>validEAN(x.rawValue));
+          const results=await detector.detect(video);if(!dialog.open||!stream)return;
+          const code=results.find(x=>validEAN(x.rawValue));
           if(code){f.code.value=code.rawValue;stop();await find();return;}
           frame=requestAnimationFrame(scan);
-        }catch(e){stop();message(e.message);}
+        }catch(e){stop();if(dialog.open){setPhase('manual');message(e.message);}}
       };
       frame=requestAnimationFrame(scan);
-    }catch(e){stop();message(e.message);}
+    }catch(e){stop();if(dialog.open){setPhase('manual');message(e.message);}}
   };
   dialog.querySelector('[data-close]').onclick=()=>dialog.close();
   dialog.addEventListener('close',()=>{++sequence;request?.abort();stop();dialog.remove();});
   form.onsubmit=async event=>{
-    event.preventDefault();if(busy||request)return;
+    event.preventDefault();if(busy||request||!['identified','register'].includes(phase))return;
     if(!form.checkValidity()){setDetails(true);message('Completa o correggi i dati per aggiungere il prodotto.');form.reportValidity();return;}
     busy=true;
     try{
@@ -163,11 +173,15 @@ async function open(options){
       if(suggestion?.id===product.id&&suggestion.fonte){product.fonte=suggestion.fonte;product.fonteUrl=suggestion.fonteUrl;if(suggestion.formatoDichiarato)product.formatoDichiarato=suggestion.formatoDichiarato;}
       const variant=variants.find(v=>v.id===product.variantId);
       const total=quantity(product,Number(f.count.value),variant);
+      if(phase==='register'){
+        if(!register)throw new Error('Registrazione prodotto non disponibile');
+        await register(product);suggestion=product;loadedCode=product.id;preview(true);setPhase('identified');message('Prodotto registrato.');return;
+      }
       await commit(product,{id:'barcode_'+crypto.randomUUID(),variantId:variant.id,quantita:total,zona:variant.zona||'dispensa',categoria:variant.categoria||'conf',stato:'disponibile',dataScadenza:f.expiry.value||null,lotto:f.lot.value||null,dataAcquisto:new Date().toISOString().slice(0,10)});
       dialog.close();
     }catch(e){setDetails(true);message(e.message);}finally{busy=false;}
   };
-  document.body.appendChild(dialog);dialog.showModal();
+  document.body.appendChild(dialog);dialog.showModal();setPhase('reading');await startCamera();
 }
 const api={validEAN,quantity,productSuggestion,onlineProduct,open};root.DietaPlannerBarcode=api;
 if(typeof module!=='undefined'&&module.exports)module.exports=api;

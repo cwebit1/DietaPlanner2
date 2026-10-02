@@ -597,3 +597,5 @@ Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mi
 02/10/2026 — Lookup barcode Open Food Facts implementato; prove mirate locale/rete, conferma, quantità, cache, errori e risposta superata passate. Shell v9 attivata; API/CORS reali verificati (Nutella 400g, ingrediente vuoto); fotocamera e ml/pz restano dispositivo. Registro «Barcode: ricerca Open Food Facts».
 
 02/10/2026 — Barcode compatto implementato e verificato con prova DOM/API mirata; validazione espande i dati mancanti prima dell’acquisto. Verifica visuale utente; stati 16 punti invariati. Registro «Finestra barcode compatta».
+
+02/10/2026 — Corretto flusso barcode su segnalazione Cwe: camera diretta, azioni per stato, registrazione distinta da acquisto. Prove mirate simulate passate; camera/visuale Android ancora da riscontrare. Registro «Barcode: lettura immediata e azioni per stato».
