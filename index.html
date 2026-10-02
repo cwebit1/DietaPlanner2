@@ -6119,25 +6119,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   };
 
   el.querySelectorAll('[data-nm-alternativa]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('alternativa',e.currentTarget)));
-  if(modificabile){
-    const pending=bozzePropostaPasto[id]?.voce||voce;
-    const enabled=await DietaPlannerMotorV12.statoRollPasto(giorno,pasto,pending);
-    const commands=document.createElement('div');commands.className='row';
-    for(const tipo of ['C','P','V']){
-      const button=document.createElement('button');button.className='secondary';button.textContent='Ruota '+tipo;button.disabled=!enabled[tipo];
-      button.addEventListener('click',async()=>{
-        button.disabled=true;
-        try{
-          const next=await DietaPlannerMotorV12.ruotaPasto(giorno,pasto,tipo,bozzePropostaPasto[id]?.voce||voce);
-          if(!next){await avviso('Nessuna alternativa compatibile per '+tipo);return;}
-          bozzePropostaPasto[id]={modalita:'roll',tipo,voce:next};
-          await renderBloccoNuovoMotore(pasto,giorno,elementId);
-        }catch(e){await avviso(e.message);}finally{button.disabled=false;}
-      });
-      commands.appendChild(button);
-    }
-    el.appendChild(commands);
-  }
+  /* @qa-metadata {"id":"P7-rimozione-comandi-ruota","paths":["renderBloccoNuovoMotore"],"rules":["nessun pulsante Ruota C/P/V aggiunto al Pasto","runtime motor-v12 e regole engine-core invariati","Alternativa e Salvafrigo conservati"],"evidence":["controllo strutturale renderer e diff"],"pending":["riscontro UI utente"]} */
   el.querySelectorAll('[data-nm-salvafrigo]').forEach(btn=>btn.addEventListener('click',e=>avviaProposta('salvafrigo',e.currentTarget)));
 
   if(bozzePropostaPasto[id]){
