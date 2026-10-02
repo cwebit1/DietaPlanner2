@@ -147,3 +147,5 @@ Validatore settimanale collegato alla stessa lettura di generazione/rigenerazion
 02/10/2026 — Shell v8 attivata, aggiornamento speciali verificato senza navigazione; apertura/scadenza inventario riscontrata al consumo. Sezioni verdi 2/4/6/7/9/11/12; residui precisi nella matrice, S/G sospese. Registro «Chiusura riscontri browser e residui».
 
 02/10/2026 — Lookup barcode Open Food Facts implementato; prove mirate locale/rete, conferma, quantità, cache, errori e risposta superata passate. Shell v9 attivata; API/CORS reali verificati (Nutella 400g, ingrediente vuoto); fotocamera e ml/pz restano dispositivo. Registro «Barcode: ricerca Open Food Facts».
+
+02/10/2026 — Barcode compatto implementato e verificato con prova DOM/API mirata; validazione espande i dati mancanti prima dell’acquisto. Verifica visuale utente; stati 16 punti invariati. Registro «Finestra barcode compatta».

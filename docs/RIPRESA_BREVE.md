@@ -53,3 +53,5 @@ Google/login: Cwe conferma funzionante il 02/10, residuo chiuso su sua evidenza;
 
 ## 02/10 — Ricerca barcode online
 Codice sconosciuto: API v3 Open Food Facts precompila nome/marca e quantità dichiarata, poi richiede ingrediente e conferma acquisto. Associazioni locali prima della rete; cache di sessione, timeout e inserimento manuale. Test mirati superati; shell v9 pubblicata e attivata dopo chiusura della vecchia pagina. API/CORS reale verificati: EAN 3017620422003 → Nutella, marca, 400g, ingrediente vuoto. Punto 13 resta parziale per fotocamera e ml/pz sul dispositivo. Registro «Barcode: ricerca Open Food Facts».
+
+Barcode compatto: nome grande e spunta per riconoscimento; «Altre informazioni» espande i dati, «Crea nuovo» prepara inserimento manuale, «Aggiungi prodotto» valida prima del commit. Prova DOM/API mirata superata; shell v10 predisposta, verifica visuale affidata all’utente. Registro «Finestra barcode compatta».

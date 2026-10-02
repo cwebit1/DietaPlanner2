@@ -62,22 +62,56 @@ async function open(options){
   const {read,all,commit}=options;
   const variants=await all('varianti');
   const dialog=document.createElement('dialog');
-  dialog.innerHTML='<form><h3>Acquista con codice a barre</h3><video autoplay playsinline muted style="max-width:100%"></video><p data-status></p><label>EAN-13<input name="code" inputmode="numeric" required pattern="[0-9]{13}"></label><button type="button" data-camera>Fotocamera</button><button type="button" data-find>Cerca codice</button><label>Ingrediente<select name="variant" required></select></label><label>Nome prodotto<input name="name" required></label><label>Quantità per confezione<input name="amount" type="number" min="0.01" step="any" required></label><label>Unità<select name="unit"><option>g</option><option>ml</option><option>pz</option></select></label><label>Confezioni<input name="count" type="number" min="1" step="1" value="1" required></label><label>Scadenza (facoltativa)<input type="date" name="expiry"></label><label>Lotto (facoltativo)<input name="lot"></label><button type="submit">Conferma acquisto</button><button type="button" data-close>Annulla</button></form>';
+  dialog.className='barcode-acquisto';
+  dialog.innerHTML=`<style>
+    .barcode-acquisto{width:min(92vw,560px);max-height:90vh;box-sizing:border-box;border-radius:16px;padding:24px}
+    .barcode-acquisto [hidden]{display:none!important}
+    .barcode-acquisto .barcode-title{display:flex;align-items:center;gap:12px;margin:0 0 20px;font-size:2rem;overflow-wrap:anywhere}
+    .barcode-acquisto [data-recognized]{color:#16803c;font-size:2.5rem;flex-shrink:0}
+    .barcode-acquisto .barcode-actions{display:flex;gap:10px;flex-wrap:wrap;margin:16px 0}
+    .barcode-acquisto button{padding:10px 14px;border-radius:8px;cursor:pointer}
+    .barcode-acquisto [type=submit]{background:#16803c;color:white;border:0;font-weight:bold}
+    .barcode-acquisto label{display:block;margin:12px 0}
+    .barcode-acquisto input,.barcode-acquisto select{display:block;width:100%;box-sizing:border-box;margin-top:4px}
+  </style><form novalidate>
+    <h2 class="barcode-title"><span data-product-name>Leggi un prodotto</span><span data-recognized hidden role="img" aria-label="Codice riconosciuto">✓</span></h2>
+    <div class="barcode-actions"><button type="button" data-info aria-expanded="false">Altre informazioni</button><button type="button" data-new>Crea nuovo</button><button type="submit">Aggiungi prodotto</button></div>
+    <p data-status role="status" hidden></p>
+    <section data-search><video hidden autoplay playsinline muted style="max-width:100%"></video><label>EAN-13<input name="code" inputmode="numeric" required pattern="[0-9]{13}"></label><button type="button" data-camera>Fotocamera</button><button type="button" data-find>Cerca codice</button></section>
+    <section data-details hidden><label>Ingrediente<select name="variant" required></select></label><label>Nome prodotto<input name="name" required></label><label>Quantità per confezione<input name="amount" type="number" min="0.01" step="any" required></label><label>Unità<select name="unit"><option>g</option><option>ml</option><option>pz</option></select></label><label>Confezioni<input name="count" type="number" min="1" step="1" value="1" required></label><label>Scadenza (facoltativa)<input type="date" name="expiry"></label><label>Lotto (facoltativo)<input name="lot"></label></section>
+    <button type="button" data-close>Annulla</button>
+  </form>`;
   const form=dialog.querySelector('form'),f=form.elements,status=dialog.querySelector('[data-status]');
   const brand=document.createElement('label');brand.textContent='Marca (facoltativa)';
   const brandInput=document.createElement('input');brandInput.name='brand';brand.appendChild(brandInput);f.name.parentElement.after(brand);
   const credit=document.createElement('p');credit.innerHTML='Ricerca prodotti: <a href="https://world.openfoodfacts.org" target="_blank" rel="noopener">Open Food Facts</a> · <a href="https://opendatacommons.org/licenses/odbl/1-0/" target="_blank" rel="noopener">ODbL</a>';
-  form.appendChild(credit);
+  const format=document.createElement('p');format.hidden=true;
+  dialog.querySelector('[data-details]').appendChild(format);
+  dialog.querySelector('[data-details]').appendChild(credit);
   const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Seleziona ingrediente…';f.variant.appendChild(placeholder);
   for(const v of variants){const opt=document.createElement('option');opt.value=v.id;opt.textContent=v.nome;f.variant.appendChild(opt);}
   let stream=null,frame=null,busy=false,sequence=0,request=null,suggestion=null,loadedCode='';
-  const stop=()=>{if(frame)cancelAnimationFrame(frame);stream?.getTracks().forEach(t=>t.stop());stream=null;};
+  /* @qa-metadata {"id":"P13-barcode-compatto","paths":["open.setDetails","open.find","open.data-new","open.form.onsubmit"],"focusedTest":"tests/pwa-barcode-online.test.js","rules":["spunta solo per codice riconosciuto corrente","dati nascosti espandibili","dati obbligatori visibili prima della validazione","Crea nuovo non scrive inventario"],"evidence":["test DOM/API: vista compatta, spunta, espansione, crea nuovo e validazione prima del commit"],"pending":["verifica visuale utente e fotocamera Android"]} */
+  const details=dialog.querySelector('[data-details]'),search=dialog.querySelector('[data-search]'),info=dialog.querySelector('[data-info]'),title=dialog.querySelector('[data-product-name]'),recognized=dialog.querySelector('[data-recognized]');
+  const setDetails=expanded=>{details.hidden=!expanded;search.hidden=!expanded&&!!suggestion;info.setAttribute('aria-expanded',String(expanded));};
+  const message=text=>{status.textContent=text;status.hidden=!text;};
+  const preview=matched=>{format.textContent=suggestion?.formatoDichiarato?'Formato dichiarato: '+suggestion.formatoDichiarato:'';format.hidden=!format.textContent;recognized.hidden=!matched;title.textContent=f.name.value.trim()||(matched?'Prodotto riconosciuto':'Leggi un prodotto');};
+  info.onclick=()=>setDetails(details.hidden);
+  dialog.querySelector('[data-new]').onclick=()=>{
+    if(busy)return;
+    request?.abort();request=null;++sequence;stop();suggestion=null;loadedCode='';
+    f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.count.value='1';f.expiry.value='';f.lot.value='';
+    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);
+    preview(false);setDetails(true);message('Compila i dati del nuovo prodotto.');f.name.focus();
+  };
+  f.name.addEventListener('input',()=>preview(!!suggestion&&suggestion.id===f.code.value.trim()));
+  const stop=()=>{if(frame)cancelAnimationFrame(frame);stream?.getTracks().forEach(t=>t.stop());stream=null;dialog.querySelector('video').hidden=true;};
   const find=async()=>{
     const code=f.code.value.trim();
     if(!validEAN(code))throw new Error('EAN-13 non valido');
     request?.abort();const ticket=++sequence;request=new AbortController();const signal=request.signal;
     suggestion=null;loadedCode=code;f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';
-    status.textContent='Cerco il prodotto…';
+    preview(false);setDetails(false);message('Cerco il prodotto…');
     const controls=[f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')];controls.forEach(c=>c.disabled=true);
     try{
       let product=await read('prodotti',code),local=!!product;
@@ -85,17 +119,17 @@ async function open(options){
       if(ticket!==sequence||code!==f.code.value.trim()||signal.aborted)return;
       if(product){
         suggestion=product;f.variant.value=local?product.variantId:'';f.name.value=product.nome||'';f.brand.value=product.marca||'';f.amount.value=product.quantita||'';f.unit.value=product.unita||'g';
-        status.textContent=local?'Prodotto associato. Verifica e conferma.':'Trovato su Open Food Facts. Seleziona l’ingrediente e verifica nome e quantità prima di confermare.'+(product.formatoDichiarato?' Formato dichiarato: '+product.formatoDichiarato:'');
-      }else status.textContent='Prodotto non trovato: associa ingrediente e formato manualmente.';
-    }catch(error){if(ticket===sequence)status.textContent=error.message;}
+        preview(true);setDetails(false);message('');
+      }else {preview(false);setDetails(true);message('Prodotto non trovato: crea il prodotto o compila i dati.');}
+    }catch(error){if(ticket===sequence){setDetails(true);message(error.message);}}
     finally{if(ticket===sequence){request=null;controls.forEach(c=>c.disabled=false);}}
   };
   f.code.addEventListener('input',()=>{
     request?.abort();request=null;++sequence;suggestion=null;
     if(loadedCode&&f.code.value.trim()!==loadedCode){f.variant.value='';f.name.value='';f.brand.value='';f.amount.value='';f.unit.value='g';f.expiry.value='';f.lot.value='';loadedCode='';}
-    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);status.textContent='';
+    [f.variant,f.name,f.brand,f.amount,f.unit,form.querySelector('[type="submit"]')].forEach(c=>c.disabled=false);preview(false);search.hidden=false;message('');
   });
-  dialog.querySelector('[data-find]').onclick=()=>find().catch(e=>status.textContent=e.message);
+  dialog.querySelector('[data-find]').onclick=()=>find().catch(e=>message(e.message));
   dialog.querySelector('[data-camera]').onclick=async()=>{
     try{
       stop();
@@ -104,22 +138,24 @@ async function open(options){
       if(!formats.includes('ean_13'))throw new Error('EAN-13 non supportato: inserisci il codice');
       const detector=new root.BarcodeDetector({formats:['ean_13']});
       stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'},audio:false});
-      const video=dialog.querySelector('video');video.srcObject=stream;await video.play();
+      const video=dialog.querySelector('video');video.hidden=false;video.srcObject=stream;await video.play();
       const scan=async()=>{
         if(!dialog.open||!stream)return;
         try{
           const results=await detector.detect(video),code=results.find(x=>validEAN(x.rawValue));
           if(code){f.code.value=code.rawValue;stop();await find();return;}
           frame=requestAnimationFrame(scan);
-        }catch(e){stop();status.textContent=e.message;}
+        }catch(e){stop();message(e.message);}
       };
       frame=requestAnimationFrame(scan);
-    }catch(e){stop();status.textContent=e.message;}
+    }catch(e){stop();message(e.message);}
   };
   dialog.querySelector('[data-close]').onclick=()=>dialog.close();
   dialog.addEventListener('close',()=>{++sequence;request?.abort();stop();dialog.remove();});
   form.onsubmit=async event=>{
-    event.preventDefault();if(busy||request)return;busy=true;
+    event.preventDefault();if(busy||request)return;
+    if(!form.checkValidity()){setDetails(true);message('Completa o correggi i dati per aggiungere il prodotto.');form.reportValidity();return;}
+    busy=true;
     try{
       const product={id:f.code.value.trim(),variantId:f.variant.value,nome:f.name.value.trim(),quantita:Number(f.amount.value),unita:f.unit.value};
       if(!product.nome||!product.variantId)throw new Error('Seleziona ingrediente e nome prodotto');
@@ -129,7 +165,7 @@ async function open(options){
       const total=quantity(product,Number(f.count.value),variant);
       await commit(product,{id:'barcode_'+crypto.randomUUID(),variantId:variant.id,quantita:total,zona:variant.zona||'dispensa',categoria:variant.categoria||'conf',stato:'disponibile',dataScadenza:f.expiry.value||null,lotto:f.lot.value||null,dataAcquisto:new Date().toISOString().slice(0,10)});
       dialog.close();
-    }catch(e){status.textContent=e.message;}finally{busy=false;}
+    }catch(e){setDetails(true);message(e.message);}finally{busy=false;}
   };
   document.body.appendChild(dialog);dialog.showModal();
 }
