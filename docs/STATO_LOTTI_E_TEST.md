@@ -589,3 +589,5 @@ Push eseguito, deploy Pages riuscito. Nuovi riscontri reali nei residui della ma
 Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mirata conversione/nutrienti/scarico/override/snapshot e shell v6 superata; dettagli nel registro omonimo. Collaudo UI ancora da completare, dosi S/G sospese.
 
 02/10/2026 — Set e Menu verificati nel browser e promossi nella matrice. Correzioni riepilogo pz/frequenze snapshot provate; shell v7 predisposta, attivazione reale da verificare. Resoconto nel registro «Riepiloghi quantitativi e frequenze da snapshot».
+
+02/10/2026 — Shell v7 verificata, punti 9/11 promossi con quantità/porzioni/storico e frequenze/grafici reali. Flag speciale aggiorna ora il listener del Piano, prova mirata passata; shell v8 predisposta. Riferimento registro «Attivazione riepiloghi e selezione speciale».

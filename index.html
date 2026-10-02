@@ -3454,7 +3454,7 @@ function formattaQuantita(variante, grammi){
   }
   return `${Math.round(grammi)}g`;
 }
-/* @qa-metadata {"id":"P7-quantita-native-riepiloghi","paths":["formattaQuantitaIngrediente","htmlIngredientiPastoRs","htmlCaroselloColazioneRs","etichettaOpzioneSpuntino","apriModalDettaglioRicetta"],"focusedTest":"tests/pwa-quantita-native-riepiloghi.test.js","rules":["pz espliciti mostrati come quantità nativa anche frazionaria","grammi legacy preservati","porzioni scalate senza usare il peso corrente per reinterpretare i pezzi snapshot"],"pending":["riepilogo reale dopo aggiornamento shell"]} */
+/* @qa-metadata {"id":"P7-quantita-native-riepiloghi","paths":["formattaQuantitaIngrediente","htmlIngredientiPastoRs","htmlCaroselloColazioneRs","etichettaOpzioneSpuntino","apriModalDettaglioRicetta"],"focusedTest":"tests/pwa-quantita-native-riepiloghi.test.js","rules":["pz espliciti mostrati come quantità nativa anche frazionaria","grammi legacy preservati","porzioni scalate senza usare il peso corrente per reinterpretare i pezzi snapshot"],"pending":[],"evidence":["02/10 browser shell v7: Uova 2pz, dettaglio 2→4pz e nutrienti/persona invariati"]} */
 function formattaQuantitaIngrediente(variante, ingrediente, scala=1){
   if(ingrediente.unita==='pz') return `${Number(ingrediente.quantita)*scala} pz`;
   return formattaQuantita(variante,Number(ingrediente.grammi??ingrediente.quantita)*scala);
@@ -7041,8 +7041,12 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
     const aggiornata = await toggleFavorito(e.target.dataset.star);
     apriModalDettaglioRicetta(aggiornata || ricetta, voce || porzioniSel, modalitaModifica);
   });
+  /* @qa-metadata {"id":"P7-speciale-elenco-aggiornato","paths":["togglePiattoSpeciale","apriModalDettaglioRicetta","renderPiano","renderBloccoNuovoMotore"],"focusedTest":"tests/pwa-speciale-elenco-aggiornato.test.js","rules":["flag speciale salvato prima della ricostruzione listener","nessuna nuova dose o modello","fuori Piano non avvia rendering Piano"],"pending":["flag seguito da pannello senza navigazione nel browser"]} */
   document.querySelector('#modalDettaglioTitolo [data-speciale]')?.addEventListener('click', async (e)=>{
     const aggiornata = await togglePiattoSpeciale(e.target.dataset.speciale);
+    // Il pannello Pasto conserva l'elenco speciali nel proprio listener:
+    // ricostruirlo dopo il flag evita una selezione stale fino alla navigazione.
+    if(document.getElementById('view-piano')?.classList.contains('active'))await renderPiano();
     apriModalDettaglioRicetta(aggiornata || ricetta, voce || porzioniSel, modalitaModifica);
   });
   if(modalitaModifica){
@@ -7298,7 +7302,7 @@ async function renderFrequenzeSettimana(){
    pranzo/cena. Non ha nulla a che fare con gli spuntini (facoltativi, tetti a parte):
    tenerle insieme in un'unica funzione voleva dire ricalcolare anche i tetti degli
    spuntini ogni volta che si rigenera un pranzo, sprecando lavoro senza motivo. */
-/* @qa-metadata {"id":"P11-frequenze-snapshot","paths":["conteggiProteiciSettimana","getConsumiProteiciSettimana","getConsumiProteiciSettimanaConsumati","renderFrequenzeSettimana"],"focusedTest":"tests/pwa-frequenze-snapshot.test.js","rules":["realizzazioni correnti e storico prevalgono sugli ID legacy","gruppo congelato prevale sul catalogo","log consumato deduplicato per slot"],"pending":["barra Uova nel browser dopo aggiornamento shell"]} */
+/* @qa-metadata {"id":"P11-frequenze-snapshot","paths":["conteggiProteiciSettimana","getConsumiProteiciSettimana","getConsumiProteiciSettimanaConsumati","renderFrequenzeSettimana"],"focusedTest":"tests/pwa-frequenze-snapshot.test.js","rules":["realizzazioni correnti e storico prevalgono sugli ID legacy","gruppo congelato prevale sul catalogo","log consumato deduplicato per slot"],"pending":[],"evidence":["02/10 browser shell v7: Uova 1 dopo consumo, grafici giorno/settimana/mese aperti"]} */
 async function conteggiProteiciSettimana(soloConsumati){
   const giorni = giorniSettimana();
   const gruppi = {carne:0,pesce:0,formaggi:0,uova:0,legumi:0};
