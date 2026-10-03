@@ -825,8 +825,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 #view-piano .meal-meta{padding:0 10px 8px;color:var(--text-dim);font-size:.7rem;}
 #view-piano .meal-empty{padding:18px 12px;color:var(--text-dim);font-size:.78rem;text-align:center;}
 #view-piano .meal-empty .primary{width:100%;margin-top:11px;}
-#view-piano .meal-proposal{margin:10px;padding:11px;border:1px solid var(--accent-dim);border-radius:10px;background:var(--panel-2);animation:pasto-proposal-in .28s linear;}
-@keyframes pasto-proposal-in{from{opacity:0;transform:translateY(-18px)}to{opacity:1;transform:translateY(0)}}
+#view-piano .meal-proposal{margin:10px;padding:11px;border:1px solid var(--accent-dim);border-radius:10px;background:var(--panel-2);overflow:hidden;}
 #view-piano .meal-proposal .pasto-griglia-compatta{margin-top:7px;}
 #view-piano .meal-proposal .row{display:grid!important;grid-template-columns:1.35fr .8fr .8fr;}
 #view-piano .meal-proposal .row button{width:100%;min-width:0;padding-left:6px;padding-right:6px;}
@@ -5950,6 +5949,24 @@ async function switchSetPastoRs(el,direction,aggiorna){
   }
 }
 
+/* @qa-metadata {"id":"P7-proposta-transizione-locale","paths":["switchPropostaPastoRs","avviaProposta","renderPannelloPropostaPasto.rigenera"],"focusedTest":"tests/pwa-proposta-transizione-locale.test.js","rules":["anima solo griglia proposte con translateX","nessun movimento della scheda o del carosello corrente","generazione e commit invariati","errore non blocca comandi"],"pending":["riscontro transizione sul dispositivo"]} */
+async function switchPropostaPastoRs(card,id,aggiorna){
+  if(!card||cambiSetPastoRsInCorso.has(card))return false;
+  cambiSetPastoRsInCorso.add(card);
+  try{
+    const cambiato=await aggiorna();
+    if(cambiato===false)return false;
+    if(typeof matchMedia==='function'&&matchMedia('(prefers-reduced-motion: reduce)').matches)return true;
+    const panels=[...card.querySelectorAll('[data-nm-proposta]')].filter(cont=>cont.dataset.nmProposta===id);
+    await Promise.all(panels.map(async cont=>{
+      const grid=cont.querySelector('.pasto-griglia-compatta');
+      if(!grid?.animate)return;
+      try{await grid.animate([{transform:'translateX(32px)',opacity:0},{transform:'translateX(0)',opacity:1}],{duration:280,easing:'cubic-bezier(.4,0,.2,1)'}).finished;}catch(error){/* Animazione cancellata: proposta già aggiornata, nessuna modifica dati. */}
+    }));
+    return true;
+  }finally{cambiSetPastoRsInCorso.delete(card);}
+}
+
 function voceSpecialePastoRs(giorno,pasto,voce,ricetta){
   const baseRealizzazione={
     ricettaId:ricetta.id,
@@ -6203,7 +6220,7 @@ async function renderBloccoNuovoMotore(pasto,giorno,elementId){
   };
 
   const avviaProposta=async(modalita,btn)=>{
-    await switchSetPastoRs(el,'down',async()=>{
+    await switchPropostaPastoRs(el,id,async()=>{
       impostaCaricamento(btn,true,modalita==='salvafrigo'?'Ricerca in corso…':'Generazione…');
       let risultato=null;
       try{
@@ -6281,7 +6298,7 @@ async function renderPannelloPropostaPasto(id,giorno,pasto,elementId,cardEl){
     cont.innerHTML=html;
     cont.querySelector('[data-nm-rigenera-proposta]')?.addEventListener('click',async(e)=>{
       const btn=e.currentTarget;
-      await switchSetPastoRs(card,'down',async()=>{
+      await switchPropostaPastoRs(card,id,async()=>{
         impostaCaricamento(btn,true,'Generazione…');
         let risultato=null;
         try{

@@ -62,3 +62,5 @@ Barcode — ricerca ingrediente mentre si scrive nel modulo registrazione: testo
 
 ## 03/10 — Spuntini nel Pasto
 Carosello libero infinito con scelta singola/toggle nel piano, alternative al 50%, centratura alla riapertura; alla scadenza sola scelta senza comandi. Composizioni/dosi e consumo invariati; Menu preservato. Prova mirata DOM/piano passata; visuale/touch/ciclo e centratura sul dispositivo da verificare. Shell v14 preparata; push autorizzato da Cwe il 03/10 dopo checkpoint 280b739. Registro «Spuntini: carosello e selezione persistente».
+
+03/10 — Corretto Cambia piatto: transizione orizzontale solo sulla griglia proposte (anche Rigenera), rimossa animazione verticale pannello. Generazione/conferma/annullamento invariati. Prova mirata passata; shell v15 preparata, riscontro UI dispositivo. Registro «Proposte: transizione orizzontale locale».

@@ -605,3 +605,5 @@ Dato approvato e applicato: ingredienti v23, 8,8g/fetta, 4 pezzi=35,2g. Prova mi
 02/10/2026 — Ricerca ingrediente barcode locale/offline mentre si scrive, buffer dieci righe e selezione esplicita verificati in simulazione. Registro «Barcode: ricerca rapida ingrediente».
 
 03/10/2026 — Spuntini Pasto: carosello con scelta singola/toggle nel piano e readonly alla scadenza. Prova mirata superata; grafica/touch dispositivo rinviati. Nessun push. Registro «Spuntini: carosello e selezione persistente».
+
+03/10/2026 — Cambia piatto/Rigenera proposta animano solo griglia alternative sull’asse X; prova mirata passata. Riscontro UI dispositivo. Registro «Proposte: transizione orizzontale locale».

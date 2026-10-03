@@ -5061,3 +5061,7 @@ File index.html (CSS, renderer e QA), sw.js v14, test mirato nuovo e shell, spec
 
 ## 03/10/2026 — Pubblicazione autorizzata carosello spuntini
 Cwe richiede «Fai push». Pubblicazione del checkpoint locale 280b739 e aggiornamento scheda; base remota e9524ab. Controlli tecnici del precedente intervento riutilizzati, nessun codice funzionale cambiato né test ripetuto; diff documenti e integrità albero remoto/locali controllati. Nessun reset o force push. Verifiche visuali/touch restano utente.
+
+## 03/10/2026 — Proposte: transizione orizzontale locale
+Cwe segnala movimento verticale dell’intera task dopo Dettagli/Cambia piatto. Il wrapper animava il track principale su Y; sostituito solo per apertura alternativa/Salvafrigo e rigenerazione proposta con wrapper che anima la griglia delle proposte su X. Rimossa anche animazione verticale CSS dell’intero pannello. Titolo, foto, comandi e scheda non ricevono questa animazione. Generazione anteprima, conferma/annullamento e motore invariati; blocco doppio evento condiviso e rilascio anche su errore; animazione cancellata non altera risultato dati.
+File index.html, sw.js v15, nuovo test mirato e aspettativa shell, scheda/stato/esito/registro. Controlli sintassi inline, integrità QA e diff; pwa-proposta-transizione-locale verifica bersaglio/asse, collegamenti, evento doppio, errore e cancellazione su DOM simulato; shell simulata. Nessun test visuale/esteso; riscontro dispositivo resta utente. Base locale 388f1a0, remota 33bcb48; checkpoint accompagna voce.
