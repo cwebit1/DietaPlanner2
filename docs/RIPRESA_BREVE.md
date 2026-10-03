@@ -59,3 +59,6 @@ Barcode corretto secondo flusso Cwe: apertura avvia camera, tema scuro/linea ros
 02/10 — Rimossi dalla UI Pasto i tre pulsanti Ruota C/P/V su richiesta Cwe. Il renderer chiamava motor-v12, senza secondo motore; runtime, regole, stack e cataloghi invariati. Shell v12 predisposta. Registro «Rimozione pulsanti Ruota C/P/V».
 
 Barcode — ricerca ingrediente mentre si scrive nel modulo registrazione: testo contenuto, dieci righe di buffer e risultati ulteriori scorribili, selezione esplicita locale/offline. Prova mirata superata, shell v13 predisposta; touch/visuale utente. Registro «Barcode: ricerca rapida ingrediente».
+
+## 03/10 — Spuntini nel Pasto
+Carosello libero infinito con scelta singola/toggle nel piano, alternative al 50%, centratura alla riapertura; alla scadenza sola scelta senza comandi. Composizioni/dosi e consumo invariati; Menu preservato. Prova mirata DOM/piano passata; visuale/touch/ciclo e centratura sul dispositivo da verificare. Shell v14 preparata; push autorizzato da Cwe il 03/10 dopo checkpoint 280b739. Registro «Spuntini: carosello e selezione persistente».

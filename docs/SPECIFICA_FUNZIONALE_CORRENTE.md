@@ -452,6 +452,12 @@ flusso testuale continuo.
 
 ## 12. Colazione, spuntini e speciali
 
+- UI spuntini Pasto (Cwe, 03/10/2026): carosello orizzontale libero infinito,
+  senza paginazione/snap; immagine del relativo ingrediente o nome sostitutivo.
+  Scelta singola persistente, nuovo tocco deseleziona; alternative al 50% solo
+  quando c’è una scelta. Riapertura centra la scelta. Dopo scadenza mostra solo
+  la scelta, senza comandi; vuoto conserva comportamento attuale. Composizioni
+  già previste e dosi restano quelle delle opzioni esistenti.
 - Colazione ordinaria: carboidrato complesso e proteina richiesti; grassi,
   carboidrati semplici e frutta facoltativi.
 - I limiti di colazione e spuntino restano contestuali, non diventano cap
