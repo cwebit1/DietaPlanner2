@@ -1307,9 +1307,12 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
   }catch(e){ throw new Error('Configurazione nutrizionale non leggibile: '+e.message); }
 }
 
+/* @qa-metadata
+{"id":"MOTORE-dose-mancante-solo-SG","paths":["ricettaAmmessa","aggiornaQuoteVegetali"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["una dose mancante esclude la ricetta solo se riguarda un ingrediente con ruolo S o G, come per quoteVegetaliComplete","condimenti e aromi senza dose restano ammessi con quantita 0","nessuna dose inventata"],"deferred":["tempi su telefono","IndexedDB reale"]}
+*/
 async function ricettaAmmessa(r,data,opts){
   opts=opts||{};
-  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante)) return false;
+  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&(i.ruoli||[]).some(role=>role==='S'||role==='G'))) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
   if(!rispettaLimitiQuoteVegetali(r,cfg.resolved))return false;
