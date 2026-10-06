@@ -1308,14 +1308,20 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
 }
 
 /* @qa-metadata
-{"id":"MOTORE-condimenti-non-condizionano","paths":["ricettaAmmessa","ingredienteCondimento"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["un condimento o aroma (aceto, sesamo, aglio, basilico, cipolla rossa) non condiziona mai l'ammissione di una ricetta: dose mancante non blocca","il condimento di V e solo rotazione","i condimenti non entrano in dishKey, sourceKeys e chiavi di stack","dose mancante di ingredienti non condimento (S/G) continua a escludere, dosi S/G sospese e non inventate"],"deferred":["tempi su telefono","IndexedDB reale"]}
+{"id":"MOTORE-condimento-V-e-aromi-senza-dose","paths":["ricettaAmmessa","condimentoDiVerdura","aromaEscluso"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["il condimento di V non si considera mai: nessuna dose, solo rotazione; e' di V se dichiarato in condimentiCompatibili solo da slot V","gli aromi esclusi (aglio, basilico fresco, semi di sesamo, cipolla rossa, istruzione Cwe 30/09/2026) non richiedono dose","i condimenti di P e C hanno quantita e funzione: la dose dichiarata si considera, una dose mancante continua a escludere la ricetta","nessun condimento entra in dishKey, sourceKeys e stack","dose S/G mancante continua a escludere, dosi S/G sospese e non inventate"],"deferred":["tempi su telefono","IndexedDB reale"]}
 */
-function ingredienteCondimento(i){
-  return !!i&&(i.condimento===true||i.categoria==='Condimenti');
+const AROMI_ESCLUSI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa']);
+function aromaEscluso(i){
+  return !!i&&AROMI_ESCLUSI.has(String(i.nome||'').trim().toLowerCase());
+}
+function condimentoDiVerdura(r,i){
+  if(!i||!(i.condimento===true||i.categoria==='Condimenti'))return false;
+  const refs=(r.slot||[]).filter(s=>s&&s.ingrediente&&Array.isArray(s.ingrediente.condimentiCompatibili)&&s.ingrediente.condimentiCompatibili.includes(i.nome));
+  return refs.length>0&&refs.every(s=>s.categoria==='V');
 }
 async function ricettaAmmessa(r,data,opts){
   opts=opts||{};
-  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&!ingredienteCondimento(i))) return false;
+  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&!condimentoDiVerdura(r,i)&&!aromaEscluso(i))) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
   if(!rispettaLimitiQuoteVegetali(r,cfg.resolved))return false;

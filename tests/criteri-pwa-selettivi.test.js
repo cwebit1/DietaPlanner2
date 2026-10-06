@@ -189,7 +189,15 @@ criterion(14,'V/S/G e residuo quantitativo con soglia 50 g',()=>{
 criterion(15,'Sughi e condimenti con dose, allergeni, compatibilità e LRU',()=>{
   const cond=allRecipeItems().filter(x=>x.group.categoria==='Condimenti'&&x.kind==='ingrediente');
   assert(cond.length>0,'Condimenti catalogo assenti');
-  assert(cond.every(x=>Number.isFinite(Number(x.item.dose))&&Number(x.item.dose)>0),'Condimento senza dose esplicita');
+  /* Regola Cwe 06/10/2026: il condimento di V non si considera mai (solo rotazione); aromi esclusi
+     (30/09/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa. Gli altri condimenti di P e C hanno dose (nel template o come porzione di catalogo). */
+  const AROMI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa']);
+  const soloVerdura=x=>{
+    const slots=(x.recipe.gruppi||[]).filter(g=>g.categoria!=='Condimenti').flatMap(g=>(g.ingredienti||[]).concat((g.composizioni||[]).flatMap(c=>c.ingredienti||[])).map(i=>({cat:g.categoria,i})));
+    const refs=slots.filter(s=>Array.isArray(s.i.condimentiCompatibili)&&s.i.condimentiCompatibili.includes(x.item.nome));
+    return refs.length>0&&refs.every(s=>s.cat==='V');
+  };
+  assert(cond.every(x=>AROMI.has(String(x.item.nome||'').toLowerCase())||soloVerdura(x)||(Number.isFinite(Number(x.item.dose))&&Number(x.item.dose)>0)||Number((json('ingredienti-new.json').ingredienti[x.item.nome]||{}).porzione)>0),'Condimento di P o C senza dose esplicita: '+cond.filter(y=>!AROMI.has(String(y.item.nome||'').toLowerCase())&&!soloVerdura(y)&&!(Number(y.item.dose)>0)&&!(Number((json('ingredienti-new.json').ingredienti[y.item.nome]||{}).porzione)>0)).map(y=>y.item.nome+' (template '+y.recipe.id+')').join(', '));
   has(source.motor,/assegnaCondimentiRotazioneGlobale/,'LRU globale condimenti assente');
   const anomalie=read('docs/ANOMALIE_DA_RISOLVERE.md');
   lacks(anomalie,/Famiglia "con pomodoro"/,'Famiglia con pomodoro ancora aperta');

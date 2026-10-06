@@ -96,7 +96,7 @@ I sottolimiti clinici, come carne rossa o categorie equivalenti, restano quelli 
 - Frutta: 2–3 porzioni al giorno, normalmente 150–200 g.
 - Olio: 10 g giornalieri complessivi, normalmente 5 g a pranzo e 5 g a cena, senza moltiplicarlo per il numero di componenti. L'olio non va aggiunto a una ricetta che non lo prevede senza una regola esplicita.
 - Colazione complessa: C + P obbligatori; grassi, zuccheri semplici e frutta sono opzionali entro i rispettivi limiti.
-- Cipolla, aglio e ingredienti aromatici mantengono dosi da condimento e non ricevono automaticamente una porzione di verdura.
+- Aromi esclusi dal perimetro (istruzione Cwe 30/09/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa non richiedono dose, non condizionano l'ammissione della ricetta e non ricevono automaticamente una porzione di verdura.
 
 ### 4.3 Allergeni e intolleranze
 
@@ -208,7 +208,7 @@ Per ogni realizzazione:
 - S e G devono avere ruolo e dose espliciti nel catalogo o nella regola della ricetta.
 - Il resolver non deve trasformare un ingrediente da sugo o aroma in una porzione piena di verdura.
 - “Tagliolini al pomodoro” con 225 g di pomodoro fresco non è corretto come fallback automatico per un semplice sugo. Può esserlo soltanto se la ricetta dichiara esplicitamente quella quantità e quel ruolo.
-- Pomodoro, cipolla, pesto, creme, spezie, olio e altri condimenti devono essere materializzati con dosi specifiche e coerenti.
+- I condimenti di P e di C (primi e secondi) hanno senso, quantità e funzione: le dosi dichiarate si considerano (esempio: pomodoro 80 g in un sugo) e una dose mancante esclude la ricetta, salvo gli aromi esclusi. Il condimento di V non si considera mai: nessuna dose, solo rotazione LRU. Nessun condimento entra negli stack (Cwe, 06/10/2026).
 - Il nome di una ricetta non può simulare un ingrediente assente: se il piatto si chiama “al pomodoro”, il pomodoro deve esistere nella distinta ingredienti o il nome va corretto.
 - La rotazione dei condimenti usa una LRU globale tra le alternative compatibili.
 - Il cursore LRU avanza solo su una proposta accettata; anteprime annullate e Roll manuali non devono consumarlo.
