@@ -1308,11 +1308,16 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
 }
 
 /* @qa-metadata
-{"id":"MOTORE-dose-mancante-solo-SG","paths":["ricettaAmmessa","aggiornaQuoteVegetali"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["una dose mancante esclude la ricetta solo se riguarda un ingrediente con ruolo S o G, come per quoteVegetaliComplete","condimenti e aromi senza dose restano ammessi con quantita 0","nessuna dose inventata"],"deferred":["tempi su telefono","IndexedDB reale"]}
+{"id":"MOTORE-condimento-V-non-condiziona","paths":["ricettaAmmessa","condimentoDiVerdura"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["il condimento di V non condiziona mai la selezione: nessuna quantita, solo rotazione","condimento di V = dichiarato in condimentiCompatibili solo da slot V","i condimenti di P e di C hanno quantita e funzione: dose mancante continua a bloccare","nessuna dose inventata"],"deferred":["tempi su telefono","IndexedDB reale"]}
 */
+function condimentoDiVerdura(r,i){
+  if(!i||!(i.condimento||i.categoria==='Condimenti'))return false;
+  const refs=(r.slot||[]).filter(s=>s&&s.ingrediente&&Array.isArray(s.ingrediente.condimentiCompatibili)&&s.ingrediente.condimentiCompatibili.includes(i.nome));
+  return refs.length>0&&refs.every(s=>s.categoria==='V');
+}
 async function ricettaAmmessa(r,data,opts){
   opts=opts||{};
-  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&(i.ruoli||[]).some(role=>role==='S'||role==='G'))) return false;
+  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&!condimentoDiVerdura(r,i))) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
   if(!rispettaLimitiQuoteVegetali(r,cfg.resolved))return false;
