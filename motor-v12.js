@@ -1308,16 +1308,14 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
 }
 
 /* @qa-metadata
-{"id":"MOTORE-condimento-V-non-condiziona","paths":["ricettaAmmessa","condimentoDiVerdura"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["il condimento di V non condiziona mai la selezione: nessuna quantita, solo rotazione","condimento di V = dichiarato in condimentiCompatibili solo da slot V","i condimenti di P e di C hanno quantita e funzione: dose mancante continua a bloccare","nessuna dose inventata"],"deferred":["tempi su telefono","IndexedDB reale"]}
+{"id":"MOTORE-condimenti-non-condizionano","paths":["ricettaAmmessa","ingredienteCondimento"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["un condimento o aroma (aceto, sesamo, aglio, basilico, cipolla rossa) non condiziona mai l'ammissione di una ricetta: dose mancante non blocca","il condimento di V e solo rotazione","i condimenti non entrano in dishKey, sourceKeys e chiavi di stack","dose mancante di ingredienti non condimento (S/G) continua a escludere, dosi S/G sospese e non inventate"],"deferred":["tempi su telefono","IndexedDB reale"]}
 */
-function condimentoDiVerdura(r,i){
-  if(!i||!(i.condimento||i.categoria==='Condimenti'))return false;
-  const refs=(r.slot||[]).filter(s=>s&&s.ingrediente&&Array.isArray(s.ingrediente.condimentiCompatibili)&&s.ingrediente.condimentiCompatibili.includes(i.nome));
-  return refs.length>0&&refs.every(s=>s.categoria==='V');
+function ingredienteCondimento(i){
+  return !!i&&(i.condimento===true||i.categoria==='Condimenti');
 }
 async function ricettaAmmessa(r,data,opts){
   opts=opts||{};
-  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&!condimentoDiVerdura(r,i))) return false;
+  if(!r||r.disponibile===false||r.ingredientiDaDefinire?.length||(r.ingredienti||[]).some(i=>i.doseMancante&&!ingredienteCondimento(i))) return false;
   const cfg=opts.runtimeConfig||await configRuntime();
   if(!cfg.resolved.valid) return false;
   if(!rispettaLimitiQuoteVegetali(r,cfg.resolved))return false;
