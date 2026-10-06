@@ -52,3 +52,8 @@ L'ultima richiesta «Continua. Fai solo i test minimi» autorizza i controlli te
 ## Budget e ripresa breve — Cwe, 27/09/2026
 
 Usare docs/RIPRESA_BREVE.md come indice operativo aggiornabile. Cercare e leggere solo le sezioni pertinenti delle fonti autorevoli, senza importare per intero file applicativi o registro. Conservare i controlli tecnici minimi; non ripetere prove già valide senza una modifica o anomalia pertinente. Un riepilogo nel registro, soli riferimenti negli altri documenti. Per il riscontro in chat raggruppare le sezioni con stato invariato; tabella completa a richiesta o quando utile per cambiamenti. Questa modalità sintetica sostituisce l'obbligo precedente di ripetere sempre tutte le 16 righe. Non frammentare il codice in moduli soltanto per ridurre il contesto: le letture selettive non richiedono refactoring. Scheda breve aggiornata a fine intervento, non cronologia cumulativa.
+
+
+## Struttura della documentazione — 06/10/2026
+
+Punto di partenza: `docs/INDICE.md`. I documenti storici e non operativi sono in `docs/archivio/` (vedi `docs/archivio/LEGGIMI.md`) e non sono fonti di regole correnti. Prima di modificare motore, rotazione, stack o condimenti leggere anche `docs/SPECIFICA_PWA_DEFINITIVA.md` §6, §8, §9 e §10, oltre a `docs/SPECIFICA_FUNZIONALE_CORRENTE.md`: le regole su `stack`, cooldown e rotazione LRU dei condimenti sono lì. Regola del 06/10/2026: i condimenti e gli aromi non condizionano mai l'ammissione di una ricetta e non entrano negli stack; il condimento di V è solo rotazione. Ingredienti chiave con `stack`; sughi e condimenti con rotazione. Prima di ogni modifica leggere la documentazione pertinente.
