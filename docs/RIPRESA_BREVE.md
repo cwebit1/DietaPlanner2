@@ -105,3 +105,7 @@ Ciclo 21:28: nr_2_19 Platessa ai ferri salvata e associata, visuale v49. Qwen ha
 33 nuove foto da nr_2_20 a nr_10_15 pubblicate nel commit contenente questa voce; catalogo versione 82, 420 ricette. Ripristino autorizzato dei dati troncati su main dal commit valido fb5e9b3: nessun cambiamento semantico a ricette o procedimenti. Registro append-only. Nr_2_8.webp e lavoro concorrente esclusi. Stati applicativi invariati.
 
 Generazioni ferme per errore Qwen di chiamate multiple in una richiesta nr_10_15. Nr_10_16 e nr_10_17 annunciate ma non inviate; nr_5_0 e nr_7_0/nr_7_1 sospese per chiarimento. Nessuna rigenerazione autorizzata.
+
+
+## Foto caricate07/10 — checkpoint
+Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel registro, voce Collegamento20 foto caricate da Cwe. Stati applicativi invariati.

@@ -5391,3 +5391,8 @@ Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_15.webp,
 ## 07/10/2026 — Ripristino catalogo e pubblicazione 33 foto autorizzati
 
 Cwe autorizza esplicitamente correggi ripristina e pusha. Corruzione gia presente nel commit cde7af4: blocchi troncati/uniti nel catalogo db-visuale.json. Ripristinati esattamente i dati delle 420 voci dal commit valido fb5e9b3, conservati i percorsi pubblicati e aggiunti i 33 percorsi delle foto locali. Catalogo versione 82. Pubblicazione atomica: 33 WebP, catalogo, registro append-only e scheda breve. Esclusa modifica separata nr_2_8.webp e ogni altro lavoro concorrente. Controlli minimi: JSON valido, confronto semantico dei dati/procedimenti con baseline senza differenze, 33 ID/file coerenti e immagini decodificabili; diff registro solo aggiunte. Stati applicativi invariati. Hash commit disponibile nel commit stesso e nello stato operativo dopo caricamento; nessuna nuova generazione Qwen.
+
+
+## 07/10/2026 — Collegamento20 foto caricate da Cwe
+
+Collegati i20 WebP caricati manualmente da Cwe, nr_10_16..nr_10_35, verificati byte per byte con il lotto preparato e decodificati800x450. Modificati soltanto percorsoImmagine dei20 ID e versione catalogo82->83; ingredienti, procedimenti e altri dati identici. Cache PWA v16->v17 per distribuire il catalogo aggiornato. Inclusa nr_10_34 su richiesta successiva di collegarle tutte; resta annotata la riserva estetica sulla feta grigiastra. Controlli minimi: confronto semantico completo JSON,420voci, corrispondenza ID/file/hash, decodifica immagini, diff registro solo aggiunte e sintassi worker. Stati delle16sezioni applicative invariati; nessun collaudo browser generale. Commit registrato nel checkpoint operativo dopo pubblicazione.
