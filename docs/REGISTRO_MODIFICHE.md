@@ -5218,3 +5218,176 @@ Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_18.webp, 
 ## 06/10/2026 — Ciclo foto Qwen: nr_2_19
 
 Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_19.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_2_19, versione visuale 48 -> 49. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 06/10/2026 — Ciclo foto Qwen: nr_2_20
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_20.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_2_20, versione visuale 49 -> 50. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 06/10/2026 — Ciclo foto Qwen: nr_2_21
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_21.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_2_21, versione visuale 50 -> 51. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 06/10/2026 — Ciclo foto Qwen: nr_2_22
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_22.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_2_22, versione visuale 51 -> 52. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 06/10/2026 — Ciclo foto Qwen: nr_2_23
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_2_23.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_2_23, versione visuale 52 -> 53. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+07/10/2026 — nr_2_23: selezionata risposta 1 Qwen su richiesta esplicita Cwe; sostituito file locale con immagine 1791323947, associazione invariata. Nessuna nuova generazione.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_3_0
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_3_0.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_3_0, versione visuale 53 -> 54. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_3_1
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_3_1.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_3_1, versione visuale 54 -> 55. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_6_0
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_6_0.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_6_0, versione visuale 55 -> 56. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_6_1
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_6_1.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_6_1, versione visuale 56 -> 57. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_6_2
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_6_2.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_6_2, versione visuale 57 -> 58. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_8_0
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_8_0.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_8_0, versione visuale 58 -> 59. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_8_1
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_8_1.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_8_1, versione visuale 59 -> 60. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_8_2
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_8_2.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_8_2, versione visuale 60 -> 61. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_8_3
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_8_3.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_8_3, versione visuale 61 -> 62. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_9_0
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_9_0.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_9_0, versione visuale 62 -> 63. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_9_1
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_9_1.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_9_1, versione visuale 63 -> 64. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_9_2
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_9_2.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_9_2, versione visuale 64 -> 65. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_9_3
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_9_3.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_9_3, versione visuale 65 -> 66. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_0
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_0.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_0, versione visuale 66 -> 67. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_1
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_1.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_1, versione visuale 67 -> 68. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_2
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_2.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_2, versione visuale 68 -> 69. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_3
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_3.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_3, versione visuale 69 -> 70. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_4
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_4.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_4, versione visuale 70 -> 71. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_5
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_5.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_5, versione visuale 71 -> 72. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_6
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_6.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_6, versione visuale 72 -> 73. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_7
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_7.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_7, versione visuale 73 -> 74. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_8
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_8.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_8, versione visuale 74 -> 75. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_9
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_9.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_9, versione visuale 75 -> 76. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_10
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_10.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_10, versione visuale 76 -> 77. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_11
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_11.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_11, versione visuale 77 -> 78. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_12
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_12.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_12, versione visuale 78 -> 79. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_13
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_13.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_13, versione visuale 79 -> 80. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_14
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_14.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_14, versione visuale 80 -> 81. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ciclo foto Qwen: nr_10_15
+
+Foto generata secondo stile approvato e salvata in assets/ricette/nr_10_15.webp, WebP 800x450 qualita 85, resize proporzionale senza ritaglio. Collegato solo percorsoImmagine della voce nr_10_15, versione visuale 81 -> 82. Preservati ingredienti, procedimento e altri dati. Controlli minimi: immagine decodificabile, ID unico, file presente, confronto JSON con sole modifiche attese. Salvataggio locale progressivo; commit/push giornaliero ancora da eseguire. Stati applicativi invariati.
+
+
+## 07/10/2026 — Ripristino catalogo e pubblicazione 33 foto autorizzati
+
+Cwe autorizza esplicitamente correggi ripristina e pusha. Corruzione gia presente nel commit cde7af4: blocchi troncati/uniti nel catalogo db-visuale.json. Ripristinati esattamente i dati delle 420 voci dal commit valido fb5e9b3, conservati i percorsi pubblicati e aggiunti i 33 percorsi delle foto locali. Catalogo versione 82. Pubblicazione atomica: 33 WebP, catalogo, registro append-only e scheda breve. Esclusa modifica separata nr_2_8.webp e ogni altro lavoro concorrente. Controlli minimi: JSON valido, confronto semantico dei dati/procedimenti con baseline senza differenze, 33 ID/file coerenti e immagini decodificabili; diff registro solo aggiunte. Stati applicativi invariati. Hash commit disponibile nel commit stesso e nello stato operativo dopo caricamento; nessuna nuova generazione Qwen.

@@ -98,3 +98,10 @@ Ciclo 20:28: nr_2_15 Orata ai ferri e nr_2_16 Platessa al forno salvate e associ
 Ciclo 20:58: nr_2_17 Platessa al limone e nr_2_18 Platessa al cartoccio con ciliegini salvate e associate; db-visuale v48. Ricetta cartoccio da aggiornare a cura Cwe. Controlli minimi WebP/ID/file/JSON superati; push pendente e stati applicativi invariati.
 
 Ciclo 21:28: nr_2_19 Platessa ai ferri salvata e associata, visuale v49. Qwen ha esaurito crediti su nr_2_20, non generata. Stop giornaliero registrato; 24 foto valide pronte per caricamento atomico.
+
+
+## Foto Qwen — checkpoint pubblicazione 07/10/2026
+
+33 nuove foto da nr_2_20 a nr_10_15 pubblicate nel commit contenente questa voce; catalogo versione 82, 420 ricette. Ripristino autorizzato dei dati troncati su main dal commit valido fb5e9b3: nessun cambiamento semantico a ricette o procedimenti. Registro append-only. Nr_2_8.webp e lavoro concorrente esclusi. Stati applicativi invariati.
+
+Generazioni ferme per errore Qwen di chiamate multiple in una richiesta nr_10_15. Nr_10_16 e nr_10_17 annunciate ma non inviate; nr_5_0 e nr_7_0/nr_7_1 sospese per chiarimento. Nessuna rigenerazione autorizzata.
