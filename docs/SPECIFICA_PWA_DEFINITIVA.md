@@ -96,7 +96,7 @@ I sottolimiti clinici, come carne rossa o categorie equivalenti, restano quelli 
 - Frutta: 2–3 porzioni al giorno, normalmente 150–200 g.
 - Olio: 10 g giornalieri complessivi, normalmente 5 g a pranzo e 5 g a cena, senza moltiplicarlo per il numero di componenti. L'olio non va aggiunto a una ricetta che non lo prevede senza una regola esplicita.
 - Colazione complessa: C + P obbligatori; grassi, zuccheri semplici e frutta sono opzionali entro i rispettivi limiti.
-- Aromi esclusi dal perimetro (istruzione Cwe 30/09/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino non richiedono dose, non condizionano l'ammissione della ricetta e non ricevono automaticamente una porzione di verdura.
+- Aromi esclusi dal perimetro (istruzione Cwe 30/09/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino, prezzemolo non richiedono dose, non condizionano l'ammissione della ricetta e non ricevono automaticamente una porzione di verdura.
 
 ### 4.3 Allergeni e intolleranze
 

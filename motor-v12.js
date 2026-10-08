@@ -1308,9 +1308,9 @@ async function caricaConfigurazioneNutrizionaleRisolta(){
 }
 
 /* @qa-metadata
-{"id":"MOTORE-condimento-V-e-aromi-senza-dose","paths":["ricettaAmmessa","condimentoDiVerdura","aromaEscluso"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["il condimento di V non si considera mai: nessuna dose, solo rotazione; e' di V se dichiarato in condimentiCompatibili solo da slot V","gli aromi esclusi (aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino; istruzione Cwe 30/09 e 06/10/2026) non richiedono dose","i condimenti di P e C hanno quantita e funzione: la dose dichiarata si considera, una dose mancante continua a escludere la ricetta","nessun condimento entra in dishKey, sourceKeys e stack","dose S/G mancante continua a escludere, dosi S/G sospese e non inventate"],"deferred":["tempi su telefono","IndexedDB reale"]}
+{"id":"MOTORE-condimento-V-e-aromi-senza-dose","paths":["ricettaAmmessa","condimentoDiVerdura","aromaEscluso"],"focusedTest":"prova mirata generazione settimanale in Node (settimane 05/10 seed 714, 12/10 seed 99, 19/10 seed 5)","rules":["il condimento di V non si considera mai: nessuna dose, solo rotazione; e' di V se dichiarato in condimentiCompatibili solo da slot V","gli aromi esclusi (aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino, prezzemolo; istruzione Cwe 30/09 e 06/10/2026) non richiedono dose","i condimenti di P e C hanno quantita e funzione: la dose dichiarata si considera, una dose mancante continua a escludere la ricetta","nessun condimento entra in dishKey, sourceKeys e stack","dose S/G mancante continua a escludere, dosi S/G sospese e non inventate"],"deferred":["tempi su telefono","IndexedDB reale"]}
 */
-const AROMI_ESCLUSI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa','rosmarino']);
+const AROMI_ESCLUSI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa','rosmarino','prezzemolo']);
 function aromaEscluso(i){
   return !!i&&AROMI_ESCLUSI.has(String(i.nome||'').trim().toLowerCase());
 }
