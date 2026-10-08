@@ -67,3 +67,45 @@ Carosello libero infinito con scelta singola/toggle nel piano, alternative al 50
 
 ## 05/10 — Menu settimanale: dose mancante
 Generazione lenta/in errore causata da ricettaAmmessa che escludeva ogni ricetta con doseMancante (92 su 420; verdure V pure da 48 a 7). Regola ora: il condimento di V non si considera mai (solo rotazione); gli aromi esclusi (aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino, prezzemolo) non richiedono dose; i condimenti di P e C hanno dose e una dose mancante esclude la ricetta; nessun condimento negli stack. Restano escluse 8 ricette per dosi S/G mancanti, sospese e non toccate. Prova mirata in Node: settimane dal 05/10, 12/10, 19/10 da 19-160 s a circa 2 s, nessun errore; shell v16 (riaprire l'app dopo l'aggiornamento). Da verificare sul dispositivo: tempi reali. Registro «Condimento di V e aromi: regola definitiva».
+
+## Foto Qwen 06/10/2026 — salvataggio locale
+Foto nr_1_4 Orzo perlato con Gorgonzola salvata WebP 800x450 e associata in db-visuale.json v26. Push previsto a fine giornata. Stati applicativi invariati; registro append-only aggiornato.
+
+Ciclo 15:58: nr_1_5 Orzo con Taleggio e nr_1_6 Riso con Gorgonzola salvate e associate, db-visuale v28. Controlli minimi ID/file, WebP e confronto JSON superati. Push giornaliero pendente. Stati applicativi invariati.
+
+Ciclo 16:28: nr_1_7 Riso con Taleggio e nr_2_0 Branzino al forno salvate e associate; db-visuale v30. Registro append-only aggiornato, controlli minimi WebP/ID/file/JSON superati. Push giornaliero pendente. Stati applicativi invariati.
+
+Ciclo 16:58: nr_2_1 Branzino al limone e nr_2_2 Branzino al cartoccio salvate e associate; db-visuale v32. Registro append-only aggiornato; controlli minimi WebP/ID/file/JSON superati. Push giornaliero pendente. Stati applicativi invariati.
+
+Foto nr_2_2 rifatta con ciliegini su richiesta Cwe; percorso invariato, ricetta da aggiornare a cura utente. Agente attivo con ciliegini nelle future foto al cartoccio.
+
+Ciclo 17:28: nr_2_3 Branzino ai ferri e nr_2_4 Merluzzo al forno salvate e associate; db-visuale v34. Registro append-only aggiornato; controlli minimi WebP/ID/file/JSON superati. Push giornaliero pendente. Stati applicativi invariati.
+
+Ciclo 17:58: nr_2_5 Merluzzo al limone e nr_2_6 Merluzzo al cartoccio con ciliegini salvate e associate; db-visuale v36. Image Load Error nr_2_5 risolto con unica ricarica. Ricetta cartoccio da aggiornare a cura Cwe. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente, stati applicativi invariati.
+
+Ciclo 18:28: nr_2_7 Merluzzo ai ferri e nr_2_8 Nasello al forno salvate e associate; db-visuale v38. Image Load Error nr_2_7 risolto con unica ricarica. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente; stati applicativi invariati.
+
+Foto nr_2_8 corretta con panatura leggera aglio/prezzemolo secondo Cwe; percorso invariato, backup in OPEN DOT.
+
+Ciclo 18:58: nr_2_9 Nasello al limone e nr_2_10 Nasello al cartoccio con ciliegini salvate e associate; db-visuale v40. Cartoccio da aggiornare nella ricetta a cura Cwe. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente; stati applicativi invariati.
+
+Ciclo 19:28: nr_2_11 Nasello ai ferri e nr_2_12 Orata al forno salvate e associate; db-visuale v42. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente; stati applicativi invariati.
+
+Ciclo 19:58: nr_2_13 Orata al limone e nr_2_14 Orata al cartoccio con ciliegini salvate e associate; db-visuale v44. Cartoccio da aggiornare nella ricetta a cura Cwe. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente; stati applicativi invariati.
+
+Ciclo 20:28: nr_2_15 Orata ai ferri e nr_2_16 Platessa al forno salvate e associate; db-visuale v46. Registro append-only; controlli minimi WebP/ID/file/JSON superati. Push pendente; stati applicativi invariati.
+
+Ciclo 20:58: nr_2_17 Platessa al limone e nr_2_18 Platessa al cartoccio con ciliegini salvate e associate; db-visuale v48. Ricetta cartoccio da aggiornare a cura Cwe. Controlli minimi WebP/ID/file/JSON superati; push pendente e stati applicativi invariati.
+
+Ciclo 21:28: nr_2_19 Platessa ai ferri salvata e associata, visuale v49. Qwen ha esaurito crediti su nr_2_20, non generata. Stop giornaliero registrato; 24 foto valide pronte per caricamento atomico.
+
+
+## Foto Qwen — checkpoint pubblicazione 07/10/2026
+
+33 nuove foto da nr_2_20 a nr_10_15 pubblicate nel commit contenente questa voce; catalogo versione 82, 420 ricette. Ripristino autorizzato dei dati troncati su main dal commit valido fb5e9b3: nessun cambiamento semantico a ricette o procedimenti. Registro append-only. Nr_2_8.webp e lavoro concorrente esclusi. Stati applicativi invariati.
+
+Generazioni ferme per errore Qwen di chiamate multiple in una richiesta nr_10_15. Nr_10_16 e nr_10_17 annunciate ma non inviate; nr_5_0 e nr_7_0/nr_7_1 sospese per chiarimento. Nessuna rigenerazione autorizzata.
+
+
+## Foto caricate07/10 — checkpoint
+Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel registro, voce Collegamento20 foto caricate da Cwe. Stati applicativi invariati.
