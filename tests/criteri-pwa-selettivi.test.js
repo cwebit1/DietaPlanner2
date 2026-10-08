@@ -190,8 +190,8 @@ criterion(15,'Sughi e condimenti con dose, allergeni, compatibilità e LRU',()=>
   const cond=allRecipeItems().filter(x=>x.group.categoria==='Condimenti'&&x.kind==='ingrediente');
   assert(cond.length>0,'Condimenti catalogo assenti');
   /* Regola Cwe 06/10/2026: il condimento di V non si considera mai (solo rotazione); aromi esclusi
-     (30/09/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa. Gli altri condimenti di P e C hanno dose (nel template o come porzione di catalogo). */
-  const AROMI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa']);
+     (30/09 e 06/10/2026): aglio, basilico fresco, semi di sesamo, cipolla rossa, rosmarino. Gli altri condimenti di P e C hanno dose (nel template o come porzione di catalogo). */
+  const AROMI=new Set(['aglio','basilico fresco','semi di sesamo','cipolla rossa','rosmarino']);
   const soloVerdura=x=>{
     const slots=(x.recipe.gruppi||[]).filter(g=>g.categoria!=='Condimenti').flatMap(g=>(g.ingredienti||[]).concat((g.composizioni||[]).flatMap(c=>c.ingredienti||[])).map(i=>({cat:g.categoria,i})));
     const refs=slots.filter(s=>Array.isArray(s.i.condimentiCompatibili)&&s.i.condimentiCompatibili.includes(x.item.nome));
