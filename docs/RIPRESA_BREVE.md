@@ -109,3 +109,6 @@ Generazioni ferme per errore Qwen di chiamate multiple in una richiesta nr_10_15
 
 ## Foto caricate07/10 — checkpoint
 Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel registro, voce Collegamento20 foto caricate da Cwe. Stati applicativi invariati.
+
+
+16/10/2026 — Collegamento foto caricate da Cwe:74 nuovi percorsi, db-visuale84;20 gia collegate;13 foto sospese. Dettagli e controlli in REGISTRO_MODIFICHE, sezione16/10. Stati altre funzioni invariati.

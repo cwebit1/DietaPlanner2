@@ -1,5 +1,5 @@
 {
-  "versione": 83,
+  "versione": 84,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -2114,7 +2114,7 @@
     },
     {
       "idRicetta": "nr_11_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_11_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno proteico semplicissimo, le uova sode pronte in pochi passaggi.",
@@ -2132,7 +2132,7 @@
     },
     {
       "idRicetta": "nr_11_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_11_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un piatto veloce e confortante, le uova strapazzate cotte lentamente fino a diventare morbide e cremose.",
@@ -2150,7 +2150,7 @@
     },
     {
       "idRicetta": "nr_11_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_11_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un piatto delicato, l'albume avvolge il tuorlo che resta morbido e cremoso.",
@@ -2172,7 +2172,7 @@
     },
     {
       "idRicetta": "nr_11_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_11_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, le uova al tegamino con l'albume rappreso e il tuorlo ancora morbido.",
@@ -2190,7 +2190,7 @@
     },
     {
       "idRicetta": "nr_11_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_11_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un piatto semplice e versatile, la frittata soffice e dorata su entrambi i lati.",
@@ -2213,7 +2213,7 @@
     },
     {
       "idRicetta": "nr_12_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno pratico e veloce, i ceci scaldati e profumati con rosmarino.",
@@ -2227,7 +2227,7 @@
     },
     {
       "idRicetta": "nr_12_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, i ceci scaldati con un tocco piccante e la croccantezza dei semi di sesamo.",
@@ -2241,7 +2241,7 @@
     },
     {
       "idRicetta": "nr_12_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rustico, i ceci scaldati con aglio e un tocco di peperoncino.",
@@ -2255,7 +2255,7 @@
     },
     {
       "idRicetta": "nr_12_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno essenziale, i ceci scaldati con una generosa macinata di pepe nero.",
@@ -2269,7 +2269,7 @@
     },
     {
       "idRicetta": "nr_12_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rapido, i ceci saltati in padella fino a scaldarsi e insaporirsi leggermente.",
@@ -2283,7 +2283,7 @@
     },
     {
       "idRicetta": "nr_12_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, i ceci conditi a freddo, pronti in pochi istanti.",
@@ -2296,7 +2296,7 @@
     },
     {
       "idRicetta": "nr_12_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rustico, i fagioli borlotti scaldati e profumati con rosmarino.",
@@ -2310,7 +2310,7 @@
     },
     {
       "idRicetta": "nr_12_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, i fagioli borlotti scaldati con un tocco piccante e semi di sesamo.",
@@ -2324,7 +2324,7 @@
     },
     {
       "idRicetta": "nr_12_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno deciso, i fagioli borlotti scaldati con aglio e peperoncino.",
@@ -2338,7 +2338,7 @@
     },
     {
       "idRicetta": "nr_12_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno semplice, i fagioli borlotti scaldati e completati con pepe nero macinato al momento.",
@@ -2352,7 +2352,7 @@
     },
     {
       "idRicetta": "nr_12_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rapido, i fagioli borlotti saltati in padella finché non si scaldano bene.",
@@ -2366,7 +2366,7 @@
     },
     {
       "idRicetta": "nr_12_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, i fagioli borlotti conditi a freddo.",
@@ -2379,7 +2379,7 @@
     },
     {
       "idRicetta": "nr_12_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno delicato, i fagioli cannellini scaldati con rosmarino.",
@@ -2393,7 +2393,7 @@
     },
     {
       "idRicetta": "nr_12_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, i fagioli cannellini scaldati con un tocco piccante e sesamo.",
@@ -2407,7 +2407,7 @@
     },
     {
       "idRicetta": "nr_12_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rustico, i fagioli cannellini scaldati con aglio e peperoncino.",
@@ -2421,7 +2421,7 @@
     },
     {
       "idRicetta": "nr_12_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno essenziale, i fagioli cannellini scaldati con pepe nero macinato al momento.",
@@ -2435,7 +2435,7 @@
     },
     {
       "idRicetta": "nr_12_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rapido, i fagioli cannellini saltati in padella.",
@@ -2449,7 +2449,7 @@
     },
     {
       "idRicetta": "nr_12_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, i fagioli cannellini conditi a freddo.",
@@ -2462,7 +2462,7 @@
     },
     {
       "idRicetta": "nr_12_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rustico, le lenticchie scaldate e profumate con rosmarino.",
@@ -2476,7 +2476,7 @@
     },
     {
       "idRicetta": "nr_12_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, le lenticchie scaldate con un tocco piccante e semi di sesamo.",
@@ -2490,7 +2490,7 @@
     },
     {
       "idRicetta": "nr_12_20",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_20.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno deciso, le lenticchie scaldate con aglio e peperoncino.",
@@ -2504,7 +2504,7 @@
     },
     {
       "idRicetta": "nr_12_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno essenziale, le lenticchie scaldate e completate con pepe nero macinato al momento.",
@@ -2518,7 +2518,7 @@
     },
     {
       "idRicetta": "nr_12_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rapido, le lenticchie saltate in padella finché non si scaldano bene.",
@@ -2532,7 +2532,7 @@
     },
     {
       "idRicetta": "nr_12_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, le lenticchie condite a freddo.",
@@ -2545,7 +2545,7 @@
     },
     {
       "idRicetta": "nr_12_24",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_24.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo vegetale semplice, il tofu insaporito con olio e rosmarino resta morbido e delicato.",
@@ -2599,7 +2599,7 @@
     },
     {
       "idRicetta": "nr_12_27",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_27.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo vegetale essenziale, il tofu scaldato e completato con pepe nero.",
@@ -2617,7 +2617,7 @@
     },
     {
       "idRicetta": "nr_12_28",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_28.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo vegetale rapido, il tofu saltato in padella fino a scaldarsi e dorarsi leggermente.",
@@ -2635,7 +2635,7 @@
     },
     {
       "idRicetta": "nr_12_29",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_12_29.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo vegetale fresco, il tofu condito a freddo.",
@@ -2724,7 +2724,7 @@
     },
     {
       "idRicetta": "nr_13_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, l'hamburger di pollo cotto alla piastra resta succoso.",
@@ -2742,7 +2742,7 @@
     },
     {
       "idRicetta": "nr_13_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di pollo cotto al forno in modo uniforme.",
@@ -2760,7 +2760,7 @@
     },
     {
       "idRicetta": "nr_13_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, l'hamburger di pollo rosolato in padella.",
@@ -2778,7 +2778,7 @@
     },
     {
       "idRicetta": "nr_13_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, l'hamburger di pollo ai ferri con la superficie leggermente segnata.",
@@ -2796,7 +2796,7 @@
     },
     {
       "idRicetta": "nr_13_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, l'hamburger di suino cotto alla piastra ben dorato.",
@@ -2814,7 +2814,7 @@
     },
     {
       "idRicetta": "nr_13_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di suino cotto al forno in modo uniforme.",
@@ -2832,7 +2832,7 @@
     },
     {
       "idRicetta": "nr_13_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo rapido, l'hamburger di suino rosolato in padella.",
@@ -2850,7 +2850,7 @@
     },
     {
       "idRicetta": "nr_13_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo gustoso, l'hamburger di suino ai ferri con un tocco affumicato.",
@@ -2868,7 +2868,7 @@
     },
     {
       "idRicetta": "nr_13_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, l'hamburger di tacchino cotto alla piastra resta comunque succoso.",
@@ -2886,7 +2886,7 @@
     },
     {
       "idRicetta": "nr_13_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, l'hamburger di tacchino cotto al forno in modo delicato.",
@@ -2904,7 +2904,7 @@
     },
     {
       "idRicetta": "nr_13_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, l'hamburger di tacchino rosolato in padella.",
@@ -2922,7 +2922,7 @@
     },
     {
       "idRicetta": "nr_13_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, l'hamburger di tacchino ai ferri con la superficie leggermente segnata.",
@@ -2940,7 +2940,7 @@
     },
     {
       "idRicetta": "nr_13_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, l'hamburger di vitello cotto alla piastra resta tenero.",
@@ -2958,7 +2958,7 @@
     },
     {
       "idRicetta": "nr_13_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di vitello cotto al forno in modo uniforme.",
@@ -2976,7 +2976,7 @@
     },
     {
       "idRicetta": "nr_13_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo delicato, l'hamburger di vitello rosolato in padella.",
@@ -2994,7 +2994,7 @@
     },
     {
       "idRicetta": "nr_13_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo gustoso, l'hamburger di vitello ai ferri con un tocco affumicato.",
@@ -3030,7 +3030,7 @@
     },
     {
       "idRicetta": "nr_13_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, il nodino di maiale cotto al forno in modo uniforme fino al centro.",
@@ -3048,7 +3048,7 @@
     },
     {
       "idRicetta": "nr_13_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, il nodino di maiale rosolato in padella e cotto a fuoco più dolce.",
@@ -3067,7 +3067,7 @@
     },
     {
       "idRicetta": "nr_13_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo gustoso, il nodino di maiale ai ferri richiede qualche minuto in più per lo spessore.",
@@ -3085,7 +3085,7 @@
     },
     {
       "idRicetta": "nr_13_24",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_24.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero e veloce, il petto di pollo cotto alla piastra fino a diventare dorato fuori e succoso dentro.",
@@ -3108,7 +3108,7 @@
     },
     {
       "idRicetta": "nr_13_25",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_25.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di pollo cotto al forno resta morbido se non troppo asciugato.",
@@ -3126,7 +3126,7 @@
     },
     {
       "idRicetta": "nr_13_26",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_26.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, il petto di pollo rosolato in padella resta succoso.",
@@ -3144,7 +3144,7 @@
     },
     {
       "idRicetta": "nr_13_27",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_27.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di pollo ai ferri con la superficie leggermente segnata.",
@@ -3162,7 +3162,7 @@
     },
     {
       "idRicetta": "nr_13_28",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_28.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, il petto di tacchino cotto alla piastra va tenuto d'occhio per non seccarlo.",
@@ -3180,7 +3180,7 @@
     },
     {
       "idRicetta": "nr_13_29",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_29.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di tacchino cotto al forno in modo delicato.",
@@ -3198,7 +3198,7 @@
     },
     {
       "idRicetta": "nr_13_30",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_30.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, il petto di tacchino rosolato in padella.",
@@ -3216,7 +3216,7 @@
     },
     {
       "idRicetta": "nr_13_31",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_13_31.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, il petto di tacchino ai ferri con la superficie leggermente segnata.",
@@ -3720,7 +3720,7 @@
     },
     {
       "idRicetta": "nr_16_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda leggera, il cous cous con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
@@ -3743,7 +3743,7 @@
     },
     {
       "idRicetta": "nr_16_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda saporita, il cous cous con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
@@ -3766,7 +3766,7 @@
     },
     {
       "idRicetta": "nr_16_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, il cous cous con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
@@ -3789,7 +3789,7 @@
     },
     {
       "idRicetta": "nr_16_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda fresca, il cous cous con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
@@ -3812,7 +3812,7 @@
     },
     {
       "idRicetta": "nr_16_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda sfiziosa, il cous cous con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
@@ -3867,7 +3867,7 @@
     },
     {
       "idRicetta": "nr_16_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda sostanziosa, il farro perlato con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
@@ -3899,7 +3899,7 @@
     },
     {
       "idRicetta": "nr_16_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda saporita, il farro perlato con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
@@ -3931,7 +3931,7 @@
     },
     {
       "idRicetta": "nr_16_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, il farro perlato con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
@@ -3963,7 +3963,7 @@
     },
     {
       "idRicetta": "nr_16_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda rustica, il farro perlato con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
@@ -3995,7 +3995,7 @@
     },
     {
       "idRicetta": "nr_16_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda decisa, il farro perlato con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
@@ -4027,7 +4027,7 @@
     },
     {
       "idRicetta": "nr_16_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda leggera, l'orzo perlato con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
@@ -4059,7 +4059,7 @@
     },
     {
       "idRicetta": "nr_16_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda semplice, l'orzo perlato con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
@@ -4091,7 +4091,7 @@
     },
     {
       "idRicetta": "nr_16_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda gustosa, l'orzo perlato con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
@@ -4123,7 +4123,7 @@
     },
     {
       "idRicetta": "nr_16_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, l'orzo perlato con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
