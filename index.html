@@ -536,6 +536,10 @@ ol.plain{margin:6px 0;padding-left:18px;font-size:0.85rem;}
 .modal .modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
 .modal .modal-head h3{font-size:1.05rem;}
 .modal .close-x{background:none;border:none;color:var(--text-dim);font-size:1.3rem;cursor:pointer;line-height:1;}
+/* Foto estesa in cima al dettaglio ricetta (solo #modalDettaglioFoto, valorizzato da apriModalDettaglioRicetta). */
+.modal .modal-foto{margin-bottom:12px;}
+.modal .modal-foto:empty{display:none;}
+.modal .modal-foto img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;background:var(--panel-2);}
 
 #status{font-size:0.8rem;color:var(--text-dim);margin:10px 0;min-height:16px;}
 
@@ -1172,6 +1176,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:0.7rem;color:var(--text
 <!-- ===== MODAL: dettaglio ricetta / info nutrizionale ===== -->
 <div class="modal-overlay hidden" id="modalDettaglio">
   <div class="modal">
+    <div class="modal-foto" id="modalDettaglioFoto"></div>
     <div class="modal-head">
       <h3 id="modalDettaglioTitolo"></h3>
       <button class="close-x" data-close="modalDettaglio">✕</button>
@@ -1331,6 +1336,9 @@ function apriModalInAlto(target){
   const overlay=typeof target==='string'?document.getElementById(target):target;
   if(!overlay)return;
   overlay.classList.remove('hidden');
+  /* La foto del dettaglio ricetta appartiene solo ad apriModalDettaglioRicetta, che la
+     scrive dopo questa chiamata: qui si svuota per non lasciarla nei modal Colazione/ecc. */
+  if(overlay.id==='modalDettaglio'){const foto=document.getElementById('modalDettaglioFoto');if(foto)foto.innerHTML='';}
   const reset=()=>{
     overlay.scrollTop=0;
     const pannello=overlay.querySelector('.modal');
@@ -7116,6 +7124,12 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
 
   document.getElementById('modalDettaglioContenuto').innerHTML = corpoHtml;
   apriModalInAlto('modalDettaglio');
+  const percorsoFotoDettaglio = contenutoVisuale && contenutoVisuale.percorsoImmagine ? String(contenutoVisuale.percorsoImmagine) : '';
+  const contenitoreFotoDettaglio = document.getElementById('modalDettaglioFoto');
+  if(contenitoreFotoDettaglio && percorsoFotoDettaglio){
+    contenitoreFotoDettaglio.innerHTML = `<img src="${escCampoNuovoRicetta(percorsoFotoDettaglio)}" alt="${escCampoNuovoRicetta(ricetta.nome||'')}">`;
+    contenitoreFotoDettaglio.querySelector('img').addEventListener('error', ()=>{ contenitoreFotoDettaglio.innerHTML=''; });
+  }
 
   document.getElementById('modalDettaglioContenuto').querySelectorAll('[data-timer-passo]').forEach(bottone=>{
     bottone.addEventListener('click', ()=>{
