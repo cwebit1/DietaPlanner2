@@ -112,3 +112,6 @@ Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel regist
 
 
 16/10/2026 — Collegamento foto caricate da Cwe:74 nuovi percorsi, db-visuale84;20 gia collegate;13 foto sospese. Dettagli e controlli in REGISTRO_MODIFICHE, sezione16/10. Stati altre funzioni invariati.
+
+
+21/10/2026 — Foto Qwen in alta risoluzione: collegati 74 nuovi percorsi (serie nr_14, nr_16_16..23, nr_18, nr_19, nr_22..27), db-visuale 85, shell v18. Escluse da rigenerare 7 non conformi e 4 scartate; 13 file sospesi del 16/10 invariati. Dettagli in REGISTRO_MODIFICHE, sezione 21/10. Stati altre funzioni invariati.

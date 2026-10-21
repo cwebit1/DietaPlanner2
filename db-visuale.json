@@ -1,5 +1,5 @@
 {
-  "versione": 84,
+  "versione": 85,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -3307,7 +3307,7 @@
     },
     {
       "idRicetta": "nr_14_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, i crackers croccanti con la morbidezza cremosa del brie.",
@@ -3320,7 +3320,7 @@
     },
     {
       "idRicetta": "nr_14_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino semplice, i crackers con la cremosità delicata della crescenza.",
@@ -3333,7 +3333,7 @@
     },
     {
       "idRicetta": "nr_14_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino sapido, i crackers con la sapidità decisa della feta.",
@@ -3346,7 +3346,7 @@
     },
     {
       "idRicetta": "nr_14_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino essenziale, i crackers con la sapidità intensa del grana.",
@@ -3359,7 +3359,7 @@
     },
     {
       "idRicetta": "nr_14_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino fresco, i crackers con la morbidezza della mozzarella.",
@@ -3372,7 +3372,7 @@
     },
     {
       "idRicetta": "nr_14_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, i crackers, croccanti, con la sapidità decisa del pecorino.",
@@ -3385,7 +3385,7 @@
     },
     {
       "idRicetta": "nr_14_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino saporito, i crackers, croccanti, con il sapore deciso della provola.",
@@ -3398,7 +3398,7 @@
     },
     {
       "idRicetta": "nr_14_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino leggero, i crackers, croccanti, con la dolcezza morbida della ricotta.",
@@ -3411,7 +3411,7 @@
     },
     {
       "idRicetta": "nr_14_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino cremoso, i crackers, croccanti, con la cremosità dello stracchino.",
@@ -3424,7 +3424,7 @@
     },
     {
       "idRicetta": "nr_14_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino delicato, i crackers, croccanti, con il sapore delicato del tomino.",
@@ -3463,7 +3463,7 @@
     },
     {
       "idRicetta": "nr_14_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino sapido, le gallette di riso, leggere e croccanti, con la sapidità decisa della feta.",
@@ -3515,7 +3515,7 @@
     },
     {
       "idRicetta": "nr_14_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino saporito, le gallette di riso, leggere e croccanti, con il sapore deciso della provola.",
@@ -3541,7 +3541,7 @@
     },
     {
       "idRicetta": "nr_14_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino cremoso, le gallette di riso, leggere e croccanti, con la cremosità dello stracchino.",
@@ -3554,7 +3554,7 @@
     },
     {
       "idRicetta": "nr_14_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino delicato, le gallette di riso, leggere e croccanti, con il sapore delicato del tomino.",
@@ -3567,7 +3567,7 @@
     },
     {
       "idRicetta": "nr_14_20",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_20.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, i taralli, sfiziosi e croccanti, con la morbidezza cremosa del brie.",
@@ -3580,7 +3580,7 @@
     },
     {
       "idRicetta": "nr_14_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino semplice, i taralli, sfiziosi e croccanti, con la cremosità della crescenza.",
@@ -3593,7 +3593,7 @@
     },
     {
       "idRicetta": "nr_14_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino sapido, i taralli, sfiziosi e croccanti, con la sapidità decisa della feta.",
@@ -3606,7 +3606,7 @@
     },
     {
       "idRicetta": "nr_14_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino essenziale, i taralli, sfiziosi e croccanti, con la sapidità intensa del grana.",
@@ -3619,7 +3619,7 @@
     },
     {
       "idRicetta": "nr_14_24",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_24.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino fresco, i taralli, sfiziosi e croccanti, con la morbidezza della mozzarella.",
@@ -3632,7 +3632,7 @@
     },
     {
       "idRicetta": "nr_14_25",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_25.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, i taralli, sfiziosi e croccanti, con la sapidità decisa del pecorino.",
@@ -3645,7 +3645,7 @@
     },
     {
       "idRicetta": "nr_14_26",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_26.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino saporito, i taralli, sfiziosi e croccanti, con il sapore deciso della provola.",
@@ -3658,7 +3658,7 @@
     },
     {
       "idRicetta": "nr_14_27",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_27.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino leggero, i taralli, sfiziosi e croccanti, con la dolcezza morbida della ricotta.",
@@ -3671,7 +3671,7 @@
     },
     {
       "idRicetta": "nr_14_28",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_28.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino cremoso, i taralli, sfiziosi e croccanti, con la cremosità dello stracchino.",
@@ -3684,7 +3684,7 @@
     },
     {
       "idRicetta": "nr_14_29",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_29.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino delicato, i taralli, sfiziosi e croccanti, con il sapore delicato del tomino.",
@@ -4155,7 +4155,7 @@
     },
     {
       "idRicetta": "nr_16_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda rustica, l'orzo perlato con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
@@ -4187,7 +4187,7 @@
     },
     {
       "idRicetta": "nr_16_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda decisa, l'orzo perlato con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
@@ -4219,7 +4219,7 @@
     },
     {
       "idRicetta": "nr_16_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda leggera, il riso con il sapore deciso del tonno, pomodorini e la freschezza del cetriolo.",
@@ -4251,7 +4251,7 @@
     },
     {
       "idRicetta": "nr_16_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda semplice, il riso con il sapore deciso del tonno, pomodorini e la dolcezza delle carote.",
@@ -4283,7 +4283,7 @@
     },
     {
       "idRicetta": "nr_16_20",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_20.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda saporita, il riso con il sapore deciso del tonno, pomodorini e il sapore dei peperoni.",
@@ -4315,7 +4315,7 @@
     },
     {
       "idRicetta": "nr_16_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda fresca, il riso con il gusto affumicato del salmone, pomodorini e la freschezza del cetriolo.",
@@ -4347,7 +4347,7 @@
     },
     {
       "idRicetta": "nr_16_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, il riso con il gusto affumicato del salmone, pomodorini e la dolcezza delle carote.",
@@ -4379,7 +4379,7 @@
     },
     {
       "idRicetta": "nr_16_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_16_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda sfiziosa, il riso con il gusto affumicato del salmone, pomodorini e il sapore dei peperoni.",
@@ -4411,7 +4411,7 @@
     },
     {
       "idRicetta": "nr_18_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_18_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco e leggero, la lattuga condita con un filo di aceto balsamico.",
@@ -4428,7 +4428,7 @@
     },
     {
       "idRicetta": "nr_18_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_18_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno amarognolo e fresco, il radicchio condito con un filo di aceto balsamico.",
@@ -4445,7 +4445,7 @@
     },
     {
       "idRicetta": "nr_18_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_18_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno delicato, il songino condito con un filo di aceto balsamico.",
@@ -4462,7 +4462,7 @@
     },
     {
       "idRicetta": "nr_18_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_18_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, gli spinaci crudi conditi con un filo di aceto balsamico.",
@@ -4479,7 +4479,7 @@
     },
     {
       "idRicetta": "nr_18_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_18_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno leggero, la valeriana condita con un filo di aceto balsamico.",
@@ -4496,7 +4496,7 @@
     },
     {
       "idRicetta": "nr_19_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, le carote condite con basilico e un filo di aceto balsamico.",
@@ -4513,7 +4513,7 @@
     },
     {
       "idRicetta": "nr_19_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, le carote con la cipolla rossa e un filo di aceto balsamico.",
@@ -4530,7 +4530,7 @@
     },
     {
       "idRicetta": "nr_19_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, le carote con il sedano e un filo di aceto balsamico.",
@@ -4547,7 +4547,7 @@
     },
     {
       "idRicetta": "nr_19_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, il cetriolo condito con basilico e un filo di aceto balsamico.",
@@ -4581,7 +4581,7 @@
     },
     {
       "idRicetta": "nr_19_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, il cetriolo con il sedano e un filo di aceto balsamico.",
@@ -4598,7 +4598,7 @@
     },
     {
       "idRicetta": "nr_19_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco, i finocchi conditi con basilico e un filo di aceto balsamico.",
@@ -4615,7 +4615,7 @@
     },
     {
       "idRicetta": "nr_19_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, i finocchi con la cipolla rossa e un filo di aceto balsamico.",
@@ -4632,7 +4632,7 @@
     },
     {
       "idRicetta": "nr_19_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, i finocchi con il sedano e un filo di aceto balsamico.",
@@ -4649,7 +4649,7 @@
     },
     {
       "idRicetta": "nr_19_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno colorato, i peperoni conditi con basilico e un filo di aceto balsamico.",
@@ -4666,7 +4666,7 @@
     },
     {
       "idRicetta": "nr_19_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno vivace, i peperoni con la cipolla rossa e un filo di aceto balsamico.",
@@ -4683,7 +4683,7 @@
     },
     {
       "idRicetta": "nr_19_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, i peperoni con il sedano e un filo di aceto balsamico.",
@@ -4700,7 +4700,7 @@
     },
     {
       "idRicetta": "nr_19_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco e leggero, il pomodoro condito con basilico e un filo di aceto balsamico.",
@@ -4717,7 +4717,7 @@
     },
     {
       "idRicetta": "nr_19_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, il pomodoro con la cipolla rossa e un filo di aceto balsamico.",
@@ -4785,7 +4785,7 @@
     },
     {
       "idRicetta": "nr_22_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_22_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno fresco e agrumato, i finocchi crudi conditi con succo d'arancia.",
@@ -4802,7 +4802,7 @@
     },
     {
       "idRicetta": "nr_22_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_22_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno delicato, i finocchi cotti al vapore restano morbidi mantenendo il loro sapore.",
@@ -4820,7 +4820,7 @@
     },
     {
       "idRicetta": "nr_23_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_23_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno leggero, le zucchine grigliate con le tipiche righe dorate.",
@@ -4838,7 +4838,7 @@
     },
     {
       "idRicetta": "nr_23_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_23_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno classico, le zucchine trifolate in padella restano saporite e leggermente croccanti.",
@@ -4856,7 +4856,7 @@
     },
     {
       "idRicetta": "nr_24_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_24_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno estivo, le melanzane grigliate con un leggero sapore affumicato.",
@@ -4874,7 +4874,7 @@
     },
     {
       "idRicetta": "nr_25_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_25_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno delicato, le carote cotte al vapore restano morbide mantenendo il loro sapore naturale.",
@@ -4892,7 +4892,7 @@
     },
     {
       "idRicetta": "nr_26_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata croccante, la lattuga con la dolcezza croccante delle carote e un filo di aceto balsamico.",
@@ -4909,7 +4909,7 @@
     },
     {
       "idRicetta": "nr_26_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata saporita, la lattuga con il sapore deciso della cipolla e un filo di aceto balsamico.",
@@ -4926,7 +4926,7 @@
     },
     {
       "idRicetta": "nr_26_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fresca, la lattuga con la freschezza dei finocchi e un filo di aceto balsamico.",
@@ -4943,7 +4943,7 @@
     },
     {
       "idRicetta": "nr_26_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata colorata, la lattuga con i pomodorini e un filo di aceto balsamico.",
@@ -4994,7 +4994,7 @@
     },
     {
       "idRicetta": "nr_26_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fresca, il radicchio con la freschezza dei finocchi e un filo di aceto balsamico.",
@@ -5028,7 +5028,7 @@
     },
     {
       "idRicetta": "nr_26_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata croccante, il songino con la dolcezza croccante delle carote e un filo di aceto balsamico.",
@@ -5045,7 +5045,7 @@
     },
     {
       "idRicetta": "nr_26_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata saporita, il songino con il sapore deciso della cipolla e un filo di aceto balsamico.",
@@ -5062,7 +5062,7 @@
     },
     {
       "idRicetta": "nr_26_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fresca, il songino con la freschezza dei finocchi e un filo di aceto balsamico.",
@@ -5096,7 +5096,7 @@
     },
     {
       "idRicetta": "nr_26_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata croccante, gli spinaci con la dolcezza croccante delle carote e un filo di aceto balsamico.",
@@ -5113,7 +5113,7 @@
     },
     {
       "idRicetta": "nr_26_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata saporita, gli spinaci con il sapore deciso della cipolla e un filo di aceto balsamico.",
@@ -5130,7 +5130,7 @@
     },
     {
       "idRicetta": "nr_26_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fresca, gli spinaci con la freschezza dei finocchi e un filo di aceto balsamico.",
@@ -5147,7 +5147,7 @@
     },
     {
       "idRicetta": "nr_26_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata colorata, gli spinaci con i pomodorini e un filo di aceto balsamico.",
@@ -5181,7 +5181,7 @@
     },
     {
       "idRicetta": "nr_26_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata saporita, la valeriana con il sapore deciso della cipolla e un filo di aceto balsamico.",
@@ -5198,7 +5198,7 @@
     },
     {
       "idRicetta": "nr_26_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fresca, la valeriana con la freschezza dei finocchi e un filo di aceto balsamico.",
@@ -5215,7 +5215,7 @@
     },
     {
       "idRicetta": "nr_26_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata colorata, la valeriana con i pomodorini e un filo di aceto balsamico.",
@@ -5232,7 +5232,7 @@
     },
     {
       "idRicetta": "nr_27_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, l'arista di maiale alla griglia con un tocco leggermente affumicato.",
@@ -5268,7 +5268,7 @@
     },
     {
       "idRicetta": "nr_27_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo classico, l'arista di maiale arrosto al forno resta morbida e succosa.",
@@ -5286,7 +5286,7 @@
     },
     {
       "idRicetta": "nr_27_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo gustoso, le costine di maiale alla griglia con la carne che si stacca facilmente dall'osso.",
