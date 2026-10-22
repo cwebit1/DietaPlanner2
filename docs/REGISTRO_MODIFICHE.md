@@ -5478,3 +5478,10 @@ Cwe respinge la foto di nr_14_11 (Gallette di riso con Crescenza) collegata il 2
 - Correzione: il nome nel titolo del modal usa la classe `titolo-ricetta-riga` (nowrap); `adattaTitoloRicettaRiga()` riduce il carattere fino al 70% della dimensione base e, solo oltre quel limite, tronca con ellissi. Stella e bottone «Piatto speciale» restano accanto, invariati. Il CSS agisce solo quando il titolo contiene un nome ricetta (`:has`), gli altri titoli del modal non cambiano.
 - File: `index.html`, `sw.js` (cache shell v21), `tests/pwa-shell-aggiornamento.test.js` (allineato a v21).
 - Test minimi: sintassi di tutti gli script inline (`node --check`), `tests/pwa-shell-aggiornamento.test.js` PASS. Resa con nomi lunghi su Android da verificare sul dispositivo.
+
+## 22/10/2026 — Dettaglio ricetta: nome sempre intero su una riga (correzione)
+
+- Richiesta Cwe: il nome deve starci tutto, senza troncamento con «…».
+- Correzione: rimossi ellissi e limite minimo del 70%; `adattaTitoloRicettaRiga()` riduce il carattere a passi di 0,25px finché il nome intero entra nella riga (soglia tecnica 4px solo come protezione del ciclo).
+- File: `index.html`, `sw.js` (cache shell v22), `tests/pwa-shell-aggiornamento.test.js` (allineato a v22).
+- Test minimi: sintassi script inline, `tests/pwa-shell-aggiornamento.test.js` PASS.
