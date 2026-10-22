@@ -115,3 +115,12 @@ Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel regist
 
 
 21/10/2026 — Foto Qwen in alta risoluzione: collegati 74 nuovi percorsi (serie nr_14, nr_16_16..23, nr_18, nr_19, nr_22..27), db-visuale 85, shell v18. Escluse da rigenerare 7 non conformi e 4 scartate; 13 file sospesi del 16/10 invariati. Dettagli in REGISTRO_MODIFICHE, sezione 21/10. Stati altre funzioni invariati.
+
+
+21/10/2026 — Altre 5 foto Qwen collegate (nr_14_11, nr_19_4, nr_26_4, nr_26_7, nr_27_1): db-visuale 86, shell v19, 234 foto collegate su 420. Da rigenerare 6. Dettagli in REGISTRO_MODIFICHE. Stati altre funzioni invariati.
+
+
+22/10/2026 — Nuovo giro worker Qwen: collegate 20 foto, db-visuale 87, shell v20, 254 foto collegate su 420. Escluse 4 non conformi (nr_27_4, nr_27_9, nr_27_11, nr_27_17). Dettagli in REGISTRO_MODIFICHE. Stati altre funzioni invariati.
+
+
+22/10/2026 — Rettifica: nr_14_11 scollegata su richiesta di Cwe (formaggio in cupole), da rifare. 253 foto collegate su 420.

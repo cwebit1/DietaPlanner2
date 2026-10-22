@@ -5445,3 +5445,28 @@ Correzione: copiati in assets/ricette 74 WebP 800x450 (ritaglio centrale 16:9, s
 Escluse per contenuto non conforme al nome, da rigenerare: nr_14_10/11/14/15/17 (non gallette di riso), nr_14_13 (formaggio erborinato al posto del grana), nr_27_1 (carne rossa al sangue, non arista). Scartate in revisione: nr_19_4, nr_26_4, nr_26_5, nr_26_7. Restano non collegati i 13 file già presenti in assets e sospesi il 16/10.
 
 File modificati: assets/ricette (74 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli minimi: JSON valido; confronto semantico con la versione 84 (74 differenze, tutte su percorsoImmagine, più la versione); 74 ID/file coerenti, WebP decodificabili 800x450; ogni percorso del catalogo ha il suo file; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Nessun test visivo. Stati applicativi invariati. Commit e push a cura di Cwe da GitHub Desktop; hash nel commit stesso.
+
+
+## 21/10/2026 — Collegamento 5 foto Qwen ritrovate nella libreria
+
+Causa: tra gli originali della libreria Qwen rimasti senza abbinamento, Cwe ha approvato 5 varianti corrette per ricette escluse nella voce precedente: nr_14_11 (gallette di riso vere con crescenza), nr_19_4, nr_26_4, nr_26_7 (insalate conformi al nome) e nr_27_1 (arista cotta, non più carne rossa al sangue).
+
+Correzione: copiati in assets/ricette i 5 WebP 800x450 e compilato soltanto percorsoImmagine dei 5 ID; db-visuale.json versione 85 -> 86, altri campi invariati. Cache PWA sw.js v18 -> v19 e aspettativa di tests/pwa-shell-aggiornamento.test.js allineata. Restano da rigenerare 6 foto: nr_14_10, nr_14_13, nr_14_14, nr_14_15, nr_14_17, nr_26_5.
+
+File modificati: assets/ricette (5 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli minimi: JSON valido; confronto semantico con la versione 85 (5 differenze su percorsoImmagine più la versione); file/ID coerenti e WebP 800x450 decodificabili; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati. Commit e push a cura di Cwe.
+
+
+## 22/10/2026 — Collegamento 20 foto del nuovo giro del worker Qwen
+
+Causa: primo giro del worker corretto (download dell'originale, niente screenshot): 24 foto salvate in MieiScript\foto\nuove_800, controllate visivamente con nome e codice del catalogo.
+
+Correzione: copiati in assets/ricette 20 WebP 800x450 e compilato soltanto percorsoImmagine di: nr_14_14, nr_14_15, nr_14_17, nr_19_14, nr_20_0, nr_21_0, nr_26_5, nr_26_11, nr_27_5, nr_27_6, nr_27_7, nr_27_8, nr_27_10, nr_27_12, nr_27_14, nr_27_15, nr_27_16, nr_27_18, nr_27_19, nr_27_20. db-visuale.json versione 86 -> 87, altri campi invariati. Cache PWA sw.js v19 -> v20 e aspettativa di tests/pwa-shell-aggiornamento.test.js allineata.
+
+Escluse per contenuto non conforme, da rigenerare: nr_27_4 (costolette con osso al posto delle costine), nr_27_9 e nr_27_11 (petto di pollo, non hamburger), nr_27_17 (sfoglia ripiena, non hamburger di tacchino). Non generate in questo giro: nr_14_10, nr_14_13, nr_27_13 (download fallito), nr_27_21, nr_27_22, nr_27_23 (crediti esauriti).
+
+File modificati: assets/ricette (20 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli minimi: JSON valido; confronto semantico con la versione 86 (20 differenze su percorsoImmagine più la versione); file/ID coerenti e WebP 800x450 decodificabili; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati. Commit e push a cura di Cwe.
+
+
+## 22/10/2026 — Rettifica: nr_14_11 scollegata
+
+Cwe respinge la foto di nr_14_11 (Gallette di riso con Crescenza) collegata il 21/10: formaggio montato in cupole alte, non spalmato sulle gallette. Svuotato soltanto percorsoImmagine di nr_14_11 in db-visuale.json (versione 87, non ancora pubblicata); file assets/ricette/nr_14_11.webp da non pubblicare. Ricetta rimessa nel lotto dei rifacimenti con prompt corretto. Foto collegate: 253 su 420. Stati applicativi invariati.

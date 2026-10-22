@@ -1,5 +1,5 @@
 {
-  "versione": 85,
+  "versione": 87,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -3489,7 +3489,7 @@
     },
     {
       "idRicetta": "nr_14_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino fresco, le gallette di riso, leggere e croccanti, con la morbidezza della mozzarella.",
@@ -3502,7 +3502,7 @@
     },
     {
       "idRicetta": "nr_14_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, le gallette di riso, leggere e croccanti, con la sapidità decisa del pecorino.",
@@ -3528,7 +3528,7 @@
     },
     {
       "idRicetta": "nr_14_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino leggero, le gallette di riso, leggere e croccanti, con la dolcezza morbida della ricotta.",
@@ -4564,7 +4564,7 @@
     },
     {
       "idRicetta": "nr_19_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rinfrescante, il cetriolo con la cipolla rossa e un filo di aceto balsamico.",
@@ -4734,7 +4734,7 @@
     },
     {
       "idRicetta": "nr_19_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_19_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, il pomodoro con il sedano e un filo di aceto balsamico.",
@@ -4751,7 +4751,7 @@
     },
     {
       "idRicetta": "nr_20_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_20_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno essenziale, il pomodoro fresco condito con un filo di aceto balsamico.",
@@ -4768,7 +4768,7 @@
     },
     {
       "idRicetta": "nr_21_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_21_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno croccante, le carote tagliate a julienne pronte in pochi istanti.",
@@ -4960,7 +4960,7 @@
     },
     {
       "idRicetta": "nr_26_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata croccante, il radicchio con la dolcezza croccante delle carote e un filo di aceto balsamico.",
@@ -4977,7 +4977,7 @@
     },
     {
       "idRicetta": "nr_26_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata saporita, il radicchio con il sapore deciso della cipolla e un filo di aceto balsamico.",
@@ -5011,7 +5011,7 @@
     },
     {
       "idRicetta": "nr_26_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata colorata, il radicchio con i pomodorini e un filo di aceto balsamico.",
@@ -5079,7 +5079,7 @@
     },
     {
       "idRicetta": "nr_26_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata colorata, il songino con i pomodorini e un filo di aceto balsamico.",
@@ -5250,7 +5250,7 @@
     },
     {
       "idRicetta": "nr_27_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'arista di maiale ai ferri cotta in padella o bistecchiera.",
@@ -5322,7 +5322,7 @@
     },
     {
       "idRicetta": "nr_27_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, le costine di maiale arrosto al forno diventano morbide e ben cotte.",
@@ -5340,7 +5340,7 @@
     },
     {
       "idRicetta": "nr_27_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo rapido, la fettina di manzo alla griglia con un tocco affumicato.",
@@ -5358,7 +5358,7 @@
     },
     {
       "idRicetta": "nr_27_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, la fettina di manzo ai ferri pronta in pochi minuti.",
@@ -5376,7 +5376,7 @@
     },
     {
       "idRicetta": "nr_27_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, la fettina di manzo arrosto al forno resta morbida.",
@@ -5412,7 +5412,7 @@
     },
     {
       "idRicetta": "nr_27_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, l'hamburger di pollo ai ferri pronto in pochi minuti.",
@@ -5448,7 +5448,7 @@
     },
     {
       "idRicetta": "nr_27_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, l'hamburger di suino alla griglia ben dorato.",
@@ -5484,7 +5484,7 @@
     },
     {
       "idRicetta": "nr_27_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di suino arrosto al forno in modo uniforme.",
@@ -5502,7 +5502,7 @@
     },
     {
       "idRicetta": "nr_27_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, l'hamburger di tacchino alla griglia resta comunque succoso.",
@@ -5520,7 +5520,7 @@
     },
     {
       "idRicetta": "nr_27_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, l'hamburger di tacchino ai ferri pronto in pochi minuti.",
@@ -5556,7 +5556,7 @@
     },
     {
       "idRicetta": "nr_27_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, l'hamburger di vitello alla griglia resta tenero.",
@@ -5574,7 +5574,7 @@
     },
     {
       "idRicetta": "nr_27_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo delicato, l'hamburger di vitello ai ferri pronto in pochi minuti.",
@@ -5592,7 +5592,7 @@
     },
     {
       "idRicetta": "nr_27_20",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_20.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di vitello arrosto al forno in modo uniforme.",
