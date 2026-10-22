@@ -5470,3 +5470,11 @@ File modificati: assets/ricette (20 nuovi WebP), db-visuale.json, sw.js, tests/p
 ## 22/10/2026 — Rettifica: nr_14_11 scollegata
 
 Cwe respinge la foto di nr_14_11 (Gallette di riso con Crescenza) collegata il 21/10: formaggio montato in cupole alte, non spalmato sulle gallette. Svuotato soltanto percorsoImmagine di nr_14_11 in db-visuale.json (versione 87, non ancora pubblicata); file assets/ricette/nr_14_11.webp da non pubblicare. Ricetta rimessa nel lotto dei rifacimenti con prompt corretto. Foto collegate: 253 su 420. Stati applicativi invariati.
+
+## 22/10/2026 — Dettaglio ricetta: nome su una sola riga con testo ridotto
+
+- Richiesta Cwe: aprendo «Ricetta» di un piatto, in alto la foto con angoli stondati, poi il nome della ricetta senza andare a capo (il testo si riduce), poi il resto invariato.
+- Stato trovato: la foto in cima con angoli stondati era già presente (commit `48e4dd5`, `#modalDettaglioFoto`), nessuna modifica necessaria.
+- Correzione: il nome nel titolo del modal usa la classe `titolo-ricetta-riga` (nowrap); `adattaTitoloRicettaRiga()` riduce il carattere fino al 70% della dimensione base e, solo oltre quel limite, tronca con ellissi. Stella e bottone «Piatto speciale» restano accanto, invariati. Il CSS agisce solo quando il titolo contiene un nome ricetta (`:has`), gli altri titoli del modal non cambiano.
+- File: `index.html`, `sw.js` (cache shell v21), `tests/pwa-shell-aggiornamento.test.js` (allineato a v21).
+- Test minimi: sintassi di tutti gli script inline (`node --check`), `tests/pwa-shell-aggiornamento.test.js` PASS. Resa con nomi lunghi su Android da verificare sul dispositivo.

@@ -540,6 +540,10 @@ ol.plain{margin:6px 0;padding-left:18px;font-size:0.85rem;}
 .modal .modal-foto{margin-bottom:12px;}
 .modal .modal-foto:empty{display:none;}
 .modal .modal-foto img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:14px;background:var(--panel-2);}
+/* Titolo ricetta su una sola riga: il testo si riduce (adattaTitoloRicettaRiga) invece di andare a capo. */
+#modalDettaglioTitolo:has(.titolo-ricetta-riga){display:flex;align-items:center;gap:6px;flex:1;min-width:0;margin-right:8px;}
+#modalDettaglioTitolo .titolo-ricetta-riga{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+#modalDettaglioTitolo:has(.titolo-ricetta-riga) > :not(.titolo-ricetta-riga){flex:none;white-space:nowrap;}
 
 #status{font-size:0.8rem;color:var(--text-dim);margin:10px 0;min-height:16px;}
 
@@ -6977,6 +6981,20 @@ function risolviProcedimentoStrutturatoRicetta(ricetta, contenutoVisuale){
   if(contenutoVisuale && Array.isArray(contenutoVisuale.procedimentoStrutturato)) return contenutoVisuale.procedimentoStrutturato;
   return [];
 }
+/* @qa-metadata {"id":"PWA-dettaglio-titolo-una-riga","paths":["apriModalDettaglioRicetta","adattaTitoloRicettaRiga"],"rules":["nome ricetta mai a capo","font ridotto fino a 0.7rem, oltre ellissi","stella e piatto speciale invariati"],"pending":["resa su dispositivo Android con nomi lunghi"]} */
+function adattaTitoloRicettaRiga(span){
+  if(!span)return;
+  span.style.fontSize='';
+  const base=parseFloat(getComputedStyle(span).fontSize)||16.8;
+  const minimo=base*0.7/1.05;
+  let dimensione=base;
+  requestAnimationFrame(()=>{
+    while(span.scrollWidth>span.clientWidth+1 && dimensione>minimo){
+      dimensione=Math.max(minimo,dimensione-0.5);
+      span.style.fontSize=dimensione+'px';
+    }
+  });
+}
 async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModifica){
   if(!ricetta) return;
   pulisciTimerDettaglioRicetta();
@@ -7003,7 +7021,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
 
   const isUnicoDettaglio = (ricetta.tipoPortata||'unico')==='unico';
   document.getElementById('modalDettaglioTitolo').innerHTML =
-    `<span style="flex:1;">${ricetta.nome}</span> ${stellaBtn(ricetta)} ${isUnicoDettaglio ? `<button class="small" data-speciale="${ricetta.id}">${ricetta.piattoSpeciale?'🍽 Togli speciale':'🍽 Piatto speciale'}</button>` : ''}`;
+    `<span class="titolo-ricetta-riga">${ricetta.nome}</span> ${stellaBtn(ricetta)} ${isUnicoDettaglio ? `<button class="small" data-speciale="${ricetta.id}">${ricetta.piattoSpeciale?'🍽 Togli speciale':'🍽 Piatto speciale'}</button>` : ''}`;
 
   const descrizioneRisolta = risolviDescrizioneRicetta(ricetta, contenutoVisuale);
   const descrizioneHtml = descrizioneRisolta
@@ -7124,6 +7142,7 @@ async function apriModalDettaglioRicetta(ricetta, voceOPorzioni, modalitaModific
 
   document.getElementById('modalDettaglioContenuto').innerHTML = corpoHtml;
   apriModalInAlto('modalDettaglio');
+  adattaTitoloRicettaRiga(document.querySelector('#modalDettaglioTitolo .titolo-ricetta-riga'));
   const percorsoFotoDettaglio = contenutoVisuale && contenutoVisuale.percorsoImmagine ? String(contenutoVisuale.percorsoImmagine) : '';
   const contenitoreFotoDettaglio = document.getElementById('modalDettaglioFoto');
   if(contenitoreFotoDettaglio && percorsoFotoDettaglio){
