@@ -124,3 +124,6 @@ Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel regist
 
 
 22/10/2026 — Rettifica: nr_14_11 scollegata su richiesta di Cwe (formaggio in cupole), da rifare. 253 foto collegate su 420.
+
+
+30/10/2026 — Giri worker Qwen del 22 e 29/10: collegate 35 foto, db-visuale 88, shell v23, 288 foto collegate su 420. Da rifare 3 (nr_27_34, nr_27_43, nr_31_0). Dettagli in REGISTRO_MODIFICHE. Stati altre funzioni invariati.

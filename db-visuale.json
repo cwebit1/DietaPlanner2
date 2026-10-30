@@ -1,5 +1,5 @@
 {
-  "versione": 87,
+  "versione": 88,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -3437,7 +3437,7 @@
     },
     {
       "idRicetta": "nr_14_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino rapido, le gallette di riso, leggere e croccanti, con la morbidezza cremosa del brie.",
@@ -3450,7 +3450,7 @@
     },
     {
       "idRicetta": "nr_14_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino semplice, le gallette di riso, leggere e croccanti, con la cremosità delicata della crescenza.",
@@ -3476,7 +3476,7 @@
     },
     {
       "idRicetta": "nr_14_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_14_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Uno spuntino essenziale, le gallette di riso, leggere e croccanti, con la sapidità intensa del grana.",
@@ -5164,7 +5164,7 @@
     },
     {
       "idRicetta": "nr_26_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_26_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata croccante, la valeriana con la dolcezza croccante delle carote e un filo di aceto balsamico.",
@@ -5304,7 +5304,7 @@
     },
     {
       "idRicetta": "nr_27_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, le costine di maiale ai ferri con la carne che si stacca dall'osso.",
@@ -5394,7 +5394,7 @@
     },
     {
       "idRicetta": "nr_27_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, l'hamburger di pollo alla griglia con un tocco affumicato.",
@@ -5430,7 +5430,7 @@
     },
     {
       "idRicetta": "nr_27_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, l'hamburger di pollo arrosto al forno in modo uniforme.",
@@ -5466,7 +5466,7 @@
     },
     {
       "idRicetta": "nr_27_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo rapido, l'hamburger di suino ai ferri pronto in pochi minuti.",
@@ -5538,7 +5538,7 @@
     },
     {
       "idRicetta": "nr_27_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, l'hamburger di tacchino arrosto al forno in modo delicato.",
@@ -5610,7 +5610,7 @@
     },
     {
       "idRicetta": "nr_27_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, il magro di vitello alla griglia resta tenero se non troppo cotto.",
@@ -5628,7 +5628,7 @@
     },
     {
       "idRicetta": "nr_27_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo delicato, il magro di vitello ai ferri pronto in pochi minuti.",
@@ -5646,7 +5646,7 @@
     },
     {
       "idRicetta": "nr_27_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, il magro di vitello arrosto al forno resta morbido.",
@@ -5664,7 +5664,7 @@
     },
     {
       "idRicetta": "nr_27_24",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_24.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo sostanzioso, il nodino di maiale alla griglia richiede più tempo per lo spessore del taglio.",
@@ -5682,7 +5682,7 @@
     },
     {
       "idRicetta": "nr_27_25",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_25.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, il nodino di maiale ai ferri va cotto più a lungo di una fettina sottile.",
@@ -5700,7 +5700,7 @@
     },
     {
       "idRicetta": "nr_27_26",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_26.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo classico, il nodino di maiale arrosto al forno cuoce in modo uniforme fino al centro.",
@@ -5718,7 +5718,7 @@
     },
     {
       "idRicetta": "nr_27_27",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_27.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di pollo alla griglia con la superficie leggermente segnata.",
@@ -5736,7 +5736,7 @@
     },
     {
       "idRicetta": "nr_27_28",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_28.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, il petto di pollo ai ferri pronto in pochi minuti.",
@@ -5754,7 +5754,7 @@
     },
     {
       "idRicetta": "nr_27_29",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_29.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di pollo arrosto al forno resta morbido se non troppo cotto.",
@@ -5772,7 +5772,7 @@
     },
     {
       "idRicetta": "nr_27_30",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_30.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo magro, il petto di tacchino alla griglia va cotto con attenzione per non seccarlo.",
@@ -5790,7 +5790,7 @@
     },
     {
       "idRicetta": "nr_27_31",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_31.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo veloce, il petto di tacchino ai ferri pronto in pochi minuti.",
@@ -5808,7 +5808,7 @@
     },
     {
       "idRicetta": "nr_27_32",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_32.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, il petto di tacchino arrosto al forno in modo delicato.",
@@ -5826,7 +5826,7 @@
     },
     {
       "idRicetta": "nr_27_33",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_33.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, la salsiccia alla griglia diventa dorata e croccante fuori.",
@@ -5862,7 +5862,7 @@
     },
     {
       "idRicetta": "nr_27_35",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_35.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo semplice, la salsiccia arrosto al forno diventa dorata e croccante.",
@@ -5880,7 +5880,7 @@
     },
     {
       "idRicetta": "nr_27_36",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_36.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, la salsiccia di maiale alla griglia diventa dorata e croccante fuori.",
@@ -5898,7 +5898,7 @@
     },
     {
       "idRicetta": "nr_27_37",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_37.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, la salsiccia di maiale ai ferri pronta in pochi minuti.",
@@ -5916,7 +5916,7 @@
     },
     {
       "idRicetta": "nr_27_38",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_38.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo classico, la salsiccia di maiale arrosto al forno diventa dorata e succosa.",
@@ -5934,7 +5934,7 @@
     },
     {
       "idRicetta": "nr_27_39",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_39.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo più leggero, la salsiccia di tacchino alla griglia resta comunque saporita.",
@@ -5952,7 +5952,7 @@
     },
     {
       "idRicetta": "nr_27_40",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_40.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, la salsiccia di tacchino ai ferri pronta in pochi minuti.",
@@ -5970,7 +5970,7 @@
     },
     {
       "idRicetta": "nr_27_41",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_41.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo leggero, la salsiccia di tacchino arrosto al forno resta dorata e saporita.",
@@ -5988,7 +5988,7 @@
     },
     {
       "idRicetta": "nr_27_42",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_42.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo saporito, le sovracosce di pollo alla griglia restano succose grazie alla pelle.",
@@ -6024,7 +6024,7 @@
     },
     {
       "idRicetta": "nr_27_44",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_27_44.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo pratico, le sovracosce di pollo arrosto al forno diventano dorate e croccanti in superficie.",
@@ -6042,7 +6042,7 @@
     },
     {
       "idRicetta": "nr_28_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_28_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Una zuppa rustica e nutriente, il mix di cereali e legumi cotto lentamente fino a diventare morbido.",
@@ -6073,7 +6073,7 @@
     },
     {
       "idRicetta": "nr_32_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_32_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un panino pratico e veloce, farcito con il prosciutto crudo.",
@@ -6086,7 +6086,7 @@
     },
     {
       "idRicetta": "nr_33_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_33_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un antipasto classico, la dolcezza del melone che si sposa con la sapidità del prosciutto crudo.",
@@ -6099,7 +6099,7 @@
     },
     {
       "idRicetta": "nr_34_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_34_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno essenziale, i ceci conditi con un filo di olio extravergine di oliva.",

@@ -5485,3 +5485,14 @@ Cwe respinge la foto di nr_14_11 (Gallette di riso con Crescenza) collegata il 2
 - Correzione: rimossi ellissi e limite minimo del 70%; `adattaTitoloRicettaRiga()` riduce il carattere a passi di 0,25px finché il nome intero entra nella riga (soglia tecnica 4px solo come protezione del ciclo).
 - File: `index.html`, `sw.js` (cache shell v22), `tests/pwa-shell-aggiornamento.test.js` (allineato a v22).
 - Test minimi: sintassi script inline, `tests/pwa-shell-aggiornamento.test.js` PASS.
+
+
+## 30/10/2026 — Collegamento 35 foto dei giri del worker Qwen del 22 e 29/10
+
+Causa: 38 foto nuove in MieiScript\foto\nuove_800 non ancora collegate, controllate visivamente con nome, codice e prompt della ricetta.
+
+Correzione: copiati in assets/ricette 35 WebP 800x450 e compilato soltanto percorsoImmagine di: nr_14_10, nr_14_11, nr_14_13, nr_26_16, nr_27_4, nr_27_9, nr_27_11, nr_27_13, nr_27_17, nr_27_21, nr_27_22, nr_27_23, nr_27_24, nr_27_25, nr_27_26, nr_27_27, nr_27_28, nr_27_29, nr_27_30, nr_27_31, nr_27_32, nr_27_33, nr_27_35, nr_27_36, nr_27_37, nr_27_38, nr_27_39, nr_27_40, nr_27_41, nr_27_42, nr_27_44, nr_28_0, nr_32_0, nr_33_0, nr_34_0. db-visuale.json versione 87 -> 88, altri campi invariati. Cache PWA sw.js v22 -> v23 e aspettativa di tests/pwa-shell-aggiornamento.test.js allineata. Foto collegate: 288 su 420.
+
+Escluse per contenuto non conforme, da rigenerare con prompt corretto: nr_27_34 (salsiccia enorme a ferro di cavallo, non una porzione piccola), nr_27_43 (pezzo simile a un petto intero, non una sovracoscia), nr_31_0 (fette spesse di carne cruda, non bresaola).
+
+File modificati: assets/ricette (35 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli minimi: JSON valido; confronto semantico con la versione 87 (35 differenze su percorsoImmagine più la versione); file/ID coerenti e WebP 800x450 decodificabili; ogni percorso del catalogo ha il suo file; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati.
