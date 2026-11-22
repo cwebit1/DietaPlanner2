@@ -6,6 +6,9 @@ const unique=x=>[...new Set(x)].sort();
 const canonical=x=>String(x||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim().replace(/\s+/g,' ');
 const dayNumber=d=>Math.floor(Date.parse(String(d).slice(0,10)+'T12:00:00Z')/86400000);
 const week=d=>{const n=dayNumber(d),dow=new Date(n*86400000).getUTCDay();return n-(dow+6)%7;};
+/* @qa-metadata
+{"id":"PWA-B-001-identita-e-disponibilita","paths":["identity","availability","hardReason","filter"],"focusedTest":"tests/b001-ripetizioni-settimanali.test.js","rules":["rotationKeys include sempre 'ricetta:<dishKey>' anche per ricette senza fonti P/C","availability mantiene chiavi ricetta: attive anche dopo pool reset (resetRoles non esclude ricetta:)","hardReason blocca stesso dishKey nella stessa settimana","cooldown rotazione 15 giorni su chiavi P, C e ricetta:"]}
+*/
 function identity(recipe){
   const ingredients=recipe.ingredientiEffettivi||recipe.ingredienti||[];
   const source=i=>canonical(i.ingredienteId||i.variantId||i.nome);
@@ -17,7 +20,7 @@ function identity(recipe){
   const dishKey=JSON.stringify([unique(food.map(i=>source(i))),preparation]);
   const sourceKeys=unique(food.filter(i=>protein.has(i.categoria)).map(i=>'P:'+source(i)));
   const rotationKeys=unique(food.filter(i=>protein.has(i.categoria)||i.categoria==='C').map(i=>(protein.has(i.categoria)?'P:':'C:')+source(i)));
-  if(rotationKeys.length)rotationKeys.push('ricetta:'+dishKey);
+  rotationKeys.push('ricetta:'+dishKey);
   return {dishKey,sourceKeys,sourceKey:sourceKeys.join('|'),rotationKeys,
     allergeniPresenti:unique(ingredients.flatMap(i=>i.allergeni||[])),
     stack:1,roll:1};
@@ -59,7 +62,7 @@ function hardReason(recipe,date,history){
   return null;
 }
 function availability(recipe,date,history,resetRoles=[],days=15){
-  const keys=identity(recipe).rotationKeys.filter(k=>!resetRoles.includes(k.split(':')[0])&&!(resetRoles.length&&k.startsWith('ricetta:')));
+  const keys=identity(recipe).rotationKeys.filter(k=>!resetRoles.includes(k.split(':')[0]));
   const uses=history.filter(e=>Math.abs(dayNumber(date)-dayNumber(e.date))<days&&keys.some(k=>e.rotationKeys.includes(k)));
   return {stack:uses.length?0:1,uses};
 }

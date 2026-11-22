@@ -5496,3 +5496,38 @@ Correzione: copiati in assets/ricette 35 WebP 800x450 e compilato soltanto perco
 Escluse per contenuto non conforme, da rigenerare con prompt corretto: nr_27_34 (salsiccia enorme a ferro di cavallo, non una porzione piccola), nr_27_43 (pezzo simile a un petto intero, non una sovracoscia), nr_31_0 (fette spesse di carne cruda, non bresaola).
 
 File modificati: assets/ricette (35 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli minimi: JSON valido; confronto semantico con la versione 87 (35 differenze su percorsoImmagine più la versione); file/ID coerenti e WebP 800x450 decodificabili; ogni percorso del catalogo ha il suo file; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati.
+
+---
+
+## 22/11/2026 — B-001: niente ricette ripetute nella programmazione settimanale
+
+**Obiettivo richiesto da Cwe:** eliminare le ripetizioni di ricette nella programmazione settimanale (bug B-001): stessa ricetta ripetuta sia nella stessa settimana sia entro 15 giorni su 4 settimane consecutive.
+
+**Causa confermata:** tre cause indipendenti:
+1. `cercaCarboSeparato` in `motor-v12.js` chiamava `ordinaPerStackPoiCaso` senza passare `history` e `giorno` → i candidati carboidrati venivano mescolati casualmente invece di essere ordinati per uso meno recente (LRU), vanificando il cooldown di rotazione quando il pool si esauriva e scattava il reset.
+2. `availability()` in `pwa-contracts.js` escludeva le chiavi `ricetta:<dishKey>` dopo un pool reset (quando `resetRoles` non vuoto) → la stessa ricetta poteva essere riproposta entro 15 giorni.
+3. `ordinaVerdureProgrammazione` in `motor-v12.js` non applicava cooldown sulle verdure quando lo storico era presente → stesso contorno poteva ripresentarsi a stretto giro dopo un reset.
+
+**Intervento effettuato:**
+- `pwa-contracts.js:identity()`: `rotationKeys.push('ricetta:'+dishKey)` sempre eseguito (prima era protetto da `if(rotationKeys.length)`), così anche le ricette senza fonti P/C hanno la chiave di rotazione della ricetta.
+- `pwa-contracts.js:availability()`: rimossa l'esclusione delle chiavi `ricetta:` quando `resetRoles` non vuoto → il cooldown ricetta resiste anche dopo reset del pool.
+- `motor-v12.js:ordinaPerStackPoiCaso()`: aggiunti parametri `history` e `giorno`; quando c'è storico ordina i candidati per uso meno recente (mai usato = prima, poi meno usi nei 15 giorni, poi stack score).
+- `motor-v12.js:cercaCarboSeparato()`, `costruisciPastoSequenziale()`, `completaPastoConBloccate()`: passano `ctx.contractHistory` e `giorno` a `ordinaPerStackPoiCaso`.
+- `motor-v12.js:ordinaVerdureProgrammazione()`, `scegliDedicataConRicorrente()`, `completaResiduoVerduraRicette()`, `chiudiPastoConVerdura()`: passano `history`/`giorno` per applicare cooldown 15 gg sulle verdure.
+
+**File modificati:** `motor-v12.js`, `pwa-contracts.js`.
+**File aggiunti:** `tests/b001-ripetizioni-settimanali.test.js`.
+
+**Test eseguiti (controlli consentiti):**
+```
+node tests/b001-ripetizioni-settimanali.test.js  → OK (0 ripetizioni stessa settimana, 0 entro 15 giorni, 4 settimane complete)
+node --check motor-v12.js                         → OK
+node --check pwa-contracts.js                     → OK
+git diff --check                                  → pulito
+```
+
+**Regressioni non verificabili:** `lotto-g-weekly-generation`, `lotto-j-vsg-stress`, `lotto-carboidrati-stress-validazione` falliscono per problemi pre-existing del test harness (`commitPianoContratti` globale mancante; `stores['diagnosticaCopertura']` non inizializzato prima di `inizializza` che chiama `put('diagnosticaCopertura',...)`). Non causati dalle modifiche al codice. Verifica limitata al test mirato B-001.
+
+**Esito:** B-001 risolto (test target passa). Commit e push sospesi perché i test di regressione esistenti non possono essere resi verdi per problemi di setup pre-existing non imputabili a questo intervento (vedi docs/BUGS.md, sezione Fixed, riga Esito).
+
+**SHA finale:** <hash-da-inserire-dopo-commit>

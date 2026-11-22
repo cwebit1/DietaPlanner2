@@ -1805,14 +1805,52 @@ function punteggioVerduraProgrammazione(r,data,variantiPrioritarie){
   const preferito=indice<=2?0:(indice<=4?1:2);
   return -Math.abs(livello-preferito)*10-livello;
 }
-function ordinaVerdureProgrammazione(pool,data,variantiPrioritarie,verdurePreferiteVariantIds){
-  const ordinati=(pool||[]).slice().sort((a,b)=>punteggioVerduraProgrammazione(b,data,variantiPrioritarie)-punteggioVerduraProgrammazione(a,data,variantiPrioritarie));
-  /* Preferenza positiva (setVerdurePreferite, Set utente), tramite
-     l'helper centralizzato ordinaPerVerdurePreferite (vedi sotto): tra
-     più soluzioni complete e valide, prova prima quelle che contengono
-     una verdura favorita - mai un obbligo, se nessuna la contiene
-     l'ordine esistente (deperibilità/programmazione, invariato) resta
-     l'unico criterio. */
+/* @qa-metadata
+{"id":"MOTORE-B-001-verdure-cooldown","paths":["ordinaVerdureProgrammazione","scegliDedicataConRicorrente","completaResiduoVerduraRicette","chiudiPastoConVerdura"],"focusedTest":"tests/b001-ripetizioni-settimanali.test.js","rules":["con storico presente filtra verdure usate negli ultimi 15 giorni (cooldown ricetta:)","se tutte le candidate sono in cooldown restituisce array vuoto (nessun errore bloccante)","ordina per ultimo uso più vecchio, poi meno usi nella finestra, poi stack score","applica ordinaPerVerdurePreferite come criterio finale"]}
+*/
+function ordinaVerdureProgrammazione(pool,data,variantiPrioritarie,verdurePreferiteVariantIds,history,giorno,cooldownVerdure){
+  const ordinati=(pool||[]).slice();
+  if(history&&history.length){
+    const oggi=K.dayNumber(giorno),finestra=cooldownVerdure??15;
+    /* Tiene solo le verdure NON usate negli ultimi 15 giorni (cooldown ricetta:).
+       Quando il reset fa cadere le chiavi ricetta: (pwa-contracts.js availability),
+       questo e' l'unico presidio che impedisce di riesporre la stessa verdura a
+       stretto giro. Se tutte le candidate sono in cooldown (catalogo troppo
+       piccolo), restituisce array vuoto: il chiamante skippa la V dedicata e
+       prova combinazioni alternative, mai un errore bloccante. */
+    const freschi=ordinati.filter(r=>{
+      const dk=K.identity(r).dishKey;
+      for(const e of history){
+        if(e.dishKey===dk&&Math.abs(K.dayNumber(e.date)-oggi)<finestra)return false;
+      }
+      return true;
+    });
+    if(!freschi.length)return [];
+    freschi.sort((a,b)=>{
+      const sa=punteggioVerduraProgrammazione(a,data,variantiPrioritarie);
+      const sb=punteggioVerduraProgrammazione(b,data,variantiPrioritarie);
+      if(sa!==sb)return sb-sa; // deperibilita' prima (decrescente)
+      const ultimoUso=r=>{
+        const dk=K.identity(r).dishKey;let u=null;
+        for(const e of history)if(e.dishKey===dk){const d=K.dayNumber(e.date);if(u===null||d>u)u=d;}
+        return u;
+      };
+      const ua=ultimoUso(a),ub=ultimoUso(b);
+      if(ua===null&&ub!==null)return -1;
+      if(ub===null&&ua!==null)return 1;
+      if(ua!==null&&ub!==null&&ua!==ub)return ua-ub;
+      const usiFinestra=r=>{
+        const dk=K.identity(r).dishKey;let n=0;
+        for(const e of history)if(e.dishKey===dk&&Math.abs(K.dayNumber(e.date)-oggi)<finestra)n++;
+        return n;
+      };
+      const da=usiFinestra(a),db=usiFinestra(b);
+      if(da!==db)return da-db;
+      return 0;
+    });
+    return ordinaPerVerdurePreferite(freschi,verdurePreferiteVariantIds);
+  }
+  ordinati.sort((a,b)=>punteggioVerduraProgrammazione(b,data,variantiPrioritarie)-punteggioVerduraProgrammazione(a,data,variantiPrioritarie));
   return ordinaPerVerdurePreferite(ordinati,verdurePreferiteVariantIds);
 }
 function prioritaVerdureProgrammazionePasti(candidati,data,variantiPrioritarie){
@@ -1850,14 +1888,14 @@ function rispettaRicorrenteDisponibile(ricette,pool,variantId){
   if(!variantId||ricette.some(r=>(r.ingredienti||[]).some(i=>i.variantId===variantId)))return true;
   return !(pool||[]).some(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&(r.ingredienti||[]).some(i=>i.variantId===variantId);});
 }
-function scegliDedicataConRicorrente(candidatiPool,data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId){
+function scegliDedicataConRicorrente(candidatiPool,data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId,history,giorno,cooldownVerdure){
   if(requiredVegetableVariantId){
     const conRicorrente=candidatiPool.filter(r=>(r.ingredienti||[]).some(i=>i.variantId===requiredVegetableVariantId));
-    if(conRicorrente.length)return ordinaVerdureProgrammazione(conRicorrente,data,variantiPrioritarie,verdurePreferiteVariantIds)[0]||null;
+    if(conRicorrente.length)return ordinaVerdureProgrammazione(conRicorrente,data,variantiPrioritarie,verdurePreferiteVariantIds,history,giorno,cooldownVerdure)[0]||null;
   }
-  return ordinaVerdureProgrammazione(candidatiPool,data,variantiPrioritarie,verdurePreferiteVariantIds)[0]||null;
+  return ordinaVerdureProgrammazione(candidatiPool,data,variantiPrioritarie,verdurePreferiteVariantIds,history,giorno,cooldownVerdure)[0]||null;
 }
-function completaResiduoVerduraRicette(ricette,pool,data,portionConfig,variantiPrioritarie,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId){
+function completaResiduoVerduraRicette(ricette,pool,data,portionConfig,variantiPrioritarie,bloccateIds,verdurePreferiteVariantIds,requiredVegetableVariantId,history,cooldownVerdure){
   bloccateIds=bloccateIds||new Set();
   let out=(ricette||[]).slice();
   const totale=coperturaVerduraRicette(out,portionConfig);
@@ -1915,12 +1953,12 @@ function completaResiduoVerduraRicette(ricette,pool,data,portionConfig,variantiP
     const copertoDaAltre=N.vegetableCoverage(righeCoperturaVerdura(out,dedicata.id),portionConfig);
     const frazioneMancante=Math.max(0,1-copertoDaAltre.coveredFraction);
     if(frazioneMancante<=0)return out;
-    const supplementare=scegliDedicataConRicorrente((pool||[]).filter(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&righeCoperturaVerdura([r]).length&&!out.some(x=>x.id===r.id);}),data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId);
+    const supplementare=scegliDedicataConRicorrente((pool||[]).filter(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&righeCoperturaVerdura([r]).length&&!out.some(x=>x.id===r.id);}),data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId,history,data,cooldownVerdure);
     if(!supplementare)return out;
     return out.concat(ridimensionaVerdureRicetta(supplementare,frazioneMancante,portionConfig));
   }
   if(!dedicata){
-    dedicata=scegliDedicataConRicorrente((pool||[]).filter(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&righeCoperturaVerdura([r]).length&&!out.some(x=>x.id===r.id);}),data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId);
+    dedicata=scegliDedicataConRicorrente((pool||[]).filter(r=>{const c=copertura(r);return c.V&&!c.C&&!c.P&&righeCoperturaVerdura([r]).length&&!out.some(x=>x.id===r.id);}),data,variantiPrioritarie,verdurePreferiteVariantIds,requiredVegetableVariantId,history,data,cooldownVerdure);
     if(dedicata)out.push(dedicata);
   }
   if(!dedicata)return out;
@@ -2317,7 +2355,38 @@ function mescolaCandidati(pool){
   for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}
   return out;
 }
-function ordinaPerStackPoiCaso(pool,stackUsati){
+/* @qa-metadata
+{"id":"MOTORE-B-001-rotazione-ricette","paths":["ordinaPerStackPoiCaso","cercaCarboSeparato","costruisciPastoSequenziale","completaPastoConBloccate"],"focusedTest":"tests/b001-ripetizioni-settimanali.test.js","rules":["con storico presente ordina candidati per uso meno recente (mai usato prima, poi meno usi nei 15 giorni, poi stack score)","senza storico conserva comportamento storico (casuale + stack)","applicato a carboidrati (cercaCarboSeparato), proteine (costruisciPastoSequenziale, completaPastoConBloccate)","evita ripetizione ricetta entro 15 giorni dopo reset del pool"]}
+*/
+function ordinaPerStackPoiCaso(pool,stackUsati,history,giorno){
+  /* Quando c'è uno storico (ramo di reset: ctx.contractHistory sempre
+     presente) ordina i candidati per uso meno recente, così quando il pool
+     è esaurito e scatta il reset si prova prima chi è stato usato meno
+     recentemente (mai usato = prima), poi chi ha meno usi nei 15 giorni.
+     Senza storico si conserva il comportamento storico (casuale + stack). */
+  if(history&&history.length){
+    const oggi=K.dayNumber(giorno),finestra=15;
+    const ultimoUso=r=>{
+      const dk=K.identity(r).dishKey;let u=null;
+      for(const e of history)if(e.dishKey===dk){const d=K.dayNumber(e.date);if(u===null||d>u)u=d;}
+      return u;
+    };
+    const usiFinestra=r=>{
+      const dk=K.identity(r).dishKey;let n=0;
+      for(const e of history)if(e.dishKey===dk&&Math.abs(K.dayNumber(e.date)-oggi)<finestra)n++;
+      return n;
+    };
+    const scoreStack=r=>(r.chiaviStack||[]).filter(k=>stackUsati.has(k)).length;
+    return pool.slice().sort((a,b)=>{
+      const ua=ultimoUso(a),ub=ultimoUso(b);
+      if(ua===null&&ub!==null)return -1;
+      if(ub===null&&ua!==null)return 1;
+      if(ua!==null&&ub!==null&&ua!==ub)return ua-ub;
+      const da=usiFinestra(a),db=usiFinestra(b);
+      if(da!==db)return da-db;
+      return scoreStack(a)-scoreStack(b);
+    });
+  }
   const casuali=mescolaCandidati(pool),score=r=>(r.chiaviStack||[]).filter(k=>stackUsati.has(k)).length;
   return casuali.sort((a,b)=>score(a)-score(b));
 }
@@ -2347,7 +2416,7 @@ async function chiudiPastoConVerdura(base,token,giorno,pool,ctx){
      altrimenti modificate. Vuoto/assente per ogni chiamante che non
      conosce blocchi: comportamento identico a prima. */
   const bloccateIds=ctx.realizzazioniBloccateIds||new Set();
-  const ricette=completaResiduoVerduraRicette(base,pool,giorno,ctx.vegetablePortions,ctx.variantiPrioritarie,bloccateIds,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.verdurePreferiteVariantIds,ctx.requiredVegetableVariantId);
+  const ricette=completaResiduoVerduraRicette(base,pool,giorno,ctx.vegetablePortions,ctx.variantiPrioritarie,bloccateIds,ctx.runtimeConfig&&ctx.runtimeConfig.userPreferences&&ctx.runtimeConfig.userPreferences.verdurePreferiteVariantIds,ctx.requiredVegetableVariantId,ctx.contractHistory,ctx.resolved?.cooldownDays?.verdure??15);
   if(!pastoCompletoPerToken(ricette,token,ctx.vegetablePortions))return null;
   if(!rispettaRicorrenteDisponibile(ricette,pool,ctx.requiredVegetableVariantId))return null;
   if(ctx.forbiddenProteinMacros&&[...macroProteicheRicette(ricette)].some(k=>ctx.forbiddenProteinMacros.has(k)))return null;
@@ -2419,7 +2488,7 @@ async function cercaCarboSeparato(proteina,fissiRimasti,autoCandidati,token,gior
   const verdurePreferite=prefUtente&&prefUtente.verdurePreferiteVariantIds;
   const contieneCerealeNonGradito=r=>!!(cerealiNonGraditi&&cerealiNonGraditi.size&&(r.ingredienti||[]).some(i=>i.ingredienteId&&cerealiNonGraditi.has(i.ingredienteId)));
   const tenta=async(chiave,eraAuto)=>{
-    let carboScelte=ordinaPerStackPoiCaso(pool.filter(r=>copertura(r).C&&!copertura(r).P&&carbKeysRicetta(r).includes(chiave)),ctx.weeklyStackKeys);
+    let carboScelte=ordinaPerStackPoiCaso(pool.filter(r=>copertura(r).C&&!copertura(r).P&&carbKeysRicetta(r).includes(chiave)),ctx.weeklyStackKeys,ctx.contractHistory,giorno);
     if(ctx.livelliInventario)carboScelte=applicaPrioritaInventario(carboScelte,ctx.livelliInventario);
     /* Preferenza negativa (cerealiNonGraditi, Set utente): riguarda solo i
        candidati AUTO, mai un carboidrato FIXED - "non cambiare un
@@ -2517,7 +2586,7 @@ async function costruisciPastoSequenziale(token,giorno,carbCandidati,pool,ctx){
   const extra=ctx.basiExtra||[];
   let proteine=pool.filter(r=>copertura(r).tokens.has(token)&&!usataOggi(r));
   if(!proteine.length)proteine=pool.filter(r=>copertura(r).tokens.has(token));
-  proteine=ordinaPerStackPoiCaso(proteine,ctx.weeklyStackKeys);
+  proteine=ordinaPerStackPoiCaso(proteine,ctx.weeklyStackKeys,ctx.contractHistory,giorno);
   /* Salvafrigo (ctx.livelliInventario presente): a parita' di token, le
      ricette che usano scorte urgenti/avanzi/freezer vengono provate prima -
      stesso meccanismo a livelli di applicaPrioritaInventario gia' usato nel
@@ -2713,7 +2782,7 @@ async function completaPastoConBloccate(token,giorno,carbCandidati,pool,ctx,bloc
     const usataOggi=r=>chiaviGiornoRicetta(r).some(k=>oggi.has(k));
     let proteine=pool.filter(r=>copertura(r).tokens.has(token)&&!copertura(r).C&&!usataOggi(r));
     if(!proteine.length)proteine=pool.filter(r=>copertura(r).tokens.has(token)&&!copertura(r).C);
-    proteine=ordinaPerStackPoiCaso(proteine,ctx.weeklyStackKeys);
+    proteine=ordinaPerStackPoiCaso(proteine,ctx.weeklyStackKeys,ctx.contractHistory,giorno);
     if(ctx.livelliInventario)proteine=applicaPrioritaInventario(proteine,ctx.livelliInventario);
     for(const proteina of proteine){
       if(chiave&&!composizioneSeparataConsentita(proteina,chiave))continue;

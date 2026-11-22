@@ -40,7 +40,7 @@
     specialMealsMax:2,
     snackWeeklyCaps:{da_limitare:2,grana_spuntino:2,crackers_spuntino:2,pane_marmellata_spuntino:2,granita_spuntino:2,patatine_grisbi:1},
     snackDailyCaps:{frutta_secca_giornaliero:1},
-    cooldownDays:{carboidrati:7,verdure:2},
+    cooldownDays:{carboidrati:15,verdure:1},
     oilGramsPerDay:10,
     rotationDays:{stack:15,roll:15},
     breakfastRegularCount:7,
