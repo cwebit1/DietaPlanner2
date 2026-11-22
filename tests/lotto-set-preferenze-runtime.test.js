@@ -18,11 +18,17 @@ const path=require('node:path');
 const root=path.join(__dirname,'..');
 
 const stores={};
-function resetStores(){for(const n of ['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario'])stores[n]=new Map();}
+function resetStores(){for(const n of ['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario','diagnosticaCopertura'])stores[n]=new Map();}
 resetStores();
 global.getAll=async name=>[...(stores[name]||new Map()).values()].map(v=>structuredClone(v));
 global.getOne=async(name,key)=>{const v=(stores[name]||new Map()).get(key);return v===undefined?null:structuredClone(v);};
 global.put=async(name,value)=>{(stores[name]||new Map()).set(value.id??value.chiave,structuredClone(value));return value;};
+global.commitPianoContratti=async(records,deleted,result)=>{
+  for(const v of records)await put('piano',v);
+  for(const id of deleted)await delKey('piano',id);
+  await put('impostazioni',{chiave:'stackBinario',valore:result.stack});
+  for(const row of result.diagnostics)await put('diagnosticaCopertura',row);
+};
 global.delKey=async(name,key)=>(stores[name]||new Map()).delete(key);
 global.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,String(url).split('?')[0]),'utf8'))});
 global.todayISO=()=>'2026-08-30';

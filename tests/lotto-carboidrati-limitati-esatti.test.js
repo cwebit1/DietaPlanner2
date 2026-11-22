@@ -9,12 +9,18 @@ const root=path.join(__dirname,'..');
 const N=require('../nutrition-config.js');
 
 const stores={};
-for(const name of ['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario'])stores[name]=new Map();
+for(const name of ['ingredienti','varianti','ricette','impostazioni','piano','consumoGiorno','inventario','diagnosticaCopertura'])stores[name]=new Map();
 function reset(){for(const m of Object.values(stores))m.clear();}
 global.getAll=async name=>[...(stores[name]||new Map()).values()].map(value=>structuredClone(value));
 global.getOne=async(name,key)=>{const value=(stores[name]||new Map()).get(key);return value===undefined?null:structuredClone(value);};
 global.put=async(name,value)=>{stores[name].set(value.id??value.chiave,structuredClone(value));return value;};
 global.delKey=async(name,key)=>stores[name].delete(key);
+global.commitPianoContratti=async(records,deleted,result)=>{
+  for(const v of records)await put('piano',v);
+  for(const id of deleted)await delKey('piano',id);
+  await put('impostazioni',{chiave:'stackBinario',valore:result.stack});
+  for(const row of result.diagnostics)await put('diagnosticaCopertura',row);
+};
 global.fetch=async url=>({ok:true,json:async()=>JSON.parse(fs.readFileSync(path.join(root,String(url).split('?')[0]),'utf8'))});
 global.todayISO=()=> '2026-08-30';
 global.giorniSettimana=()=>['2026-08-31','2026-09-01','2026-09-02','2026-09-03','2026-09-04','2026-09-05','2026-09-06'];

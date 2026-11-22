@@ -5531,3 +5531,38 @@ git diff --check                                  → pulito
 **Esito:** B-001 risolto (test target passa). Commit e push sospesi perché i test di regressione esistenti non possono essere resi verdi per problemi di setup pre-existing non imputabili a questo intervento (vedi docs/BUGS.md, sezione Fixed, riga Esito).
 
 **SHA finale:** <hash-da-inserire-dopo-commit>
+
+---
+
+## 22/11/2026 — B-002: impianto test allineato a diagnosticaCopertura e commitPianoContratti
+
+**Obiettivo richiesto da Cwe:** riparare il setup del test harness (impianto) così che i test di regressione esistenti funzionino con i nuovi requisiti del motore `diagnosticaCopertura` e `commitPianoContratti`, senza toccare i file del motore (motor-v12.js, pwa-contracts.js, nutrition-config.js, index.html).
+
+**Causa confermata:** il motore `inizializza()` scrive su `stores['diagnosticaCopertura']` durante l'inizializzazione e `salvaRecordsContratti` richiede `global.commitPianoContratti` per la persistenza atomica del piano, ma i vecchi test di regressione non definivano né `diagnosticaCopertura` nello stores Map né `commitPianoContratti` come funzione globale. Errore: `Cannot read properties of undefined (reading 'set')` al `global.put`/`inizializza` oppure `Persistenza atomica del piano non disponibile` al `salvaRecordsContratti`.
+
+**Intervento effettuato (solo file di test, nessun modulo del motore):**
+- Aggiunto `'diagnosticaCopertura'` all'array di inizializzazione degli stores in ogni file di test.
+- Aggiunto `global.commitPianoContratti=async(records,deleted,result)=>{...}` dopo `global.delKey` in ogni file di test.
+- File toccati: `tests/lotto-carboidrati-fixed-senza-auto.test.js`, `tests/lotto-carboidrati-limitati-esatti.test.js`, `tests/lotto-carboidrati-priorita-pxcuser.test.js`, `tests/lotto-j-avviso-solo-per-fissi-sostituiti.test.js`, `tests/lotto-pasto-anteprima-non-salvata.test.js`, `tests/lotto-programmazione-lucchetti.test.js`, `tests/lotto-proteine-giorno-esclusione.test.js`, `tests/lotto-rotazione-proteine-auto-binaria.test.js`, `tests/lotto-set-proteine-menu-reale.test.js`, `tests/menu-layer-sequenziale.test.js`, `tests/lotto-set-preferenze-runtime.test.js`.
+
+**Test eseguiti (controlli consentiti):**
+```
+node --check <ogni file di test modificato>  → OK per tutti
+node tests/lotto-carboidrati-fixed-senza-auto.test.js   → PASS
+node tests/lotto-carboidrati-limitati-esatti.test.js    → PASS
+node tests/lotto-j-avviso-solo-per-fissi-sostituiti.test.js → PASS
+node tests/lotto-programmazione-lucchetti.test.js       → PASS
+node tests/lotto-proteine-giorno-esclusione.test.js     → PASS
+node tests/lotto-rotazione-proteine-auto-binaria.test.js → PASS
+node tests/lotto-set-proteine-menu-reale.test.js        → PASS
+node tests/menu-layer-sequenziale.test.js               → PASS
+node tests/lotto-carboidrati-priorita-pxcuser.test.js   → FAIL (asserzione: EXCLUDED carboidrato usato → B-004)
+node tests/lotto-pasto-anteprima-non-salvata.test.js    → FAIL (asserzione: stessa macro pranzo/cena → B-005)
+node tests/lotto-set-preferenze-runtime.test.js         → FAIL (asserzione actual:false/expected:true → B-006)
+```
+
+**Regressioni note:** 8 test passano su 11; 3 falliscono su asserzioni pre-existing (non imputabili alla correzione dell'impianto). Registrate come B-004, B-005, B-006 in docs/BUGS.md sezione Open.
+
+**Esito:** impianto test allineato ai requisiti del motore. 8/11 test verdi. B-002 spostato in Fixed con hash del commit.
+
+**SHA finale:** <hash-da-inserire-dopo-commit>
