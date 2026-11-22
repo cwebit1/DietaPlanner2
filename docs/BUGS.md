@@ -2,6 +2,12 @@
 
 ## Open
 
+### B-002 [med] - · Regressioni test harness pre-existing su lotto-g/lotto-j/lotto-carboidrati
+Found: 2026-11-22
+Repro: esegui tests/lotto-g-weekly-generation.test.js, lotto-j-vsg-stress, lotto-carboidrati-stress-validazione → falliscono per problemi di setup del test harness non imputabili al codice (commitPianoContratti globale mancante; stores['diagnosticaCopertura'] non inizializzato prima di inizializza)
+Expected: tutti i test di regressione esistenti sono verdi
+Where: tests/lotto-g-weekly-generation.test.js, tests/lotto-j-vsg-stress.test.js, tests/lotto-carboidrati-stress-validazione.test.js
+
 ## Fixed
 
 - B-001 [med] - · La programmazione settimanale ripropone sempre le stesse ricette · fixed 2026-11-22 in <hash-da-inserire-dopo-commit>
