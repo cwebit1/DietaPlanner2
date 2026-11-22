@@ -5565,4 +5565,4 @@ node tests/lotto-set-preferenze-runtime.test.js         → FAIL (asserzione act
 
 **Esito:** impianto test allineato ai requisiti del motore. 8/11 test verdi. B-002 spostato in Fixed con hash del commit.
 
-**SHA finale:** <hash-da-inserire-dopo-commit>
+**SHA finale:** 3f89cd3
