@@ -1,5 +1,5 @@
 {
-  "versione": 88,
+  "versione": 89,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -6113,7 +6113,7 @@
     },
     {
       "idRicetta": "nr_34_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_34_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno semplice, i fagioli borlotti conditi con un filo di olio extravergine di oliva.",
@@ -6127,7 +6127,7 @@
     },
     {
       "idRicetta": "nr_34_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_34_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno delicato, i fagioli cannellini conditi con un filo di olio extravergine di oliva.",
@@ -6141,7 +6141,7 @@
     },
     {
       "idRicetta": "nr_34_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_34_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno rustico, le lenticchie condite con un filo di olio extravergine di oliva.",
@@ -6155,7 +6155,7 @@
     },
     {
       "idRicetta": "nr_35_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_35_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo vegetale essenziale, il tofu scaldato e completato con pepe nero.",
@@ -6173,7 +6173,7 @@
     },
     {
       "idRicetta": "nr_36_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_36_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un contorno saporito, i piselli surgelati stufati con la dolcezza della cipolla rossa.",
@@ -6603,7 +6603,7 @@
     },
     {
       "idRicetta": "nr_40_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_40_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo completo, il pesce spada accompagnato dalle patate lesse.",
@@ -6626,7 +6626,7 @@
     },
     {
       "idRicetta": "nr_40_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_40_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo di mare classico, il polpo servito con le patate lesse.",
@@ -6649,7 +6649,7 @@
     },
     {
       "idRicetta": "nr_41_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_41_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo di pesce azzurro, le sardine al forno diventano dorate in superficie.",
@@ -6667,7 +6667,7 @@
     },
     {
       "idRicetta": "nr_41_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_41_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un secondo di pesce azzurro, lo sgombro al forno diventa dorato e saporito.",
@@ -6685,7 +6685,7 @@
     },
     {
       "idRicetta": "nr_42_0",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_0.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda leggera, il cous cous con il tofu e la freschezza del cetriolo.",
@@ -6708,7 +6708,7 @@
     },
     {
       "idRicetta": "nr_42_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda semplice, il cous cous con il tofu e la dolcezza delle carote.",
@@ -6731,7 +6731,7 @@
     },
     {
       "idRicetta": "nr_42_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda vivace, il cous cous con il tofu e il sapore dei peperoni.",
@@ -6754,7 +6754,7 @@
     },
     {
       "idRicetta": "nr_42_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda rustica, il farro perlato con il tofu e la freschezza del cetriolo.",
@@ -6786,7 +6786,7 @@
     },
     {
       "idRicetta": "nr_42_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda sostanziosa, il farro con il tofu, pomodorini e la dolcezza delle carote.",
@@ -6818,7 +6818,7 @@
     },
     {
       "idRicetta": "nr_42_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda decisa, il farro con il tofu, pomodorini e il sapore dei peperoni.",
@@ -6850,7 +6850,7 @@
     },
     {
       "idRicetta": "nr_42_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, l'orzo con il tofu, pomodorini e la freschezza del cetriolo.",
@@ -6882,7 +6882,7 @@
     },
     {
       "idRicetta": "nr_42_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda rustica, l'orzo con il tofu, pomodorini e la dolcezza delle carote.",
@@ -6914,7 +6914,7 @@
     },
     {
       "idRicetta": "nr_42_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda decisa, l'orzo con il tofu, pomodorini e il sapore dei peperoni.",
@@ -6946,7 +6946,7 @@
     },
     {
       "idRicetta": "nr_42_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda fresca, il riso con il tofu, pomodorini e la freschezza del cetriolo.",
@@ -6978,7 +6978,7 @@
     },
     {
       "idRicetta": "nr_42_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda delicata, il riso con il tofu, pomodorini e la dolcezza delle carote.",
@@ -7010,7 +7010,7 @@
     },
     {
       "idRicetta": "nr_42_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_42_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un'insalata fredda sfiziosa, il riso con il tofu, pomodorini e il sapore dei peperoni.",
@@ -7065,7 +7065,7 @@
     },
     {
       "idRicetta": "nr_43_1",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_1.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di zucchine e carote.",
@@ -7088,7 +7088,7 @@
     },
     {
       "idRicetta": "nr_43_2",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_2.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo piatto colorato, la pasta corta condita con un sugo veloce di zucchine e pomodoro.",
@@ -7111,7 +7111,7 @@
     },
     {
       "idRicetta": "nr_43_3",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_3.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di pomodoro e melanzane.",
@@ -7134,7 +7134,7 @@
     },
     {
       "idRicetta": "nr_43_4",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_4.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di piselli e carote.",
@@ -7157,7 +7157,7 @@
     },
     {
       "idRicetta": "nr_43_5",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_5.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta corta condita con un sugo veloce di piselli e pomodoro.",
@@ -7180,7 +7180,7 @@
     },
     {
       "idRicetta": "nr_43_6",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_6.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, la pasta corta condita con un sugo fresco di pomodoro e basilico.",
@@ -7203,7 +7203,7 @@
     },
     {
       "idRicetta": "nr_43_7",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_7.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, la pasta corta con aglio, olio e pomodorini.",
@@ -7231,7 +7231,7 @@
     },
     {
       "idRicetta": "nr_43_8",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_8.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e melanzane.",
@@ -7254,7 +7254,7 @@
     },
     {
       "idRicetta": "nr_43_9",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_9.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e carote.",
@@ -7277,7 +7277,7 @@
     },
     {
       "idRicetta": "nr_43_10",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_10.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di zucchine e pomodoro.",
@@ -7300,7 +7300,7 @@
     },
     {
       "idRicetta": "nr_43_11",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_11.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di pomodoro e melanzane.",
@@ -7323,7 +7323,7 @@
     },
     {
       "idRicetta": "nr_43_12",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_12.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di piselli e carote.",
@@ -7346,7 +7346,7 @@
     },
     {
       "idRicetta": "nr_43_13",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_13.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, i tagliolini all'uovo condita con un sugo veloce di piselli e pomodoro.",
@@ -7369,7 +7369,7 @@
     },
     {
       "idRicetta": "nr_43_14",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_14.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, i tagliolini all'uovo condita con un sugo fresco di pomodoro e basilico.",
@@ -7392,7 +7392,7 @@
     },
     {
       "idRicetta": "nr_43_15",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_15.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, i tagliolini all'uovo con aglio, olio e pomodorini.",
@@ -7420,7 +7420,7 @@
     },
     {
       "idRicetta": "nr_43_16",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_16.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di zucchine e melanzane.",
@@ -7443,7 +7443,7 @@
     },
     {
       "idRicetta": "nr_43_17",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_17.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di zucchine e carote.",
@@ -7466,7 +7466,7 @@
     },
     {
       "idRicetta": "nr_43_18",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_18.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di zucchine e pomodoro.",
@@ -7489,7 +7489,7 @@
     },
     {
       "idRicetta": "nr_43_19",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_19.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di pomodoro e melanzane.",
@@ -7512,7 +7512,7 @@
     },
     {
       "idRicetta": "nr_43_20",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_20.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di piselli e carote.",
@@ -7535,7 +7535,7 @@
     },
     {
       "idRicetta": "nr_43_21",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_21.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, la pasta integrale condita con un sugo veloce di piselli e pomodoro.",
@@ -7558,7 +7558,7 @@
     },
     {
       "idRicetta": "nr_43_22",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_22.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, la pasta integrale condita con un sugo fresco di pomodoro e basilico.",
@@ -7581,7 +7581,7 @@
     },
     {
       "idRicetta": "nr_43_23",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_23.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, la pasta integrale con aglio, olio e pomodorini.",
@@ -7609,7 +7609,7 @@
     },
     {
       "idRicetta": "nr_43_24",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_24.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di zucchine e melanzane.",
@@ -7641,7 +7641,7 @@
     },
     {
       "idRicetta": "nr_43_25",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_25.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di zucchine e carote.",
@@ -7673,7 +7673,7 @@
     },
     {
       "idRicetta": "nr_43_26",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_26.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di zucchine e pomodoro.",
@@ -7705,7 +7705,7 @@
     },
     {
       "idRicetta": "nr_43_27",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_27.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di pomodoro e melanzane.",
@@ -7737,7 +7737,7 @@
     },
     {
       "idRicetta": "nr_43_28",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_28.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di piselli e carote.",
@@ -7769,7 +7769,7 @@
     },
     {
       "idRicetta": "nr_43_29",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_29.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il riso condito con un saltato veloce di piselli e pomodoro.",
@@ -7801,7 +7801,7 @@
     },
     {
       "idRicetta": "nr_43_30",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_30.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, il riso condito con un sugo fresco di pomodoro e basilico.",
@@ -7833,7 +7833,7 @@
     },
     {
       "idRicetta": "nr_43_31",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_31.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, il riso con aglio, olio e pomodorini.",
@@ -7870,7 +7870,7 @@
     },
     {
       "idRicetta": "nr_43_32",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_32.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di zucchine e melanzane.",
@@ -7902,7 +7902,7 @@
     },
     {
       "idRicetta": "nr_43_33",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_33.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di zucchine e carote.",
@@ -7934,7 +7934,7 @@
     },
     {
       "idRicetta": "nr_43_34",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_34.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di zucchine e pomodoro.",
@@ -7966,7 +7966,7 @@
     },
     {
       "idRicetta": "nr_43_35",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_35.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di pomodoro e melanzane.",
@@ -7998,7 +7998,7 @@
     },
     {
       "idRicetta": "nr_43_36",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_36.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di piselli e carote.",
@@ -8030,7 +8030,7 @@
     },
     {
       "idRicetta": "nr_43_37",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_37.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, l'orzo condito con un saltato veloce di piselli e pomodoro.",
@@ -8062,7 +8062,7 @@
     },
     {
       "idRicetta": "nr_43_38",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_38.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, l'orzo condito con un sugo fresco di pomodoro e basilico.",
@@ -8094,7 +8094,7 @@
     },
     {
       "idRicetta": "nr_43_39",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_39.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, l'orzo con aglio, olio e pomodorini.",
@@ -8131,7 +8131,7 @@
     },
     {
       "idRicetta": "nr_43_40",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_40.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di zucchine e melanzane.",
@@ -8163,7 +8163,7 @@
     },
     {
       "idRicetta": "nr_43_41",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_41.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di zucchine e carote.",
@@ -8195,7 +8195,7 @@
     },
     {
       "idRicetta": "nr_43_42",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_42.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di zucchine e pomodoro.",
@@ -8227,7 +8227,7 @@
     },
     {
       "idRicetta": "nr_43_43",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_43.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di pomodoro e melanzane.",
@@ -8259,7 +8259,7 @@
     },
     {
       "idRicetta": "nr_43_44",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_44.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di piselli e carote.",
@@ -8291,7 +8291,7 @@
     },
     {
       "idRicetta": "nr_43_45",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_45.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il farro condito con un saltato veloce di piselli e pomodoro.",
@@ -8323,7 +8323,7 @@
     },
     {
       "idRicetta": "nr_43_46",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_46.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, il farro condito con un sugo fresco di pomodoro e basilico.",
@@ -8355,7 +8355,7 @@
     },
     {
       "idRicetta": "nr_43_47",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_47.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, il farro con aglio, olio e pomodorini.",
@@ -8392,7 +8392,7 @@
     },
     {
       "idRicetta": "nr_43_48",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_48.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e melanzane.",
@@ -8415,7 +8415,7 @@
     },
     {
       "idRicetta": "nr_43_49",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_49.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e carote.",
@@ -8438,7 +8438,7 @@
     },
     {
       "idRicetta": "nr_43_50",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_50.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di zucchine e pomodoro.",
@@ -8461,7 +8461,7 @@
     },
     {
       "idRicetta": "nr_43_51",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_51.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di pomodoro e melanzane.",
@@ -8484,7 +8484,7 @@
     },
     {
       "idRicetta": "nr_43_52",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_52.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di piselli e carote.",
@@ -8507,7 +8507,7 @@
     },
     {
       "idRicetta": "nr_43_53",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_53.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo colorato, il cous cous condito con un saltato veloce di piselli e pomodoro.",
@@ -8530,7 +8530,7 @@
     },
     {
       "idRicetta": "nr_43_54",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_54.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo classico, il cous cous condito con un sugo fresco di pomodoro e basilico.",
@@ -8553,7 +8553,7 @@
     },
     {
       "idRicetta": "nr_43_55",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_55.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo semplice e saporito, il cous cous con aglio, olio e pomodorini.",
@@ -8581,7 +8581,7 @@
     },
     {
       "idRicetta": "nr_43_56",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_56.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e melanzane.",
@@ -8604,7 +8604,7 @@
     },
     {
       "idRicetta": "nr_43_57",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_57.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e carote.",

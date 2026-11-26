@@ -5566,3 +5566,21 @@ node tests/lotto-set-preferenze-runtime.test.js         → FAIL (asserzione act
 **Esito:** impianto test allineato ai requisiti del motore. 8/11 test verdi. B-002 spostato in Fixed con hash del commit.
 
 **SHA finale:** 3f89cd3
+
+
+---
+
+## 26/11/2026 — Collegamento 78 foto dei giri del worker Qwen di novembre
+
+Causa: 83 foto nuove in MieiScript/foto/nuove_800 non ancora collegate. Ognuna è stata controllata a vista contro nome, descrizione, procedimento e prompt della ricetta.
+
+Correzione: copiati in assets/ricette 78 WebP 800x450 e compilato soltanto percorsoImmagine di: nr_34_1, nr_34_2, nr_34_3, nr_35_0, nr_36_0, nr_40_0, nr_40_1, nr_41_0, nr_41_1, nr_42_0, nr_42_1, nr_42_2, nr_42_3, nr_42_4, nr_42_5, nr_42_6, nr_42_7, nr_42_8, nr_42_9, nr_42_10, nr_42_11, nr_43_1, nr_43_2, nr_43_3, nr_43_4, nr_43_5, nr_43_6, nr_43_7, nr_43_8, nr_43_9, nr_43_10, nr_43_11, nr_43_12, nr_43_13, nr_43_14, nr_43_15, nr_43_16, nr_43_17, nr_43_18, nr_43_19, nr_43_20, nr_43_21, nr_43_22, nr_43_23, nr_43_24, nr_43_25, nr_43_26, nr_43_27, nr_43_28, nr_43_29, nr_43_30, nr_43_31, nr_43_32, nr_43_33, nr_43_34, nr_43_35, nr_43_36, nr_43_37, nr_43_38, nr_43_39, nr_43_40, nr_43_41, nr_43_42, nr_43_43, nr_43_44, nr_43_45, nr_43_46, nr_43_47, nr_43_48, nr_43_49, nr_43_50, nr_43_51, nr_43_52, nr_43_53, nr_43_54, nr_43_55, nr_43_56, nr_43_57. db-visuale.json versione 88 -> 89, altri campi invariati. Cache PWA sw.js v23 -> v24 e aspettativa di tests/pwa-shell-aggiornamento.test.js allineata. Foto collegate: 366 su 420.
+
+Escluse per contenuto non conforme, da rigenerare con prompt corretto (MieiScript/prompt/ricette-rimanenti-17.json):
+- nr_27_34: Salsiccia riconoscibile con righe da griglia, ma lunga e curva a ferro di cavallo; nel prompt chiedere un tratto corto (10 cm), quasi dritto, senza curvatura a U.
+- nr_27_43: Sembra un petto/arrosto di pollo con tagli profondi a griglia, nessun osso visibile; chiedere una vera sovracoscia con osso e pelle dorata con solo righe leggere, forma irregolare di coscia.
+- nr_31_0: Fette rosso vivo e umide che sembrano carne cruda/carpaccio, non bresaola bordeaux scuro; rucola sparsa sopra: chiedere fette sottili rotonde bordeaux scuro opache, disposte a ventaglio con rucola a lato.
+- nr_39_0: Pezzi bianchi tozzi con piselli, sembrano gnocchi o capesante piu' che seppie; chiedere seppie a strisce/anelli con tentacoli, aspetto da stufato con sughetto.
+- nr_43_0: Zucchine e melanzane a cubetti giuste, ma la pasta sembra tagliatelle/strisce piatte tagliate, non una vera pasta corta: nel prompt indicare esplicitamente penne o fusilli o maccheroni.
+
+File modificati: assets/ricette (78 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli: JSON valido; ogni percorso del catalogo ha il suo file; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati.
