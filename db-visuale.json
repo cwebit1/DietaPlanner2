@@ -1,5 +1,5 @@
 {
-  "versione": 89,
+  "versione": 90,
   "ricette": [
     {
       "idRicetta": "nr_1_0",
@@ -8627,7 +8627,7 @@
     },
     {
       "idRicetta": "nr_43_58",
-      "percorsoImmagine": "",
+      "percorsoImmagine": "assets/ricette/nr_43_58.webp",
       "ricettaTestuale": "",
       "disponibile": true,
       "descrizione": "Un primo delicato, i ravioli ricotta e spinaci conditi con un saltato veloce di zucchine e pomodoro.",

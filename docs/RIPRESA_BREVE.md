@@ -130,3 +130,6 @@ Catalogo visuale83: collegati nr_10_16..nr_10_35. Shell v17. Dettagli nel regist
 
 
 26/11/2026 — Foto Qwen di novembre: collegate 78 foto, db-visuale 89, shell v24, 366 foto collegate su 420. Da rifare 5 (nr_27_34, nr_27_43, nr_31_0, nr_39_0, nr_43_0). Prompt rimanenti riscritti con il contesto della ricetta in apertura. Dettagli in REGISTRO_MODIFICHE. Stati altre funzioni invariati.
+
+
+26/11/2026 — Collegata nr_43_58 (foto scelta da Cwe, scritta Qwen ritagliata): db-visuale 90, shell v25, 367 foto collegate su 420. Dettagli in REGISTRO_MODIFICHE. Stati altre funzioni invariati.

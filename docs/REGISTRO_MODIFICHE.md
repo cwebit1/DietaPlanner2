@@ -5584,3 +5584,11 @@ Escluse per contenuto non conforme, da rigenerare con prompt corretto (MieiScrip
 - nr_43_0: Zucchine e melanzane a cubetti giuste, ma la pasta sembra tagliatelle/strisce piatte tagliate, non una vera pasta corta: nel prompt indicare esplicitamente penne o fusilli o maccheroni.
 
 File modificati: assets/ricette (78 nuovi WebP), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli: JSON valido; ogni percorso del catalogo ha il suo file; node --check sw.js; superati tests/pwa-shell-aggiornamento, catalogo-visuale-disponibilita e catalogo-visuale-campione-editoriale. Stati applicativi invariati.
+
+## 26/11/2026 — Collegamento foto nr_43_58 (ravioli ricotta e spinaci con zucchine e pomodoro)
+
+Causa: foto mancante. Cwe ha scelto la foto tra quelle generate da Qwen in La mia creazione.
+
+Correzione: ritagliato il 10% in basso (16:9) per togliere la scritta "Qwen" in basso a destra, salvata 800x450 in assets/ricette/nr_43_58.webp e compilato soltanto percorsoImmagine di nr_43_58. db-visuale.json versione 89 -> 90, altri campi invariati. Cache PWA sw.js v24 -> v25 e aspettativa di tests/pwa-shell-aggiornamento.test.js allineata. Foto collegate: 367 su 420.
+
+File modificati: assets/ricette/nr_43_58.webp (nuovo), db-visuale.json, sw.js, tests/pwa-shell-aggiornamento.test.js, docs/REGISTRO_MODIFICHE.md (sola aggiunta), docs/RIPRESA_BREVE.md. Controlli: JSON valido; superato tests/pwa-shell-aggiornamento. Stati applicativi invariati.
